@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Placements;
 
 use App\Unifin\Repositories\Placements\Jcap;
+
+//use Illuminate\Contracts\View\View;
+//use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,17 +13,41 @@ class JcapController extends Controller
 {
     public function index()
     {
-//        dd((new Jcap(public_path('test\placements\UNI.test.NB.TXT'), 'some'))->getPlacements());
-
-        return view('jcap.index');
+        return view('admin.placements.jcap.index');
     }
 
     public function show(Request $request)
     {
-        $path = $request->file('placement')->storeAs('placements', $request->file('placement')->getClientOriginalName());
+        $request->file('placement')
+            ->storeAs('public\placements', $request->file('placement')
+                ->getClientOriginalName());
 
-        //create csv
-        (new Jcap($path, $request->file('placement')->getClientOriginalName()))->getCSV();
+        $filename = $request->file('placement')->getClientOriginalName();
+        $path = public_path('storage\\placements\\' . $filename);
+
+        $records = (new Jcap($path, $filename))->getRecords();
+
+        $csvFileName = public_path('storage\\placements\\' . $filename . '.csv');
+
+        $fp = fopen($csvFileName, 'w');
+
+        fputcsv($fp, Jcap::headers());
+
+        foreach ($records as $row) {
+            fputcsv($fp, $row);
+        }
+
+        fclose($fp);
+
+        return response()->download($csvFileName);
+
+//        return \Excel::create('jcap-placement', function ($excel) use ($records) {
+//            $excel->sheet('placement', function ($sheet) use ($records) {
+//                $sheet->fromArray($records);
+//            });
+//        })->download('csv');
+
+//        return view('admin.placements.jcap.import', compact('records'));
 
 //        dd($path);
     }

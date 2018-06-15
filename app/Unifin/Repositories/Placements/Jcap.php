@@ -11,7 +11,7 @@ class Jcap
     protected $placements;
     protected $filename;
 
-    protected $csvHeaders = [
+    protected static $recordHeaders = [
         'BFrame ID',
         'Remote ID',
         'Placement Date',
@@ -78,12 +78,12 @@ class Jcap
         'Country',
         'Home Telephone',
         'Business Telephone',
-        'Other telephone',
         'Employer',
         'Current Creditor'
     ];
 
     protected $cnRecord = [
+        'BframeID'                         => [0, 10],
         'RemoteIDs'                        => [10, 4],
         'PlacementDates'                   => [14, 8],
         'Portfolios'                       => [22, 12],
@@ -105,10 +105,10 @@ class Jcap
         'DateOfBirth'                      => [224, 8],
         'TypeInterest'                     => [232, 1],
         'CommissionRate'                   => [233, 5],
-        'AccountBalance'                   => [238, 13],
-        'PrincipalBalance'                 => [251, 13],
-        'InterestBalance'                  => [264, 13],
-        'ChargesBalance'                   => [277, 13],
+        'AccountBalance'                   => [238, 13, 'number'],
+        'PrincipalBalance'                 => [251, 13, 'number'],
+        'InterestBalance'                  => [264, 13, 'number'],
+        'ChargesBalance'                   => [277, 13, 'number'],
         'Filler1'                          => [290, 13],
         'Filler2'                          => [303, 13],
         'CollectionCost'                   => [316, 13],
@@ -119,21 +119,21 @@ class Jcap
         'OriginalNoteDate'                 => [366, 8],
         'OriginalStartDate'                => [374, 8],
         'OriginalAPR'                      => [382, 7],
-        'OriginalNoteAmount'               => [389, 11],
+        'OriginalNoteAmount'               => [389, 11, 'number'],
         'OriginalTerm'                     => [400, 4],
-        'OriginalBalance'                  => [404, 11],
+        'OriginalBalance'                  => [404, 11, 'number'],
         'OriginalPaymentAmountPriorToJCAP' => [415, 8],
         'OriginalMaturity'                 => [423, 8],
         'AdjustedMaturity'                 => [431, 8],
         'Filler3'                          => [439, 16],
-        'OriginalPaymentDatePriorToJCAP'   => [455, 8],
+        'OriginalPaymentDatePriorToJCAP'   => [455, 8, 'number'],
         'MiscellaneousDescription1'        => [463, 25],
         'MiscellaneousDescription2'        => [488, 25],
         'MiscellaneousDescription3'        => [513, 25],
         'MiscellaneousDescription4'        => [538, 25],
         'MiscellaneousDescriptionID'       => [563, 6],
         'FirstPaymentDefault'              => [569, 1],
-        'WriteOffAmount'                   => [570, 9],
+        'WriteOffAmount'                   => [570, 9, 'number'],
         'WriteOffDate'                     => [579, 8],
         'AmountLastTransaction'            => [587, 9],
         'Filler4'                          => [596, 3],
@@ -160,12 +160,76 @@ class Jcap
 
     public function __construct($file, $filename)
     {
-        $this->filename = $filename;
-        foreach (file($file) as $line) {
-            $contents[] = $line;
+//        $this->filename = $filename;
+//        foreach (file($file) as $line) {
+//            $contents[] = $line;
+//        }
+//        $this->contents = collect($contents);
+//        $this->processRecords();
+
+        $file = new \SplFileObject($file, "r");
+
+        while (! $file->eof()) {
+            $line = $file->fgets();
+
+            $this->processRecord($line);
         }
-        $this->contents = collect($contents);
-        $this->processRecords();
+    }
+
+    private function formatToNumber($value, $record)
+    {
+        if (isset($record[2]) && $record[2] == 'number') {
+            return floatval($value);
+        }
+        return $value;
+    }
+
+    public function processRecord($line)
+    {
+        $cnRecord = array();
+        $ccRecord = array();
+        $ceRecord = array();
+        $bframeID = trim(substr($line, 0, 10));
+        $recordType = substr($line, 34, 2);
+
+        //cn record
+        if ($recordType == 'CN') {
+            foreach ($this->cnRecord as $recordKey => $recordItem) {
+                $cnRecord[$recordKey] = $this->formatToNumber(trim(substr($line, $recordItem[0], $recordItem[1])), $recordItem);
+            }
+            $this->placements[$bframeID] = $cnRecord;
+
+            //create blank cc
+            foreach ($this->ccRecord as $recordKey => $recordItem) {
+                $ccRecord[$recordKey] = '';
+            }
+            $this->placements[$bframeID] += $ccRecord;
+
+            //create blank ce
+            foreach ($this->ceRecord as $recordKey => $recordItem) {
+                $ceRecord[$recordKey] = '';
+            }
+            $this->placements[$bframeID] += $ceRecord;
+
+            //create creditor name;
+            $this->placements[$bframeID] += ['CurrentCreditor' => 'Jefferson Capital Systems, LLC'];
+        }
+
+        //cc record
+        if ($recordType == 'CC') {
+            foreach ($this->ccRecord as $recordKey => $recordItem) {
+                $ccRecord[$recordKey] = $this->formatToNumber(trim(substr($line, $recordItem[0], $recordItem[1])), $recordItem);
+            }
+            $this->placements[$bframeID] = array_merge($this->placements[$bframeID], $ccRecord);
+        }
+
+        //ce record
+        if ($recordType == 'CE') {
+            foreach ($this->ceRecord as $recordKey => $recordItem) {
+                $ceRecord[$recordKey] = $this->formatToNumber(trim(substr($line, $recordItem[0], $recordItem[1])), $recordItem);
+            }
+            $this->placements[$bframeID] = array_merge($this->placements[$bframeID], $ceRecord);
+        }
     }
 
     public function processRecords()
@@ -218,13 +282,15 @@ class Jcap
         }
     }
 
-    public function getPlacements()
+    public function getRecords()
     {
         return $this->placements;
+//        return [self::$recordHeaders, $this->placements];
     }
 
-    public function getCSV()
+    public static function headers()
     {
-
+        return self::$recordHeaders;
     }
+
 }

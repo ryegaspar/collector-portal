@@ -15,8 +15,13 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('topnavbar', require('./components/TopNavBar'));
+Vue.component('sidebar', require('./components/SideBar'));
+
 
 const app = new Vue({
     el: '#app'
 });
+
+require('./genesisui');
+

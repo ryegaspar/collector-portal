@@ -1,95 +1,42 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<meta name="author" content="Ryan Gaspar">
+	<link rel="shortcut icon" href="img/favicon.png">
 
-        <title>Laravel</title>
+	<title>INUFIN</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+	<!-- Main styles for this application -->
+	<link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
+</head>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+<body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+	<div id="app" class="app">
+		<topnavbar></topnavbar>
 
-            .full-height {
-                height: 100vh;
-            }
+		<div class="app-body">
+			<sidebar></sidebar>
+			<!-- Main content -->
+			<main class="main">
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+				<div class="container-fluid">
 
-            .position-ref {
-                position: relative;
-            }
+				</div>
+				<!-- /.conainer-fluid -->
+			</main>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+		</div>
 
-            .content {
-                text-align: center;
-            }
+		<footer class="app-footer">
+			<span>© ryeg_</span>
+		</footer>
+	</div>
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
+	<!-- Bootstrap and necessary plugins -->
+	<script src="{{ URL::asset('js/app.js') }}"></script>
+</body>
 </html>

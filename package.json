@@ -17,6 +17,9 @@
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
-        "vue": "^2.5.7"
+        "vue": "^2.5.7",
+        "font-awesome": "^4.7.0",
+        "flag-icon-css": "2.9.0",
+        "simple-line-icons": "^2.4.1"
     }
 }
