@@ -16,9 +16,14 @@
 //});
 
 //Auth::routes();
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('user.login');
+Route::post('login', 'Auth\LoginController@login')->name('user.login.submit');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::redirect('/', '/dashboard');
+
+Route::get('/dashboard', 'Users\DashboardController@index')->name('user.dashboard');
+
+Route::get('/collections', 'Users\CollectionController@index')->name('user.collection');
 
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');
 Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-plc.view');

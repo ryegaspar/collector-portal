@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Admin;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,7 +24,7 @@ class AuthTest extends TestCase
     /** @test */
     function an_admin_can_access_admin_dashboard()
     {
-        $admin = create(Admin::class);
+        $admin = create(User::class, ['access_level' => 2]);
         $this->adminSignIn($admin);
 
         $this->get(route('admin.dashboard'))

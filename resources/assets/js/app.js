@@ -16,8 +16,10 @@ window.Vue = require('vue');
  */
 
 Vue.component('topnavbar', require('./components/TopNavBar'));
-Vue.component('sidebar', require('./components/SideBar'));
 
+Vue.component('sidebar', require('./components/Users/SideBar'));
+Vue.component('login', require('./components/Users/Login'));
+Vue.component('dashboard', require('./components/Users/Dashboard'));
 
 const app = new Vue({
     el: '#app'
