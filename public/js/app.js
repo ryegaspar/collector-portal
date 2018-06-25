@@ -48172,6 +48172,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -48294,51 +48295,6 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "input-group mb-4" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.remember,
-                expression: "form.remember"
-              }
-            ],
-            staticClass: "input-group-prepend",
-            attrs: { type: "checkbox" },
-            domProps: {
-              checked: Array.isArray(_vm.form.remember)
-                ? _vm._i(_vm.form.remember, null) > -1
-                : _vm.form.remember
-            },
-            on: {
-              change: function($event) {
-                var $$a = _vm.form.remember,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = null,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && _vm.$set(_vm.form, "remember", $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      _vm.$set(
-                        _vm.form,
-                        "remember",
-                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                      )
-                  }
-                } else {
-                  _vm.$set(_vm.form, "remember", $$c)
-                }
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm._m(2)
-        ]),
-        _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-6" }, [
             _c("button", {
@@ -48370,16 +48326,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "input-group-prepend" }, [
       _c("span", { staticClass: "input-group-text" }, [
         _c("i", { staticClass: "icon-lock" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("span", { staticStyle: { "margin-left": "10px" } }, [
-        _vm._v("Remember me")
       ])
     ])
   }

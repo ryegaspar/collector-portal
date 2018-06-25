@@ -24,19 +24,20 @@
                        v-model="form.password"
                        placeholder="Password">
             </div>
-            <div class="input-group mb-4">
-                <input type="checkbox"
-                       class="input-group-prepend"
-                       v-model="form.remember">
-                <div>
-                    <span style="margin-left:10px">Remember me</span>
-                </div>
-            </div>
+            <!--<div class="input-group mb-4">-->
+                <!--<input type="checkbox"-->
+                       <!--class="input-group-prepend"-->
+                       <!--v-model="form.remember">-->
+                <!--<div>-->
+                    <!--<span style="margin-left:10px">Remember me</span>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="row">
                 <div class="col-6">
                     <button type="submit"
                             class="btn btn-primary px-4"
-                            :disabled="isLoading" v-html="submitButton"></button>
+                            :disabled="isLoading"
+                            v-html="submitButton"></button>
                 </div>
             </div>
         </form>

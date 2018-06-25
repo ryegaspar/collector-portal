@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\USR;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -39,12 +41,40 @@ class LoginController extends Controller
     }
 
     /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(Request $request)
+    {
+        request()->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = USR::where('USR_CODE', strtoupper($request->username))
+            ->where('USR_PW', $request->password)
+            ->where('USR_DEF_MOT_DESK', '!=', '')
+            ->first();
+
+        if ($user) {
+            Auth::loginUsingId($user->USR_CODE);
+            return $this->sendLoginResponse($request);
+        } else {
+            return response([], 401);
+        }
+    }
+
+    /**
      * get the login username to be used by the controller
      *
      * @return string
      */
     public function username() {
-        return 'username';
+        return 'USR_CODE';
     }
 
     /**
