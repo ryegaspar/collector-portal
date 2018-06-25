@@ -13,7 +13,10 @@
                     <img class="img-avatar" src="images/image-avatar.png">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">
+                    <form method="post" :action="logoutPath" ref="logout">
+                        <input type="hidden" name="_token" :value="csrfToken">
+                    </form>
+                    <a class="dropdown-item" href="#" @click="doLogout">
                         <i class="fa fa-lock"></i>Logout
                     </a>
                 </div>
@@ -22,5 +25,24 @@
     </header>
 </template>
 <script>
-    export default {}
+    export default {
+
+    	methods: {
+    		doLogout() {
+    			this.$refs.logout.submit();
+            }
+        },
+
+        computed: {
+    		logoutPath() {
+    			let path = window.location.pathname;
+    			return `${path.substr(0, path.indexOf('/', 1))}/logout`;
+            },
+
+    		csrfToken() {
+    			return window.token;
+            }
+        }
+
+    }
 </script>

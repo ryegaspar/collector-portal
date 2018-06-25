@@ -19,4 +19,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+//    /**
+//     * a user has many DBR
+//     *
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function DBR()
+//    {
+//        return $this->hasMany('App\DBR', 'DBR_DESK', 'desk');
+//    }
 }

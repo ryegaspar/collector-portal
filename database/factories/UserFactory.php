@@ -16,10 +16,11 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'last_name'       => $faker->lastName,
-        'first_name'      => $faker->firstName,
+        'last_name'      => $faker->lastName,
+        'first_name'     => $faker->firstName,
         'username'       => $faker->unique()->userName,
         'password'       => bcrypt('Password1'),
+        'desk'           => $faker->randomNumber(3),
         'access_level'   => 3,
         'remember_token' => str_random(10),
     ];
