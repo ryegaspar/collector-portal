@@ -20,7 +20,7 @@ Vue.component('topnavbar', require('./components/TopNavBar'));
 Vue.component('sidebar', require('./components/Users/SideBar'));
 Vue.component('login', require('./components/Users/Login'));
 Vue.component('dashboard', require('./components/Users/Dashboard'));
-Vue.component('collections', require('./components/Users/Collections'));
+Vue.component('accounts', require('./components/Users/Accounts'));
 
 const app = new Vue({
     el: '#app'

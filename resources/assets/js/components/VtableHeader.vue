@@ -2,9 +2,26 @@
     <div class="filter-bar">
         <div class="form-inline">
             <!--<div class="toolbar">-->
-            <div class="col-md-4">
-                <div class="btn-group">
-                    <button type="button" class="mb-1 btn btn-outline-purple dropdown-toggle"
+            <div class="col-md-4 input-group" style="padding-left: 2px;padding-right: 2px">
+                <div class="btn-group-sm">
+                    <button type="button"
+                            class="btn btn-outline-primary btn-sm dropdown-toggle mr-1"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="icon-layers"></i> Per Page <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#"
+                           class="dropdown-item font-xs"
+                           :class="page == perPageShow ? 'disabled' : ''"
+                           v-for="page in pages"
+                           @click="changePage(page)"> {{ page }} </a>
+                    </div>
+                </div>
+                <div class="btn-group input-group-append">
+                    <button type="button"
+                            class="btn btn-outline-purple btn-sm dropdown-toggle"
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false">
@@ -26,19 +43,19 @@
             </div>
             <div class="col-md-4">
             </div>
-            <div class="col-md-4">
-                <div class="btn-group input-group">
+            <div class="col-md-4" style="padding-left: 2px;padding-right: 2px">
+                <div class="btn-group input-group btn-group-sm">
                     <input type="text"
                            class="form-control input-group-sm"
                            :placeholder="placeholder"
-                           v-model="filterText"
-                           @keyup="doFilter"
-                           @keyup.enter="doFilter">
+                           v-model="searchText"
+                           @keyup="doSearch"
+                           @keyup.enter="doSearch">
                     <span class="filter-clear fa fa-times-circle"
-                          v-if="!!filterText"
-                          @click="resetFilter"></span>
+                          v-if="!!searchText"
+                          @click="resetSearch"></span>
                     <span class="input-group-append">
-                            <button class="btn btn-outline-success" @click="doFilter">Go</button>
+                            <button class="btn btn-outline-success btn-sm" @click="doSearch">Go</button>
                         </span>
                 </div>
             </div>
@@ -50,29 +67,39 @@
 <script>
 	export default {
 		props: [
+			'perPage',
 			'fields',
 			'placeholder'
 		],
 
 		data() {
 			return {
-				filterText: ''
+				searchText: '',
+                pages: [5, 10, 25, 50, 100],
+                perPageShow: this.perPage
 			}
 		},
 
 		methods: {
+			changePage(page) {
+				if (page !== this.perPageShow) {
+					this.$events.fire('change-per-page', page);
+					this.perPageShow = page;
+				}
+            },
+
 			doToggleField(field) {
 				this.field = !field;
 				this.$events.fire('field-toggle', field);
 			},
 
-			doFilter: _.debounce(function() {
-				this.$events.fire('filter-set', this.filterText)
+			doSearch: _.debounce(function() {
+				this.$events.fire('search-set', this.searchText)
 			}, 500),
 
-			resetFilter() {
-				this.filterText = '';
-				this.$events.fire('filter-reset');
+			resetSearch() {
+				this.searchText = '';
+				this.$events.fire('search-reset');
 			}
 		},
 
@@ -94,7 +121,7 @@
     .filter-clear {
         z-index: 10;
         position: absolute;
-        right: 55px;
+        right: 40px;
         top: 0;
         bottom: 0;
         height: 14px;

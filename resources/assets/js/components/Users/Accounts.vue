@@ -4,12 +4,14 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <filter-bar :fields="fieldDefs" placeholder="name, id"></filter-bar>
+                        <vtable-header :perPage=perPage
+                                       :fields="fieldDefs"
+                                       placeholder="name, id"></vtable-header>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
                                 :append-params="moreParams"
-                                :perPage=50>
+                                :perPage=perPage>
                             <template slot="actions" slot-scope="props">
                                 <div class="custom-actions">
                                     <button class="btn btn-success btn-sm"
@@ -35,14 +37,14 @@
 </template>
 
 <script>
-	import FilterBar from '../FilterBar';
+	import VtableHeader from '../VtableHeader';
 	import VtableCollectionFieldDefs from './VtableCollectionFieldDefs';
     import Vtable from '../VTable';
     import VueEvents from 'vue-events';
 
     Vue.use(VueEvents);
 
-	Vue.component('filter-bar', FilterBar);
+	Vue.component('vtable-header', VtableHeader);
 
 	export default {
 
@@ -55,18 +57,19 @@
 				fieldDefs: VtableCollectionFieldDefs,
                 sortOrder: [
                     {
-                    	field: 'DBR_LAST_TRUST_DATE_O',
-                        sortField: 'DBR_LAST_TRUST_DATE_O',
+                    	field: 'last_worked',
+                        sortField: 'DBR_LAST_WORKED_O',
                         direction: 'desc'
                     }
                 ],
-                moreParams: {}
+                moreParams: {},
+                perPage: 25
 			}
         },
 
         computed: {
 			tableUrl() {
-				return `./collections/show`;
+				return `./accounts/show`;
             }
         }
     }

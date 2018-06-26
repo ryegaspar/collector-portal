@@ -24,8 +24,8 @@ Route::redirect('/', '/dashboard');
 
 Route::get('/dashboard', 'Users\DashboardController@index')->name('user.dashboard');
 
-Route::get('/collections', 'Users\CollectionController@index')->name('user.collections');
-Route::get('/collections/show', 'Users\CollectionController@show')->name('user.collections.show');
+Route::get('/accounts', 'Users\AccountsController@index')->name('user.accounts');
+Route::get('/accounts/show', 'Users\AccountsController@show')->name('user.accounts.show');
 
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');
 Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-plc.view');

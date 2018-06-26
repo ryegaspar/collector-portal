@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class CollectionController extends Controller
+class AccountsController extends Controller
 {
     /**
      * CollectionController constructor.
@@ -22,12 +22,12 @@ class CollectionController extends Controller
      */
     public function index()
     {
-        return view('users.collections');
+        return view('users.accounts');
     }
 
     public function show()
     {
-        $query = DBR::where('DBR_DESK', Auth::user()->desk);
+        $query = DBR::where('DBR_DESK', Auth::user()->USR_DEF_MOT_DESK);
         $request = request();
 
         if (request()->filled('sort')) {
@@ -41,9 +41,9 @@ class CollectionController extends Controller
             $query = $query->orderBy('DBR_NO', 'asc');
         }
 
-        if (request()->exists('filter')) {
+        if (request()->exists('search')) {
             $query->where(function($q) use ($request) {
-                $value = "%{$request->filter}%";
+                $value = "%{$request->search}%";
                 $q->where('DBR_NAME1', 'like', $value)
                     ->orWhere('DBR_NO', 'like', $value);
             });

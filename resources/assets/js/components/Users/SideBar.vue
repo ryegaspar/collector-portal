@@ -45,8 +45,8 @@
 						icon: 'fa fa-tachometer'
 					},
                     accounts: {
-						href: 'collections',
-                        text: 'Collection Accounts',
+						href: 'accounts',
+                        text: 'Accounts',
                         icon: 'fa fa-users'
                     },
                     adjustments: {

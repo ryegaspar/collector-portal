@@ -4,7 +4,7 @@
 	<!-- Main content -->
 	<main class="main">
 		<div class="container-fluid">
-			<collections class="mt-md-4"></collections>
+			<accounts class="mt-md-4"></accounts>
 		</div>
 	</main>
 @endsection

@@ -21,31 +21,210 @@ class DBR extends Model
      */
     protected $primaryKey = 'DBR_NO';
 
+    /**
+     * set incrementing of primary key to false
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
     protected $casts = [
-        'DBR_LAST_WORKED_O' => 'datetime:m/d/Y',
+        'DBR_LAST_WORKED_O'     => 'datetime:m/d/Y',
         'DBR_LAST_TRUST_DATE_O' => 'datetime:m/d/Y'
     ];
 
-//    public function getDBR_LAST_WORKED_OAttribute($date) {
-//        if (Carbon::parse($date)->diffInDays(Carbon::now()) <= 5) {
-//            return Carbon::parse($date)->diffForHumans();
-//        }
-//        return Carbon::parse($date)->toFormattedDateString();
-//    }
-//
-//    public function getAttribute($key) {
-//       if (array_key_exists($prefixedKey = 'DBR_LAST_WORKED_O'))
-//    }
+    protected $hidden = [
+        'DBR_AGENCY',
+        'DBR_CLIENT',
+        'DBR_CLI_REF_NO',
+        'DBR_ACN',
+        'DBR_NEXT_LTR_DATE',
+        'DBR_NEXT_LTR_NO',
+        'DBR_LETTER_SET',
+        'DBR_TIE_SERIES',
+        'DBR_NAME1',
+        'DBR_REVIEW_DATE',
+        'DBR_PRIORITY',
+        'DBR_RS',
+        'ASSIGN_DATE',
+        'DBR_PCASGN_DATE',
+        'DBR_LAST_CHG_DATE',
+        'DBR_LAST_PAY_DATE',
+        'DBR_LAST_TRUST_DATE',
+        'DBR_INT_THRU_DATE',
+        'DBR_LAST_WORKED',
+        'DBR_LAST_LETTER',
+        'DBR_CLOSE_DATE',
+        'DBR_JUDGMENT_DATE',
+        'DBR_JUDGMENT_INT_STDT',
+        'DBR_LAST_PDC_POST',
+        'DBR_LST_PDC_DATE',
+        'DBR_PC_CHARGES',
+        'DBR_INT_TOT',
+        'DBR_INT_DUE',
+        'DBR_COURT_TOT',
+        'DBR_LAST_PDC_DATE',
+        'DBR_COURT_DUE',
+        'DBR_ATTY_TOT',
+        'DBR_ATTY_DUE',
+        'DBR_OTHER_TOT',
+        'DBR_OTHER_DUE',
+        'DBR_MISC_TOT',
+        'DBR_MISC_DUE',
+        'DBR_CNTF_TOT',
+        'DBR_CNTF_DUE',
+        'DBR_JINT_DUE',
+        'DBR_COMM_TO_DATE',
+        'DBR_INT_RATE',
+        'DBR_COM_RATE',
+        'DBR_COM_RULE',
+        'DBR_TRW_STATUS',
+        'DBR_TRW_FIRST_DATE',
+        'DBR_TRW_LAST_DATE',
+        'DBR_TRW_FLAG',
+        'DBR_TRW_FLAG_1',
+        'DBR_TRW_FLAG_2',
+        'DBR_TRW_FLAG_3',
+        'DBR_TRW_FLAG_4',
+        'DBR_1_FLAG',
+        'DBR_2_FLAG',
+        'DBR_3_FLAG',
+        'DBR_4_FLAG',
+        'DBR_CLIENT_INT_AMT',
+        'DBR_PC_SER',
+        'DBR_TIME_ZONE',
+        'DBR_RJ_LETTER',
+        'DBR_WS_RULE',
+        'DBR_LT_COLL_FLAG',
+        'DBR_CLASS',
+        'DBR_CATEGORY',
+        'DBR_PROVID_DBASE',
+        'DBR_NO_ACK',
+        'DBR_BATCH_NO',
+        'DBR_BATCH_SEQ',
+        'DBR_ADV_COSTS',
+        'DBR_CL_CODES_1',
+        'DBR_CL_CODES_2',
+        'DBR_CL_CODES_3',
+        'DBR_CL_CODES_4',
+        'DBR_CL_MISC_2',
+        'DBR_CL_MISC_3',
+        'DBR_CL_MISC_4',
+        'DBR_CL_DATES_1',
+        'DBR_CL_DATES_2',
+        'DBR_CL_DATES_3',
+        'DBR_CL_DATES_4',
+        'DBR_FIRST_DEL_DATE',
+        'DBR_NEGOTIATE_AMT',
+        'DBR_JUDGMENT_AMT',
+        'DBR_WS_LTR_CNT',
+        'DBR_WS_PHN_CONN_CNT',
+        'DBR_WS_DAYS_WORKED_CNT',
+        'DBR_WS_LTR_NCNT',
+        'DBR_TTL_CRD_RPTS',
+        'DBR_TTL_EXT_SKP_TR',
+        'DBR_TTL_BANKOS',
+        'DBR_COMM_STATUS',
+        'DBR_YEARS_AT_RES',
+        'DBR_YEARS_AT_EMP',
+        'DBR_NO_REAL_ESTATE',
+        'DBR_NO_AUTOS',
+        'DBR_OS_SCORE',
+        'DBR_TRW_CCC',
+        'DBR_ORG_DB',
+        'DBR_CR_FLAGS',
+        'DBR_STL_PER',
+        'DBR_STL_EXP',
+        'DBR_STL_AMT',
+        'DBR_STL_DIS',
+        'DBR_NEXT_LTR_DATE_O',
+        'DBR_REVIEW_DATE_O',
+        'DBR_PCASGN_DATE_O',
+        'DBR_LAST_CHG_DATE_O',
+        'DBR_LAST_PAY_DATE_O',
+        'DBR_COLL_FLAGS',
+        'DBR_INT_THRU_DATE_O',
+        'DBR_LAST_LETTER_O',
+        'DBR_JUDGMENT_DATE_O',
+        'DBR_JUDGMENT_INT_STDT_O',
+        'DBR_TRW_FIRST_DATE_O',
+        'DBR_TRW_LAST_DATE_O',
+        'DBR_CL_DATES_1_O',
+        'DBR_CL_DATES_2_O',
+        'DBR_CL_DATES_3_O',
+        'DBR_CL_DATES_4_O',
+        'DBR_FIRST_DEL_DATE_O',
+        'DBR_PAYMENTS_MADE',
+        'DBR_TIGER_LINK',
+        'DBR_INTEREST_AMT',
+        'DBR_ORIG_INT_THRU_DATE',
+        'DBR_LAST_ADJUSTMENT_DATE',
+        'DBR_INT_COMP_FLAG',
+        'DBR_JUDGMENT_FLAG',
+        'DBR_CNTF_FLAG',
+        'DBR_WS_START_DATE',
+        'DBR_TIME_OF_DAY',
+        'DBR_LINK_SERIES',
+        'DBR_LAST_LETTER_CODE',
+        'DBR_TIE_FLAG',
+        'DBR_BILLING_CYCLE',
+        'DBR_BILLING_CNTR',
+        'DBR_CCCS',
+        'DBR_REFUND',
+        'DBR_LAST_DEL_DATE',
+        'DBR_TIE_GROUP',
+        'DBR_JINT_TOT',
+        'DBR_WS1_LTR_CNT',
+        'DBR_WS1_LTR_NCNT',
+        'DBR_WS1_PHN_CONN_CNT',
+        'DBR_WS1_DAYS_WORKED_CNT',
+        'DBR_PROBABILITY',
+        'DBR_CHARGE_OFF_AMT'
+    ];
 
-//    public $incrementing = false;
+    protected $appends = ['full_name', 'assign_amount', 'received_total', 'client', 'last_worked', 'last_transaction'];
 
-//    /**
-//     * a DBR belongs to a user
-//     *
-//     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-//     */
-//    public function User()
-//    {
-//        return $this->belongsTo('App\DBR', 'desk', 'DBR_DESK');
-//    }
+    public function getFullNameAttribute()
+    {
+        return ucwords(strtolower(str_replace(',', ', ', $this->DBR_NAME1)));
+    }
+
+    public function getAssignAmountAttribute()
+    {
+        return number_format($this->DBR_ASSIGN_AMT, 2, '.', ',');
+    }
+
+    public function getReceivedTotalAttribute()
+    {
+        return number_format($this->DBR_RECVD_TOT, 2, '.', ',');
+    }
+
+    public function getClientAttribute()
+    {
+        return strtolower($this->DBR_CL_MISC_1);
+    }
+
+    public function getLastWorkedAttribute()
+    {
+        if ($this->DBR_LAST_WORKED_O == '') {
+            return 'never';
+        }
+        if (Carbon::parse($this->DBR_LAST_WORKED_O)->diffInDays(Carbon::now()) <= 5) {
+            return Carbon::parse($this->DBR_LAST_WORKED_O)->diffForHumans();
+        }
+
+        return Carbon::parse($this->DBR_LAST_WORKED_O)->toFormattedDateString();
+    }
+
+    public function getLastTransactionAttribute()
+    {
+        if ($this->DBR_LAST_TRUST_DATE_O == '') {
+            return 'never';
+        }
+        if (Carbon::parse($this->DBR_LAST_TRUST_DATE_O)->diffInDays(Carbon::now()) <= 5) {
+            return Carbon::parse($this->DBR_LAST_TRUST_DATE_O)->diffForHumans();
+        }
+
+        return Carbon::parse($this->DBR_LAST_TRUST_DATE_O)->toFormattedDateString();
+    }
 }

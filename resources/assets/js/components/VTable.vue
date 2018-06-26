@@ -64,13 +64,15 @@
 							last: 'fa fa-angle-double-right',
 						}
 					},
-				}
+				},
+                perPageShow: this.perPage
 			}
 		},
 
 		mounted() {
-			this.$events.$on('filter-set', eventData => this.onFilterSet(eventData));
-			this.$events.$on('filter-reset', eventData => this.onFilterReset());
+			this.$events.$on('search-set', eventData => this.onSearchSet(eventData));
+			this.$events.$on('search-reset', eventData => this.onSearchReset());
+			this.$events.$on('change-per-page', eventData => this.onChangePagesToShow(eventData));
 		},
 
 		render(h) {
@@ -104,7 +106,7 @@
 							sortOrder: this.sortOrder,
 							appendParams: this.appendParams,
 							paginationPath: '',
-							perPage: this.perPage,
+							perPage: this.perPageShow,
 						},
 						on: {
 							'vuetable:pagination-data': this.onPaginationData
@@ -174,13 +176,13 @@
 				)
 			},
 
-			onFilterSet(filterText) {
-				this.appendParams.filter = filterText;
+			onSearchSet(searchText) {
+				this.appendParams.search = searchText;
 				Vue.nextTick(() => this.$refs.vuetable.refresh());
 			},
 
-			onFilterReset() {
-				delete this.appendParams.filter;
+			onSearchReset() {
+				delete this.appendParams.search;
 				Vue.nextTick(() => this.$refs.vuetable.refresh());
 			},
 
@@ -192,6 +194,10 @@
 			onChangePage(page) {
 				this.$refs.vuetable.changePage(page)
 			},
+
+            onChangePagesToShow(page) {
+				this.perPageShow = page;
+            }
 		},
 
 		created() {
@@ -204,17 +210,6 @@
 			'field-toggle'(field) {
 				field.visible = !field.visible;
 				this.$refs.vuetable.normalizeFields();
-				// Vue.nextTick(() => this.$refs.vuetable.normalizeFields());
-				//
-				// var x = this.columns.filter(function(el) {
-				// return el.visible == true;
-				// });
-				//
-				// if (parseInt(x.length) > parseInt(this.threshold)) {
-				// this.$emit('collapse');
-				// } else {
-				// this.$emit('expand');
-				// }
 			}
 		},
 
@@ -222,7 +217,15 @@
 			// fields() {
 			// return this.columns;
 			// }
-		}
+		},
+
+        watch: {
+			perPageShow() {
+				this.$nextTick(() => {
+					this.$refs.vuetable.refresh();
+                })
+            }
+        }
 	}
 </script>
 
