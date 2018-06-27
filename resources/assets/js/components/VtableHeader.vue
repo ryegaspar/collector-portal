@@ -16,7 +16,7 @@
                            class="dropdown-item font-xs"
                            :class="page == perPageShow ? 'disabled' : ''"
                            v-for="page in pages"
-                           @click="changePage(page)"> {{ page }} </a>
+                           @click="changePerPage(page)"> {{ page }} </a>
                     </div>
                 </div>
                 <div class="btn-group input-group-append">
@@ -35,7 +35,8 @@
                            href="#">
                             <i v-if="field.visible === true || field.visible === undefined || field.visible === 'undefined'"
                                class="fa fa-eye"></i>
-                            <i v-if="field.visible === false" class="fa fa-eye-slash"></i>
+                            <i v-if="field.visible === false"
+                               class="fa fa-eye-slash"></i>
                             {{ field.title }}
                         </a>
                     </div>
@@ -75,25 +76,25 @@
 		data() {
 			return {
 				searchText: '',
-                pages: [5, 10, 25, 50, 100],
-                perPageShow: this.perPage
+				pages: [5, 10, 25, 50, 100],
+				perPageShow: this.perPage
 			}
 		},
 
 		methods: {
-			changePage(page) {
+			changePerPage(page) {
 				if (page !== this.perPageShow) {
 					this.$events.fire('change-per-page', page);
 					this.perPageShow = page;
 				}
-            },
+			},
 
 			doToggleField(field) {
 				this.field = !field;
 				this.$events.fire('field-toggle', field);
 			},
 
-			doSearch: _.debounce(function() {
+			doSearch: _.debounce(function () {
 				this.$events.fire('search-set', this.searchText)
 			}, 500),
 

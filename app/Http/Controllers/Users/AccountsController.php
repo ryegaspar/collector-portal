@@ -25,14 +25,13 @@ class AccountsController extends Controller
         return view('users.accounts');
     }
 
-    public function show()
+    public function show(Request $request)
     {
         $query = DBR::where('DBR_DESK', Auth::user()->USR_DEF_MOT_DESK);
-        $request = request();
 
-        if (request()->filled('sort')) {
+        if ($request->filled('sort')) {
             // multisort
-            $sorts = explode(',', request()->sort);
+            $sorts = explode(',', $request->sort);
             foreach ($sorts as $sort) {
                 list($sortCol, $sortDir) = explode('|', $sort);
                 $query = $query->orderBy($sortCol, $sortDir);
@@ -41,7 +40,7 @@ class AccountsController extends Controller
             $query = $query->orderBy('DBR_NO', 'asc');
         }
 
-        if (request()->exists('search')) {
+        if ($request->exists('search')) {
             $query->where(function($q) use ($request) {
                 $value = "%{$request->search}%";
                 $q->where('DBR_NAME1', 'like', $value)
@@ -49,13 +48,13 @@ class AccountsController extends Controller
             });
         }
 
-        $perPage = request()->has('per_page') ? (int) request()->per_page : null;
+        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
 
         $pagination = $query->paginate($perPage);
         $pagination->appends([
-            'sort' => request()->sort,
-            'filter' => request()->filter,
-            'per_page' => request()->per_page
+            'sort' => $request->sort,
+            'filter' => $request->filter,
+            'per_page' => $request->per_page
         ]);
 
         return response()->json($pagination);
