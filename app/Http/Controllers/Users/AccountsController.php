@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Users;
 use App\DBR;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Unifin\UserTabulation\AccountsTabulation;
 
 class AccountsController extends Controller
 {
@@ -25,38 +25,19 @@ class AccountsController extends Controller
         return view('users.accounts');
     }
 
-    public function show(Request $request)
+    /**
+     * display specified resource
+     *
+     * @param Request $request
+     * @param DBR $dbr
+     * @param AccountsTabulation $paginate
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(Request $request, DBR $dbr, AccountsTabulation $paginate)
     {
-        $query = DBR::where('DBR_DESK', Auth::user()->USR_DEF_MOT_DESK);
-
-        if ($request->filled('sort')) {
-            // multisort
-            $sorts = explode(',', $request->sort);
-            foreach ($sorts as $sort) {
-                list($sortCol, $sortDir) = explode('|', $sort);
-                $query = $query->orderBy($sortCol, $sortDir);
-            }
-        } else {
-            $query = $query->orderBy('DBR_NO', 'asc');
+        $response = $dbr->getUserAccounts($request, $paginate);
+        if ($request->wantsJson()) {
+            return response()->json($response);
         }
-
-        if ($request->exists('search')) {
-            $query->where(function($q) use ($request) {
-                $value = "%{$request->search}%";
-                $q->where('DBR_NAME1', 'like', $value)
-                    ->orWhere('DBR_NO', 'like', $value);
-            });
-        }
-
-        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
-
-        $pagination = $query->paginate($perPage);
-        $pagination->appends([
-            'sort' => $request->sort,
-            'filter' => $request->filter,
-            'per_page' => $request->per_page
-        ]);
-
-        return response()->json($pagination);
     }
 }

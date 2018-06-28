@@ -12,7 +12,7 @@ export default [
 		visible: true,
 	},
 	{
-		name: 'assign_amount',
+		name: 'assigned_amount',
 		sortField: 'DBR_ASSIGN_AMT',
 		title: 'Assign Amount',
 		dataClass: 'text-right',

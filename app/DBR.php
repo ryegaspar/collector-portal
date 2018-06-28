@@ -4,6 +4,8 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Unifin\UserTabulation\AccountsTabulation;
 
 class DBR extends Model
 {
@@ -28,11 +30,21 @@ class DBR extends Model
      */
     public $incrementing = false;
 
+    /**
+     * convert columns to their appropriate types
+     *
+     * @var array
+     */
     protected $casts = [
         'DBR_LAST_WORKED_O'     => 'datetime:m/d/Y',
         'DBR_LAST_TRUST_DATE_O' => 'datetime:m/d/Y'
     ];
 
+    /**
+     * hide columns that are not needed and for security
+     *
+     * @var array
+     */
     protected $hidden = [
         'DBR_AGENCY',
         'DBR_CLIENT',
@@ -182,28 +194,58 @@ class DBR extends Model
         'DBR_CHARGE_OFF_AMT'
     ];
 
-    protected $appends = ['full_name', 'assign_amount', 'received_total', 'client', 'last_worked', 'last_transaction'];
+    /**
+     * accessors to append to the model's array form
+     *
+     * @var array
+     */
+    protected $appends = ['full_name', 'assigned_amount', 'received_total', 'client', 'last_worked', 'last_transaction'];
 
+    /**
+     * accessor to full name, capitalize first word, capitalize first word, capitalize first word, capitalize first word
+     *
+     * @return string
+     */
     public function getFullNameAttribute()
     {
         return ucwords(strtolower(str_replace(',', ', ', $this->DBR_NAME1)));
     }
 
-    public function getAssignAmountAttribute()
+    /**
+     * accessor to assigned amount, reformatted to proper decimal
+     *
+     * @return string
+     */
+    public function getAssignedAmountAttribute()
     {
         return number_format($this->DBR_ASSIGN_AMT, 2, '.', ',');
     }
 
+    /**
+     * accessor to received total, reformatted to proper decimal
+     *
+     * @return string
+     */
     public function getReceivedTotalAttribute()
     {
         return number_format($this->DBR_RECVD_TOT, 2, '.', ',');
     }
 
+    /**
+     * accessor to client, make it lower case
+     *
+     * @return string
+     */
     public function getClientAttribute()
     {
         return strtolower($this->DBR_CL_MISC_1);
     }
 
+    /**
+     * accessor to last worked, reformatted date to carbon instance
+     *
+     * @return string
+     */
     public function getLastWorkedAttribute()
     {
         if ($this->DBR_LAST_WORKED_O == '') {
@@ -216,6 +258,11 @@ class DBR extends Model
         return Carbon::parse($this->DBR_LAST_WORKED_O)->toFormattedDateString();
     }
 
+    /**
+     * accessor to last transaction, reformatted date to carbon instance
+     *
+     * @return string
+     */
     public function getLastTransactionAttribute()
     {
         if ($this->DBR_LAST_TRUST_DATE_O == '') {
@@ -226,5 +273,51 @@ class DBR extends Model
         }
 
         return Carbon::parse($this->DBR_LAST_TRUST_DATE_O)->toFormattedDateString();
+    }
+
+    /**
+     * apply tabulation to relevant dbr
+     *
+     * @param $query
+     * @param AccountsTabulation $paginate
+     * @return mixed
+     */
+    public function scopeTabulate($query, AccountsTabulation $paginate)
+    {
+       return $paginate->apply($query);
+    }
+
+    /**
+     * get all dbr of the user
+     *
+     * @param $builder
+     * @return mixed
+     */
+    public function scopeUserAccounts($builder)
+    {
+        return $builder->where('DBR_DESK', Auth::user()->USR_DEF_MOT_DESK);
+    }
+
+    /**
+     * fetch all relevant dbr accounts
+     *
+     * @param $request
+     * @param AccountsTabulation $paginate
+     * @return mixed
+     */
+    public function getUserAccounts($request, AccountsTabulation $paginate)
+    {
+        $builder = DBR::userAccounts()->tabulate($paginate);
+
+        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
+
+        $pagination = $builder->paginate($perPage);
+        $pagination->appends([
+            'sort' => $request->sort,
+            'search' => $request->search,
+            'per_page' => $request->per_page
+        ]);
+
+        return $pagination;
     }
 }
