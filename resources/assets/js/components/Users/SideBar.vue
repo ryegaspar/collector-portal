@@ -49,6 +49,11 @@
                         text: 'Accounts',
                         icon: 'fa fa-users'
                     },
+                    transactions: {
+						href: 'transactions',
+                        text: 'Transactions',
+                        icon: 'fa fa-credit-card'
+                    },
                     adjustments: {
 						href: 'adjustments',
                         text: 'Adjustments',

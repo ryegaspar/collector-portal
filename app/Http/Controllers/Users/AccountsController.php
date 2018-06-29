@@ -18,7 +18,7 @@ class AccountsController extends Controller
     }
 
     /**
-     * show collection page
+     * show accounts page
      */
     public function index()
     {

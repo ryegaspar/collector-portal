@@ -27,6 +27,9 @@ Route::get('/dashboard', 'Users\DashboardController@index')->name('user.dashboar
 Route::get('/accounts', 'Users\AccountsController@index')->name('user.accounts');
 Route::get('/accounts/show', 'Users\AccountsController@show')->name('user.accounts.show');
 
+Route::get('/transactions', 'Users\TransactionsController@index')->name('user.transactions');
+Route::get('/transactions/show', 'Users\TransactionsController@show')->name('user.transactions.show');
+
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');
 Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-plc.view');
 

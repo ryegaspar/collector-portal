@@ -7,6 +7,7 @@
                         <vtable-header :perPage=perPage
                                        :fields="fieldDefs"
                                        placeholder="name, id"></vtable-header>
+                        <vtable-header-date-filter></vtable-header-date-filter>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
@@ -38,39 +39,41 @@
 
 <script>
 	import VtableHeader from '../VtableHeader';
-	import VtableAccountsFieldDefs from './VtableAccountsFieldDefs';
-    import Vtable from '../VTable';
-    import VueEvents from 'vue-events';
+	import VtableHeaderDateFilter from './VtableHeaderDateFilter';
+	import VtableTransactionsFieldDefs from './VtableTransactionsFieldDefs';
+	import Vtable from '../VTable';
+	import VueEvents from 'vue-events';
 
-    Vue.use(VueEvents);
+	Vue.use(VueEvents);
 
 	Vue.component('vtable-header', VtableHeader);
+	Vue.component('vtable-header-date-filter', VtableHeaderDateFilter);
 
 	export default {
 
 		components: {
 			Vtable
-        },
+		},
 
 		data() {
 			return {
-				fieldDefs: VtableAccountsFieldDefs,
-                sortOrder: [
-                    {
-                    	field: 'last_worked',
-                        sortField: 'DBR_LAST_WORKED_O',
-                        direction: 'desc'
-                    }
-                ],
-                moreParams: {},
-                perPage: 25
+				fieldDefs: VtableTransactionsFieldDefs,
+				sortOrder: [
+					{
+						field: 'PAY_DATE_O',
+						sortField: 'PAY_DATE_O',
+						direction: 'desc'
+					}
+				],
+				moreParams: {},
+				perPage: 25
 			}
-        },
+		},
 
-        computed: {
+		computed: {
 			tableUrl() {
-				return `./accounts/show`;
-            }
-        }
-    }
+				return `./transactions/show`;
+			}
+		}
+	}
 </script>
