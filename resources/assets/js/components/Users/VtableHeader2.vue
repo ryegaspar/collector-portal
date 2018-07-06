@@ -2,30 +2,28 @@
     <div class="filter-bar">
         <div class="form-inline">
             <!--<div class="toolbar">-->
-            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
+            <div class="col-md-8 input-group" style="padding-left: 2px;padding-right: 2px">
                 <div class="btn-group input-group-append">
+                    <label class="col-form-label-sm mr-1">Payment Date</label>
+                    <date-range-picker class="mr-1"
+                                       :startDate="propStartDate"
+                                       :endDate="propEndDate"
+                                       :ranges=ranges>
+                    </date-range-picker>
                     <button type="button"
-                            class="btn btn-outline-info btn-sm dropdown-toggle mr-1"
+                            class="btn btn-outline-cyan btn-sm dropdown-toggle mr-1"
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false">
-                        <i class="fa fa-calendar"></i> Payment Date Range <span class="caret"></span>
+                        <i class="fa fa-filter"></i> Status <span class="caret"></span>
                     </button>
                     <div class="dropdown-menu">
                         <!-- list item-->
-                        <a class="dropdown-item" href="#">Current Pay Period</a>
-                        <a class="dropdown-item" href="#">Next Pay Period</a>
-                        <a class="dropdown-item" href="#">Previous Pay Period</a>
-                        <a class="dropdown-item" href="#">Today</a>
-                        <a class="dropdown-item" href="#">Tomorrow</a>
-                        <a class="dropdown-item" href="#">Yesterday</a>
-                        <a class="dropdown-item" href="#">This Week</a>
-                        <a class="dropdown-item" href="#">Last Week</a>
-                        <a class="dropdown-item" href="#">This Month</a>
-                        <a class="dropdown-item" href="#">Last Month</a>
-                        <a class="dropdown-item" href="#">User-Defined Date Range</a>
+                        <a class="dropdown-item" href="#">Payment Posted</a>
+                        <a class="dropdown-item" href="#">Pending Posting</a>
+                        <a class="dropdown-item" href="#">In Process</a>
+                        <a class="dropdown-item" href="#">Hold for Process</a>
                     </div>
-                    <date-range-picker :start-date="startDate" :end-date="endDate" @input="console.log(value)" :ranges=ranges></date-range-picker>
                 </div>
             </div>
         </div>
@@ -33,34 +31,36 @@
 </template>
 
 <script>
-    import DateRangePicker from '../DatePicker/DateRangePicker';
+	import DateRangePicker from '../DatePicker/DateRangePicker';
 
 	export default {
 		components: {
 			DateRangePicker
-        },
+		},
 
 		props: [
-		],
+			'propStartDate',
+            'propEndDate'
+        ],
 
 		data() {
 			return {
-				startDate: '2018-06-29',
-                endDate: '2018-07-29',
-                ranges: {
+				startDate: '',
+				endDate: '',
+				ranges: {
 					'Curent Pay Period': this.currentPayPeriod(),
-                    'Next Pay Period': this.nextPayPeriod(),
-                    'Previous Pay Period': [],
+					'Next Pay Period': this.nextPayPeriod(),
+					'Previous Pay Period': this.previousPayPeriod(),
 					'Today': [moment(), moment()],
-					'Tomorrow': [],
+					'Tomorrow': [moment().add(1, 'day'), moment().add(1, 'day')],
 					'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'This Week': [],
-                    'Last Week': [],
+					'This Week': [moment().startOf('week'), moment().endOf('week')],
+					'Last Week': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf('week')],
 					'This month': [moment().startOf('month'), moment().endOf('month')],
 					'This year': [moment().startOf('year'), moment().endOf('year')],
 					'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                }
-            }
+				}
+			}
 		},
 
 		methods: {
@@ -71,25 +71,34 @@
 					if (moment().date() >= 20) {
 						return [moment().set('date', 21), moment().add(1, 'month').set('date', 4)];
 					}
-                    return [moment().subtract(1, 'month').set('date', 21), moment().set('date', 4)];
-                }
+					return [moment().subtract(1, 'month').set('date', 21), moment().set('date', 4)];
+				}
 			},
 
-            nextPayPeriod() {
+			nextPayPeriod() {
 				if (moment().date() >= 5 && moment().date() <= 20) { // 5-20
 					return [moment().set('date', 21), moment().add(1, 'month').set('date', 4)];
 				} else { // 21 - 4
 					if (moment().date() >= 20) {
 						return [moment().add(1, 'month').set('date', 5), moment().add(1, 'month').set('date', 20)];
-                    }
+					}
 					return [moment().set('date', 5), moment().set('date', 20)];
+				}
+			},
+
+            previousPayPeriod() {
+				if (moment().date() >= 5 && moment().date() <= 20) { // 5-20
+					return [moment().subtract(1, 'month').set('date', 21), moment().set('date', 4)];
+				} else { // 21 - 4
+					if (moment().date() >= 20) {
+						return [moment().set('date', 5), moment().set('date', 20)];
+					}
+					return [moment().subtract(1, 'month').set('date', 5), moment().set('date', 20)];
 				}
             }
 		},
 
-		computed: {
-
-		}
+		computed: {}
 	}
 </script>
 

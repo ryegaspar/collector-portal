@@ -163,8 +163,8 @@
 			},
 			clickedApply() {
 				this.open = false
-				this.$emit('update', {startDate: this.start, endDate: this.end})
-                console.log({startDate: this.start, endDate: this.end})
+				// this.$emit('update', {startDate: this.start, endDate: this.end})
+				this.$events.fire('paydate-change', moment(this.start).format("YYYY-MM-DD"), moment(this.end).format("YYYY-MM-DD"));
 			},
 			clickAway() {
 				if (this.open) {

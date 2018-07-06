@@ -7,7 +7,9 @@
                         <vtable-header :perPage=perPage
                                        :fields="fieldDefs"
                                        placeholder="name, id"></vtable-header>
-                        <vtable-header-date-filter></vtable-header-date-filter>
+                        <vtable-header2 :prop-start-date="startText"
+                                        :prop-end-date="endText">
+                        </vtable-header2>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
@@ -39,7 +41,7 @@
 
 <script>
 	import VtableHeader from '../VtableHeader';
-	import VtableHeaderDateFilter from './VtableHeaderDateFilter';
+	import VtableHeader2 from './VtableHeader2';
 	import VtableTransactionsFieldDefs from './VtableTransactionsFieldDefs';
 	import Vtable from '../VTable';
 	import VueEvents from 'vue-events';
@@ -47,12 +49,12 @@
 	Vue.use(VueEvents);
 
 	Vue.component('vtable-header', VtableHeader);
-	Vue.component('vtable-header-date-filter', VtableHeaderDateFilter);
 
 	export default {
 
 		components: {
-			Vtable
+			Vtable,
+            VtableHeader2
 		},
 
 		data() {
@@ -60,20 +62,40 @@
 				fieldDefs: VtableTransactionsFieldDefs,
 				sortOrder: [
 					{
-						field: 'PAY_DATE_O',
+						field: 'pay_date',
 						sortField: 'PAY_DATE_O',
-						direction: 'desc'
+						direction: 'asc'
 					}
 				],
-				moreParams: {},
+				moreParams: {
+					'paydate': this.startDate() + '|' + this.endDate()
+                },
 				perPage: 25
 			}
 		},
 
+        methods: {
+			startDate() {
+				return moment(moment().add(-1, 'days')).format("YYYY-MM-DD");
+			},
+
+			endDate() {
+				return moment(moment().add(3, 'days')).format("YYYY-MM-DD");
+			},
+        },
+
 		computed: {
 			tableUrl() {
 				return `./transactions/show`;
-			}
+			},
+
+            startText() {
+				return moment().add(-1, 'days');
+            },
+
+            endText() {
+				return moment().add(3, 'days');
+            }
 		}
 	}
 </script>

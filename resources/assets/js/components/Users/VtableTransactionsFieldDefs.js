@@ -6,16 +6,44 @@ export default [
 		visible: true,
 	},
 	{
+		name: 'full_name',
+		sortField: 'PAY_NAME',
+		title: 'Name',
+		visible: true
+	},
+	{
 		name: 'PAY_AMT',
 		sortField: 'PAY_AMT',
-		title: 'Payment Amount',
+		title: 'Amount',
 		dataClass: 'text-right',
 		visible: true,
 	},
 	{
-		name: 'PAY_DATE_O',
+		name: 'PAY_COMM',
+		sortField: 'PAY_COMM',
+		title: 'Agency Comm.',
+		dataClass: 'text-right',
+		visible: true
+	},
+	{
+		name: 'payment_type',
+		sortFiled: 'PAY_TYPE',
+		title: 'Type',
+		dataClass: 'text-center',
+		visible: true,
+	},
+	{
+		name: 'PAY_STATUS',
+		sortField: 'PAY_STATUS',
+		title: 'Status',
+		dataClass: 'text-center',
+		visible: true,
+		callback: 'getPaymentStatus'
+	},
+	{
+		name: 'pay_date',
 		sortField: 'PAY_DATE_O',
-		title: 'Payment Date',
+		title: 'Date',
 		dataClass: 'text-right',
 		visible: true,
 	},

@@ -2,7 +2,7 @@
     <div class="filter-bar">
         <div class="form-inline">
             <!--<div class="toolbar">-->
-            <div class="col-md-4 input-group" style="padding-left: 2px;padding-right: 2px">
+            <div class="col-md-8 input-group" style="padding-left: 2px;padding-right: 2px">
                 <div class="btn-group-sm">
                     <button type="button"
                             class="btn btn-outline-primary btn-sm dropdown-toggle mr-1"
@@ -41,8 +41,6 @@
                         </a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
             </div>
             <div class="col-md-4" style="padding-left: 2px;padding-right: 2px">
                 <div class="btn-group input-group btn-group-sm">

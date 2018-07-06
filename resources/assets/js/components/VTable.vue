@@ -65,7 +65,7 @@
 						}
 					},
 				},
-                perPageShow: this.perPage
+				perPageShow: this.perPage
 			}
 		},
 
@@ -73,6 +73,7 @@
 			this.$events.$on('search-set', eventData => this.onSearchSet(eventData));
 			this.$events.$on('search-reset', eventData => this.onSearchReset());
 			this.$events.$on('change-per-page', eventData => this.onChangePagesToShow(eventData));
+			this.$events.$on('paydate-change', (date1, date2) => this.onPaydateChange(date1, date2));
 		},
 
 		render(h) {
@@ -195,9 +196,32 @@
 				this.$refs.vuetable.changePage(page)
 			},
 
-            onChangePagesToShow(page) {
+			onChangePagesToShow(page) {
 				this.perPageShow = page;
-            }
+			},
+
+			onPaydateChange(date1, date2) {
+				// console.log(date1, date2);
+				this.appendParams.paydate = date1 + '|' + date2
+				Vue.nextTick(() => this.$refs.vuetable.refresh());
+			},
+
+			/**
+             * get payment status
+			 * @returns {string}
+			 */
+			getPaymentStatus(value) {
+				switch (value) {
+                    case 'T':
+                    	return `<span class="badge badge-pill badge-success">Payment Posted</span>`;
+                    case 'R':
+                    	return `<span class="badge badge-pill badge-info">In Process</span>`;
+                    case 'H':
+                    	return `<span class="badge badge-pill badge-warning">Hold for Process</span>`;
+                    case 'P':
+                    	return `<span class="badge badge-pill badge-primary">Pending Posting</span>`;
+                }
+			}
 		},
 
 		created() {
@@ -219,13 +243,13 @@
 			// }
 		},
 
-        watch: {
+		watch: {
 			perPageShow() {
 				this.$nextTick(() => {
 					this.$refs.vuetable.refresh();
-                })
-            }
-        }
+				})
+			}
+		}
 	}
 </script>
 
@@ -279,7 +303,8 @@
     .pagination-info {
         float: left;
     }
-    th.sortable:hover{
+
+    th.sortable:hover {
         text-decoration: none !important;
     }
 </style>
