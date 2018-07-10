@@ -3,7 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Unifin\UserTabulation\TransactionsTabulations;
 
@@ -104,16 +106,25 @@ class DebterPayment extends Model
     public function getUserPayments($request, TransactionsTabulations $debterPayment)
     {
         $builder = DebterPayment::userAccounts()->tabulate($debterPayment);
+//        $sumPayAmount = $builder->sum('PAY_AMT');
+//        $sumCommAmount = $builder->sum('PAY_COMM');
 
         $perPage = $request->has('per_page') ? (int)$request->per_page : null;
 
-        $pagination = $builder->paginate($perPage);
-        $pagination->appends([
+        $pagination = $builder->paginate($perPage)->appends([
             'sort'     => $request->sort,
             'search'   => $request->search,
             'per_page' => $request->per_page,
-            'paydate'  => $request->paydate
+            'status'   => $request->status,
+            'paydate'  => $request->paydate,
         ]);
+
+//        $response = response()->json($pagination)->original;
+//        $custom = collect([
+//            'sumPayAmount' => $sumPayAmount,
+//            'sumCommAmount' => $sumCommAmount
+//        ]);
+//        $response = $custom->merge($response);
 
         return $pagination;
     }

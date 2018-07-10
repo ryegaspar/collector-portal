@@ -20,6 +20,11 @@ class TransactionsTabulations extends Tabulation
      */
     protected $defaultSort = 'PAY_DBR_NO';
 
+    /**
+     * filter by pay date
+     *
+     * @return $this
+     */
     public function filterPaydate()
     {
         if ($this->request->paydate) {
@@ -33,6 +38,22 @@ class TransactionsTabulations extends Tabulation
     }
 
     /**
+     * filter by status
+     *
+     * @return $this
+     */
+    public function filterStatus()
+    {
+        if ($this->request->status) {
+            if ($this->request->status != "A") {
+                $this->builder->where("PAY_STATUS", $this->request->status);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * apply tabulation
      *
      * @param $builder
@@ -42,7 +63,7 @@ class TransactionsTabulations extends Tabulation
     {
         $this->builder = $builder;
 
-        $this->search()->sort()->filterPaydate();
+        $this->search()->sort()->filterStatus()->filterPaydate();
 
         return $this->builder;
     }

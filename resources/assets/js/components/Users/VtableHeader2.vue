@@ -2,7 +2,7 @@
     <div class="filter-bar">
         <div class="form-inline">
             <!--<div class="toolbar">-->
-            <div class="col-md-8 input-group" style="padding-left: 2px;padding-right: 2px">
+            <div class="col-md-6 input-group" style="padding-left: 2px;padding-right: 2px">
                 <div class="btn-group input-group-append">
                     <label class="col-form-label-sm mr-1">Payment Date</label>
                     <date-range-picker class="mr-1"
@@ -15,16 +15,19 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false">
-                        <i class="fa fa-filter"></i> Status <span class="caret"></span>
+                        <i class="fa fa-filter"></i> {{ statusText }} <span class="caret"></span>
                     </button>
                     <div class="dropdown-menu">
                         <!-- list item-->
-                        <a class="dropdown-item" href="#">Payment Posted</a>
-                        <a class="dropdown-item" href="#">Pending Posting</a>
-                        <a class="dropdown-item" href="#">In Process</a>
-                        <a class="dropdown-item" href="#">Hold for Process</a>
+                        <a v-for="item in statusDropdown"
+                           class="dropdown-item"
+                           @click="filterStatus(item.code, item.text)"
+                           href="#">{{ item.text }}
+                        </a>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6 input-group" style="padding-left: 2px;padding-right: 2px">
             </div>
         </div>
     </div>
@@ -40,8 +43,8 @@
 
 		props: [
 			'propStartDate',
-            'propEndDate'
-        ],
+			'propEndDate'
+		],
 
 		data() {
 			return {
@@ -59,7 +62,16 @@
 					'This month': [moment().startOf('month'), moment().endOf('month')],
 					'This year': [moment().startOf('year'), moment().endOf('year')],
 					'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-				}
+				},
+
+				statusText: 'Status',
+				statusDropdown: [
+					{ code: "A", text: "All" },
+					{ code: "T", text: "Payment Posted" },
+					{ code: "R", text: "In Process" },
+					{ code: "H", text: "Hold for Process" },
+					{ code: "P", text: "Pending Posting" }
+				]
 			}
 		},
 
@@ -86,7 +98,7 @@
 				}
 			},
 
-            previousPayPeriod() {
+			previousPayPeriod() {
 				if (moment().date() >= 5 && moment().date() <= 20) { // 5-20
 					return [moment().subtract(1, 'month').set('date', 21), moment().set('date', 4)];
 				} else { // 21 - 4
@@ -95,7 +107,12 @@
 					}
 					return [moment().subtract(1, 'month').set('date', 5), moment().set('date', 20)];
 				}
-            }
+			},
+
+            filterStatus(code, text) {
+				this.statusText = text;
+				this.$events.fire('status-change', code);
+			}
 		},
 
 		computed: {}

@@ -19,6 +19,13 @@ export default [
 		visible: true,
 	},
 	{
+		name: 'last_trust_amount',
+		sortField: 'DBR_LAST_TRUST_AMT',
+		title: 'Last Transaction Amount',
+		dataClass: 'text-right',
+		visible: true,
+	},
+	{
 		name: 'received_total',
 		sortField: 'DBR_RECVD_TOT',
 		title: 'Received Total',
@@ -43,7 +50,7 @@ export default [
 		sortField: 'DBR_LAST_TRUST_DATE_O',
 		title: 'Last Transaction',
 		dataClass: 'text-right',
-		visible: true,
+		visible: false,
 	}
 
 

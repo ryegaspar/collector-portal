@@ -54,8 +54,8 @@
                           v-if="!!searchText"
                           @click="resetSearch"></span>
                     <span class="input-group-append">
-                            <button class="btn btn-outline-success btn-sm" @click="doSearch">Go</button>
-                        </span>
+                        <button class="btn btn-outline-success btn-sm" @click="doSearch">Go</button>
+                    </span>
                 </div>
             </div>
             <!--</div>-->

@@ -65344,8 +65344,130 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    summary: {
+      type: Array,
+      required: true
+    },
+    monthName: {
+      type: String,
+      required: true
+    },
+    transactions: {
+      type: Array,
+      required: true
+    },
+    pdc: {
+      type: Array,
+      required: true
+    }
+  },
+
+  methods: {
+    toNumber: function toNumber(value) {
+      return Number(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    },
+    getTotal: function getTotal(column) {
+      var total = 0;
+      this.summary.forEach(function (obj, index) {
+        total += parseFloat(obj[column]);
+      });
+      return total;
+    }
+  },
+
+  computed: {
+    totalAccounts: function totalAccounts() {
+      return this.getTotal('num_dbr');
+    },
+    totalAssigned: function totalAssigned() {
+      return this.getTotal('sum_assigned_amt');
+    },
+    totalReceived: function totalReceived() {
+      return this.getTotal('sum_received_total');
+    }
+  }
+});
 
 /***/ }),
 /* 181 */
@@ -65355,102 +65477,303 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "animated fadeIn" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              { staticClass: "table table-responsive-sm table-striped" },
+              [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  [
+                    _vm._l(_vm.summary, function(item) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(_vm._s(item.Client_Name))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-right" }, [
+                          _vm._v(_vm._s(item.num_dbr))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", {
+                          staticClass: "text-right",
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.toNumber(item.sum_assigned_amt)
+                            )
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("td", {
+                          staticClass: "text-right",
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.toNumber(item.sum_received_total)
+                            )
+                          }
+                        })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("td", {
+                        staticClass: "text-right",
+                        domProps: { textContent: _vm._s(_vm.totalAccounts) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        staticClass: "text-right",
+                        domProps: {
+                          textContent: _vm._s(_vm.toNumber(_vm.totalAssigned))
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        staticClass: "text-right",
+                        domProps: {
+                          textContent: _vm._s(_vm.toNumber(_vm.totalReceived))
+                        }
+                      })
+                    ])
+                  ],
+                  2
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h4", { staticClass: "card-title mb-0" }, [
+              _vm._v("Transactions for this " + _vm._s(_vm.monthName))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              { staticClass: "table table-responsive-sm table-striped" },
+              [
+                _vm._m(3),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.toNumber(_vm.transactions[0].trs_payment_amount)
+                        )
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.toNumber(
+                            _vm.transactions[0].trs_payment_comm_amount
+                          )
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.toNumber(_vm.pdc[0].pdc_payment_amount)
+                        )
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.toNumber(_vm.pdc[0].pdc_payment_comm_amount)
+                        )
+                      }
+                    })
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(6)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "animated fadeIn" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("h4", { staticClass: "card-title mb-0" }, [_vm._v("News")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "small text-muted" }, [
-                _vm._v("June 6, 2018")
-              ])
-            ]),
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", { staticClass: "card-title mb-0" }, [_vm._v("Account Summary")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Client")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right" }, [_vm._v("# of Accounts")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Assigned Total")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right" }, [_vm._v("Received Total")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("TOTAL")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td"),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [
+          _c("strong", [_vm._v("Total Amount Collected")])
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [
+          _c("strong", [_vm._v("Total Commission Amount")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Transactions to date")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Postdates")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h4", { staticClass: "card-title mb-0" }, [_vm._v("News")]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    Bacon ipsum dolor amet ham hock flank andouille, doner boudin corned beef venison meatloaf beef salami chuck. Pig jowl ball tip landjaeger, sausage bacon ribeye short ribs sirloin swine kielbasa bresaola burgdoggen shank t-bone. Meatball chicken bacon ham hock porchetta kevin rump cow buffalo, kielbasa alcatra bresaola. Turducken boudin bresaola landjaeger venison flank brisket shoulder drumstick short loin spare ribs pancetta meatloaf cow rump. Beef ribs tail hamburger pork loin leberkas ground round doner. Pork capicola hamburger landjaeger meatball drumstick. Frankfurter short ribs salami shoulder pork leberkas filet mignon capicola spare ribs landjaeger turkey meatloaf kevin jerky.\n                "
-              )
+            _c("div", { staticClass: "small text-muted" }, [
+              _vm._v("June 6, 2018")
             ])
           ]),
           _vm._v(" "),
-          _c("hr", { staticClass: "mb-4" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("h4", { staticClass: "card-title mb-0" }, [
-                _vm._v("More News")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "small text-muted" }, [
-                _vm._v("June 7, 2018")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    Spicy jalapeno bacon ipsum dolor amet pork loin shoulder t-bone flank. Biltong picanha tenderloin beef ribs pork loin. Sirloin filet mignon ground round turkey meatloaf prosciutto, pancetta bacon andouille flank cow short ribs. Salami chicken tongue, meatloaf pork venison tail ham hock picanha spare ribs brisket kielbasa swine bresaola. Chicken salami andouille ground round alcatra beef ribs.\n                "
-              )
-            ])
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v(
+              "\n                    Bacon ipsum dolor amet ham hock flank andouille, doner boudin corned beef venison meatloaf beef\n                    salami chuck. Pig jowl ball tip landjaeger, sausage bacon ribeye short ribs sirloin swine\n                    kielbasa bresaola burgdoggen shank t-bone. Meatball chicken bacon ham hock porchetta kevin rump\n                    cow buffalo, kielbasa alcatra bresaola. Turducken boudin bresaola landjaeger venison flank\n                    brisket shoulder drumstick short loin spare ribs pancetta meatloaf cow rump. Beef ribs tail\n                    hamburger pork loin leberkas ground round doner. Pork capicola hamburger landjaeger meatball\n                    drumstick. Frankfurter short ribs salami shoulder pork leberkas filet mignon capicola spare ribs\n                    landjaeger turkey meatloaf kevin jerky.\n                "
+            )
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header bg-primary" }, [
-              _vm._v("Forecast EOM")
-            ]),
+        _c("hr", { staticClass: "mb-4" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h4", { staticClass: "card-title mb-0" }, [_vm._v("More News")]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v("\n                    $138,709.73\n                ")
+            _c("div", { staticClass: "small text-muted" }, [
+              _vm._v("June 7, 2018")
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header bg-primary" }, [
-              _vm._v("MTD")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v("\n                    $68,709.73\n                ")
-            ])
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v(
+              "\n                    Spicy jalapeno bacon ipsum dolor amet pork loin shoulder t-bone flank. Biltong picanha\n                    tenderloin beef ribs pork loin. Sirloin filet mignon ground round turkey meatloaf prosciutto,\n                    pancetta bacon andouille flank cow short ribs. Salami chicken tongue, meatloaf pork venison tail\n                    ham hock picanha spare ribs brisket kielbasa swine bresaola. Chicken salami andouille ground\n                    round alcatra beef ribs.\n                "
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header bg-primary" }, [
+            _vm._v("Forecast EOM")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header bg-primary" }, [
-              _vm._v("Last Month")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v("\n                    $877,009.28\n                ")
-            ])
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v("\n                    $138,709.73\n                ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header bg-primary" }, [_vm._v("MTD")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v("\n                    $68,709.73\n                ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header bg-primary" }, [
+            _vm._v("Last Month")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header bg-green" }, [
-              _vm._v("Current Pay Period")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v("\n                    $68,709.73\n                ")
-            ])
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v("\n                    $877,009.28\n                ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header bg-green" }, [
+            _vm._v("Current Pay Period")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header bg-green" }, [
-              _vm._v("Previous Pay Period")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v("\n                    $68,709.73\n                ")
-            ])
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v("\n                    $68,709.73\n                ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header bg-green" }, [
+            _vm._v("Previous Pay Period")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _vm._v("\n                    $68,709.73\n                ")
           ])
         ])
       ])
@@ -66014,6 +66337,12 @@ if (false) {
 	dataClass: 'text-right',
 	visible: true
 }, {
+	name: 'last_trust_amount',
+	sortField: 'DBR_LAST_TRUST_AMT',
+	title: 'Last Transaction Amount',
+	dataClass: 'text-right',
+	visible: true
+}, {
 	name: 'received_total',
 	sortField: 'DBR_RECVD_TOT',
 	title: 'Received Total',
@@ -66035,7 +66364,7 @@ if (false) {
 	sortField: 'DBR_LAST_TRUST_DATE_O',
 	title: 'Last Transaction',
 	dataClass: 'text-right',
-	visible: true
+	visible: false
 }]);
 
 /***/ }),
@@ -66175,6 +66504,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		this.$events.$on('paydate-change', function (date1, date2) {
 			return _this.onPaydateChange(date1, date2);
 		});
+		this.$events.$on('status-change', function (eventData) {
+			return _this.onStatusChange(eventData);
+		});
 	},
 	render: function render(h) {
 		return h('div', {
@@ -66275,31 +66607,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this4.$refs.vuetable.refresh();
 			});
 		},
+		onStatusChange: function onStatusChange(status) {
+			var _this5 = this;
 
-
-		/**
-            * get payment status
-   * @returns {string}
-   */
-		getPaymentStatus: function getPaymentStatus(value) {
-			switch (value) {
-				case 'T':
-					return '<span class="badge badge-pill badge-success">Payment Posted</span>';
-				case 'R':
-					return '<span class="badge badge-pill badge-info">In Process</span>';
-				case 'H':
-					return '<span class="badge badge-pill badge-warning">Hold for Process</span>';
-				case 'P':
-					return '<span class="badge badge-pill badge-primary">Pending Posting</span>';
-			}
+			this.appendParams.status = status;
+			Vue.nextTick(function () {
+				return _this5.$refs.vuetable.refresh();
+			});
 		}
 	},
 
 	created: function created() {
-		var _this5 = this;
+		var _this6 = this;
 
 		this.$parent.$on('reload', function () {
-			_this5.$refs.vuetable.reload();
+			_this6.$refs.vuetable.reload();
 		});
 	},
 
@@ -66319,10 +66641,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	watch: {
 		perPageShow: function perPageShow() {
-			var _this6 = this;
+			var _this7 = this;
 
 			this.$nextTick(function () {
-				_this6.$refs.vuetable.refresh();
+				_this7.$refs.vuetable.refresh();
 			});
 		}
 	}
@@ -67269,6 +67591,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -67295,7 +67620,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				'This month': [moment().startOf('month'), moment().endOf('month')],
 				'This year': [moment().startOf('year'), moment().endOf('year')],
 				'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-			}
+			},
+
+			statusText: 'Status',
+			statusDropdown: [{ code: "A", text: "All" }, { code: "T", text: "Payment Posted" }, { code: "R", text: "In Process" }, { code: "H", text: "Hold for Process" }, { code: "P", text: "Pending Posting" }]
 		};
 	},
 
@@ -67336,6 +67664,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				}
 				return [moment().subtract(1, 'month').set('date', 5), moment().set('date', 20)];
 			}
+		},
+		filterStatus: function filterStatus(code, text) {
+			this.statusText = text;
+			this.$events.fire('status-change', code);
 		}
 	},
 
@@ -68357,7 +68689,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "col-md-8 input-group",
+          staticClass: "col-md-6 input-group",
           staticStyle: { "padding-left": "2px", "padding-right": "2px" }
         },
         [
@@ -68378,63 +68710,58 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm._m(0),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-outline-cyan btn-sm dropdown-toggle mr-1",
+                  attrs: {
+                    type: "button",
+                    "data-toggle": "dropdown",
+                    "aria-haspopup": "true",
+                    "aria-expanded": "false"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-filter" }),
+                  _vm._v(" " + _vm._s(_vm.statusText) + " "),
+                  _c("span", { staticClass: "caret" })
+                ]
+              ),
               _vm._v(" "),
-              _vm._m(1)
+              _c(
+                "div",
+                { staticClass: "dropdown-menu" },
+                _vm._l(_vm.statusDropdown, function(item) {
+                  return _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.filterStatus(item.code, item.text)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(item.text) + "\n                    ")]
+                  )
+                })
+              )
             ],
             1
           )
         ]
-      )
+      ),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "col-md-6 input-group",
+        staticStyle: { "padding-left": "2px", "padding-right": "2px" }
+      })
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-cyan btn-sm dropdown-toggle mr-1",
-        attrs: {
-          type: "button",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }
-      },
-      [
-        _c("i", { staticClass: "fa fa-filter" }),
-        _vm._v(" Status "),
-        _c("span", { staticClass: "caret" })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown-menu" }, [
-      _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-        _vm._v("Payment Posted")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-        _vm._v("Pending Posting")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-        _vm._v("In Process")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-        _vm._v("Hold for Process")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -68483,7 +68810,18 @@ if (false) {
 	title: 'Status',
 	dataClass: 'text-center',
 	visible: true,
-	callback: 'getPaymentStatus'
+	callback: function callback(value) {
+		switch (value) {
+			case 'T':
+				return '<span class="badge badge-pill badge-success">Payment Posted</span>';
+			case 'R':
+				return '<span class="badge badge-pill badge-info">In Process</span>';
+			case 'H':
+				return '<span class="badge badge-pill badge-warning">Hold for Process</span>';
+			case 'P':
+				return '<span class="badge badge-pill badge-primary">Pending Posting</span>';
+		}
+	}
 }, {
 	name: 'pay_date',
 	sortField: 'PAY_DATE_O',

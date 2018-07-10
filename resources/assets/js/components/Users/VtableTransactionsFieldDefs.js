@@ -38,7 +38,18 @@ export default [
 		title: 'Status',
 		dataClass: 'text-center',
 		visible: true,
-		callback: 'getPaymentStatus'
+		callback: function (value) {
+			switch (value) {
+				case 'T':
+					return `<span class="badge badge-pill badge-success">Payment Posted</span>`;
+				case 'R':
+					return `<span class="badge badge-pill badge-info">In Process</span>`;
+				case 'H':
+					return `<span class="badge badge-pill badge-warning">Hold for Process</span>`;
+				case 'P':
+					return `<span class="badge badge-pill badge-primary">Pending Posting</span>`;
+			}
+		}
 	},
 	{
 		name: 'pay_date',

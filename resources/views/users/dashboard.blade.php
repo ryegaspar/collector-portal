@@ -4,7 +4,12 @@
 	<!-- Main content -->
 	<main class="main">
 		<div class="container-fluid">
-			<dashboard class="mt-md-4"></dashboard>
+			<dashboard :Summary="{{ $accountSummary }}"
+					   month-name="{{ $monthName }}"
+					   :transactions="{{ $transactions }}"
+					   :pdc="{{ $pdc }}"
+					   class="mt-md-4">
+			</dashboard>
 		</div>
 	</main>
 @endsection

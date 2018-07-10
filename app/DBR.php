@@ -199,7 +199,10 @@ class DBR extends Model
      *
      * @var array
      */
-    protected $appends = ['full_name', 'assigned_amount', 'received_total', 'client', 'last_worked', 'last_transaction'];
+    protected $appends = [
+        'full_name', 'assigned_amount',
+        'last_trust_amount', 'received_total',
+        'client', 'last_worked', 'last_transaction'];
 
     /**
      * accessor to full name, capitalize first word, capitalize first word, capitalize first word, capitalize first word
@@ -222,6 +225,16 @@ class DBR extends Model
     }
 
     /**
+     * accessor to last trust amount, reformatted to proper decimal
+     *
+     * @return string
+     */
+    public function getLastTrustAmountAttribute()
+    {
+        return number_format($this->DBR_LAST_TRUST_AMT, 2, '.', ',');
+    }
+
+    /**
      * accessor to received total, reformatted to proper decimal
      *
      * @return string
@@ -238,7 +251,7 @@ class DBR extends Model
      */
     public function getClientAttribute()
     {
-        return strtolower($this->DBR_CL_MISC_1);
+        return ucwords(strtolower($this->DBR_CL_MISC_1));
     }
 
     /**
