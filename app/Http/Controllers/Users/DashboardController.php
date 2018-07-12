@@ -34,8 +34,8 @@ class DashboardController extends Controller
             ->orderBy('num_dbr', 'desc')
             ->get();
 
-        $startDate = Carbon::parse('first day of this month')->format("Y-m-d");
-        $endDate = Carbon::parse('last day of this month')->format("Y-m-d");
+        $startDate = Carbon::parse('first day of 07/10/2018')->format("Y-m-d");
+        $endDate = Carbon::parse('last day of 07/10/2018')->format("Y-m-d");
         $monthName = Carbon::now()->format("F");
 
         $transactions = DB::table('UFN.PaymentTable')

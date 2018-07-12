@@ -30,3 +30,15 @@ const app = new Vue({
 
 require('./genesisui');
 
+// intercept ajax if user is unauthenticated
+window.axios.interceptors.response.use((response) => {
+	// Check if the user is no longer signed in,
+	// if so then we need them to sign back in.
+	return response;
+}, (error) => {
+	if (error.response.status === 401) {
+		window.location.href = '/login';
+		return;
+	}
+	return Promise.reject(error);
+});

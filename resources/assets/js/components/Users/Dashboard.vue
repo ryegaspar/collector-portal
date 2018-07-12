@@ -4,6 +4,56 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
+                        <h4 class="card-title mb-0">
+                            <button class="btn btn-success"
+                                    @click="subMonth()"
+                                    :disabled="leftArrowDisable"
+                                    v-html="leftArrowClass">
+                            </button>
+                            Transactions for {{ monthName }} {{ yearText }}
+                            <button class="btn btn-success pull-right"
+                                    @click="addMonth()"
+                                    :disabled="rightArrowDisable"
+                                    v-html="rightArrowClass">
+                                <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-responsive-sm table-striped">
+                            <thead>
+                            <tr>
+                                <td></td>
+                                <td class="text-right"><strong>Total Amount Collected</strong></td>
+                                <td class="text-right"><strong>Total Fee Amount</strong></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><strong>Transactions to date</strong></td>
+                                <td class="text-right" v-text="toNumber(trs_payment_amount)"></td>
+                                <td class="text-right" v-text="toNumber(trs_payment_comm_amount)"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Postdates</strong></td>
+                                <td class="text-right" v-text="toNumber(pdc_payment_amount)"></td>
+                                <td class="text-right" v-text="toNumber(pdc_payment_comm_amount)"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>TOTAL</strong></td>
+                                <td class="text-right" v-text="totalReceivedAmount"></td>
+                                <td class="text-right" v-text="totalFeeAmount"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
                         <h4 class="card-title mb-0">Account Summary</h4>
                     </div>
                     <div class="card-body">
@@ -28,38 +78,6 @@
                                     <td class="text-right" v-text="totalAccounts"></td>
                                     <td class="text-right" v-text="toNumber(totalAssigned)"></td>
                                     <td class="text-right" v-text="toNumber(totalReceived)"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title mb-0">Transactions for this {{ monthName }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-responsive-sm table-striped">
-                            <thead>
-                                <tr>
-                                    <td></td>
-                                    <td class="text-right"><strong>Total Amount Collected</strong></td>
-                                    <td class="text-right"><strong>Total Commission Amount</strong></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Transactions to date</strong></td>
-                                    <td class="text-right" v-text="toNumber(transactions[0].trs_payment_amount)"></td>
-                                    <td class="text-right" v-text="toNumber(transactions[0].trs_payment_comm_amount)"></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Postdates</strong></td>
-                                    <td class="text-right" v-text="toNumber(pdc[0].pdc_payment_amount)"></td>
-                                    <td class="text-right" v-text="toNumber(pdc[0].pdc_payment_comm_amount)"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -143,46 +161,106 @@
 				type: Array,
 				required: true
 			},
-            monthName: {
-				type: String,
-                required: true
-            },
-            transactions: {
-				type: Array,
-                required: true
-            },
-            pdc: {
-				type: Array,
-                required: true
-            }
 		},
+
+        data() {
+			return {
+				pdc_payment_amount: 0.00,
+				pdc_payment_comm_amount: 0.00,
+                trs_payment_amount: 0.00,
+                trs_payment_comm_amount: 0.00,
+
+                currentDate: moment(moment()).format("YYYY-MM-DD"),
+
+                leftArrowDisable: true,
+                leftArrowClass: `<i class="fa fa-arrow-left"></i>`,
+
+                rightArrowDisable: true,
+                rightArrowClass: `<i class="fa fa-arrow-right"></i>`
+            }
+        },
 
         methods: {
 			toNumber(value) {
                 return (Number(value)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             },
 
-            getTotal(column) {
+            getTotalSummary(column) {
 				let total = 0;
 				(this.summary).forEach((obj, index) => {
 					total +=parseFloat(obj[column]);
 				});
 				return total;
+            },
+
+            getData() {
+				axios.get('./dashboard/transactions?date=' + this.currentDate)
+					.then(({data}) => {
+						this.pdc_payment_amount = data.pdc[0].pdc_payment_amount == null ? 0 : data.pdc[0].pdc_payment_amount;
+						this.pdc_payment_comm_amount = data.pdc[0].pdc_payment_comm_amount == null ? 0 : data.pdc[0].pdc_payment_comm_amount;
+
+						this.trs_payment_amount = data.transactions[0].trs_payment_amount == null ? 0 : data.transactions[0].trs_payment_amount;
+						this.trs_payment_comm_amount = data.transactions[0].trs_payment_comm_amount == null ? 0 : data.transactions[0].trs_payment_comm_amount;
+
+						this.leftArrowDisable = false;
+						this.leftArrowClass = `<i class="fa fa-arrow-left"></i>`;
+						this.rightArrowDisable = false;
+						this.rightArrowClass = `<i class="fa fa-arrow-right"></i>`;
+
+					})
+            },
+
+            addMonth() {
+				this.rightArrowDisable = true;
+				this.rightArrowClass =`<i class="fa fa-spinner fa-spin"></i>`;
+
+				this.currentDate = moment(this.currentDate).add(1, 'month').format("YYYY-MM-DD");
+
+				this.getData()
+            },
+
+            subMonth() {
+				this.leftArrowDisable = true;
+				this.leftArrowClass =`<i class="fa fa-spinner fa-spin"></i>`;
+
+				this.currentDate = moment(this.currentDate).add(-1, 'month').format("YYYY-MM-DD");
+
+				this.getData();
             }
         },
 
         computed: {
 			totalAccounts() {
-				return this.getTotal('num_dbr');
+				return this.getTotalSummary('num_dbr');
             },
 
             totalAssigned() {
-				return this.getTotal('sum_assigned_amt');
+				return this.getTotalSummary('sum_assigned_amt');
             },
 
             totalReceived() {
-				return this.getTotal('sum_received_total');
+				return this.getTotalSummary('sum_received_total');
+            },
+
+            totalReceivedAmount() {
+				return this.toNumber(parseFloat(this.trs_payment_amount) + parseFloat(this.pdc_payment_amount));
+            },
+
+            totalFeeAmount() {
+				return this.toNumber(parseFloat(this.trs_payment_comm_amount) + parseFloat(this.pdc_payment_comm_amount));
+			},
+
+            monthName() {
+				return moment(this.currentDate).format("MMMM");
+            },
+
+            yearText() {
+				return moment(this.currentDate).format("YYYY");
             }
+        },
+
+        mounted() {
+			this.getData();
         }
 	}
 

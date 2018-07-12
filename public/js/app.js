@@ -42006,6 +42006,19 @@ var app = new Vue({
 
 __webpack_require__(229);
 
+// intercept ajax if user is unauthenticated
+window.axios.interceptors.response.use(function (response) {
+  // Check if the user is no longer signed in,
+  // if so then we need them to sign back in.
+  return response;
+}, function (error) {
+  if (error.response.status === 401) {
+    window.location.href = '/login';
+    return;
+  }
+  return Promise.reject(error);
+});
+
 /***/ }),
 /* 146 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -65422,51 +65435,125 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    summary: {
-      type: Array,
-      required: true
-    },
-    monthName: {
-      type: String,
-      required: true
-    },
-    transactions: {
-      type: Array,
-      required: true
-    },
-    pdc: {
-      type: Array,
-      required: true
-    }
-  },
+								props: {
+																summary: {
+																								type: Array,
+																								required: true
+																}
+								},
 
-  methods: {
-    toNumber: function toNumber(value) {
-      return Number(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    },
-    getTotal: function getTotal(column) {
-      var total = 0;
-      this.summary.forEach(function (obj, index) {
-        total += parseFloat(obj[column]);
-      });
-      return total;
-    }
-  },
+								data: function data() {
+																return {
+																								pdc_payment_amount: 0.00,
+																								pdc_payment_comm_amount: 0.00,
+																								trs_payment_amount: 0.00,
+																								trs_payment_comm_amount: 0.00,
 
-  computed: {
-    totalAccounts: function totalAccounts() {
-      return this.getTotal('num_dbr');
-    },
-    totalAssigned: function totalAssigned() {
-      return this.getTotal('sum_assigned_amt');
-    },
-    totalReceived: function totalReceived() {
-      return this.getTotal('sum_received_total');
-    }
-  }
+																								currentDate: moment(moment()).format("YYYY-MM-DD"),
+
+																								leftArrowDisable: true,
+																								leftArrowClass: '<i class="fa fa-arrow-left"></i>',
+
+																								rightArrowDisable: true,
+																								rightArrowClass: '<i class="fa fa-arrow-right"></i>'
+																};
+								},
+
+
+								methods: {
+																toNumber: function toNumber(value) {
+																								return Number(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+																},
+																getTotalSummary: function getTotalSummary(column) {
+																								var total = 0;
+																								this.summary.forEach(function (obj, index) {
+																																total += parseFloat(obj[column]);
+																								});
+																								return total;
+																},
+																getData: function getData() {
+																								var _this = this;
+
+																								axios.get('./dashboard/transactions?date=' + this.currentDate).then(function (_ref) {
+																																var data = _ref.data;
+
+																																_this.pdc_payment_amount = data.pdc[0].pdc_payment_amount == null ? 0 : data.pdc[0].pdc_payment_amount;
+																																_this.pdc_payment_comm_amount = data.pdc[0].pdc_payment_comm_amount == null ? 0 : data.pdc[0].pdc_payment_comm_amount;
+
+																																_this.trs_payment_amount = data.transactions[0].trs_payment_amount == null ? 0 : data.transactions[0].trs_payment_amount;
+																																_this.trs_payment_comm_amount = data.transactions[0].trs_payment_comm_amount == null ? 0 : data.transactions[0].trs_payment_comm_amount;
+
+																																_this.leftArrowDisable = false;
+																																_this.leftArrowClass = '<i class="fa fa-arrow-left"></i>';
+																																_this.rightArrowDisable = false;
+																																_this.rightArrowClass = '<i class="fa fa-arrow-right"></i>';
+																								});
+																},
+																addMonth: function addMonth() {
+																								this.rightArrowDisable = true;
+																								this.rightArrowClass = '<i class="fa fa-spinner fa-spin"></i>';
+
+																								this.currentDate = moment(this.currentDate).add(1, 'month').format("YYYY-MM-DD");
+
+																								this.getData();
+																},
+																subMonth: function subMonth() {
+																								this.leftArrowDisable = true;
+																								this.leftArrowClass = '<i class="fa fa-spinner fa-spin"></i>';
+
+																								this.currentDate = moment(this.currentDate).add(-1, 'month').format("YYYY-MM-DD");
+
+																								this.getData();
+																}
+								},
+
+								computed: {
+																totalAccounts: function totalAccounts() {
+																								return this.getTotalSummary('num_dbr');
+																},
+																totalAssigned: function totalAssigned() {
+																								return this.getTotalSummary('sum_assigned_amt');
+																},
+																totalReceived: function totalReceived() {
+																								return this.getTotalSummary('sum_received_total');
+																},
+																totalReceivedAmount: function totalReceivedAmount() {
+																								return this.toNumber(parseFloat(this.trs_payment_amount) + parseFloat(this.pdc_payment_amount));
+																},
+																totalFeeAmount: function totalFeeAmount() {
+																								return this.toNumber(parseFloat(this.trs_payment_comm_amount) + parseFloat(this.pdc_payment_comm_amount));
+																},
+																monthName: function monthName() {
+																								return moment(this.currentDate).format("MMMM");
+																},
+																yearText: function yearText() {
+																								return moment(this.currentDate).format("YYYY");
+																}
+								},
+
+								mounted: function mounted() {
+																this.getData();
+								}
 });
 
 /***/ }),
@@ -65481,14 +65568,126 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "card-header" }, [
+            _c("h4", { staticClass: "card-title mb-0" }, [
+              _c("button", {
+                staticClass: "btn btn-success",
+                attrs: { disabled: _vm.leftArrowDisable },
+                domProps: { innerHTML: _vm._s(_vm.leftArrowClass) },
+                on: {
+                  click: function($event) {
+                    _vm.subMonth()
+                  }
+                }
+              }),
+              _vm._v(
+                "\n                        Transactions for " +
+                  _vm._s(_vm.monthName) +
+                  " " +
+                  _vm._s(_vm.yearText) +
+                  "\n                        "
+              ),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success pull-right",
+                  attrs: { disabled: _vm.rightArrowDisable },
+                  domProps: { innerHTML: _vm._s(_vm.rightArrowClass) },
+                  on: {
+                    click: function($event) {
+                      _vm.addMonth()
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-arrow-right" })]
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c(
               "table",
               { staticClass: "table table-responsive-sm table-striped" },
               [
-                _vm._m(1),
+                _vm._m(0),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.toNumber(_vm.trs_payment_amount)
+                        )
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.toNumber(_vm.trs_payment_comm_amount)
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.toNumber(_vm.pdc_payment_amount)
+                        )
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.toNumber(_vm.pdc_payment_comm_amount)
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: { textContent: _vm._s(_vm.totalReceivedAmount) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-right",
+                      domProps: { textContent: _vm._s(_vm.totalFeeAmount) }
+                    })
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(4),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              { staticClass: "table table-responsive-sm table-striped" },
+              [
+                _vm._m(5),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -65522,7 +65721,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("tr", [
-                      _vm._m(2),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c("td", {
                         staticClass: "text-right",
@@ -65553,80 +65752,46 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("h4", { staticClass: "card-title mb-0" }, [
-              _vm._v("Transactions for this " + _vm._s(_vm.monthName))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "table",
-              { staticClass: "table table-responsive-sm table-striped" },
-              [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", [
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _c("td", {
-                      staticClass: "text-right",
-                      domProps: {
-                        textContent: _vm._s(
-                          _vm.toNumber(_vm.transactions[0].trs_payment_amount)
-                        )
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("td", {
-                      staticClass: "text-right",
-                      domProps: {
-                        textContent: _vm._s(
-                          _vm.toNumber(
-                            _vm.transactions[0].trs_payment_comm_amount
-                          )
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _vm._m(5),
-                    _vm._v(" "),
-                    _c("td", {
-                      staticClass: "text-right",
-                      domProps: {
-                        textContent: _vm._s(
-                          _vm.toNumber(_vm.pdc[0].pdc_payment_amount)
-                        )
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("td", {
-                      staticClass: "text-right",
-                      domProps: {
-                        textContent: _vm._s(
-                          _vm.toNumber(_vm.pdc[0].pdc_payment_comm_amount)
-                        )
-                      }
-                    })
-                  ])
-                ])
-              ]
-            )
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(6)
+    _vm._m(7)
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td"),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [
+          _c("strong", [_vm._v("Total Amount Collected")])
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [
+          _c("strong", [_vm._v("Total Fee Amount")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Transactions to date")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Postdates")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("TOTAL")])])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -65656,36 +65821,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("td", [_c("strong", [_vm._v("TOTAL")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("td"),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-right" }, [
-          _c("strong", [_vm._v("Total Amount Collected")])
-        ]),
-        _vm._v(" "),
-        _c("td", { staticClass: "text-right" }, [
-          _c("strong", [_vm._v("Total Commission Amount")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("strong", [_vm._v("Transactions to date")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("strong", [_vm._v("Postdates")])])
   },
   function() {
     var _vm = this

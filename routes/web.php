@@ -24,6 +24,8 @@ Route::redirect('/', '/dashboard');
 
 Route::get('/dashboard', 'Users\DashboardController@index')->name('user.dashboard');
 
+Route::get('/dashboard/transactions', 'Users\DashboardTransactionController@index')->name('user.dashboard.transactions');
+
 Route::get('/accounts', 'Users\AccountsController@index')->name('user.accounts');
 Route::get('/accounts/show', 'Users\AccountsController@show')->name('user.accounts.show');
 

@@ -6,8 +6,6 @@
 		<div class="container-fluid">
 			<dashboard :Summary="{{ $accountSummary }}"
 					   month-name="{{ $monthName }}"
-					   :transactions="{{ $transactions }}"
-					   :pdc="{{ $pdc }}"
 					   class="mt-md-4">
 			</dashboard>
 		</div>
