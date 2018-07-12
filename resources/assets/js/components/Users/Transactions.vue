@@ -7,9 +7,9 @@
                         <vtable-header :perPage=perPage
                                        :fields="fieldDefs"
                                        placeholder="name, id"></vtable-header>
-                        <vtable-header2 :prop-start-date="startText"
+                        <vtable-sub-header-transactions :prop-start-date="startText"
                                         :prop-end-date="endText">
-                        </vtable-header2>
+                        </vtable-sub-header-transactions>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
@@ -41,7 +41,7 @@
 
 <script>
 	import VtableHeader from '../VtableHeader';
-	import VtableHeader2 from './VtableHeader2';
+	import VtableSubHeaderTransactions from './VtableSubHeaderTransactions';
 	import VtableTransactionsFieldDefs from './VtableTransactionsFieldDefs';
 	import Vtable from '../VTable';
 	import VueEvents from 'vue-events';
@@ -54,7 +54,7 @@
 
 		components: {
 			Vtable,
-            VtableHeader2
+            VtableSubHeaderTransactions
 		},
 
 		data() {

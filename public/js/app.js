@@ -67491,8 +67491,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VtableHeader__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VtableHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VtableHeader__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VtableHeader2__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VtableHeader2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__VtableHeader2__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VtableSubHeaderTransactions__ = __webpack_require__(759);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VtableSubHeaderTransactions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__VtableSubHeaderTransactions__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VtableTransactionsFieldDefs__ = __webpack_require__(227);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__VTable__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__VTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__VTable__);
@@ -67554,7 +67554,7 @@ Vue.component('vtable-header', __WEBPACK_IMPORTED_MODULE_0__VtableHeader___defau
 
 	components: {
 		Vtable: __WEBPACK_IMPORTED_MODULE_3__VTable___default.a,
-		VtableHeader2: __WEBPACK_IMPORTED_MODULE_1__VtableHeader2___default.a
+		VtableSubHeaderTransactions: __WEBPACK_IMPORTED_MODULE_1__VtableSubHeaderTransactions___default.a
 	},
 
 	data: function data() {
@@ -67596,220 +67596,10 @@ Vue.component('vtable-header', __WEBPACK_IMPORTED_MODULE_0__VtableHeader___defau
 });
 
 /***/ }),
-/* 207 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(208)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(210)
-/* template */
-var __vue_template__ = __webpack_require__(226)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\Users\\VtableHeader2.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2dc444f2", Component.options)
-  } else {
-    hotAPI.reload("data-v-2dc444f2", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 208 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(209);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("6881baed", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2dc444f2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VtableHeader2.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2dc444f2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VtableHeader2.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 209 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.filter-type {\n    padding-top: 7px;\n    font-size: 15px;\n    font-weight: bold;\n}\n.filter-clear {\n    z-index: 10;\n    position: absolute;\n    right: 40px;\n    top: 0;\n    bottom: 0;\n    height: 14px;\n    margin: auto;\n    font-size: 14px;\n    cursor: pointer;\n}\n.filter-bar {\n    margin-top: 3px;\n    margin-bottom: 5px;\n    background: #fcfcfc;\n    padding: 5px;\n    border: 1px solid #e7e6e8;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 210 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DatePicker_DateRangePicker__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DatePicker_DateRangePicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__DatePicker_DateRangePicker__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	components: {
-		DateRangePicker: __WEBPACK_IMPORTED_MODULE_0__DatePicker_DateRangePicker___default.a
-	},
-
-	props: ['propStartDate', 'propEndDate'],
-
-	data: function data() {
-		return {
-			startDate: '',
-			endDate: '',
-			ranges: {
-				'Curent Pay Period': this.currentPayPeriod(),
-				'Next Pay Period': this.nextPayPeriod(),
-				'Previous Pay Period': this.previousPayPeriod(),
-				'Today': [moment(), moment()],
-				'Tomorrow': [moment().add(1, 'day'), moment().add(1, 'day')],
-				'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-				'This Week': [moment().startOf('week'), moment().endOf('week')],
-				'Last Week': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf('week')],
-				'This month': [moment().startOf('month'), moment().endOf('month')],
-				'This year': [moment().startOf('year'), moment().endOf('year')],
-				'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-			},
-
-			statusText: 'Status',
-			statusDropdown: [{ code: "A", text: "All" }, { code: "T", text: "Payment Posted" }, { code: "R", text: "In Process" }, { code: "H", text: "Hold for Process" }, { code: "P", text: "Pending Posting" }]
-		};
-	},
-
-
-	methods: {
-		currentPayPeriod: function currentPayPeriod() {
-			if (moment().date() >= 5 && moment().date() <= 20) {
-				// 5-20
-				return [moment().set('date', 5), moment().set('date', 20)];
-			} else {
-				// 21 - 4
-				if (moment().date() >= 20) {
-					return [moment().set('date', 21), moment().add(1, 'month').set('date', 4)];
-				}
-				return [moment().subtract(1, 'month').set('date', 21), moment().set('date', 4)];
-			}
-		},
-		nextPayPeriod: function nextPayPeriod() {
-			if (moment().date() >= 5 && moment().date() <= 20) {
-				// 5-20
-				return [moment().set('date', 21), moment().add(1, 'month').set('date', 4)];
-			} else {
-				// 21 - 4
-				if (moment().date() >= 20) {
-					return [moment().add(1, 'month').set('date', 5), moment().add(1, 'month').set('date', 20)];
-				}
-				return [moment().set('date', 5), moment().set('date', 20)];
-			}
-		},
-		previousPayPeriod: function previousPayPeriod() {
-			if (moment().date() >= 5 && moment().date() <= 20) {
-				// 5-20
-				return [moment().subtract(1, 'month').set('date', 21), moment().set('date', 4)];
-			} else {
-				// 21 - 4
-				if (moment().date() >= 20) {
-					return [moment().set('date', 5), moment().set('date', 20)];
-				}
-				return [moment().subtract(1, 'month').set('date', 5), moment().set('date', 20)];
-			}
-		},
-		filterStatus: function filterStatus(code, text) {
-			this.statusText = text;
-			this.$events.fire('status-change', code);
-		}
-	},
-
-	computed: {}
-});
-
-/***/ }),
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
 /* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68812,101 +68602,7 @@ if (false) {
 }
 
 /***/ }),
-/* 226 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "filter-bar" }, [
-    _c("div", { staticClass: "form-inline" }, [
-      _c(
-        "div",
-        {
-          staticClass: "col-md-6 input-group",
-          staticStyle: { "padding-left": "2px", "padding-right": "2px" }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "btn-group input-group-append" },
-            [
-              _c("label", { staticClass: "col-form-label-sm mr-1" }, [
-                _vm._v("Payment Date")
-              ]),
-              _vm._v(" "),
-              _c("date-range-picker", {
-                staticClass: "mr-1",
-                attrs: {
-                  startDate: _vm.propStartDate,
-                  endDate: _vm.propEndDate,
-                  ranges: _vm.ranges
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "btn btn-outline-cyan btn-sm dropdown-toggle mr-1",
-                  attrs: {
-                    type: "button",
-                    "data-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false"
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-filter" }),
-                  _vm._v(" " + _vm._s(_vm.statusText) + " "),
-                  _c("span", { staticClass: "caret" })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "dropdown-menu" },
-                _vm._l(_vm.statusDropdown, function(item) {
-                  return _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          _vm.filterStatus(item.code, item.text)
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(item.text) + "\n                    ")]
-                  )
-                })
-              )
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", {
-        staticClass: "col-md-6 input-group",
-        staticStyle: { "padding-left": "2px", "padding-right": "2px" }
-      })
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2dc444f2", module.exports)
-  }
-}
-
-/***/ }),
+/* 226 */,
 /* 227 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -68994,7 +68690,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("vtable-header2", {
+              _c("vtable-sub-header-transactions", {
                 attrs: {
                   "prop-start-date": _vm.startText,
                   "prop-end-date": _vm.endText
@@ -69372,6 +69068,843 @@ if (!Array.prototype.includes) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */,
+/* 475 */,
+/* 476 */,
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */,
+/* 523 */,
+/* 524 */,
+/* 525 */,
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */,
+/* 545 */,
+/* 546 */,
+/* 547 */,
+/* 548 */,
+/* 549 */,
+/* 550 */,
+/* 551 */,
+/* 552 */,
+/* 553 */,
+/* 554 */,
+/* 555 */,
+/* 556 */,
+/* 557 */,
+/* 558 */,
+/* 559 */,
+/* 560 */,
+/* 561 */,
+/* 562 */,
+/* 563 */,
+/* 564 */,
+/* 565 */,
+/* 566 */,
+/* 567 */,
+/* 568 */,
+/* 569 */,
+/* 570 */,
+/* 571 */,
+/* 572 */,
+/* 573 */,
+/* 574 */,
+/* 575 */,
+/* 576 */,
+/* 577 */,
+/* 578 */,
+/* 579 */,
+/* 580 */,
+/* 581 */,
+/* 582 */,
+/* 583 */,
+/* 584 */,
+/* 585 */,
+/* 586 */,
+/* 587 */,
+/* 588 */,
+/* 589 */,
+/* 590 */,
+/* 591 */,
+/* 592 */,
+/* 593 */,
+/* 594 */,
+/* 595 */,
+/* 596 */,
+/* 597 */,
+/* 598 */,
+/* 599 */,
+/* 600 */,
+/* 601 */,
+/* 602 */,
+/* 603 */,
+/* 604 */,
+/* 605 */,
+/* 606 */,
+/* 607 */,
+/* 608 */,
+/* 609 */,
+/* 610 */,
+/* 611 */,
+/* 612 */,
+/* 613 */,
+/* 614 */,
+/* 615 */,
+/* 616 */,
+/* 617 */,
+/* 618 */,
+/* 619 */,
+/* 620 */,
+/* 621 */,
+/* 622 */,
+/* 623 */,
+/* 624 */,
+/* 625 */,
+/* 626 */,
+/* 627 */,
+/* 628 */,
+/* 629 */,
+/* 630 */,
+/* 631 */,
+/* 632 */,
+/* 633 */,
+/* 634 */,
+/* 635 */,
+/* 636 */,
+/* 637 */,
+/* 638 */,
+/* 639 */,
+/* 640 */,
+/* 641 */,
+/* 642 */,
+/* 643 */,
+/* 644 */,
+/* 645 */,
+/* 646 */,
+/* 647 */,
+/* 648 */,
+/* 649 */,
+/* 650 */,
+/* 651 */,
+/* 652 */,
+/* 653 */,
+/* 654 */,
+/* 655 */,
+/* 656 */,
+/* 657 */,
+/* 658 */,
+/* 659 */,
+/* 660 */,
+/* 661 */,
+/* 662 */,
+/* 663 */,
+/* 664 */,
+/* 665 */,
+/* 666 */,
+/* 667 */,
+/* 668 */,
+/* 669 */,
+/* 670 */,
+/* 671 */,
+/* 672 */,
+/* 673 */,
+/* 674 */,
+/* 675 */,
+/* 676 */,
+/* 677 */,
+/* 678 */,
+/* 679 */,
+/* 680 */,
+/* 681 */,
+/* 682 */,
+/* 683 */,
+/* 684 */,
+/* 685 */,
+/* 686 */,
+/* 687 */,
+/* 688 */,
+/* 689 */,
+/* 690 */,
+/* 691 */,
+/* 692 */,
+/* 693 */,
+/* 694 */,
+/* 695 */,
+/* 696 */,
+/* 697 */,
+/* 698 */,
+/* 699 */,
+/* 700 */,
+/* 701 */,
+/* 702 */,
+/* 703 */,
+/* 704 */,
+/* 705 */,
+/* 706 */,
+/* 707 */,
+/* 708 */,
+/* 709 */,
+/* 710 */,
+/* 711 */,
+/* 712 */,
+/* 713 */,
+/* 714 */,
+/* 715 */,
+/* 716 */,
+/* 717 */,
+/* 718 */,
+/* 719 */,
+/* 720 */,
+/* 721 */,
+/* 722 */,
+/* 723 */,
+/* 724 */,
+/* 725 */,
+/* 726 */,
+/* 727 */,
+/* 728 */,
+/* 729 */,
+/* 730 */,
+/* 731 */,
+/* 732 */,
+/* 733 */,
+/* 734 */,
+/* 735 */,
+/* 736 */,
+/* 737 */,
+/* 738 */,
+/* 739 */,
+/* 740 */,
+/* 741 */,
+/* 742 */,
+/* 743 */,
+/* 744 */,
+/* 745 */,
+/* 746 */,
+/* 747 */,
+/* 748 */,
+/* 749 */,
+/* 750 */,
+/* 751 */,
+/* 752 */,
+/* 753 */,
+/* 754 */,
+/* 755 */,
+/* 756 */,
+/* 757 */,
+/* 758 */,
+/* 759 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(760)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(762)
+/* template */
+var __vue_template__ = __webpack_require__(763)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Users\\VtableSubHeaderTransactions.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2637954f", Component.options)
+  } else {
+    hotAPI.reload("data-v-2637954f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 760 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(761);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("b4344134", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2637954f\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VtableSubHeaderTransactions.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2637954f\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VtableSubHeaderTransactions.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 761 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.filter-type {\n    padding-top: 7px;\n    font-size: 15px;\n    font-weight: bold;\n}\n.filter-clear {\n    z-index: 10;\n    position: absolute;\n    right: 40px;\n    top: 0;\n    bottom: 0;\n    height: 14px;\n    margin: auto;\n    font-size: 14px;\n    cursor: pointer;\n}\n.filter-bar {\n    margin-top: 3px;\n    margin-bottom: 5px;\n    background: #fcfcfc;\n    padding: 5px;\n    border: 1px solid #e7e6e8;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 762 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DatePicker_DateRangePicker__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DatePicker_DateRangePicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__DatePicker_DateRangePicker__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	components: {
+		DateRangePicker: __WEBPACK_IMPORTED_MODULE_0__DatePicker_DateRangePicker___default.a
+	},
+
+	props: ['propStartDate', 'propEndDate'],
+
+	data: function data() {
+		return {
+			startDate: '',
+			endDate: '',
+			ranges: {
+				'Curent Pay Period': this.currentPayPeriod(),
+				'Next Pay Period': this.nextPayPeriod(),
+				'Previous Pay Period': this.previousPayPeriod(),
+				'Today': [moment(), moment()],
+				'Tomorrow': [moment().add(1, 'day'), moment().add(1, 'day')],
+				'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+				'This Week': [moment().startOf('week'), moment().endOf('week')],
+				'Last Week': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf('week')],
+				'This month': [moment().startOf('month'), moment().endOf('month')],
+				'This year': [moment().startOf('year'), moment().endOf('year')],
+				'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+			},
+
+			statusText: 'Status',
+			statusDropdown: [{ code: "A", text: "All" }, { code: "T", text: "Payment Posted" }, { code: "R", text: "In Process" }, { code: "H", text: "Hold for Process" }, { code: "P", text: "Pending Posting" }]
+		};
+	},
+
+
+	methods: {
+		currentPayPeriod: function currentPayPeriod() {
+			if (moment().date() >= 5 && moment().date() <= 20) {
+				// 5-20
+				return [moment().set('date', 5), moment().set('date', 20)];
+			} else {
+				// 21 - 4
+				if (moment().date() >= 20) {
+					return [moment().set('date', 21), moment().add(1, 'month').set('date', 4)];
+				}
+				return [moment().subtract(1, 'month').set('date', 21), moment().set('date', 4)];
+			}
+		},
+		nextPayPeriod: function nextPayPeriod() {
+			if (moment().date() >= 5 && moment().date() <= 20) {
+				// 5-20
+				return [moment().set('date', 21), moment().add(1, 'month').set('date', 4)];
+			} else {
+				// 21 - 4
+				if (moment().date() >= 20) {
+					return [moment().add(1, 'month').set('date', 5), moment().add(1, 'month').set('date', 20)];
+				}
+				return [moment().set('date', 5), moment().set('date', 20)];
+			}
+		},
+		previousPayPeriod: function previousPayPeriod() {
+			if (moment().date() >= 5 && moment().date() <= 20) {
+				// 5-20
+				return [moment().subtract(1, 'month').set('date', 21), moment().set('date', 4)];
+			} else {
+				// 21 - 4
+				if (moment().date() >= 20) {
+					return [moment().set('date', 5), moment().set('date', 20)];
+				}
+				return [moment().subtract(1, 'month').set('date', 5), moment().set('date', 20)];
+			}
+		},
+		filterStatus: function filterStatus(code, text) {
+			this.statusText = text;
+			this.$events.fire('status-change', code);
+		}
+	},
+
+	computed: {}
+});
+
+/***/ }),
+/* 763 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "filter-bar" }, [
+    _c("div", { staticClass: "form-inline" }, [
+      _c(
+        "div",
+        {
+          staticClass: "col-md-6 input-group",
+          staticStyle: { "padding-left": "2px", "padding-right": "2px" }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "btn-group input-group-append" },
+            [
+              _c("label", { staticClass: "col-form-label-sm mr-1" }, [
+                _vm._v("Payment Date")
+              ]),
+              _vm._v(" "),
+              _c("date-range-picker", {
+                staticClass: "mr-1",
+                attrs: {
+                  startDate: _vm.propStartDate,
+                  endDate: _vm.propEndDate,
+                  ranges: _vm.ranges
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-outline-cyan btn-sm dropdown-toggle mr-1",
+                  attrs: {
+                    type: "button",
+                    "data-toggle": "dropdown",
+                    "aria-haspopup": "true",
+                    "aria-expanded": "false"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-filter" }),
+                  _vm._v(" " + _vm._s(_vm.statusText) + " "),
+                  _c("span", { staticClass: "caret" })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "dropdown-menu" },
+                _vm._l(_vm.statusDropdown, function(item) {
+                  return _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.filterStatus(item.code, item.text)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(item.text) + "\n                    ")]
+                  )
+                })
+              )
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "col-md-6 input-group",
+        staticStyle: { "padding-left": "2px", "padding-right": "2px" }
+      })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2637954f", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
