@@ -1,10 +1,10 @@
 <?php
 
-namespace Unifin\UserTabulation;
+namespace Unifin\TableFilters;
 
 use Carbon\Carbon;
 
-class TransactionsTabulations extends Tabulation
+class UserTransactionFilter extends TableFilter
 {
     /**
      * columns to search

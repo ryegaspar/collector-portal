@@ -1,10 +1,10 @@
 <?php
 
-namespace Unifin\UserTabulation;
+namespace Unifin\TableFilters;
 
 use Illuminate\Http\Request;
 
-abstract class Tabulation
+abstract class TableFilter
 {
     /**
      * @var Request

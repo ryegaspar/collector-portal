@@ -5,7 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Unifin\UserTabulation\AccountsTabulation;
+use Unifin\TableFilters\UserAccountFilter;
 
 class DBR extends Model
 {
@@ -292,10 +292,10 @@ class DBR extends Model
      * apply tabulation to relevant dbr
      *
      * @param $query
-     * @param AccountsTabulation $paginate
+     * @param UserAccountFilter $paginate
      * @return mixed
      */
-    public function scopeTabulate($query, AccountsTabulation $paginate)
+    public function scopeTabulate($query, UserAccountFilter $paginate)
     {
        return $paginate->apply($query);
     }
@@ -315,10 +315,10 @@ class DBR extends Model
      * fetch all relevant dbr accounts
      *
      * @param $request
-     * @param AccountsTabulation $paginate
+     * @param UserAccountFilter $paginate
      * @return mixed
      */
-    public function getUserAccounts($request, AccountsTabulation $paginate)
+    public function getUserAccounts($request, UserAccountFilter $paginate)
     {
         $builder = DBR::userAccounts()->tabulate($paginate);
 

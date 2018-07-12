@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Users;
 use App\DebterPayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Unifin\UserTabulation\TransactionsTabulations;
+use Unifin\TableFilters\UserTransactionFilter;
 
 class TransactionsController extends Controller
 {
@@ -30,10 +30,10 @@ class TransactionsController extends Controller
      *
      * @param Request $request
      * @param DebterPayment $debterPayment
-     * @param TransactionsTabulations $paginate
+     * @param UserTransactionFilter $paginate
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, DebterPayment $debterPayment, TransactionsTabulations $paginate)
+    public function show(Request $request, DebterPayment $debterPayment, UserTransactionFilter $paginate)
     {
         $response = $debterPayment->getUserPayments($request, $paginate);
 //        if ($request->wantsJson()) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Unifin\UserTabulation;
+namespace Unifin\TableFilters;
 
-class AccountsTabulation extends Tabulation
+class UserAccountFilter extends TableFilter
 {
     /**
      * columns to search

@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Unifin\UserTabulation\TransactionsTabulations;
+use Unifin\TableFilters\UserTransactionFilter;
 
 class DebterPayment extends Model
 {
@@ -77,10 +75,10 @@ class DebterPayment extends Model
      * apply tabulation to relevant debter payment
      *
      * @param $query
-     * @param TransactionsTabulations $paginate
+     * @param UserTransactionFilter $paginate
      * @return mixed
      */
-    public function scopeTabulate($query, TransactionsTabulations $paginate)
+    public function scopeTabulate($query, UserTransactionFilter $paginate)
     {
         return $paginate->apply($query);
     }
@@ -100,10 +98,10 @@ class DebterPayment extends Model
      * fetch all relevant dbr accounts
      *
      * @param $request
-     * @param TransactionsTabulations $debterPayment
+     * @param UserTransactionFilter $debterPayment
      * @return mixed
      */
-    public function getUserPayments($request, TransactionsTabulations $debterPayment)
+    public function getUserPayments($request, UserTransactionFilter $debterPayment)
     {
         $builder = DebterPayment::userAccounts()->tabulate($debterPayment);
 //        $sumPayAmount = $builder->sum('PAY_AMT');

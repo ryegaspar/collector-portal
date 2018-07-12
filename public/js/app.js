@@ -65421,38 +65421,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 								props: {
@@ -65827,7 +65795,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _c("h4", { staticClass: "card-title mb-0" }, [_vm._v("News")]),
@@ -65859,56 +65827,6 @@ var staticRenderFns = [
             _vm._v(
               "\n                    Spicy jalapeno bacon ipsum dolor amet pork loin shoulder t-bone flank. Biltong picanha\n                    tenderloin beef ribs pork loin. Sirloin filet mignon ground round turkey meatloaf prosciutto,\n                    pancetta bacon andouille flank cow short ribs. Salami chicken tongue, meatloaf pork venison tail\n                    ham hock picanha spare ribs brisket kielbasa swine bresaola. Chicken salami andouille ground\n                    round alcatra beef ribs.\n                "
             )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header bg-primary" }, [
-            _vm._v("Forecast EOM")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n                    $138,709.73\n                ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header bg-primary" }, [_vm._v("MTD")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n                    $68,709.73\n                ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header bg-primary" }, [
-            _vm._v("Last Month")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n                    $877,009.28\n                ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header bg-green" }, [
-            _vm._v("Current Pay Period")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n                    $68,709.73\n                ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header bg-green" }, [
-            _vm._v("Previous Pay Period")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n                    $68,709.73\n                ")
           ])
         ])
       ])

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Users;
 use App\DBR;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Unifin\UserTabulation\AccountsTabulation;
+use Unifin\TableFilters\UserAccountFilter;
 
 class AccountsController extends Controller
 {
@@ -30,10 +30,10 @@ class AccountsController extends Controller
      *
      * @param Request $request
      * @param DBR $dbr
-     * @param AccountsTabulation $paginate
+     * @param UserAccountFilter $paginate
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, DBR $dbr, AccountsTabulation $paginate)
+    public function show(Request $request, DBR $dbr, UserAccountFilter $paginate)
     {
         $response = $dbr->getUserAccounts($request, $paginate);
         if ($request->wantsJson()) {

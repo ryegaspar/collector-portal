@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">News</h4>
@@ -115,38 +115,6 @@
                         pancetta bacon andouille flank cow short ribs. Salami chicken tongue, meatloaf pork venison tail
                         ham hock picanha spare ribs brisket kielbasa swine bresaola. Chicken salami andouille ground
                         round alcatra beef ribs.
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header bg-primary">Forecast EOM</div>
-                    <div class="card-body">
-                        $138,709.73
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header bg-primary">MTD</div>
-                    <div class="card-body">
-                        $68,709.73
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header bg-primary">Last Month</div>
-                    <div class="card-body">
-                        $877,009.28
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header bg-green">Current Pay Period</div>
-                    <div class="card-body">
-                        $68,709.73
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header bg-green">Previous Pay Period</div>
-                    <div class="card-body">
-                        $68,709.73
                     </div>
                 </div>
             </div>
