@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Users;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Unifin\Repositories\RawQueries;
 
 class DashboardTransactionController extends Controller
 {
@@ -18,30 +16,18 @@ class DashboardTransactionController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * show user transactions on ajax request only
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function index(Request $request)
     {
-        $startDate = Carbon::parse('first day of this month')->format("Y-m-d");
-        $endDate = Carbon::parse('last day of this month')->format("Y-m-d");
+        list($transactions, $pdc) = RawQueries::UserMonthlyTransactions($request->date);
 
-        if ($request->date) {
-            $startDate = Carbon::parse("first day of {$request->date}")->format("Y-m-d");
-            $endDate = Carbon::parse("last day of {$request->date}")->format("Y-m-d");
+        if ($request->wantsJson()) {
+            return response(compact( 'transactions', 'pdc'), 200);
         }
-
-        $transactions = DB::table('UFN.PaymentTable')
-            ->select(DB::raw('sum(PAY_AMT) as trs_payment_amount, sum(PAY_COMM) as trs_payment_comm_amount'))
-            ->where('DESK', Auth::user()->USR_DEF_MOT_DESK)
-            ->whereBetween('PAY_DATE_O', [$startDate, $endDate])
-            ->where('PAY_STATUS', 'T')
-            ->get();
-
-        $pdc = DB::table('UFN.PaymentTable')
-            ->select(DB::raw('sum(PAY_AMT) as pdc_payment_amount, sum(PAY_COMM) as pdc_payment_comm_amount'))
-            ->where('DESK', Auth::user()->USR_DEF_MOT_DESK)
-            ->whereBetween('PAY_DATE_O', [$startDate, $endDate])
-            ->where('PAY_STATUS', '<>', 'T')
-            ->get();
-
-        return response(compact( 'transactions', 'pdc'), 200);
     }
 }

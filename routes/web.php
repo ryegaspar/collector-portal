@@ -32,6 +32,10 @@ Route::get('/accounts/show', 'Users\AccountsController@show')->name('user.accoun
 Route::get('/transactions', 'Users\TransactionsController@index')->name('user.transactions');
 Route::get('/transactions/show', 'Users\TransactionsController@show')->name('user.transactions.show');
 
+Route::get('/adjustments', 'Users\AdjustmentsController@index')->name('user.adjustments');
+
+
+
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');
 Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-plc.view');
 
