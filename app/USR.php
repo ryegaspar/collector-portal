@@ -9,7 +9,13 @@ class USR extends Authenticatable
 {
     use Notifiable;
 
-//    protected $guarded = [];
+    /**
+     * define collect one db connection
+     *
+     * @var string
+     */
+    protected $connection = 'sqlsrv2';
+
     /**
      * define table for DBR
      *

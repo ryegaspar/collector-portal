@@ -15,6 +15,11 @@ window.moment = require('moment');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import Form from './utilities/Form';
+import SweetAlert from 'sweetalert';
+
+window.Form = Form;
+window.swal = SweetAlert;
 
 Vue.component('topnavbar', require('./components/TopNavBar'));
 
@@ -23,6 +28,7 @@ Vue.component('login', require('./components/Users/Login'));
 Vue.component('dashboard', require('./components/Users/Dashboard'));
 Vue.component('accounts', require('./components/Users/Accounts'));
 Vue.component('transactions', require('./components/Users/Transactions'));
+Vue.component('adjustments', require('./components/Users/Adjustments'));
 
 const app = new Vue({
     el: '#app'
@@ -36,7 +42,7 @@ window.axios.interceptors.response.use((response) => {
 	// if so then we need them to sign back in.
 	return response;
 }, (error) => {
-	if (error.response.status === 401) {
+	if (error.response.status === 401 && error.response.data !== 'invalid user') {
 		window.location.href = '/login';
 		return;
 	}

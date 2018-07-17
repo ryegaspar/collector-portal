@@ -12,16 +12,16 @@ export default [
 		visible: true
 	},
 	{
-		name: 'PAY_AMT',
+		name: 'pay_amount',
 		sortField: 'PAY_AMT',
 		title: 'Amount',
 		dataClass: 'text-right',
 		visible: true,
 	},
 	{
-		name: 'PAY_COMM',
+		name: 'pay_commission',
 		sortField: 'PAY_COMM',
-		title: 'Agency Comm.',
+		title: 'Agency Fee',
 		dataClass: 'text-right',
 		visible: true
 	},

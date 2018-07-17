@@ -62,7 +62,7 @@ class LoginController extends Controller
             Auth::loginUsingId($user->USR_CODE);
             return $this->sendLoginResponse($request);
         } else {
-            return response([], 401);
+            return response('invalid user', 401);
         }
     }
 

@@ -4,6 +4,7 @@
 	<!-- Main content -->
 	<main class="main">
 		<div class="container-fluid">
+			<adjustments></adjustments>
 		</div>
 	</main>
 @endsection

@@ -10,6 +10,13 @@ use Unifin\TableFilters\UserTransactionFilter;
 class DebterPayment extends Model
 {
     /**
+     * define collect one db connection
+     *
+     * @var string
+     */
+    protected $connection = 'sqlsrv2';
+
+    /**
      * define table for DBR
      *
      * @var string
@@ -22,7 +29,7 @@ class DebterPayment extends Model
      * @var array
      */
     protected $casts = [
-        'PAY_DATE_O' => 'datetime:m/d/Y'
+        'PAY_DATE_O' => 'datetime:m/d/Y',
     ];
 
     /**
@@ -30,7 +37,7 @@ class DebterPayment extends Model
      *
      * @var array
      */
-    protected $appends = ['full_name', 'payment_type', 'pay_date'];
+    protected $appends = ['full_name', 'payment_type', 'pay_date', 'pay_commission', 'pay_amount'];
 
     /**
      * accessor to debter name, make it lower case
@@ -42,6 +49,11 @@ class DebterPayment extends Model
         return ucwords(strtolower(str_replace(',', ', ', $this->PAY_NAME)));
     }
 
+    /**
+     * accessor to payment type
+     *
+     * @return string
+     */
     public function getPaymentTypeAttribute()
     {
         return ucwords(strtolower($this->PAY_TYPE));
@@ -65,6 +77,40 @@ class DebterPayment extends Model
 
         if ((Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) >= -5) &&
             (Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) < 0)) {
+            return Carbon::parse($this->PAY_DATE_O)->diffForHumans();
+        }
+
+        return Carbon::parse($this->PAY_DATE_O)->toFormattedDateString();
+    }
+
+    /**
+     * accessor to pay amount
+     *
+     * @return string
+     */
+    public function getPayAmountAttribute()
+    {
+        return number_format($this->PAY_AMT, 2, '.', ',');
+    }
+
+    /**
+     * accessor to pay commission
+     *
+     * @return string
+     */
+    public function getPayCommissionAttribute()
+    {
+        return number_format($this->PAY_COMM, 2, '.', ',');
+    }
+
+    /**
+     * accessor to payment date, reformatted date to carbon instance
+     *
+     * @return string
+     */
+    public function getPaymentDateAttribute()
+    {
+        if (Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) <= 5) {
             return Carbon::parse($this->PAY_DATE_O)->diffForHumans();
         }
 
@@ -104,8 +150,6 @@ class DebterPayment extends Model
     public function getUserPayments($request, UserTransactionFilter $debterPayment)
     {
         $builder = DebterPayment::userAccounts()->tabulate($debterPayment);
-//        $sumPayAmount = $builder->sum('PAY_AMT');
-//        $sumCommAmount = $builder->sum('PAY_COMM');
 
         $perPage = $request->has('per_page') ? (int)$request->per_page : null;
 
@@ -117,27 +161,17 @@ class DebterPayment extends Model
             'paydate'  => $request->paydate,
         ]);
 
-//        $response = response()->json($pagination)->original;
-//        $custom = collect([
-//            'sumPayAmount' => $sumPayAmount,
-//            'sumCommAmount' => $sumCommAmount
-//        ]);
-//        $response = $custom->merge($response);
-
         return $pagination;
     }
 
-    /**
-     * accessor to payment date, reformatted date to carbon instance
-     *
-     * @return string
-     */
-    public function getPaymentDateAttribute()
+    public static function getFirstPaymentCommission($dbr_no, $amount, $date)
     {
-        if (Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) <= 5) {
-            return Carbon::parse($this->PAY_DATE_O)->diffForHumans();
-        }
+        $date = Carbon::parse($date)->toDateString();
 
-        return Carbon::parse($this->PAY_DATE_O)->toFormattedDateString();
+        return self::where('PAY_DBR_NO', '=', $dbr_no)
+            ->whereDate('PAY_DATE_O', '=', $date)
+            ->where('PAY_AMT', '=', $amount)
+            ->where('PAY_STATUS', '=', 'T')
+            ->first();
     }
 }

@@ -10,6 +10,13 @@ use Unifin\TableFilters\UserAccountFilter;
 class DBR extends Model
 {
     /**
+     * define collect one db connection
+     *
+     * @var string
+     */
+    protected $connection = 'sqlsrv2';
+
+    /**
      * define table for DBR
      *
      * @var string

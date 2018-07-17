@@ -14,14 +14,14 @@ export default [
 	{
 		name: 'assigned_amount',
 		sortField: 'DBR_ASSIGN_AMT',
-		title: 'Assign Amount',
+		title: 'Assigned Amount',
 		dataClass: 'text-right',
 		visible: true,
 	},
 	{
 		name: 'last_trust_amount',
 		sortField: 'DBR_LAST_TRUST_AMT',
-		title: 'Last Transaction Amount',
+		title: 'Last Transaction Amt',
 		dataClass: 'text-right',
 		visible: true,
 	},

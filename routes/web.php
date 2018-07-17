@@ -33,6 +33,7 @@ Route::get('/transactions', 'Users\TransactionsController@index')->name('user.tr
 Route::get('/transactions/show', 'Users\TransactionsController@show')->name('user.transactions.show');
 
 Route::get('/adjustments', 'Users\AdjustmentsController@index')->name('user.adjustments');
+Route::post('/adjustments', 'Users\AdjustmentsController@store')->name('user.adjustments.store');
 
 
 
