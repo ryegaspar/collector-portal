@@ -5,22 +5,22 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="filter-bar">
-                           <div class="form-inline">
-                               <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                   <div class="btn-group-sm">
-                                       <button type="button"
-                                               class="btn btn-primary mr-2"
-                                               @click="addAdjustment">
-                                           <i class="icon-plus"></i> Add
-                                       </button>
-                                   </div>
-                                   <div class="btn-group-sm">
+                            <div class="form-inline">
+                                <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
+                                    <div class="btn-group-sm">
+                                        <button type="button"
+                                                class="btn btn-primary mr-2"
+                                                @click="addAdjustment">
+                                            <i class="icon-plus"></i> Add
+                                        </button>
+                                    </div>
+                                    <div class="btn-group-sm">
                                        <span style="font-size: 0.75rem;margin-bottom: 0px !important;">
-                                           <em>adjustment for {{ startMonthWord }} to {{ endMonthWord }}, deadline: {{ deadlineWord }}</em>
+                                           <em>adjustments for {{ startMonthWord }} to {{ endMonthWord }}, deadline: {{ deadlineWord }}</em>
                                        </span>
-                                   </div>
-                               </div>
-                           </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <vtable-header :perPage=perPage
                                        :fields="fieldDefs"
@@ -36,7 +36,7 @@
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="delete"
-                                            @click="itemAction('delete-item', props.rowData, props.rowIndex)">
+                                            @click="itemAction('delete-item', props.rowData, props.rowIndex, $event)">
                                         <i class="fa fa-trash-o"></i>
                                     </button>
                                 </div>
@@ -65,7 +65,7 @@
 
 		components: {
 			Vtable,
-            ModalAdjustments
+			ModalAdjustments
 		},
 
 		data() {
@@ -81,55 +81,90 @@
 				moreParams: {},
 				perPage: 25,
 
-                isAdd: true
+				isAdd: true
 			}
 		},
 
-        methods: {
+		methods: {
 			addAdjustment() {
 				this.isAdd = true;
 				this.$events.fire('modal-reset');
 				$("#modalAdjustment").modal("show");
-            },
+			},
 
-            onReloadTable() {
+			onReloadTable() {
 				this.$emit('reload');
-            },
+			},
 
-            itemAction(action, data, index, e) {
+			itemAction(action, data, index, e) {
+				let innerHTML = e.currentTarget.innerHTML;
+				let button = e.currentTarget;
 
-            }
-        },
+				$('[data-toggle="tooltip"]').tooltip('hide');
+
+				button.setAttribute("disabled", true);
+				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`
+
+				swal({
+					title: "Are you sure?",
+					text: "You will not be able to recover this data",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				}).then((willDelete) => {
+					if (willDelete) {
+						axios.delete(`./adjustments/${data.id}`)
+							.then(() => {
+								swal({
+									title: "Success",
+									text: "Successfully deleted adjustment data",
+									icon: "success",
+									timer: 1250
+								});
+								this.$emit('reload');
+							}).catch((error) => {
+								swal({
+                                    title: "Delete Adjustment",
+                                    text: `${error.message}`,
+                                    icon: "warning",
+                                });
+							});
+					}
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
+				})
+			}
+		},
 
 		computed: {
 			tableUrl() {
 				return `./adjustments/show`;
 			},
 
-            startMonthWord() {
+			startMonthWord() {
 				if (moment().date() > 5)
 					return moment().startOf('month').format("MMMM Do");
-                else
-                	return moment().add(-1, 'month').startOf('month').format("MMMM Do");
-            },
+				else
+					return moment().add(-1, 'month').startOf('month').format("MMMM Do");
+			},
 
-            endMonthWord() {
+			endMonthWord() {
 				if (moment().date() > 5)
 					return moment().format("MMMM Do");
 				else
 					return moment().add(-1, 'month').endOf('month').format('MMMM Do');
-            },
+			},
 
-            deadlineWord() {
+			deadlineWord() {
 				if (moment().date() > 5)
-					return moment().add(1, 'month').set('date', 5).format("MMMM D YYYY")
-                else
-                	return moment().set('date', 5).format("MMMM D, YYYY");
-            }
+					return moment().add(1, 'month').set('date', 5).format("MMMM D, YYYY")
+				else
+					return moment().set('date', 5).format("MMMM D, YYYY");
+			}
 		},
 
-        mounted() {
+		mounted() {
 			this.$events.$on('reload-table', eventData => this.onReloadTable());
-        }
+		}
 	}
 </script>

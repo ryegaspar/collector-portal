@@ -69416,7 +69416,45 @@ Vue.component('vtable-header', __WEBPACK_IMPORTED_MODULE_0__VtableHeader___defau
 		onReloadTable: function onReloadTable() {
 			this.$emit('reload');
 		},
-		itemAction: function itemAction(action, data, index, e) {}
+		itemAction: function itemAction(action, data, index, e) {
+			var _this = this;
+
+			var innerHTML = e.currentTarget.innerHTML;
+			var button = e.currentTarget;
+
+			$('[data-toggle="tooltip"]').tooltip('hide');
+
+			button.setAttribute("disabled", true);
+			button.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+
+			swal({
+				title: "Are you sure?",
+				text: "You will not be able to recover this data",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true
+			}).then(function (willDelete) {
+				if (willDelete) {
+					axios.delete('./adjustments/' + data.id).then(function () {
+						swal({
+							title: "Success",
+							text: "Successfully deleted adjustment data",
+							icon: "success",
+							timer: 1250
+						});
+						_this.$emit('reload');
+					}).catch(function (error) {
+						swal({
+							title: "Delete Adjustment",
+							text: '' + error.message,
+							icon: "warning"
+						});
+					});
+				}
+				button.removeAttribute("disabled");
+				button.innerHTML = innerHTML;
+			});
+		}
 	},
 
 	computed: {
@@ -69430,15 +69468,15 @@ Vue.component('vtable-header', __WEBPACK_IMPORTED_MODULE_0__VtableHeader___defau
 			if (moment().date() > 5) return moment().format("MMMM Do");else return moment().add(-1, 'month').endOf('month').format('MMMM Do');
 		},
 		deadlineWord: function deadlineWord() {
-			if (moment().date() > 5) return moment().add(1, 'month').set('date', 5).format("MMMM D YYYY");else return moment().set('date', 5).format("MMMM D, YYYY");
+			if (moment().date() > 5) return moment().add(1, 'month').set('date', 5).format("MMMM D, YYYY");else return moment().set('date', 5).format("MMMM D, YYYY");
 		}
 	},
 
 	mounted: function mounted() {
-		var _this = this;
+		var _this2 = this;
 
 		this.$events.$on('reload-table', function (eventData) {
-			return _this.onReloadTable();
+			return _this2.onReloadTable();
 		});
 	}
 });
@@ -71382,7 +71420,7 @@ var render = function() {
                             [
                               _c("i", { staticClass: "icon-plus" }),
                               _vm._v(
-                                " Add\n                                   "
+                                " Add\n                                    "
                               )
                             ]
                           )
@@ -71400,7 +71438,7 @@ var render = function() {
                             [
                               _c("em", [
                                 _vm._v(
-                                  "adjustment for " +
+                                  "adjustments for " +
                                     _vm._s(_vm.startMonthWord) +
                                     " to " +
                                     _vm._s(_vm.endMonthWord) +
@@ -71453,7 +71491,8 @@ var render = function() {
                                     _vm.itemAction(
                                       "delete-item",
                                       props.rowData,
-                                      props.rowIndex
+                                      props.rowIndex,
+                                      $event
                                     )
                                   }
                                 }
@@ -72318,34 +72357,40 @@ if (!Array.prototype.includes) {
 	name: 'dbr_no',
 	sortField: 'dbr_no',
 	title: 'Debter No',
+	titleClass: 'text-center',
 	visible: true
 }, {
 	name: 'name',
 	sortField: 'name',
 	title: 'Name',
+	titleClass: 'text-center',
 	visible: true
 }, {
 	name: 'formatted_date',
 	sortField: 'date',
 	title: 'Payment Date',
+	titleClass: 'text-center',
 	dataClass: 'text-right',
 	visible: true
 }, {
 	name: 'formatted_amount',
 	sortField: 'amount',
 	title: 'Payment Amount',
+	titleClass: 'text-center',
 	dataClass: 'text-right',
 	visible: true
 }, {
 	name: 'formatted_commission',
 	sortField: 'commission',
 	title: 'Fee',
+	titleClass: 'text-center',
 	dataClass: 'text-right',
 	visible: true
 }, {
 	name: 'status',
 	sortField: 'status',
 	title: 'Status',
+	titleClass: 'text-center',
 	dataClass: 'text-center',
 	visible: true,
 	callback: function callback(value) {
@@ -72361,6 +72406,7 @@ if (!Array.prototype.includes) {
 }, {
 	name: '__slot:actions',
 	title: 'Actions',
+	titleClass: 'text-center',
 	visible: true
 }]);
 

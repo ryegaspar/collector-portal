@@ -3,18 +3,21 @@ export default [
 		name: 'dbr_no',
 		sortField: 'dbr_no',
 		title: 'Debter No',
+		titleClass: 'text-center',
 		visible: true,
 	},
 	{
 		name: 'name',
 		sortField: 'name',
 		title: 'Name',
+		titleClass: 'text-center',
 		visible: true,
 	},
 	{
 		name: 'formatted_date',
 		sortField: 'date',
 		title: 'Payment Date',
+		titleClass: 'text-center',
 		dataClass: 'text-right',
 		visible: true,
 	},
@@ -22,6 +25,7 @@ export default [
 		name: 'formatted_amount',
 		sortField: 'amount',
 		title: 'Payment Amount',
+		titleClass: 'text-center',
 		dataClass: 'text-right',
 		visible: true,
 	},
@@ -29,6 +33,7 @@ export default [
 		name: 'formatted_commission',
 		sortField: 'commission',
 		title: 'Fee',
+		titleClass: 'text-center',
 		dataClass: 'text-right',
 		visible: true,
 	},
@@ -36,6 +41,7 @@ export default [
 		name: 'status',
 		sortField: 'status',
 		title: 'Status',
+		titleClass: 'text-center',
 		dataClass: 'text-center',
 		visible: true,
 		callback: function (value) {
@@ -52,6 +58,7 @@ export default [
 	{
 		name: '__slot:actions',
 		title: 'Actions',
+		titleClass: 'text-center',
 		visible: true
 	}
 ]

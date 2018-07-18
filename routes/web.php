@@ -35,6 +35,7 @@ Route::get('/transactions/show', 'Users\TransactionsController@show')->name('use
 Route::get('/adjustments', 'Users\AdjustmentsController@index')->name('user.adjustments');
 Route::post('/adjustments', 'Users\AdjustmentsController@store')->name('user.adjustments.store');
 Route::get('/adjustments/show', 'Users\AdjustmentsController@show')->name('user.adjustments.show');
+Route::delete('/adjustments/{adjustment}', 'Users\AdjustmentsController@destroy')->name('user.adjustments.destroy');
 
 
 

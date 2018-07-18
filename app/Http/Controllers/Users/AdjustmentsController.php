@@ -7,6 +7,7 @@ use App\Rules\AdjustmentAmount;
 use App\Rules\AdjustmentDate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\UserAdjustmentFilter;
 
 class AdjustmentsController extends Controller
@@ -55,9 +56,25 @@ class AdjustmentsController extends Controller
     public function show(Request $request, Adjustment $adjustment, UserAdjustmentFilter $paginate)
     {
         $response = $adjustment->getUserAdjustments($request, $paginate);
-//        if ($request->wantsJson()) {
+        if ($request->wantsJson()) {
             return response()->json($response);
-//        }
+        }
+    }
+
+    /**
+     * delete the given adjustment data
+     *
+     * @param Adjustment $adjustment
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function destroy(Adjustment $adjustment)
+    {
+        if (Auth::user()->can('delete', $adjustment)) {
+            $adjustment->delete();
+            return response([], 204);
+        } else
+            return response([], 403);
     }
 
 
