@@ -6,14 +6,25 @@
                     <div class="card-body">
                         <div class="filter-bar">
                            <div class="form-inline">
-                               <button type="button" class="btn btn-primary mb-2 mr-2" @click="addAdjustment">
-                                   <i class="icon-plus"></i> Add
-                               </button>
-                               <button type="button" class="btn btn-primary mb-2" @click="editAdjustment">
-                                   <i class="icon-pencil"></i> Edit
-                               </button>
+                               <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
+                                   <div class="btn-group-sm">
+                                       <button type="button"
+                                               class="btn btn-primary mr-2"
+                                               @click="addAdjustment">
+                                           <i class="icon-plus"></i> Add
+                                       </button>
+                                   </div>
+                                   <div class="btn-group-sm">
+                                       <span style="font-size: 0.75rem;margin-bottom: 0px !important;">
+                                           <em>adjustment for {{ startMonthWord }} to {{ endMonthWord }}, deadline: {{ deadlineWord }}</em>
+                                       </span>
+                                   </div>
+                               </div>
                            </div>
                         </div>
+                        <vtable-header :perPage=perPage
+                                       :fields="fieldDefs"
+                                       placeholder="name, id"></vtable-header>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
@@ -21,14 +32,9 @@
                                 :perPage=perPage>
                             <template slot="actions" slot-scope="props">
                                 <div class="custom-actions">
-                                    <button class="btn btn-success btn-sm"
+                                    <button type="button" class="btn btn-danger btn-sm"
                                             data-toggle="tooltip"
-                                            title="edit"
-                                            @click="itemAction('edit-item', props.rowData, props.rowIndex)">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm"
-                                            data-toggle="tooltip"
+                                            data-placement="top"
                                             title="delete"
                                             @click="itemAction('delete-item', props.rowData, props.rowIndex)">
                                         <i class="fa fa-trash-o"></i>
@@ -46,7 +52,7 @@
 
 <script>
 	import VtableHeader from '../VtableHeader';
-	import VtableAccountsFieldDefs from './VtableAccountsFieldDefs';
+	import VtableAdjustmentsFieldDefs from './VtableAdjustmentsFieldDefs';
 	import Vtable from '../VTable';
 	import VueEvents from 'vue-events';
 	import ModalAdjustments from './ModalAdjustments';
@@ -64,12 +70,12 @@
 
 		data() {
 			return {
-				fieldDefs: VtableAccountsFieldDefs,
+				fieldDefs: VtableAdjustmentsFieldDefs,
 				sortOrder: [
 					{
-						field: 'last_worked',
-						sortField: 'DBR_LAST_WORKED_O',
-						direction: 'desc'
+						field: 'date',
+						sortField: 'date',
+						direction: 'asc'
 					}
 				],
 				moreParams: {},
@@ -82,19 +88,48 @@
         methods: {
 			addAdjustment() {
 				this.isAdd = true;
+				this.$events.fire('modal-reset');
 				$("#modalAdjustment").modal("show");
             },
 
-            editAdjustment() {
-				this.isAdd = false;
-				$("#modalAdjustment").modal("show");
+            onReloadTable() {
+				this.$emit('reload');
+            },
+
+            itemAction(action, data, index, e) {
+
             }
         },
 
 		computed: {
 			tableUrl() {
-				return `./accounts/show`;
-			}
-		}
+				return `./adjustments/show`;
+			},
+
+            startMonthWord() {
+				if (moment().date() > 5)
+					return moment().startOf('month').format("MMMM Do");
+                else
+                	return moment().add(-1, 'month').startOf('month').format("MMMM Do");
+            },
+
+            endMonthWord() {
+				if (moment().date() > 5)
+					return moment().format("MMMM Do");
+				else
+					return moment().add(-1, 'month').endOf('month').format('MMMM Do');
+            },
+
+            deadlineWord() {
+				if (moment().date() > 5)
+					return moment().add(1, 'month').set('date', 5).format("MMMM D YYYY")
+                else
+                	return moment().set('date', 5).format("MMMM D, YYYY");
+            }
+		},
+
+        mounted() {
+			this.$events.$on('reload-table', eventData => this.onReloadTable());
+        }
 	}
 </script>

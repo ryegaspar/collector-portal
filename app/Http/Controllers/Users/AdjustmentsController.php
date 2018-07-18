@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Users;
 
 use App\Adjustment;
-use App\DebterPayment;
 use App\Rules\AdjustmentAmount;
 use App\Rules\AdjustmentDate;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Unifin\TableFilters\UserAdjustmentFilter;
 
 class AdjustmentsController extends Controller
 {
@@ -31,24 +29,36 @@ class AdjustmentsController extends Controller
         return view('users.adjustments');
     }
 
+    /**
+     * persists a new adjustment
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function store(Request $request)
     {
+        $request->merge(['dbr_no' => sprintf('%010d', $request->dbr_no)]);
+
         $adjustment = $request->validate([
             'dbr_no' => 'required|exists:sqlsrv2.CDS.DBR,DBR_NO',
             'amount' => ['required', new AdjustmentAmount],
             'date'   => ['required', new AdjustmentDate],
         ]);
 
-        $adjustment['date'] = Carbon::parse(request()->date)->format('Y-m-d');
-
-        $adjustment['commission'] = DebterPayment::getFirstPaymentCommission($request->dbr_no, $request->amount, $request->date)->PAY_COMM;
-
-        $adjustment['desk'] = Auth::user()->USR_DEF_MOT_DESK;
-
-        $response = Adjustment::create($adjustment);
+        $response = Adjustment::addCollectorAdjustment($adjustment);
 
         if (request()->wantsJson()) {
             return response($response, 201);
         }
     }
+
+    public function show(Request $request, Adjustment $adjustment, UserAdjustmentFilter $paginate)
+    {
+        $response = $adjustment->getUserAdjustments($request, $paginate);
+//        if ($request->wantsJson()) {
+            return response()->json($response);
+//        }
+    }
+
+
 }

@@ -164,7 +164,7 @@ class DebterPayment extends Model
         return $pagination;
     }
 
-    public static function getFirstPaymentCommission($dbr_no, $amount, $date)
+    public static function getFirstRecord($dbr_no, $amount, $date)
     {
         $date = Carbon::parse($date)->toDateString();
 

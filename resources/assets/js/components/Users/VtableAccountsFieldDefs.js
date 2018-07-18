@@ -2,7 +2,7 @@ export default [
 	{
 		name: 'DBR_NO',
 		sortField: 'DBR_NO',
-		title: 'Debter ID',
+		title: 'Debter No',
 		visible: true,
 	},
 	{

@@ -296,13 +296,13 @@ class DBR extends Model
     }
 
     /**
-     * apply tabulation to relevant dbr
+     * apply filters to relevant dbr
      *
      * @param $query
      * @param UserAccountFilter $paginate
      * @return mixed
      */
-    public function scopeTabulate($query, UserAccountFilter $paginate)
+    public function scopeTableFilters($query, UserAccountFilter $paginate)
     {
        return $paginate->apply($query);
     }
@@ -327,7 +327,7 @@ class DBR extends Model
      */
     public function getUserAccounts($request, UserAccountFilter $paginate)
     {
-        $builder = DBR::userAccounts()->tabulate($paginate);
+        $builder = DBR::userAccounts()->tableFilters($paginate);
 
         $perPage = $request->has('per_page') ? (int) $request->per_page : null;
 

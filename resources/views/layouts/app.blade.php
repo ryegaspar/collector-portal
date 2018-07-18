@@ -32,5 +32,12 @@
 	<!-- Bootstrap and necessary plugins -->
 	<script src="{{ URL::asset('js/app.js') }}"></script>
 	@yield('footer')
+	<script>
+		$(function() {
+			$('body').tooltip({
+				selector: '[data-toggle=tooltip]'
+			});
+		});
+	</script>
 </body>
 </html>

@@ -45,8 +45,8 @@
                                        class="form-control text-right"
                                        v-model="form.amount">
                                 <em class="error invalid-feedback"
-                                    v-if="form.errors.has('amount')">
-                                    {{ form.errors.get('amount') }}
+                                    v-if="form.errors.has('amount')"
+                                    v-html="form.errors.get('amount')">
                                 </em>
                             </div>
                         </fieldset>
@@ -92,6 +92,10 @@
 			}
 		},
 
+        mounted() {
+			this.$events.$on('modal-reset', eventData => this.onResetModal());
+        },
+
 		methods: {
 			submit() {
 				let tempButtonText = this.persistButtonText;
@@ -113,13 +117,20 @@
                             icon: 'success',
                             timer: 1250
                         });
+
+						this.$events.fire('reload-table');
+						// this.$emit('reload');
 					})
 					.catch((error) => {
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
 					})
 
-			}
+			},
+
+            onResetModal() {
+				this.form.errors.clear();
+            }
 		},
 
 		watch: {
@@ -129,12 +140,6 @@
 				else
 					this.persistButtonText = 'Update';
 			},
-
-			'form.date': function (newVal, oldVal) {
-				if (newVal !== oldVal && this.form.errors.any()) {
-					this.form.errors.clear();
-				}
-			}
 		},
 	}
 </script>

@@ -36,8 +36,8 @@ class TransactionsController extends Controller
     public function show(Request $request, DebterPayment $debterPayment, UserTransactionFilter $paginate)
     {
         $response = $debterPayment->getUserPayments($request, $paginate);
-//        if ($request->wantsJson()) {
+        if ($request->wantsJson()) {
             return response()->json($response);
-//        }
+        }
     }
 }
