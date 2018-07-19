@@ -1,5 +1,8 @@
 @extends('layouts.app')
-@section('title', ' - Dashboard')
+@section('title', ' - Adjustments')
+@section('topnavbar')
+	<topnavbar title="Adjustments"></topnavbar>
+@endsection
 @section('content')
 	<!-- Main content -->
 	<main class="main">

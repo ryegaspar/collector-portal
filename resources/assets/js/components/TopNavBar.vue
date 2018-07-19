@@ -1,15 +1,22 @@
 <template>
     <header class="app-header navbar">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon">UNIFIN</span>
         </button>
         <a class="navbar-brand" href="#"></a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <ul class="nav navbar-nav d-md-down-none mr-auto">
+            <li class="nav-item px-3">{{ title }}</li>
+        </ul>
         <ul class="nav navbar-nav d-md-down-none ml-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link"
+                   data-toggle="dropdown"
+                   href="#" role="button"
+                   aria-haspopup="true"
+                   aria-expanded="false">
                     <img class="img-avatar" src="images/image-avatar.png">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -26,6 +33,10 @@
 </template>
 <script>
     export default {
+
+    	props: [
+    		'title',
+        ],
 
     	methods: {
     		doLogout() {
