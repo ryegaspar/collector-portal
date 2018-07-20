@@ -16,11 +16,22 @@
 //});
 
 //Auth::routes();
+
+Route::prefix('admin')->group(function() {
+    Route::get('login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    Route::post('login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::post('logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+
+    Route::redirect('/', 'admin/dashboard');
+
+    Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
+});
+
+Route::redirect('/', '/dashboard');
+
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('user.login');
 Route::post('login', 'Auth\LoginController@login')->name('user.login.submit');
 Route::post('logout', 'Auth\LoginController@logout')->name('user.logout');
-
-Route::redirect('/', '/dashboard');
 
 Route::get('/dashboard', 'Users\DashboardController@index')->name('user.dashboard');
 
@@ -41,12 +52,6 @@ Route::delete('/adjustments/{adjustment}', 'Users\AdjustmentsController@destroy'
 
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');
 Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-plc.view');
-
-Route::prefix('admin')->group(function() {
-    Route::get('login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-
-    Route::get('dashboard', 'AdminDashboardController@index')->name('admin.dashboard');
-});
 
 //TODO: remove this!
 Route::get('testing', function() {

@@ -9,8 +9,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $guarded = [];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -20,13 +18,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-//    /**
-//     * a user has many DBR
-//     *
-//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-//     */
-//    public function DBR()
-//    {
-//        return $this->hasMany('App\DBR', 'DBR_DESK', 'desk');
-//    }
+    /**
+     * set username column
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'username';
+    }
 }

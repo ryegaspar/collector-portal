@@ -11,8 +11,25 @@ class AdminLoginController extends Controller
 {
     use AuthenticatesUsers;
 
+    /**
+     * redirect after loging in
+     *
+     * @var string
+     */
     protected $redirectTo = '../../admin/dashboard';
 
+    /**
+     * set decay minutes for login throttling
+     *
+     * @var int
+     */
+    public $decayMinutes = 20;
+
+    /**
+     * create AdminLoginController instance.
+     *
+     * AdminLoginController constructor.
+     */
     public function __construct()
     {
         $this->middleware('guest:admin', ['except' => 'logout']);
@@ -24,7 +41,7 @@ class AdminLoginController extends Controller
      */
     public function showLoginForm()
     {
-        return 'hello';
+        return view('auth.adminlogin');
     }
 
     /**
@@ -51,6 +68,21 @@ class AdminLoginController extends Controller
         }
 
         redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/admin');
     }
 
     /**

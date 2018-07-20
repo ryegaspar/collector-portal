@@ -21,17 +21,13 @@ import SweetAlert from 'sweetalert';
 window.Form = Form;
 window.swal = SweetAlert;
 
-Vue.component('topnavbar', require('./components/Users/TopNavBar'));
+Vue.component('topnavbar', require('./components/Admin/TopNavBar'));
 
-Vue.component('sidebar', require('./components/Users/SideBar'));
-Vue.component('login', require('./components/Users/Login'));
-Vue.component('dashboard', require('./components/Users/Dashboard'));
-Vue.component('accounts', require('./components/Users/Accounts'));
-Vue.component('transactions', require('./components/Users/Transactions'));
-Vue.component('adjustments', require('./components/Users/Adjustments'));
+Vue.component('sidebar', require('./components/Admin/SideBar'));
+Vue.component('login', require('./components/Admin/Login'));
 
 const app = new Vue({
-    el: '#app'
+	el: '#app'
 });
 
 require('./genesisui');
@@ -43,7 +39,7 @@ window.axios.interceptors.response.use((response) => {
 	return response;
 }, (error) => {
 	if (error.response.status === 401 && error.response.data !== 'invalid user') {
-		window.location.href = '/login';
+		window.location.href = '/admin/login';
 		return;
 	}
 	return Promise.reject(error);

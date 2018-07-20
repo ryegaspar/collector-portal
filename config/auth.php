@@ -48,7 +48,7 @@ return [
 
         'admin' => [
             'driver'   => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
         ],
     ],
 
@@ -75,10 +75,10 @@ return [
             'model'  => App\USR::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'admins' => [
+             'driver' => 'database',
+             'table' => 'users',
+         ],
     ],
 
     /*

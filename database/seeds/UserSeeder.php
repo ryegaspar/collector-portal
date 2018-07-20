@@ -15,15 +15,15 @@ class UserSeeder extends Seeder
         User::truncate();
 
         factory(User::class)->create([
-            'username' => 'dalia',
-            'password' => bcrypt('Password1'),
-            'desk' => '042'
+            'username'     => 'admin',
+            'password'     => bcrypt('Password'),
+            'access_level' => 1
         ]);
 
         factory(User::class)->create([
-            'username' => 'kenny',
-            'password' => bcrypt('Password1'),
-            'desk' => '118'
+            'username' => 'admin5',
+            'password' => bcrypt('Password'),
+            'access_level' => 5
         ]);
     }
 }
