@@ -46,7 +46,7 @@
 					},
 					Adjustments: {
 						href: 'adjustments',
-						text: 'Collector Adjustment',
+						text: 'Collector Adjustments',
 						icon: 'fa fa-line-chart'
 					},
 					Users: {

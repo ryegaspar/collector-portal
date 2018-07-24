@@ -38,9 +38,9 @@
 		<div class="error-page">
 			<header class="error-page__header">
 				<img class="error-page__header-image" src="{{ URL::asset('images/sad_computer.gif') }}" alt="Sad computer">
-				<h1 class="error-page__title nolinks">Page Not Found</h1>
+				<h1 class="error-page__title nolinks">404</h1>
 			</header>
-			<p class="error-page__message">The page you are looking for could not be found.</p>
+			<p class="error-page__message">This is not the page you are looking for</p>
 		</div>
 	</div>
 </body>

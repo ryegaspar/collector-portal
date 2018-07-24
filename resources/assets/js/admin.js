@@ -25,6 +25,7 @@ Vue.component('topnavbar', require('./components/Admin/TopNavBar'));
 
 Vue.component('sidebar', require('./components/Admin/SideBar'));
 Vue.component('login', require('./components/Admin/Login'));
+Vue.component('adjustments', require('./components/Admin/Adjustments'));
 
 const app = new Vue({
 	el: '#app'

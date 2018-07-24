@@ -44,6 +44,7 @@
                     <button type="submit"
                             class="btn btn-primary px-4 pull-right"
                             :disabled="isLoading"
+                            ref="submit"
                             v-html="submitButton"></button>
                 </div>
             </div>
@@ -69,6 +70,7 @@
 
 		methods: {
 			submit() {
+				this.$refs.submit.focus();
 				this.isLoading = true;
 				this.submitButton = `<span><i class="fa fa-circle-o-notch fa-spin"></i></span>`;
 				let url = './login';

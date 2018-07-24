@@ -18,13 +18,16 @@
 //Auth::routes();
 
 Route::prefix('admin')->group(function() {
+    Route::redirect('/', 'admin/dashboard');
+
     Route::get('login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::post('logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 
-    Route::redirect('/', 'admin/dashboard');
-
     Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
+    Route::get('adjustments', 'Admin\AdjustmentsController@index')->name('admin.adjustments');
+    Route::get('adjustments/show', 'Admin\AdjustmentsController@show')->name('admin.adjustments.show');
+    Route::patch('adjustments/{adjustment}', 'Admin\AdjustmentsController@update')->name('admin.adjustments.update');
 });
 
 Route::redirect('/', '/dashboard');

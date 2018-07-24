@@ -4,14 +4,14 @@ namespace Unifin\TableFilters;
 
 use Unifin\TableFilters\Interfaces\AdjustmentFilterInterface;
 
-class UserAdjustmentFilter extends TableFilter implements AdjustmentFilterInterface
+class AdminAdjustmentFilter extends TableFilter implements AdjustmentFilterInterface
 {
     /**
      * columns to search
      *
      * @var array
      */
-    protected $searches = ['dbr_no'];
+    protected $searches = ['desk', 'name'];
 
     /**
      * default sort column

@@ -5,11 +5,13 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Unifin\TableFilters\AdminAdjustmentFilter;
+use Unifin\TableFilters\Interfaces\AdjustmentFilterInterface;
 use Unifin\TableFilters\UserAdjustmentFilter;
 
 class Adjustment extends Model
 {
-    protected $fillable = ['desk', 'name', 'commission', 'dbr_no', 'amount', 'date'];
+    protected $fillable = ['desk', 'name', 'commission', 'dbr_no', 'amount', 'date', 'status'];
 
     /**
      * accessors to append to the model's array form
@@ -28,6 +30,25 @@ class Adjustment extends Model
     ];
 
     /**
+     * add adjustments for the collector
+     *
+     * @param $adjustment
+     * @return mixed
+     */
+    public static function addCollectorAdjustment($adjustment)
+    {
+        $adjustment['date'] = Carbon::parse(request()->date)->format('Y-m-d');
+
+        $debterRecord = DebterPayment::getFirstRecord(request()->dbr_no, request()->amount, request()->date);
+
+        $adjustment['commission'] = $debterRecord->PAY_COMM;
+        $adjustment['name'] = $debterRecord->PAY_NAME;
+        $adjustment['desk'] = Auth::user()->USR_DEF_MOT_DESK;
+
+        return self::create($adjustment);
+    }
+
+    /**
      * accessor to debter name, make it lower case
      *
      * @return string
@@ -37,11 +58,21 @@ class Adjustment extends Model
         return Carbon::parse($this->date)->toFormattedDateString();
     }
 
+    /**
+     * accessor to the amount
+     *
+     * @return string
+     */
     public function getFormattedAmountAttribute()
     {
         return number_format($this->amount, 2, '.', ',');
     }
 
+    /**
+     * accessor to the commission
+     *
+     * @return string
+     */
     public function getFormattedCommissionAttribute()
     {
         return number_format($this->commission, 2, '.', ',');
@@ -62,30 +93,47 @@ class Adjustment extends Model
      * apply filters to relevant dbr
      *
      * @param $query
-     * @param UserAdjustmentFilter $paginate
+     * @param AdjustmentFilterInterface $paginate
      * @return mixed
      */
-    public function scopeTableFilters($query, UserAdjustmentFilter $paginate)
+    public function scopeTableFilters($query, AdjustmentFilterInterface $paginate)
     {
         return $paginate->apply($query);
     }
 
-    public static function addCollectorAdjustment($adjustment)
-    {
-        $adjustment['date'] = Carbon::parse(request()->date)->format('Y-m-d');
-
-        $debterRecord = DebterPayment::getFirstRecord(request()->dbr_no, request()->amount, request()->date);
-
-        $adjustment['commission'] = $debterRecord->PAY_COMM;
-        $adjustment['name'] = $debterRecord->PAY_NAME;
-        $adjustment['desk'] = Auth::user()->USR_DEF_MOT_DESK;
-
-        return self::create($adjustment);
-    }
-
+    /**
+     * fetch user adjustments
+     *
+     * @param $request
+     * @param UserAdjustmentFilter $paginate
+     * @return mixed
+     */
     public function getUserAdjustments($request, UserAdjustmentFilter $paginate)
     {
         $builder = Adjustment::userAdjustments()->tableFilters($paginate);
+
+        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
+
+        $pagination = $builder->paginate($perPage);
+        $pagination->appends([
+            'sort'     => $request->sort,
+            'search'   => $request->search,
+            'per_page' => $request->per_page
+        ]);
+
+        return $pagination;
+    }
+
+    /**
+     * fetch all adjustments
+     *
+     * @param $request
+     * @param AdminAdjustmentFilter $paginate
+     * @return mixed
+     */
+    public function getAllAdjustments($request, AdminAdjustmentFilter $paginate)
+    {
+        $builder = Adjustment::tableFilters($paginate);
 
         $perPage = $request->has('per_page') ? (int)$request->per_page : null;
 

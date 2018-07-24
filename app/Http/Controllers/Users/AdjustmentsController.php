@@ -53,6 +53,14 @@ class AdjustmentsController extends Controller
         }
     }
 
+    /**
+     * return a lists of the resource in vuetable format
+     *
+     * @param Request $request
+     * @param Adjustment $adjustment
+     * @param UserAdjustmentFilter $paginate
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(Request $request, Adjustment $adjustment, UserAdjustmentFilter $paginate)
     {
         $response = $adjustment->getUserAdjustments($request, $paginate);
