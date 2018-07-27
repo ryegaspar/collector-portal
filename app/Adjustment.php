@@ -119,29 +119,6 @@ class Adjustment extends Model
     }
 
     /**
-     * fetch user adjustments
-     *
-     * @param $request
-     * @param UserAdjustmentFilter $paginate
-     * @return mixed
-     */
-    public function getUserAdjustments($request, UserAdjustmentFilter $paginate)
-    {
-        $builder = Adjustment::userAdjustments()->tableFilters($paginate);
-
-        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
-
-        $pagination = $builder->paginate($perPage);
-        $pagination->appends([
-            'sort'     => $request->sort,
-            'search'   => $request->search,
-            'per_page' => $request->per_page
-        ]);
-
-        return $pagination;
-    }
-
-    /**
      * fetch all adjustments
      *
      * @param $request

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dildo\Traits;
+namespace Unifin\Traits;
 
 trait Paginate
 {

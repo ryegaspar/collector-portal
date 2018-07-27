@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Users;
 
 use App\Adjustment;
+use App\Http\Controllers\Controller;
 use App\Rules\AdjustmentAmount;
 use App\Rules\AdjustmentDate;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\UserAdjustmentFilter;
+use Unifin\Traits\Paginate;
 
 class AdjustmentsController extends Controller
 {
+    use Paginate;
+
     /**
      * CollectionController constructor.
      */
@@ -56,15 +59,13 @@ class AdjustmentsController extends Controller
     /**
      * return a lists of the resource in vuetable format
      *
-     * @param Request $request
-     * @param Adjustment $adjustment
-     * @param UserAdjustmentFilter $paginate
+     * @param UserAdjustmentFilter $userAdjustmentFilter
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, Adjustment $adjustment, UserAdjustmentFilter $paginate)
+    public function show(UserAdjustmentFilter $userAdjustmentFilter)
     {
-        $response = $adjustment->getUserAdjustments($request, $paginate);
-        if ($request->wantsJson()) {
+        $response = $this->getUserAdjustments($userAdjustmentFilter);
+        if (request()->wantsJson()) {
             return response()->json($response);
         }
     }
@@ -83,6 +84,21 @@ class AdjustmentsController extends Controller
             return response([], 204);
         } else
             return response([], 403);
+    }
+
+    /**
+     * fetch all relevant adjustments of the user
+     *
+     * @param $userAdjustmentFilter
+     * @return mixed
+     */
+    public function getUserAdjustments($userAdjustmentFilter)
+    {
+        $adjustments = Adjustment::userAdjustments()->tableFilters($userAdjustmentFilter);
+
+        $results = $this->paginate($adjustments);
+
+        return $results;
     }
 
 

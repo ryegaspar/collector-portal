@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Users;
 
 use App\DBR;
-use Dildo\Traits\Paginate;
+use Unifin\Traits\Paginate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Unifin\TableFilters\UserAccountFilter;
@@ -31,16 +31,30 @@ class AccountsController extends Controller
     /**
      * display specified resource
      *
-     * @param Request $request
-     * @param DBR $dbr
-     * @param UserAccountFilter $paginate
+     * @param UserAccountFilter $userAccountFilter
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, DBR $dbr, UserAccountFilter $paginate)
+    public function show(UserAccountFilter $userAccountFilter)
     {
-        $response = $dbr->getUserAccounts($request, $paginate);
-        if ($request->wantsJson()) {
-            return response()->json($response);
+        $dbr = $this->getUserAccounts($userAccountFilter);
+
+        if (request()->wantsJson()) {
+            return $dbr;
         }
+    }
+
+    /**
+     * fetch all relevant accounts for the user
+     *
+     * @param UserAccountFilter $userAccountFilter
+     * @return mixed
+     */
+    public function getUserAccounts($userAccountFilter)
+    {
+        $dbr = DBR::userAccounts()->tableFilters($userAccountFilter);
+
+        $results = $this->paginate($dbr);
+
+        return $results;
     }
 }

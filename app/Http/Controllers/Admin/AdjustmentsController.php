@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Adjustment;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Unifin\TableFilters\AdminAdjustmentFilter;
+use Unifin\Traits\Paginate;
 
 class AdjustmentsController extends Controller
 {
+    use Paginate;
+
     /**
      * CollectionController constructor.
      */
@@ -30,15 +32,13 @@ class AdjustmentsController extends Controller
     /**
      * return a lists of the resource in vuetable format
      *
-     * @param Request $request
-     * @param Adjustment $adjustment
-     * @param AdminAdjustmentFilter $paginate
+     * @param AdminAdjustmentFilter $adminAdjustmentFilter
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, Adjustment $adjustment, AdminAdjustmentFilter $paginate)
+    public function show(AdminAdjustmentFilter $adminAdjustmentFilter)
     {
-        $response = $adjustment->getAllAdjustments($request, $paginate);
-        if ($request->wantsJson()) {
+        $response = $this->getAllAdjustments($adminAdjustmentFilter);
+        if (request()->wantsJson()) {
             return response()->json($response);
         }
     }
@@ -47,7 +47,6 @@ class AdjustmentsController extends Controller
      * update status of the adjustment
      *
      * @param Adjustment $adjustment
-     * @param $status
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function update(Adjustment $adjustment)
@@ -59,5 +58,20 @@ class AdjustmentsController extends Controller
         $adjustment->update($data);
 
         return response([], 200);
+    }
+
+    /**
+     * get all adjustments
+     *
+     * @param $adminAdjustmentFilter
+     * @return mixed
+     */
+    public function getAllAdjustments($adminAdjustmentFilter)
+    {
+        $adjustments = Adjustment::tableFilters($adminAdjustmentFilter);
+
+        $results = $this->paginate($adjustments);
+
+        return $results;
     }
 }

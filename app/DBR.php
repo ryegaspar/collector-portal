@@ -317,27 +317,4 @@ class DBR extends Model
     {
         return $builder->where('DBR_DESK', Auth::user()->USR_DEF_MOT_DESK);
     }
-
-    /**
-     * fetch all relevant dbr accounts
-     *
-     * @param $request
-     * @param UserAccountFilter $paginate
-     * @return mixed
-     */
-    public function getUserAccounts($request, UserAccountFilter $paginate)
-    {
-        $builder = DBR::userAccounts()->tableFilters($paginate);
-
-        $perPage = $request->has('per_page') ? (int) $request->per_page : null;
-
-        $pagination = $builder->paginate($perPage);
-        $pagination->appends([
-            'sort' => $request->sort,
-            'search' => $request->search,
-            'per_page' => $request->per_page
-        ]);
-
-        return $pagination;
-    }
 }

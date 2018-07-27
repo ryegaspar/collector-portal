@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Users;
 
 use App\DebterPayment;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Unifin\TableFilters\UserTransactionFilter;
+use Unifin\Traits\Paginate;
 
 class TransactionsController extends Controller
 {
+    use Paginate;
+
     /**
      * create new instance of TransactionsController
      */
@@ -28,16 +30,53 @@ class TransactionsController extends Controller
     /**
      * display specified resource
      *
-     * @param Request $request
-     * @param DebterPayment $debterPayment
-     * @param UserTransactionFilter $paginate
+     * @param UserTransactionFilter $userTransactionFilter
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, DebterPayment $debterPayment, UserTransactionFilter $paginate)
+    public function show(UserTransactionFilter $userTransactionFilter)
     {
-        $response = $debterPayment->getUserPayments($request, $paginate);
-        if ($request->wantsJson()) {
-            return response()->json($response);
+        $transactions = $this->getTransactions($userTransactionFilter);
+
+        if (request()->wantsJson()) {
+            return $transactions;
         }
+    }
+
+    /**
+     * get transactions of the current user
+     *
+     * @param $userTransactionFilter
+     * @return mixed
+     */
+    public function getTransactions($userTransactionFilter)
+    {
+        $transactions = DebterPayment::userAccounts()->tabulate($userTransactionFilter);
+
+        $results = $this->paginate($transactions);
+
+        return $results;
+    }
+
+    /**
+     * override paginate to include additional search properties
+     *
+     * @param $model
+     * @return mixed
+     */
+    public function paginate($model)
+    {
+        $request = request();
+
+        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
+
+        $pagination = $model->paginate($perPage)->appends([
+            'sort'     => $request->sort,
+            'search'   => $request->search,
+            'per_page' => $request->per_page,
+            'status'   => $request->status,
+            'paydate'  => $request->paydate,
+        ]);
+
+        return $pagination;
     }
 }

@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers\Users;
 
-use App\DebterPayment;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Unifin\Repositories\RawQueries;
 
 class DashboardController extends Controller

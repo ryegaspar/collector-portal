@@ -141,29 +141,13 @@ class DebterPayment extends Model
     }
 
     /**
-     * fetch all relevant dbr accounts
+     * get a record with dbr_no, amount, date and transaction occurred
      *
-     * @param $request
-     * @param UserTransactionFilter $debterPayment
+     * @param $dbr_no
+     * @param $amount
+     * @param $date
      * @return mixed
      */
-    public function getUserPayments($request, UserTransactionFilter $debterPayment)
-    {
-        $builder = DebterPayment::userAccounts()->tabulate($debterPayment);
-
-        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
-
-        $pagination = $builder->paginate($perPage)->appends([
-            'sort'     => $request->sort,
-            'search'   => $request->search,
-            'per_page' => $request->per_page,
-            'status'   => $request->status,
-            'paydate'  => $request->paydate,
-        ]);
-
-        return $pagination;
-    }
-
     public static function getFirstRecord($dbr_no, $amount, $date)
     {
         $date = Carbon::parse($date)->toDateString();
