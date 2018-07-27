@@ -227,7 +227,7 @@
             }
         },
 
-        mounted() {
+        created() {
 			this.getData();
         }
 	}

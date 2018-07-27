@@ -67319,7 +67319,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 																}
 								},
 
-								mounted: function mounted() {
+								created: function created() {
 																this.getData();
 								}
 });
@@ -69789,7 +69789,7 @@ Vue.component('vtable-header', __WEBPACK_IMPORTED_MODULE_0__VtableHeader___defau
 		}
 	},
 
-	mounted: function mounted() {
+	created: function created() {
 		var _this2 = this;
 
 		this.$events.$on('reload-table', function (eventData) {
@@ -70005,7 +70005,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			})
 		};
 	},
-	mounted: function mounted() {
+	created: function created() {
 		var _this = this;
 
 		this.$events.$on('modal-reset', function (eventData) {

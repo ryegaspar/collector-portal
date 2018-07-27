@@ -92,7 +92,7 @@
 			}
 		},
 
-        mounted() {
+        created() {
 			this.$events.$on('modal-reset', eventData => this.onResetModal());
         },
 

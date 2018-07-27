@@ -163,7 +163,7 @@
 			}
 		},
 
-		mounted() {
+		created() {
 			this.$events.$on('reload-table', eventData => this.onReloadTable());
 		}
 	}
