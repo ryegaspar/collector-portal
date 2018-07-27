@@ -8,7 +8,7 @@
 	<meta name="author" content="Ryan Gaspar">
 	<link rel="shortcut icon" href="img/favicon.png">
 
-	<title>{{ config('app.name', 'UNIFIN') }}@section('title')@show</title>
+	<title>{{ config('app.name', 'UNIFIN') }}@yield('title')</title>
 
 	<!-- Main styles for this application -->
 	<link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
