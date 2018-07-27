@@ -17,6 +17,8 @@ class CreateAdjustmentsTable extends Migration
             $table->increments('id');
             $table->string('desk', 3);
             $table->string('dbr_no', 10);
+            $table->string('desk_from', 3);
+            $table->string('collector_name', 30);
             $table->string('name', 30);
             $table->float('amount', 11, 2);
             $table->date('date');

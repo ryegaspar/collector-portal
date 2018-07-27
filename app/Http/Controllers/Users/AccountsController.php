@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Users;
 
 use App\DBR;
+use Dildo\Traits\Paginate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Unifin\TableFilters\UserAccountFilter;
 
 class AccountsController extends Controller
 {
+    use Paginate;
+
     /**
      * CollectionController constructor.
      */

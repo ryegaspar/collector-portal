@@ -11,7 +11,7 @@ use Unifin\TableFilters\UserAdjustmentFilter;
 
 class Adjustment extends Model
 {
-    protected $fillable = ['desk', 'name', 'commission', 'dbr_no', 'amount', 'date', 'status'];
+    protected $fillable = ['desk', 'desk_from', 'name', 'collector_name', 'commission', 'dbr_no', 'amount', 'date', 'status'];
 
     /**
      * accessors to append to the model's array form
@@ -43,6 +43,8 @@ class Adjustment extends Model
 
         $adjustment['commission'] = $debterRecord->PAY_COMM;
         $adjustment['name'] = $debterRecord->PAY_NAME;
+        $adjustment['collector_name'] = Auth::user()->USR_NAME;
+        $adjustment['desk_from'] = $debterRecord->DESK;
         $adjustment['desk'] = Auth::user()->USR_DEF_MOT_DESK;
 
         return self::create($adjustment);
@@ -76,6 +78,21 @@ class Adjustment extends Model
     public function getFormattedCommissionAttribute()
     {
         return number_format($this->commission, 2, '.', ',');
+    }
+
+    /**
+     * fetch the created_at attribute as diffForHumans
+     *
+     * @param $date
+     * @return string
+     */
+    public function getCreatedAtAttribute($date)
+    {
+        if (Carbon::parse($date)->diffInDays(Carbon::now()) <= 5) {
+            return Carbon::parse($date)->diffForHumans();
+        }
+
+        return Carbon::parse($date)->toFormattedDateString();
     }
 
     /**
