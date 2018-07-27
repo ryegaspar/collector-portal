@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\AdminAdjustmentFilter;
 use Unifin\TableFilters\Interfaces\AdjustmentFilterInterface;
+use Unifin\TableFilters\TableFilter;
 use Unifin\TableFilters\UserAdjustmentFilter;
 
 class Adjustment extends Model
@@ -110,10 +111,10 @@ class Adjustment extends Model
      * apply filters to relevant dbr
      *
      * @param $query
-     * @param AdjustmentFilterInterface $paginate
+     * @param TableFilter $paginate
      * @return mixed
      */
-    public function scopeTableFilters($query, AdjustmentFilterInterface $paginate)
+    public function scopeTableFilters($query, TableFilter $paginate)
     {
         return $paginate->apply($query);
     }

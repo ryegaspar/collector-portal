@@ -2,9 +2,8 @@
 
 namespace Unifin\TableFilters;
 
-use Unifin\TableFilters\Interfaces\AdjustmentFilterInterface;
 
-class UserAdjustmentFilter extends TableFilter implements AdjustmentFilterInterface
+class UserAdjustmentFilter extends TableFilter
 {
     /**
      * columns to search
