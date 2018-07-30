@@ -20,6 +20,6 @@ class AdjustmentPolicy
      */
     public function delete(USR $usr, Adjustment $adjustment)
     {
-        return $adjustment->desk == $usr->USR_DEF_MOT_DESK;
+        return $adjustment->status == 0 && $adjustment->desk == $usr->USR_DEF_MOT_DESK;
     }
 }

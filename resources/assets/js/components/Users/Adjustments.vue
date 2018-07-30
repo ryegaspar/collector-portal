@@ -32,7 +32,9 @@
                                 :perPage=perPage>
                             <template slot="actions" slot-scope="props">
                                 <div class="custom-actions">
-                                    <button type="button" class="btn btn-danger btn-sm"
+                                    <button v-if="props.rowData.status==='0'"
+                                            type="button"
+                                            class="btn btn-danger btn-sm"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="delete"

@@ -69689,6 +69689,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -71860,29 +71862,31 @@ var render = function() {
                       fn: function(props) {
                         return [
                           _c("div", { staticClass: "custom-actions" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger btn-sm",
-                                attrs: {
-                                  type: "button",
-                                  "data-toggle": "tooltip",
-                                  "data-placement": "top",
-                                  title: "delete"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    _vm.itemAction(
-                                      "delete-item",
-                                      props.rowData,
-                                      props.rowIndex,
-                                      $event
-                                    )
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-trash-o" })]
-                            )
+                            props.rowData.status === "0"
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-danger btn-sm",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "tooltip",
+                                      "data-placement": "top",
+                                      title: "delete"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.itemAction(
+                                          "delete-item",
+                                          props.rowData,
+                                          props.rowIndex,
+                                          $event
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-trash-o" })]
+                                )
+                              : _vm._e()
                           ])
                         ]
                       }
