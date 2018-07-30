@@ -27,7 +27,23 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        $this->registerAdminPolicies();
 
-        //
+    }
+
+    /**
+     * Register the admin's policies.
+     *
+     * @return void
+     */
+    public function registerAdminPolicies()
+    {
+        Gate::define('access-superadmin', function ($user) {
+            return $user->access_level == 1;
+        });
+
+        Gate::define('access-admin', function ($user) {
+            return $user->access_level = 2;
+        });
     }
 }

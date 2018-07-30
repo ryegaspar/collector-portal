@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Adjustment;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Unifin\TableFilters\AdminAdjustmentFilter;
 use Unifin\Traits\Paginate;
 
@@ -16,7 +17,7 @@ class AdjustmentsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware(['auth:admin', 'can:access-superadmin']);
     }
 
     /**

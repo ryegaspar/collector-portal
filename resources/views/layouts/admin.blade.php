@@ -25,7 +25,9 @@
 		@yield('topnavbar')
 
 		<div class="app-body">
+			@can('access-superadmin')
 			<sidebar></sidebar>
+			@endcan
 			@yield('content')
 		</div>
 
@@ -38,7 +40,7 @@
 	<script src="{{ URL::asset('js/superadmin.js') }}"></script>
 	@yield('footer')
 	<script>
-		$(function() {
+		$(function () {
 			$('body').tooltip({
 				selector: '[data-toggle=tooltip]'
 			});
