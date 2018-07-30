@@ -67916,6 +67916,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -67942,7 +67943,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.submitButton = '<span><i class="fa fa-circle-o-notch fa-spin"></i></span>';
 			var url = './login';
 			axios.post(url, this.form).catch(function (error) {
-				console.log(error.response.data.errors);
 				_this.$refs.password.focus();
 				if (error.response.data.errors.username) _this.errorMessage = error.response.data.errors.username[0];else _this.errorMessage = error.response.data.errors.password[0];
 				_this.hasErrors = true;

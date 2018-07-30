@@ -67877,9 +67877,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -67891,7 +67888,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       submitButton: 'Login',
       isLoading: false,
-      hasErrors: false
+      hasErrors: false,
+      errorMessage: ''
     };
   },
 
@@ -67904,6 +67902,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.submitButton = '<span><i class="fa fa-spinner fa-spin"></i></span>';
       var url = './login';
       axios.post(url, this.form).catch(function () {
+        _this.$refs.password.focus();
+        _this.errorMessage = 'invalid username/password';
         _this.hasErrors = true;
         _this.isLoading = false;
         _this.submitButton = 'Login';
@@ -67927,7 +67927,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card-body" }, [
-    _c("h1", [_vm._v("Login")]),
+    _c("h1", { staticStyle: { color: "#94a0b2" } }, [_vm._v("Login")]),
     _vm._v(" "),
     _c("p", { staticClass: "text-muted" }, [_vm._v("Sign In to your account")]),
     _vm._v(" "),
@@ -67966,16 +67966,10 @@ var render = function() {
                 _vm.$set(_vm.form, "username", $event.target.value)
               }
             }
-          }),
-          _vm._v(" "),
-          _vm.hasErrors
-            ? _c("em", { staticClass: "error invalid-feedback" }, [
-                _vm._v("Invalid username or password")
-              ])
-            : _vm._e()
+          })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "input-group mb-4" }, [
+        _c("div", { staticClass: "input-group mb-3" }, [
           _vm._m(1),
           _vm._v(" "),
           _c("input", {
@@ -67987,11 +67981,15 @@ var render = function() {
                 expression: "form.password"
               }
             ],
+            ref: "password",
             staticClass: "form-control",
             class: _vm.hasErrors ? "is-invalid" : "",
             attrs: { type: "password", placeholder: "Password" },
             domProps: { value: _vm.form.password },
             on: {
+              focus: function($event) {
+                $event.target.select()
+              },
               input: function($event) {
                 if ($event.target.composing) {
                   return
@@ -68000,6 +67998,14 @@ var render = function() {
               }
             }
           })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group mb-4" }, [
+          _vm.hasErrors
+            ? _c("em", { staticClass: "error invalid-feedback" }, [
+                _vm._v(_vm._s(_vm.errorMessage))
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [

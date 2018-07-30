@@ -6,7 +6,8 @@
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"
-                          style="background-color: transparent;border: none"><i class="icon-user"></i></span>
+                          style="background-color: transparent;border: none"><i class="icon-user"></i>
+                    </span>
                 </div>
                 <input type="text"
                        class="form-control"
@@ -76,7 +77,6 @@
 				let url = './login';
 				axios.post(url, this.form)
 					.catch((error) => {
-						console.log(error.response.data.errors);
 						this.$refs.password.focus();
 						if (error.response.data.errors.username)
 							this.errorMessage = error.response.data.errors.username[0];
