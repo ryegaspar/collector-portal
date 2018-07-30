@@ -11,6 +11,8 @@
             <li class="nav-item px-3">{{ title }}</li>
         </ul>
         <ul class="nav navbar-nav d-md-down-none ml-auto">
+            <li class="nav-item">{{ name }}
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link"
                    data-toggle="dropdown"
@@ -37,6 +39,12 @@
     	props: [
     		'title',
         ],
+
+        data() {
+    		return {
+				'name': window.App.name,
+            }
+        },
 
     	methods: {
     		doLogout() {

@@ -25,9 +25,13 @@ Route::prefix('admin')->group(function() {
     Route::post('logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 
     Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
+
     Route::get('adjustments', 'Admin\AdjustmentsController@index')->name('admin.adjustments');
     Route::get('adjustments/show', 'Admin\AdjustmentsController@show')->name('admin.adjustments.show');
     Route::patch('adjustments/{adjustment}', 'Admin\AdjustmentsController@update')->name('admin.adjustments.update');
+
+    Route::get('users', 'Admin\UsersController@index')->name('admin.users');
+    Route::get('users/show', 'Admin\UsersController@show')->name('admin.users.show');
 });
 
 Route::redirect('/', '/dashboard');

@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('password');
             $table->unsignedSmallInteger('access_level')->default(5);
+            $table->boolean('active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

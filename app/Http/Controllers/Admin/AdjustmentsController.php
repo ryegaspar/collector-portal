@@ -12,7 +12,7 @@ class AdjustmentsController extends Controller
     use Paginate;
 
     /**
-     * CollectionController constructor.
+     * AdjustmentsController constructor.
      */
     public function __construct()
     {
@@ -26,7 +26,7 @@ class AdjustmentsController extends Controller
      */
     public function index()
     {
-        return view('admin.adjustments');
+        return view('superadmin.adjustments');
     }
 
     /**

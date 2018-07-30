@@ -21,9 +21,19 @@ class UserSeeder extends Seeder
         ]);
 
         factory(User::class)->create([
-            'username' => 'admin5',
+            'password'     => bcrypt('Password'),
+            'access_level' => 1
+        ], 3);
+
+        factory(User::class)->create([
+            'username' => 'admin2',
             'password' => bcrypt('Password'),
-            'access_level' => 5
+            'access_level' => 2
         ]);
+
+        factory(User::class)->create([
+            'password' => bcrypt('Password'),
+            'access_level' => 2
+        ], 2);
     }
 }

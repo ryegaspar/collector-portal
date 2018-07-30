@@ -67,8 +67,6 @@
 					'date': this.startDate() + '|' + this.endDate()
                 },
 				perPage: 25,
-
-				isAdd: true
 			}
 		},
 

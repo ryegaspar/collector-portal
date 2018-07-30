@@ -13,6 +13,11 @@
 	<!-- Main styles for this application -->
 	<link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
 	@yield('header')
+	<script>
+		window.App = {!! json_encode([
+			'name' => Auth::user()->USR_NAME
+		]) !!}
+	</script>
 </head>
 
 <body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">

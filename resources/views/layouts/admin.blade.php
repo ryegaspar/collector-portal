@@ -13,6 +13,11 @@
 	<!-- Main styles for this application -->
 	<link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
 	@yield('header')
+	<script>
+		window.App = {!! json_encode([
+			'name' => Auth::user()->first_name.' '.Auth::user()->last_name
+		]) !!}
+	</script>
 </head>
 
 <body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
@@ -30,7 +35,7 @@
 	</div>
 
 	<!-- Bootstrap and necessary plugins -->
-	<script src="{{ URL::asset('js/admin.js') }}"></script>
+	<script src="{{ URL::asset('js/superadmin.js') }}"></script>
 	@yield('footer')
 	<script>
 		$(function() {
