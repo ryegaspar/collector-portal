@@ -11,7 +11,7 @@ export default [
 		sortField: 'name',
 		title: 'Name',
 		titleClass: 'text-center',
-		visible: true,
+		visible: false,
 	},
 	{
 		name: 'formatted_date',
@@ -36,6 +36,13 @@ export default [
 		titleClass: 'text-center',
 		dataClass: 'text-right',
 		visible: true,
+	},
+	{
+		name: 'created_at',
+		sortField: 'created_at',
+		title: 'Date Submitted',
+		titleClass: 'text-center',
+		dataClass: 'text-right'
 	},
 	{
 		name: 'status',

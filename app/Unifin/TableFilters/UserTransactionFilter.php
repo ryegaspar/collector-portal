@@ -27,12 +27,15 @@ class UserTransactionFilter extends TableFilter
      */
     public function filterPaydate()
     {
-        if ($this->request->paydate) {
-            list($startDate, $endDate) = explode('|', $this->request->paydate);
+        if ($this->request->date) {
+            list($startDate, $endDate) = explode('|', $this->request->date);
             $startDate = Carbon::parse($startDate);
             $endDate = Carbon::parse($endDate);
 
-            $this->builder->whereBetween('PAY_DATE_O', [$startDate, $endDate]);
+//            $this->builder->whereBetween('PAY_DATE_O', [$startDate, $endDate]);
+            $this->builder
+                ->whereDate('PAY_DATE_O','>=', $startDate)
+                ->whereDate('PAY_DATE_O', '<=', $endDate);
         }
         return $this;
     }

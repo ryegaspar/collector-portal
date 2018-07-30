@@ -6,13 +6,21 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\AdminAdjustmentFilter;
-use Unifin\TableFilters\Interfaces\AdjustmentFilterInterface;
 use Unifin\TableFilters\TableFilter;
-use Unifin\TableFilters\UserAdjustmentFilter;
 
 class Adjustment extends Model
 {
-    protected $fillable = ['desk', 'desk_from', 'name', 'collector_name', 'commission', 'dbr_no', 'amount', 'date', 'status'];
+    protected $fillable = [
+        'desk',
+        'desk_from',
+        'name',
+        'collector_name',
+        'commission',
+        'dbr_no',
+        'amount',
+        'date',
+        'status'
+    ];
 
     /**
      * accessors to append to the model's array form
@@ -27,8 +35,9 @@ class Adjustment extends Model
      * @var array
      */
     protected $casts = [
-        'date'     => 'datetime:m/d/Y',
+        'date' => 'datetime:m/d/Y',
     ];
+
 
     /**
      * add adjustments for the collector

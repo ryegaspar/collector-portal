@@ -7,6 +7,10 @@
                         <vtable-header :perPage=perPage
                                        :fields="fieldDefs"
                                        placeholder="desk, name"></vtable-header>
+                        <vtable-sub-header-adjustments
+                                :prop-start-date="startText"
+                                :prop-end-date="endText">
+                        </vtable-sub-header-adjustments>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
@@ -37,15 +41,16 @@
 	import VtableAdjustmentsFieldDefs from './VtableAdjustmentsFieldDefs';
 	import Vtable from '../VTable';
 	import VueEvents from 'vue-events';
+	import VtableSubHeaderAdjustments from './VtableSubHeaderAdjustments';
 
 	Vue.use(VueEvents);
-
-	Vue.component('vtable-header', VtableHeader);
 
 	export default {
 
 		components: {
 			Vtable,
+			VtableHeader,
+			VtableSubHeaderAdjustments
 		},
 
 		data() {
@@ -58,7 +63,9 @@
 						direction: 'desc'
 					}
 				],
-				moreParams: {},
+				moreParams: {
+					'date': this.startDate() + '|' + this.endDate()
+                },
 				perPage: 25,
 
 				isAdd: true
@@ -66,6 +73,14 @@
 		},
 
 		methods: {
+			startDate() {
+				return moment(moment().startOf('month')).format("YYYY-MM-DD");
+			},
+
+			endDate() {
+				return moment(moment().endOf('month')).format("YYYY-MM-DD");
+			},
+
 			itemAction(action, data, index, e) {
 				let innerHTML = e.currentTarget.innerHTML;
 				let button = e.currentTarget;
@@ -123,6 +138,14 @@
 			tableUrl() {
 				return `./adjustments/show`;
 			},
+
+			startText() {
+				return moment().startOf('month');
+			},
+
+			endText() {
+				return moment().endOf('month');
+			}
 		},
 
 		mounted() {

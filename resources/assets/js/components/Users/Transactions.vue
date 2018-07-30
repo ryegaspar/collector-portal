@@ -48,12 +48,11 @@
 
 	Vue.use(VueEvents);
 
-	Vue.component('vtable-header', VtableHeader);
-
 	export default {
 
 		components: {
 			Vtable,
+            VtableHeader,
             VtableSubHeaderTransactions
 		},
 
@@ -62,13 +61,13 @@
 				fieldDefs: VtableTransactionsFieldDefs,
 				sortOrder: [
 					{
-						field: 'pay_date',
-						sortField: 'PAY_DATE_O',
-						direction: 'asc'
+						field: 'created_at',
+						sortField: 'created_at',
+						direction: 'desc'
 					}
 				],
 				moreParams: {
-					'paydate': this.startDate() + '|' + this.endDate()
+					'date': this.startDate() + '|' + this.endDate()
                 },
 				perPage: 25
 			}

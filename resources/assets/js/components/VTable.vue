@@ -73,7 +73,7 @@
 			this.$events.$on('search-set', eventData => this.onSearchSet(eventData));
 			this.$events.$on('search-reset', eventData => this.onSearchReset());
 			this.$events.$on('change-per-page', eventData => this.onChangePagesToShow(eventData));
-			this.$events.$on('paydate-change', (date1, date2) => this.onPaydateChange(date1, date2));
+			this.$events.$on('date-change', (date1, date2) => this.onPaydateChange(date1, date2));
 			this.$events.$on('status-change', eventData => this.onStatusChange(eventData));
 		},
 
@@ -203,7 +203,7 @@
 
 			onPaydateChange(date1, date2) {
 				// console.log(date1, date2);
-				this.appendParams.paydate = date1 + '|' + date2;
+				this.appendParams.date = date1 + '|' + date2;
 				Vue.nextTick(() => this.$refs.vuetable.refresh());
 			},
 

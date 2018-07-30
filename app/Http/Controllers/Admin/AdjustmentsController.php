@@ -74,4 +74,27 @@ class AdjustmentsController extends Controller
 
         return $results;
     }
+
+    /**
+     * override paginate to include additional search properties
+     *
+     * @param $model
+     * @return mixed
+     */
+    public function paginate($model)
+    {
+        $request = request();
+
+        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
+
+        $pagination = $model->paginate($perPage)->appends([
+            'sort'     => $request->sort,
+            'search'   => $request->search,
+            'per_page' => $request->per_page,
+            'status'   => $request->created_at,
+//            'paydate'  => $request->paydate,
+        ]);
+
+        return $pagination;
+    }
 }

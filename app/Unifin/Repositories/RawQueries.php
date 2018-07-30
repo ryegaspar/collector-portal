@@ -24,19 +24,21 @@ class RawQueries
 
     public static function UserMonthlyTransactions($date = null)
     {
-        $startDate = Carbon::parse('first day of this month')->format("Y-m-d");
-        $endDate = Carbon::parse('last day of this month')->format("Y-m-d");
+        $startDate = Carbon::parse('first day of this month')->toDateString();
+        $endDate = Carbon::parse('last day of this month')->toDateString();
 
         if ($date) {
-            $startDate = Carbon::parse("first day of {$date}")->format("Y-m-d");
-            $endDate = Carbon::parse("last day of {$date}")->format("Y-m-d");
+            $startDate = Carbon::parse("first day of {$date}")->toDateString();
+            $endDate = Carbon::parse("last day of {$date}")->toDateString();
         }
 
         $transactions = DB::connection('sqlsrv2')
             ->table('UFN.PaymentTable')
             ->select(DB::raw('sum(PAY_AMT) as trs_payment_amount, sum(PAY_COMM) as trs_payment_comm_amount'))
             ->where('DESK', Auth::user()->USR_DEF_MOT_DESK)
-            ->whereBetween('PAY_DATE_O', [$startDate, $endDate])
+//            ->whereBetween('PAY_DATE_O', [$startDate, $endDate])
+            ->whereDate('PAY_DATE_O', '>=', $startDate)
+            ->whereDate('PAY_DATE_O', '<=', $endDate)
             ->where('PAY_STATUS', 'T')
             ->get();
 
