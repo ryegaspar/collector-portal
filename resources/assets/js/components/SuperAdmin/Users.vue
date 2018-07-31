@@ -4,13 +4,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <!--<vtable-header :perPage=perPage-->
-                                       <!--:fields="fieldDefs"-->
-                                       <!--placeholder="desk, name"></vtable-header>-->
-                        <!--<vtable-sub-header-adjustments-->
-                                <!--:prop-start-date="startText"-->
-                                <!--:prop-end-date="endText">-->
-                        <!--</vtable-sub-header-adjustments>-->
+                        <vtable-header :perPage=perPage
+                                       :fields="fieldDefs"
+                                       placeholder="name, id"></vtable-header>
+                        <vtable-sub-header-users></vtable-sub-header-users>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
@@ -41,7 +38,7 @@
 	import VtableUsersFieldDefs from './VtableUsersFieldDefs';
 	import Vtable from '../VTable';
 	import VueEvents from 'vue-events';
-	import VtableSubHeaderAdjustments from './VtableSubHeaderAdjustments';
+	import VtableSubHeaderUsers from './VtableSubHeaderUsers';
 
 	Vue.use(VueEvents);
 
@@ -50,7 +47,7 @@
 		components: {
 			Vtable,
 			VtableHeader,
-			VtableSubHeaderAdjustments
+            VtableSubHeaderUsers
 		},
 
 		data() {

@@ -75,6 +75,9 @@
 			this.$events.$on('change-per-page', eventData => this.onChangePagesToShow(eventData));
 			this.$events.$on('date-change', (date1, date2) => this.onPaydateChange(date1, date2));
 			this.$events.$on('status-change', eventData => this.onStatusChange(eventData));
+
+			this.$events.$on('filter1-change', eventData => this.onFilter1Change(eventData));
+			this.$events.$on('filter2-change', eventData => this.onFilter2Change(eventData));
 		},
 
 		render(h) {
@@ -202,7 +205,6 @@
 			},
 
 			onPaydateChange(date1, date2) {
-				// console.log(date1, date2);
 				this.appendParams.date = date1 + '|' + date2;
 				Vue.nextTick(() => this.$refs.vuetable.refresh());
 			},
@@ -210,7 +212,17 @@
 			onStatusChange(status) {
 				this.appendParams.status = status;
 				Vue.nextTick(() => this.$refs.vuetable.refresh());
-			}
+			},
+
+            onFilter1Change(filter) {
+				this.appendParams.filter1 = filter;
+				Vue.nextTick(() => this.$refs.vuetable.refresh());
+            },
+
+            onFilter2Change(filter) {
+				this.appendParams.filter2 = filter;
+				Vue.nextTick(() => this.$refs.vuetable.refresh());
+            }
 		},
 
 		created() {
