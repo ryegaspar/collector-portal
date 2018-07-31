@@ -49,19 +49,4 @@ class AdminUserFilter extends TableFilter
 
         return $this;
     }
-
-    /**
-     * override apply tabulation
-     *
-     * @param $builder
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function apply($builder)
-    {
-        $this->builder = $builder;
-
-        $this->search()->sort()->filterGroup()->filterStatus();
-
-        return $this->builder;
-    }
 }

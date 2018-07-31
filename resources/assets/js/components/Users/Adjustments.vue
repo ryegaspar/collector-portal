@@ -75,9 +75,9 @@
 				fieldDefs: VtableAdjustmentsFieldDefs,
 				sortOrder: [
 					{
-						field: 'date',
-						sortField: 'date',
-						direction: 'asc'
+						field: 'created_at',
+						sortField: 'created_at',
+						direction: 'desc'
 					}
 				],
 				moreParams: {},

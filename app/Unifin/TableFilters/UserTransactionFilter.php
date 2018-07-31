@@ -47,27 +47,12 @@ class UserTransactionFilter extends TableFilter
      */
     public function filterStatus()
     {
-        if ($this->request->status) {
-            if ($this->request->status != "A") {
-                $this->builder->where("PAY_STATUS", $this->request->status);
+        if ($this->request->filter1) {
+            if ($this->request->filter1 != "A") {
+                $this->builder->where("PAY_STATUS", $this->request->filter1);
             }
         }
 
         return $this;
-    }
-
-    /**
-     * apply tabulation
-     *
-     * @param $builder
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function apply($builder)
-    {
-        $this->builder = $builder;
-
-        $this->search()->sort()->filterStatus()->filterPaydate();
-
-        return $this->builder;
     }
 }

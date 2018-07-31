@@ -111,7 +111,7 @@
 
             filterStatus(code, text) {
 				this.statusText = text;
-				this.$events.fire('status-change', code);
+				this.$events.fire('filter1-change', code);
 			}
 		},
 

@@ -4,6 +4,13 @@
             <!--<div class="toolbar">-->
             <div class="col-md-6 input-group" style="padding-left: 2px;padding-right: 2px">
                 <div class="btn-group input-group-append">
+                    <div class="btn-group-sm">
+                        <button type="button"
+                                class="btn btn-primary mr-2"
+                                @click="addUser">
+                            <i class="icon-plus"></i> Add
+                        </button>
+                    </div>
                     <label class="col-form-label-sm mr-1">Group</label>
                     <div class="dropdown">
                         <button type="button"
@@ -70,10 +77,15 @@
 		},
 
 		methods: {
+			addUser() {
+				this.$emit('addUser');
+            },
+
             filter1Run(code, text) {
 				this.filter1Text = text;
 				this.$events.fire('filter1-change', code);
             },
+
 			filter2Run(code, text) {
 				this.filter2Text = text;
 				this.$events.fire('filter2-change', code);

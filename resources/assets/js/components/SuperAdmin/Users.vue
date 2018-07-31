@@ -7,7 +7,7 @@
                         <vtable-header :perPage=perPage
                                        :fields="fieldDefs"
                                        placeholder="name, id"></vtable-header>
-                        <vtable-sub-header-users></vtable-sub-header-users>
+                        <vtable-sub-header-users @addUser="addUser"></vtable-sub-header-users>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
@@ -70,6 +70,9 @@
 		},
 
 		methods: {
+			addUser() {
+				console.log('gotcha!');
+            }
 			// startDate() {
 			// 	return moment(moment().startOf('month')).format("YYYY-MM-DD");
 			// },

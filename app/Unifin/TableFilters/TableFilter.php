@@ -99,6 +99,12 @@ class TableFilter
 
         $this->search()->sort();
 
+        $filters = preg_grep('/^filter/', get_class_methods($this));
+
+        foreach($filters as $filter) {
+            $this->$filter();
+        }
+
         return $this->builder;
     }
 }

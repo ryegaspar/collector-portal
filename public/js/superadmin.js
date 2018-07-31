@@ -65322,37 +65322,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this4.$refs.vuetable.refresh();
 			});
 		},
-		onStatusChange: function onStatusChange(status) {
+		onFilter1Change: function onFilter1Change(filter) {
 			var _this5 = this;
 
-			this.appendParams.status = status;
+			this.appendParams.filter1 = filter;
 			Vue.nextTick(function () {
 				return _this5.$refs.vuetable.refresh();
 			});
 		},
-		onFilter1Change: function onFilter1Change(filter) {
-			var _this6 = this;
-
-			this.appendParams.filter1 = filter;
-			Vue.nextTick(function () {
-				return _this6.$refs.vuetable.refresh();
-			});
-		},
 		onFilter2Change: function onFilter2Change(filter) {
-			var _this7 = this;
+			var _this6 = this;
 
 			this.appendParams.filter2 = filter;
 			Vue.nextTick(function () {
-				return _this7.$refs.vuetable.refresh();
+				return _this6.$refs.vuetable.refresh();
 			});
 		}
 	},
 
 	created: function created() {
-		var _this8 = this;
+		var _this7 = this;
 
 		this.$parent.$on('reload', function () {
-			_this8.$refs.vuetable.reload();
+			_this7.$refs.vuetable.reload();
 		});
 	},
 
@@ -65372,10 +65364,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	watch: {
 		perPageShow: function perPageShow() {
-			var _this9 = this;
+			var _this8 = this;
 
 			this.$nextTick(function () {
-				_this9.$refs.vuetable.refresh();
+				_this8.$refs.vuetable.refresh();
 			});
 		}
 	}
@@ -68642,7 +68634,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	methods: {
 		filterStatus: function filterStatus(code, text) {
 			this.statusText = text;
-			this.$events.fire('status-change', code);
+			this.$events.fire('filter1-change', code);
 		}
 	},
 
@@ -68976,6 +68968,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_events___default.a);
 
 
 	methods: {
+		addUser: function addUser() {
+			console.log('gotcha!');
+		}
 		// startDate() {
 		// 	return moment(moment().startOf('month')).format("YYYY-MM-DD");
 		// },
@@ -69035,6 +69030,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_events___default.a);
 		// 		button.innerHTML = innerHTML;
 		// 	})
 		// }
+
 	},
 
 	computed: {
@@ -69133,7 +69129,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("vtable-sub-header-users"),
+              _c("vtable-sub-header-users", { on: { addUser: _vm.addUser } }),
               _vm._v(" "),
               _c("vtable", {
                 attrs: {
@@ -69844,6 +69840,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	components: {},
@@ -69859,6 +69862,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 	methods: {
+		addUser: function addUser() {
+			this.$emit('addUser');
+		},
 		filter1Run: function filter1Run(code, text) {
 			this.filter1Text = text;
 			this.$events.fire('filter1-change', code);
@@ -69890,6 +69896,21 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "btn-group input-group-append" }, [
+            _c("div", { staticClass: "btn-group-sm" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary mr-2",
+                  attrs: { type: "button" },
+                  on: { click: _vm.addUser }
+                },
+                [
+                  _c("i", { staticClass: "icon-plus" }),
+                  _vm._v(" Add\n                    ")
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c("label", { staticClass: "col-form-label-sm mr-1" }, [
               _vm._v("Group")
             ]),

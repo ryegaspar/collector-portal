@@ -61,8 +61,8 @@
 				fieldDefs: VtableTransactionsFieldDefs,
 				sortOrder: [
 					{
-						field: 'created_at',
-						sortField: 'created_at',
+						field: 'PAY_DATE_O',
+						sortField: 'PAY_DATE_O',
 						direction: 'desc'
 					}
 				],

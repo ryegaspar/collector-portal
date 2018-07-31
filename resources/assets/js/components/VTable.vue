@@ -209,11 +209,6 @@
 				Vue.nextTick(() => this.$refs.vuetable.refresh());
 			},
 
-			onStatusChange(status) {
-				this.appendParams.status = status;
-				Vue.nextTick(() => this.$refs.vuetable.refresh());
-			},
-
             onFilter1Change(filter) {
 				this.appendParams.filter1 = filter;
 				Vue.nextTick(() => this.$refs.vuetable.refresh());

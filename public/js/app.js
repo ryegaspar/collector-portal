@@ -65322,37 +65322,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this4.$refs.vuetable.refresh();
 			});
 		},
-		onStatusChange: function onStatusChange(status) {
+		onFilter1Change: function onFilter1Change(filter) {
 			var _this5 = this;
 
-			this.appendParams.status = status;
+			this.appendParams.filter1 = filter;
 			Vue.nextTick(function () {
 				return _this5.$refs.vuetable.refresh();
 			});
 		},
-		onFilter1Change: function onFilter1Change(filter) {
-			var _this6 = this;
-
-			this.appendParams.filter1 = filter;
-			Vue.nextTick(function () {
-				return _this6.$refs.vuetable.refresh();
-			});
-		},
 		onFilter2Change: function onFilter2Change(filter) {
-			var _this7 = this;
+			var _this6 = this;
 
 			this.appendParams.filter2 = filter;
 			Vue.nextTick(function () {
-				return _this7.$refs.vuetable.refresh();
+				return _this6.$refs.vuetable.refresh();
 			});
 		}
 	},
 
 	created: function created() {
-		var _this8 = this;
+		var _this7 = this;
 
 		this.$parent.$on('reload', function () {
-			_this8.$refs.vuetable.reload();
+			_this7.$refs.vuetable.reload();
 		});
 	},
 
@@ -65372,10 +65364,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	watch: {
 		perPageShow: function perPageShow() {
-			var _this9 = this;
+			var _this8 = this;
 
 			this.$nextTick(function () {
-				_this9.$refs.vuetable.refresh();
+				_this8.$refs.vuetable.refresh();
 			});
 		}
 	}
@@ -69121,8 +69113,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_4_vue_events___default.a);
 		return {
 			fieldDefs: __WEBPACK_IMPORTED_MODULE_2__VtableTransactionsFieldDefs__["a" /* default */],
 			sortOrder: [{
-				field: 'created_at',
-				sortField: 'created_at',
+				field: 'PAY_DATE_O',
+				sortField: 'PAY_DATE_O',
 				direction: 'desc'
 			}],
 			moreParams: {
@@ -69362,7 +69354,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		filterStatus: function filterStatus(code, text) {
 			this.statusText = text;
-			this.$events.fire('status-change', code);
+			this.$events.fire('filter1-change', code);
 		}
 	},
 
@@ -69776,9 +69768,9 @@ Vue.component('vtable-header', __WEBPACK_IMPORTED_MODULE_0__VtableHeader___defau
 		return {
 			fieldDefs: __WEBPACK_IMPORTED_MODULE_1__VtableAdjustmentsFieldDefs__["a" /* default */],
 			sortOrder: [{
-				field: 'date',
-				sortField: 'date',
-				direction: 'asc'
+				field: 'created_at',
+				sortField: 'created_at',
+				direction: 'desc'
 			}],
 			moreParams: {},
 			perPage: 25,
