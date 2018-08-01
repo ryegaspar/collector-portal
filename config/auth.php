@@ -109,4 +109,10 @@ return [
 //        ]
     ],
 
+    'reserved_usernames' => [
+        'admin',
+        'moderator',
+        'owner',
+    ],
+
 ];

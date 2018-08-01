@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Adjustment;
 use App\Policies\AdjustmentPolicy;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Model'       => 'App\Policies\ModelPolicy',
         Adjustment::class => AdjustmentPolicy::class,
     ];
 
@@ -39,11 +39,11 @@ class AuthServiceProvider extends ServiceProvider
     public function registerAdminPolicies()
     {
         Gate::define('access-superadmin', function ($user) {
-            return $user->access_level == 1;
+            return $user->access_level <= 1;
         });
 
         Gate::define('access-admin', function ($user) {
-            return $user->access_level = 2;
+            return $user->access_level <= 2;
         });
     }
 }

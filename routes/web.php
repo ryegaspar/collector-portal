@@ -32,6 +32,10 @@ Route::prefix('admin')->group(function() {
 
     Route::get('users', 'Admin\UsersController@index')->name('admin.users');
     Route::get('users/show', 'Admin\UsersController@show')->name('admin.users.show');
+    Route::post('users', 'Admin\UsersController@store')->name('admin.users.store');
+    Route::get('users/{user}', 'Admin\UsersController@edit')->name('admin.users.edit');
+    Route::patch('users/{user}', 'Admin\UsersController@update')->name('admin.users.update');
+    Route::patch('users/toggle-active/{user}', 'Admin\UserToggleActiveController@update')->name('users.toggleActive');
 });
 
 Route::redirect('/', '/dashboard');
@@ -51,8 +55,8 @@ Route::get('/transactions', 'Users\TransactionsController@index')->name('user.tr
 Route::get('/transactions/show', 'Users\TransactionsController@show')->name('user.transactions.show');
 
 Route::get('/adjustments', 'Users\AdjustmentsController@index')->name('user.adjustments');
-Route::post('/adjustments', 'Users\AdjustmentsController@store')->name('user.adjustments.store');
 Route::get('/adjustments/show', 'Users\AdjustmentsController@show')->name('user.adjustments.show');
+Route::post('/adjustments', 'Users\AdjustmentsController@store')->name('user.adjustments.store');
 Route::delete('/adjustments/{adjustment}', 'Users\AdjustmentsController@destroy')->name('user.adjustments.destroy');
 
 

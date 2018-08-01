@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Rules\Username;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\AdminUserFilter;
 use Unifin\Traits\Paginate;
 
@@ -16,7 +19,7 @@ class UsersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'can:access-superadmin']);
+        $this->middleware(['auth:admin', 'activeUser', 'can:access-superadmin']);
     }
 
     /**
@@ -41,6 +44,63 @@ class UsersController extends Controller
         if (request()->wantsJson()) {
             return response()->json($response);
         }
+    }
+
+    /**
+     * persists a new user
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function store(Request $request)
+    {
+        $user = $request->validate([
+            'username'     => ['required', 'min:6', 'unique:users,username', new Username],
+            'first_name'   => ['required'],
+            'last_name'    => ['required'],
+            'access_level' => ['required']
+        ]);
+
+        $response = User::create($user);
+
+        return response($response, 201);
+    }
+
+    /**
+     * get user
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function edit(User $user)
+    {
+        if (request()->wantsJson()) {
+            return response($user, 200);
+        }
+    }
+
+
+    /**
+     * update the given user
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function update(User $user)
+    {
+        if (Auth::user()->id == $user->id) {
+            return response([], 403);
+        }
+
+        $newUser = request()->validate([
+            'first_name'   => 'required',
+            'last_name'    => 'required',
+            'access_level' => 'required',
+        ]);
+
+        $user->update($newUser);
+
+        return response([], 201);
     }
 
     /**

@@ -8,11 +8,17 @@ export default [
 		visible: true,
 	},
 	{
+		name: 'username',
+		sortField: 'username',
+		title: 'Username',
+		titleClass: 'text-center',
+		visible: true,
+	},
+	{
 		name: 'full_name',
 		sortField: 'first_name',
 		title: 'Name',
 		titleClass: 'text-center',
-		dataClass: 'text-center',
 		visible: true,
 	},
 	{

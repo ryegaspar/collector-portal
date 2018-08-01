@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('last_name');
             $table->string('first_name');
-            $table->string('password');
+            $table->string('password')->default(bcrypt('Password1'));
             $table->unsignedSmallInteger('access_level')->default(5);
             $table->boolean('active')->default(true);
             $table->rememberToken();
