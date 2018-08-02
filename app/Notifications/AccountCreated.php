@@ -55,7 +55,7 @@ class AccountCreated extends Notification
         $user = $this->user;
         $unencrypted_password = $this->unencrypted_password;
         return (new MailMessage)
-            ->from('donotreply@unifinrs.com')
+            ->from('noreply@unifinrs.com')
             ->subject('Welcome to Unifin')
             ->markdown('mail.welcome', compact('user', 'unencrypted_password'));
     }

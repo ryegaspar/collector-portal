@@ -27,7 +27,7 @@ class AdjustmentsController extends Controller
      */
     public function index()
     {
-        return view('superadmin.adjustments');
+        return view('admin.adjustments');
     }
 
     /**
@@ -39,6 +39,7 @@ class AdjustmentsController extends Controller
     public function show(AdminAdjustmentFilter $adminAdjustmentFilter)
     {
         $response = $this->getAllAdjustments($adminAdjustmentFilter);
+
         if (request()->wantsJson()) {
             return response()->json($response);
         }

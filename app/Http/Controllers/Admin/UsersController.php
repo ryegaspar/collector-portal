@@ -31,7 +31,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('superadmin.users');
+        return view('admin.users');
     }
 
     /**

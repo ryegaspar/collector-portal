@@ -24,6 +24,6 @@
 		</div>
 	</div>
 
-	<script src="{{ url::asset('js/admin.js') }}"></script>
+	<script src="{{ url::asset('js/superadmin.js') }}"></script>
 </body>
 </html>

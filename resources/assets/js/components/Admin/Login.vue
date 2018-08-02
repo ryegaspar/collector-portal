@@ -40,13 +40,19 @@
                 <em class="error invalid-feedback" v-if="hasErrors">{{ errorMessage }}</em>
             </div>
             <div class="row">
-                <div class="col-6"></div>
                 <div class="col-6">
                     <button type="submit"
-                            class="btn btn-primary px-4 pull-right"
+                            class="btn btn-primary px-4"
                             :disabled="isLoading"
                             ref="submit"
-                            v-html="submitButton"></button>
+                            v-html="submitButton">
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button type="button"
+                            class=" btn btn-link px-0"
+                            @click="openForgotPassword">Forgot password?
+                    </button>
                 </div>
             </div>
         </form>
@@ -91,7 +97,11 @@
 						this.isLoading = false;
 						location.assign(redirect);
 					});
-			}
+			},
+
+            openForgotPassword() {
+				window.location.assign('/admin/forgot-password');
+            }
 		}
 	}
 </script>

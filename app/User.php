@@ -3,16 +3,29 @@
 namespace App;
 
 use App\Notifications\AccountCreated;
+use App\Notifications\ResetPassword;
 use Carbon\Carbon;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Unifin\TableFilters\TableFilter;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPasswordContract
 {
     use Notifiable;
+    use CanResetPassword;
 
-    protected $fillable = ['username', 'password', 'last_name', 'first_name','email', 'access_level', 'active', 'confirmation_token'];
+    protected $fillable = [
+        'username',
+        'password',
+        'last_name',
+        'first_name',
+        'email',
+        'access_level',
+        'active',
+        'confirmation_token'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -20,7 +33,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     protected $appends = ['full_name'];
@@ -97,5 +111,16 @@ class User extends Authenticatable
         $userModel->notify(new AccountCreated($userModel, $unencrypted_password));
 
         return $userModel;
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

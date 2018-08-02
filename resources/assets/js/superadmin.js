@@ -21,12 +21,13 @@ import SweetAlert from 'sweetalert';
 window.Form = Form;
 window.swal = SweetAlert;
 
-Vue.component('topnavbar', require('./components/SuperAdmin/TopNavBar'));
+Vue.component('topnavbar', require('./components/Admin/TopNavBar'));
 
-Vue.component('sidebar', require('./components/SuperAdmin/SideBar'));
-Vue.component('login', require('./components/SuperAdmin/Login'));
-Vue.component('adjustments', require('./components/SuperAdmin/Adjustments'));
-Vue.component('users', require('./components/SuperAdmin/Users'));
+Vue.component('sidebar', require('./components/Admin/SideBar'));
+Vue.component('login', require('./components/Admin/Login'));
+Vue.component('forgot-password', require('./components/Admin/ForgotPassword'));
+Vue.component('adjustments', require('./components/Admin/Adjustments'));
+Vue.component('users', require('./components/Admin/Users'));
 
 const app = new Vue({
 	el: '#app'
