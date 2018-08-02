@@ -69095,6 +69095,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_events___default.a);
 	titleClass: 'text-center',
 	visible: true
 }, {
+	name: 'email',
+	sortField: 'email',
+	title: 'Email',
+	titleClass: 'text-center',
+	visible: true
+}, {
 	name: 'full_name',
 	sortField: 'first_name',
 	title: 'Name',
@@ -69606,6 +69612,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['isAdd', 'formData'],
@@ -69622,6 +69640,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				username: '',
 				last_name: '',
 				first_name: '',
+				email: '',
 				access_level: ''
 			}),
 
@@ -69677,12 +69696,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this2.isLoading = false;
 				_this2.persistButtonText = tempButtonText;
 
-				swal({
-					title: "Error",
-					text: 'Unable to update user',
-					icon: 'warning',
-					timer: 1250
-				});
+				if (!_this2.isAdd) {
+					swal({
+						title: "Error",
+						text: 'Unable to update user',
+						icon: 'warning',
+						timer: 1250
+					});
+				}
 			});
 		},
 		onResetModal: function onResetModal() {
@@ -69852,6 +69873,44 @@ var render = function() {
                           _vm._v(
                             "\n                                " +
                               _vm._s(_vm.form.errors.get("last_name")) +
+                              "\n                            "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("fieldset", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Email")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.email,
+                          expression: "form.email"
+                        }
+                      ],
+                      staticClass: "form-control text-right",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.form.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "email", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.form.errors.has("email")
+                      ? _c("em", { staticClass: "error invalid-feedback" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.form.errors.get("email")) +
                               "\n                            "
                           )
                         ])

@@ -50,6 +50,18 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
+                            <label>Email</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       class="form-control text-right"
+                                       v-model="form.email">
+                                <em class="error invalid-feedback"
+                                    v-if="form.errors.has('email')">
+                                    {{ form.errors.get('email') }}
+                                </em>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
                             <label>Group</label>
                             <div class="input-group">
                                 <select class="form-control"
@@ -100,6 +112,7 @@
 					username: '',
 					last_name: '',
 					first_name: '',
+                    email: '',
                     access_level: '',
 				}),
 
@@ -149,12 +162,14 @@
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
 
-						swal({
-							title: "Error",
-							text: `Unable to update user`,
-							icon: 'warning',
-							timer: 1250
-						});
+						if (!this.isAdd) {
+							swal({
+								title: "Error",
+								text: `Unable to update user`,
+								icon: 'warning',
+								timer: 1250
+							});
+                        }
 					})
 
 			},

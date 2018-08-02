@@ -15,6 +15,13 @@ export default [
 		visible: true,
 	},
 	{
+		name: 'email',
+		sortField: 'email',
+		title: 'Email',
+		titleClass: 'text-center',
+		visible: true
+	},
+	{
 		name: 'full_name',
 		sortField: 'first_name',
 		title: 'Name',

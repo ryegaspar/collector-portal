@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ConfirmUserEmail;
+use App\Rules\UserEmail;
 use App\Rules\Username;
 use App\User;
 use Illuminate\Http\Request;
@@ -56,12 +58,13 @@ class UsersController extends Controller
     {
         $user = $request->validate([
             'username'     => ['required', 'min:6', 'unique:users,username', new Username],
+            'email'        => ['required', 'email', 'unique:users,email', new UserEmail],
             'first_name'   => ['required'],
             'last_name'    => ['required'],
             'access_level' => ['required']
         ]);
 
-        $response = User::create($user);
+        $response = User::createUser($user);
 
         return response($response, 201);
     }

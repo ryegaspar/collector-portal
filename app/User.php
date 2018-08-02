@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\AccountCreated;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +12,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['username', 'password', 'last_name', 'first_name', 'access_level', 'active'];
+    protected $fillable = ['username', 'password', 'last_name', 'first_name','email', 'access_level', 'active', 'confirmation_token'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -78,5 +79,23 @@ class User extends Authenticatable
     public function scopeTableFilters($query, TableFilter $paginate)
     {
         return $paginate->apply($query);
+    }
+
+    /**
+     * create a new user
+     *
+     * @param $user
+     * @return \App\User
+     */
+    public static function createUser($user)
+    {
+        $unencrypted_password = str_random(8);
+        $user['password'] = bcrypt($unencrypted_password);
+
+        $userModel = self::create($user);
+
+        $userModel->notify(new AccountCreated($userModel, $unencrypted_password));
+
+        return $userModel;
     }
 }

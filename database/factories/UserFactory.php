@@ -18,6 +18,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'last_name'      => $faker->lastName,
         'first_name'     => $faker->firstName,
+        'email'          => $faker->email,
         'username'       => $faker->unique()->userName,
         'password'       => bcrypt('Password1'),
         'access_level'   => 5,
