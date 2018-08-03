@@ -2,6 +2,9 @@
 
 return [
 
+    //custom validation message
+    'hash' => 'The :attribute doesn\'t match current password.',
+
     /*
     |--------------------------------------------------------------------------
     | Validation Language Lines

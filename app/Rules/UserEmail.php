@@ -25,6 +25,6 @@ class UserEmail implements Rule
      */
     public function message()
     {
-        return 'The :attribute must be valid unifin email';
+        return 'The :attribute must be a valid Unifin email';
     }
 }

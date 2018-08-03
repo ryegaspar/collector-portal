@@ -30,6 +30,10 @@ Route::prefix('admin')->group(function() {
     Route::get('reset-password/{token}', 'Auth\ResetPasswordController@showResetForm')->name('admin.reset_password');
     Route::post('reset-password', 'Auth\ResetPasswordController@reset')->name('admin.reset_password.submit');
 
+    Route::get('profile', 'Admin\ProfileController@index')->name('admin.profile');
+    Route::get('profile/show', 'Admin\ProfileController@show')->name('admin.profile.show');
+    Route::patch('profile', 'Admin\ProfileController@update')->name('admin.profile.update');
+
     Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
 
     Route::get('adjustments', 'Admin\AdjustmentsController@index')->name('admin.adjustments');

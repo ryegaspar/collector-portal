@@ -59,7 +59,7 @@ class AdjustmentsController extends Controller
 
         $adjustment->update($data);
 
-        return response([], 200);
+        return response([], 201);
     }
 
     /**

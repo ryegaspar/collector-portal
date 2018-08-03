@@ -28,7 +28,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         $this->registerAdminPolicies();
-
     }
 
     /**
@@ -39,11 +38,11 @@ class AuthServiceProvider extends ServiceProvider
     public function registerAdminPolicies()
     {
         Gate::define('access-superadmin', function ($user) {
-            return $user->access_level == 1;
+            return $user->access_level <= 1;
         });
 
         Gate::define('access-admin', function ($user) {
-            return $user->access_level == 2;
+            return $user->access_level <= 2;
         });
     }
 }

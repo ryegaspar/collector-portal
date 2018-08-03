@@ -25,7 +25,7 @@ Vue.component('topnavbar', require('./components/Admin/TopNavBar'));
 
 Vue.component('sidebar', require('./components/Admin/SideBar'));
 Vue.component('login', require('./components/Admin/Login'));
-Vue.component('forgot-password', require('./components/Admin/ForgotPassword'));
+Vue.component('profile', require('./components/Admin/Profile'));
 Vue.component('adjustments', require('./components/Admin/Adjustments'));
 Vue.component('users', require('./components/Admin/Users'));
 

@@ -22,6 +22,9 @@
                     <img class="img-avatar" src="/images/image-avatar.png">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#" @click="viewProfile">
+                        <i class="fa fa-user-circle"></i> Profile
+                    </a>
                     <form method="post" :action="logoutPath" ref="logout">
                         <input type="hidden" name="_token" :value="csrfToken">
                     </form>
@@ -49,6 +52,10 @@
     	methods: {
     		doLogout() {
     			this.$refs.logout.submit();
+            },
+
+            viewProfile() {
+    			window.location.assign('./profile');
             }
         },
 
