@@ -25,7 +25,7 @@
                     <a class="dropdown-item" href="#" @click="viewProfile">
                         <i class="fa fa-user-circle"></i> Profile
                     </a>
-                    <form method="post" :action="logoutPath" ref="logout">
+                    <form method="post" action="/admin/logout" ref="logout">
                         <input type="hidden" name="_token" :value="csrfToken">
                     </form>
                     <a class="dropdown-item" href="#" @click="doLogout">
@@ -55,16 +55,11 @@
             },
 
             viewProfile() {
-    			window.location.assign('./profile');
+    			window.location.assign('/admin/profile');
             }
         },
 
         computed: {
-    		logoutPath() {
-    			let path = window.location.pathname;
-    			return `${path.substr(0, path.indexOf('/', 1))}/logout`;
-            },
-
     		csrfToken() {
     			return window.token;
             }

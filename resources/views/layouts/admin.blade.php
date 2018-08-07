@@ -38,7 +38,7 @@
 	</div>
 
 	<!-- Bootstrap and necessary plugins -->
-	<script src="{{ URL::asset('js/superadmin.js') }}"></script>
+	<script src="{{ URL::asset('js/admin.js') }}"></script>
 	@yield('footer')
 	<script>
 		$(function () {

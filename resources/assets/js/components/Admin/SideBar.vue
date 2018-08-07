@@ -40,20 +40,38 @@
 			return {
 				menus: {
 					dashboard: {
-						href: 'dashboard',
+						href: '/admin/dashboard',
 						text: 'Dashboard',
 						icon: 'fa fa-tachometer'
 					},
 					Adjustments: {
-						href: 'adjustments',
+						href: '/admin/adjustments',
 						text: 'Collector Adjustments',
 						icon: 'fa fa-line-chart'
 					},
 					Users: {
-						href: 'users',
+						href: '/admin/users',
 						text: 'Users',
 						icon: 'fa fa-users'
 					},
+                    Scripts: {
+						href: '#',
+                        text: 'Scripts',
+                        icon: 'fa fa-list-ol',
+                        children: {
+                        	ScriptCreate: {
+                        		href: '/admin/scripts/create',
+                                icon: 'fa fa-plus',
+                                text: 'Create Script'
+                            },
+                            ScriptList: {
+                        		href: '/admin/scripts',
+								icon: 'fa fa-list-ol',
+                                text: "Lists"
+							}
+                        }
+
+                    }
 					// item2: {
 					// href: '#',
 					//     text: 'Item 2',

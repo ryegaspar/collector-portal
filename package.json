@@ -24,9 +24,13 @@
         "popper.js": "^1.12",
         "simple-line-icons": "^2.4.1",
         "sweetalert": "^2.1.0",
+        "tinymce": "^4.8.1",
         "vue": "^2.5.7",
         "vuetable-2": "^1.7.5",
         "vue-clickaway": "^2.2.2",
         "vue-events": "^3.1.0"
+    },
+    "dependencies": {
+        "npm": "^6.3.0"
     }
 }
