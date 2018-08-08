@@ -52,7 +52,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::patch('users/toggle-active/{user}', 'UserToggleActiveController@update')->name('admin.users.toggleActive');
 
         Route::get('scripts', 'ScriptsController@index')->name('admin.scripts');
+        Route::get('scripts/show/{script}', 'ScriptsController@show')->name('admin.scripts.show');
         Route::get('scripts/create', 'ScriptsController@create')->name('admin.scripts.create');
+        Route::post('scripts', 'ScriptsController@store')->name('admin.scripts.store');
+        Route::get('scripts/{script}', 'ScriptsController@edit')->name('admin.scripts.edit');
 
         Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function() {
             \UniSharp\LaravelFilemanager\Lfm::routes();

@@ -59,6 +59,16 @@ class User extends Authenticatable implements CanResetPasswordContract
     }
 
     /**
+     * user has many scripts
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function scripts()
+    {
+        return $this->hasMany('App\Script');
+    }
+
+    /**
      * fetch the created_at attribute as diffForHumans
      *
      * @param $date
@@ -122,5 +132,19 @@ class User extends Authenticatable implements CanResetPasswordContract
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * create a script for the user
+     *
+     * @param $script
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function createScript($script)
+    {
+        if (request()->status) {
+            $script['published_at'] = $this->freshTimestamp();
+        }
+        return $this->scripts()->create($script);
     }
 }

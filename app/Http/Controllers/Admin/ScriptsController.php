@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Script;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Unifin\TableFilters\AdminScriptFilter;
 use Unifin\Traits\Paginate;
 
 class ScriptsController extends Controller
@@ -21,11 +24,28 @@ class ScriptsController extends Controller
     /**
      * display adjustments page
      *
+     * @param AdminScriptFilter $adminScriptFilter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(AdminScriptFilter $adminScriptFilter)
     {
+        if (request()->wantsJson()) {
+            $response = $this->getScripts($adminScriptFilter);
+            return response()->json($response);
+
+        }
         return view('admin.scripts');
+    }
+
+    /**
+     * return a lists of the resource in vuetable format
+     *
+     * @param AdminScriptFilter $adminScriptFilter
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(Script $script)
+    {
+        return $script;
     }
 
     /**
@@ -40,15 +60,33 @@ class ScriptsController extends Controller
     /**
      * persists a new script
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $user = $request->validate([
-            'title'     => ['required'],
+        $script = request()->validate([
+            'title'   => 'required',
+            'content' => '',
+            'status'  => ''
         ]);
 
-        return response([], 201);
+        $response = Auth::user()->createScript($script);
+
+        return response($response, 201);
+    }
+
+    /**
+     * get users
+     *
+     * @param $adminScriptFilter
+     * @return mixed
+     */
+    public function getScripts($adminScriptFilter)
+    {
+        $scripts = Script::tableFilters($adminScriptFilter);
+
+        $results = $this->paginate($scripts);
+
+        return $results;
     }
 }

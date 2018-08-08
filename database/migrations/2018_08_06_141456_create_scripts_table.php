@@ -16,8 +16,10 @@ class CreateScriptsTable extends Migration
         Schema::create('scripts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->unsignedInteger('status')->default(0);
             $table->text('content')->nullable();
-            $table->unsignedInteger('author_id');
+            $table->unsignedInteger('user_id');
+            $table->dateTime('published_at')->nullable();
             $table->timestamps();
         });
     }
