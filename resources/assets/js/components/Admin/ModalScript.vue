@@ -30,13 +30,21 @@
         },
     	methods: {
     		loadPreview(id) {
+    			this.scriptTitle = '';
+    			this.scriptBody = '';
+
     			axios.get(`/admin/scripts/show/${id}`)
                     .then(({data}) => {
                     	this.scriptTitle = data.title;
                     	this.scriptBody = data.content;
                     })
                     .catch(() => {
-
+						swal({
+							title: "Error",
+							text: "Unable to preview the script",
+							icon: 'warning',
+							timer: 1250
+						});
                     });
             }
         }

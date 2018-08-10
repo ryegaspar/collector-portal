@@ -18,7 +18,7 @@ class ScriptsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'can:access-admin']);
+        $this->middleware(['auth:admin', 'activeUser', 'check-permission:super-admin|admin']);
     }
 
     /**
@@ -40,8 +40,8 @@ class ScriptsController extends Controller
     /**
      * return a lists of the resource in vuetable format
      *
-     * @param AdminScriptFilter $adminScriptFilter
-     * @return \Illuminate\Http\JsonResponse
+     * @param Script $script
+     * @return Script
      */
     public function show(Script $script)
     {
@@ -54,7 +54,7 @@ class ScriptsController extends Controller
      */
     public function create()
     {
-        return view('admin.scripts.create_edit');
+        return view('admin.scripts.create');
     }
 
     /**
@@ -73,6 +73,42 @@ class ScriptsController extends Controller
         $response = Auth::user()->createScript($script);
 
         return response($response, 201);
+    }
+
+    /**
+     * get user
+     *
+     * @param Script $script
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function edit(Script $script)
+    {
+        if (request()->wantsJson()) {
+            return response($script, 200);
+        }
+
+        $scriptId = $script->id;
+
+        return view('admin.scripts.edit', compact('scriptId'));
+    }
+
+    /**
+     * update the given user
+     *
+     * @param Script $script
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function update(Script $script)
+    {
+        $script = request()->validate([
+            'title'   => 'required',
+            'status'    => '',
+            'access_level' => 'required',
+        ]);
+
+//        $user->update($newUser);
+
+        return response([], 201);
     }
 
     /**

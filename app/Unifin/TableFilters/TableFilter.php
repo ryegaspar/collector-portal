@@ -4,7 +4,7 @@ namespace Unifin\TableFilters;
 
 use Illuminate\Http\Request;
 
-class TableFilter
+abstract class TableFilter
 {
     /**
      * @var Request

@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create a Script</div>
+                    <div class="card-header" v-if="isAdd">Create a Script</div>
+                    <div class="card-header" v-else>Edit Script</div>
                     <div class="card-body">
                         <div class="form-horizontal">
                             <div class="form-group row">
@@ -19,7 +20,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row" v-if="isAdd || !this.originalStatus">
                                 <label class="col-md-1 col-form-label">Publish</label>
                                 <div class="checkbox col-md-8">
                                     <input type="checkbox" class="form-group mt-2"
@@ -63,6 +64,8 @@
 	import Tinymce from "./TinymceVue"
 
 	export default {
+		props: ['id'],
+
 		components: {
 			Tinymce
 		},
@@ -71,7 +74,9 @@
 			return {
 				persistButtonText: `<i class="fa fa-save"></i> Save`,
 				isLoading: false,
-				isAdd: true,
+				isAdd: !this.id,
+                originalStatus: false,
+                updateID: this.id,
 
 				form: new Form({
 					title: '',
@@ -92,9 +97,9 @@
 				this.persistButtonText = `<i class="fa fa-spinner fa-spin"></i>`
 
 				if (!this.isAdd) {
-					notifyMessage = "Successfully updated user";
+					notifyMessage = "Successfully updated script";
 					action = 'patch';
-					url = `./users/${this.updateID}`;
+					url = `/admin/scripts/${this.updateID}`;
 				}
 
 				this.form[action](url)
@@ -102,12 +107,15 @@
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
 
-						swal({
+						let swalNotify = {
 							title: "Success",
 							text: notifyMessage,
 							icon: 'success',
 							timer: 1250
-						});
+                        }
+
+                        localStorage.setItem("swal", JSON.stringify(swalNotify));
+						window.location.href = `/admin/scripts`;
 					})
 					.catch((error) => {
 						this.isLoading = false;
@@ -125,7 +133,22 @@
 					})
 
 			}
-		}
+		},
+
+        mounted() {
+			if (!this.isAdd) {
+				console.log('loading data');
+				axios.get(`/admin/scripts/${this.id}`)
+                    .then(({data}) => {
+                    	this.form.title = data.title;
+						this.originalStatus = data.status;
+						this.form.status = data.status;
+                    	this.form.content = data.content;
+                    });
+
+				this.persistButtonText = `<i class="fa fa-save"></i> Update`;
+            }
+        }
 
 	}
 </script>

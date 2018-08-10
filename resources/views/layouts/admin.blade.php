@@ -26,9 +26,7 @@
 		@yield('topnavbar')
 
 		<div class="app-body">
-			@can('access-superadmin')
 			<sidebar></sidebar>
-			@endcan
 			@yield('content')
 		</div>
 

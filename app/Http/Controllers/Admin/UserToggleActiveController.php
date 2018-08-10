@@ -13,7 +13,7 @@ class UserToggleActiveController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'can:access-superadmin']);
+        $this->middleware(['auth:admin', 'activeUser', 'check-permission:super-admin']);
     }
 
     /**

@@ -21,8 +21,17 @@
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Preview"
-                                            @click="showPreview(props.rowData.id)">
+                                            @click="itemAction('show-preview', props.rowData, props.rowIndex, $event)">
                                         <i class="fa fa-search"></i>
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-sm btn-warning"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Publish"
+                                            v-if="!props.rowData.status"
+                                            @click="itemAction('publish-script', props.rowData, props.rowIndex, $event)">
+                                        <i class="fa fa-upload"></i>
                                     </button>
                                     <button type="button"
                                             class="btn btn-sm btn-info"
@@ -30,7 +39,7 @@
                                             data-placement="top"
                                             title="Edit"
                                             v-if=""
-                                            @click="">
+                                            @click="itemAction('edit-script', props.rowData, props.rowIndex, $event)">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
                                     <!--<button type="button"-->
@@ -81,10 +90,63 @@
         },
 
         methods: {
-    		showPreview(id) {
-    			this.$refs.modalScript.loadPreview(id);
-				$("#modalScript").modal("show");
-            }
+			itemAction(action, data, index, e) {
+				let innerHTML = e.currentTarget.innerHTML;
+				let button = e.currentTarget;
+
+				$('[data-toggle="tooltip"]').tooltip('hide');
+
+				button.setAttribute("disabled", true);
+				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
+
+				if (action === 'show-preview') {
+					this.$refs.modalScript.loadPreview(data.id);
+					$("#modalScript").modal("show");
+
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
+				}
+
+				if (action === 'publish-script') {
+					swal({
+						title: "Publish",
+						text: `Are you sure you want to publish this script`,
+						icon: "warning",
+						buttons: true,
+						dangerMode: true
+					}).then((value) => {
+						if (value) {
+                            axios.patch(`/admin/scripts/publish/${data.id}`)
+                                .then(() => {
+									swal({
+										title: "Success",
+										text: "Successfully published script",
+										icon: 'success',
+										timer: 1250
+									});
+
+									this.$emit('reload');
+
+								}).catch((error) => {
+                                    swal({
+                                        title: "Error",
+                                        text: "Unable to publish the script",
+                                        icon: 'error',
+                                        timer: 1250
+                                    });
+                            });
+						}
+						button.removeAttribute("disabled");
+						button.innerHTML = innerHTML;
+					});
+				}
+
+				if (action === 'edit-script') {
+					window.location.assign(`/admin/scripts/${data.id}`);
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
+                }
+			},
         },
 
 		computed: {

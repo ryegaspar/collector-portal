@@ -67,8 +67,10 @@
                                 <select class="form-control"
                                         v-model="form.access_level"
                                         @change="form.errors.clear()">
-                                    <option value="1">Super Admin</option>
-                                    <option value="2">Admin</option>
+                                    <option :value="group.value"
+                                            v-for="group in accessGroups">
+                                        {{ group.text }}
+                                    </option>
                                 </select>
                                 <em class="error invalid-feedback"
                                     v-if="form.errors.has('access_level')">
@@ -117,6 +119,13 @@
 				}),
 
                 updateID: '',
+
+                accessGroups: [
+                    { value: 1, text: 'Super Admin' },
+                    { value: 2, text: 'Admin' },
+                    { value: 3, text: 'Manager' },
+                    { value: 4, text: 'Office Support' }
+                ]
 			}
 		},
 

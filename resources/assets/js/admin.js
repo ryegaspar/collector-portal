@@ -49,3 +49,8 @@ window.axios.interceptors.response.use((response) => {
 	}
 	return Promise.reject(error);
 });
+
+if (localStorage.getItem("swal") != null) {
+	swal(JSON.parse(localStorage.getItem("swal")))
+	localStorage.clear();
+}

@@ -56,6 +56,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('scripts/create', 'ScriptsController@create')->name('admin.scripts.create');
         Route::post('scripts', 'ScriptsController@store')->name('admin.scripts.store');
         Route::get('scripts/{script}', 'ScriptsController@edit')->name('admin.scripts.edit');
+        Route::patch('scripts/{script}', 'ScriptsController@update')->name('admin.scripts.update');
+        Route::patch('scripts/publish/{script}', 'ScriptPublishedController@update')->name('admin.scripts.publish');
 
         Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function() {
             \UniSharp\LaravelFilemanager\Lfm::routes();
