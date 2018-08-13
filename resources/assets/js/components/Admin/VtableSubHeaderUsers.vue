@@ -11,23 +11,6 @@
                             <i class="icon-plus"></i> Add
                         </button>
                     </div>
-                    <label class="col-form-label-sm mr-1">Group</label>
-                    <div class="dropdown">
-                        <button type="button"
-                                class="btn btn-outline-primary btn-sm dropdown-toggle mr-1"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false">
-                            <i class="fa fa-filter"></i> {{ filter1Text }} <span class="caret"></span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a v-for="item in filter1Menus"
-                               class="dropdown-item"
-                               @click="filter1Run(item.code, item.text)"
-                               href="#">{{ item.text }}
-                            </a>
-                        </div>
-                    </div>
                     <label class="col-form-label-sm mr-1">Status</label>
                     <div class="dropdown">
                         <button type="button"
@@ -61,12 +44,12 @@
 
 		data() {
 			return {
-				filter1Text: 'Group',
-                filter1Menus: [
-                    { code: "A", text: "All" },
-                    { code: "1", text: "SuperAdmin" },
-                    { code: "2", text: "Admin" }
-                ],
+				// filter1Text: 'Group',
+                // filter1Menus: [
+                //     { code: "A", text: "All" },
+                //     { code: "1", text: "SuperAdmin" },
+                //     { code: "2", text: "Admin" }
+                // ],
 				filter2Text: 'Status',
                 filter2Menus: [
 					{ code: "A", text: "All" },
@@ -81,16 +64,20 @@
 				this.$emit('addUser');
             },
 
-            filter1Run(code, text) {
-				this.filter1Text = text;
-				this.$events.fire('filter1-change', code);
-            },
+            // filter1Run(code, text) {
+			// 	this.filter1Text = text;
+			// 	this.$events.fire('filter1-change', code);
+            // },
 
 			filter2Run(code, text) {
 				this.filter2Text = text;
 				this.$events.fire('filter2-change', code);
 			},
 		},
+
+        created() {
+
+        },
 
 		computed: {}
 	}

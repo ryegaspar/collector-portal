@@ -62,12 +62,12 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label>Group</label>
+                            <label>Role</label>
                             <div class="input-group">
                                 <select class="form-control"
                                         v-model="form.access_level"
                                         @change="form.errors.clear()">
-                                    <option :value="group.value"
+                                    <option :value="group.text"
                                             v-for="group in accessGroups">
                                         {{ group.text }}
                                     </option>
@@ -101,9 +101,6 @@
             'formData'
 		],
 
-		components: {
-		},
-
 		data() {
 			return {
 				persistButtonClass: 'btn btn-success',
@@ -120,18 +117,23 @@
 
                 updateID: '',
 
-                accessGroups: [
-                    { value: 1, text: 'Super Admin' },
-                    { value: 2, text: 'Admin' },
-                    { value: 3, text: 'Manager' },
-                    { value: 4, text: 'Office Support' }
-                ]
+                accessGroups: []
 			}
 		},
 
         created() {
-			this.$events.$on('modal-reset', eventData => this.onResetModal());
-			this.$events.$on('modal-edit', eventData => this.onEditModal(eventData));
+			axios.get('/admin/roles')
+                .then(({data}) => {
+                	data.forEach((element) => {
+                		let role = Object();
+                		role.value = element.id;
+                		role.text = element.name;
+                		this.accessGroups.push(role);
+                    });
+                })
+                .catch((error) => {
+                	console.log(error);
+                });
         },
 
 		methods: {
@@ -165,7 +167,6 @@
                         });
 
 						this.$emit('submitted');
-						// this.$emit('reload');
 					})
 					.catch((error) => {
 						this.isLoading = false;
@@ -183,14 +184,16 @@
 
 			},
 
-            onResetModal() {
+            resetModal() {
 				this.form.errors.clear();
 				this.form.reset();
             },
 
-            onEditModal(e) {
-				_.assign(this.form, e);
-				this.updateID = e.id;
+            populateData(data) {
+				_.assign(this.form, data);
+				if (data.roles.length >= 1)
+				    this.form.access_level = data.roles[0].name;
+				this.updateID = data.id;
             }
 		},
 

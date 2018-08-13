@@ -17,7 +17,7 @@ class AdjustmentsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'check-permission:super-admin']);
+        $this->middleware(['auth:admin', 'activeUser']);
     }
 
     /**

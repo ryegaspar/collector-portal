@@ -14,16 +14,16 @@ class UserSeeder extends Seeder
     {
         User::truncate();
 
-        factory(User::class)->create([
+        $user = factory(User::class)->create([
             'username'     => 'admin',
             'password'     => bcrypt('Password'),
-            'access_level' => 1
         ]);
+
+        $user->syncRoles('super-admin');
 
         factory(User::class)->create([
             'username' => 'admin2',
             'password' => bcrypt('Password'),
-            'access_level' => 2
         ]);
     }
 }

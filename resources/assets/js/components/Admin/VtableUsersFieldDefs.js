@@ -29,20 +29,23 @@ export default [
 		visible: true,
 	},
 	{
-		name: 'access_level',
-		sortField: 'access_level',
-		title: 'Group',
+		name: 'roles',
+		title: 'Role',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
 		visible: true,
-		callback: function (value) {
-			switch (value) {
-				case '1':
-					return `<span class="badge badge-pill badge-primary"><i class="fa fa-star"></i> Super Admin</span>`;
-					break;
-				case '2':
-					return `<span class="badge badge-pill badge-secondary">Admin</span>`;
-					break;
+		callback: function (role) {
+			if (role[0]) {
+				switch (role[0].id) {
+					case 1:
+						return `<span class="badge badge-pill badge-primary"><i class="fa fa-star"></i> super-admin</span>`;
+						break;
+					case 2:
+						return `<span class="badge badge-pill badge-secondary">admin</span>`;
+						break;
+					default:
+						return `<span class="badge badge-pill badge-warning">${role[0].name}</span>`
+				}
 			}
 		}
 	},

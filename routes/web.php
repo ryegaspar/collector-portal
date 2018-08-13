@@ -34,6 +34,8 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     Route::group(['namespace' => 'Admin'], function() {
+        Route::get('roles', 'RoleListsController@index')->name('admin.role');
+
         Route::get('profile', 'ProfileController@index')->name('admin.profile');
         Route::get('profile/show', 'ProfileController@show')->name('admin.profile.show');
         Route::patch('profile', 'ProfileController@update')->name('admin.profile.update');

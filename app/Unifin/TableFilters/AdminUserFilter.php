@@ -18,21 +18,21 @@ class AdminUserFilter extends TableFilter
      */
     protected $defaultSort = 'created_at';
 
-    /**
-     * filter by group
-     *
-     * @return $this
-     */
-    public function filterGroup()
-    {
-        if (!is_null($this->request->filter1)) {
-            if ($this->request->filter1 != "A") {
-                $this->builder->where("access_level", "=", $this->request->filter1);
-            }
-        }
-
-        return $this;
-    }
+//    /**
+//     * filter by group
+//     *
+//     * @return $this
+//     */
+//    public function filterGroup()
+//    {
+//        if (!is_null($this->request->filter1)) {
+//            if ($this->request->filter1 != "A") {
+//                $this->builder->where("access_level", "=", $this->request->filter1);
+//            }
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * filter by status

@@ -42,7 +42,8 @@
                 </div>
             </div>
         </div>
-        <modal-user :isAdd="isAdd"
+        <modal-user ref="modalUser"
+                    :isAdd="isAdd"
                     :formData="formData"
                     @submitted="formSubmitted">
         </modal-user>
@@ -89,7 +90,7 @@
 		methods: {
 			addUser() {
 				this.isAdd = true;
-				this.$events.fire('modal-reset');
+				this.$refs.modalUser.resetModal();
 				$("#modalUser").modal("show");
             },
 
@@ -112,7 +113,7 @@
 					axios.get(url)
                         .then(({data}) => {
                         	$("#modalUser").modal("show");
-                        	this.$events.fire('modal-edit', data);
+                        	this.$refs.modalUser.populateData(data);
 
                         	button.removeAttribute("disabled");
                         	button.innerHTML = innerHTML;

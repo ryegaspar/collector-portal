@@ -21,7 +21,7 @@ class UsersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'check-permission:super-admin']);
+        $this->middleware(['auth:admin', 'activeUser']);
     }
 
     /**
@@ -56,6 +56,8 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        // no additional validation for access_level since the
+        // 'users' control are only accessed by super-admins
         $user = $request->validate([
             'username'     => ['required', 'min:6', 'unique:users,username', new Username],
             'email'        => ['required', 'email', 'unique:users,email', new UserEmail],
@@ -101,7 +103,11 @@ class UsersController extends Controller
             'access_level' => 'required',
         ]);
 
+        $role = $newUser['access_level'];
+        unset($newUser['access_level']);
+
         $user->update($newUser);
+        $user->syncRoles($role);
 
         return response([], 201);
     }

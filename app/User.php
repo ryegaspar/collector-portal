@@ -9,13 +9,27 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Unifin\TableFilters\TableFilter;
 
 class User extends Authenticatable implements CanResetPasswordContract
 {
     use Notifiable;
     use CanResetPassword;
+    use HasRoles;
 
+    /**
+     * Guard name for the model used for spatie laravel permissions
+     *
+     * @var string
+     */
+    protected $guard_name = 'admin';
+
+    /**
+     * The attributes that are mass assignable
+     *
+     * @var array
+     */
     protected $fillable = [
         'username',
         'password',
@@ -37,6 +51,13 @@ class User extends Authenticatable implements CanResetPasswordContract
         'remember_token',
     ];
 
+    protected $with = ['roles'];
+
+    /**
+     * append full name to the model
+     *
+     * @var array
+     */
     protected $appends = ['full_name'];
 
     /**
@@ -93,6 +114,11 @@ class User extends Authenticatable implements CanResetPasswordContract
         return "{$this->first_name} {$this->last_name}";
     }
 
+    public function setPasswordAttribute($value)
+    {
+        return bcrypt($value);
+    }
+
     /**
      * apply filters for table view
      *
@@ -114,9 +140,12 @@ class User extends Authenticatable implements CanResetPasswordContract
     public static function createUser($user)
     {
         $unencrypted_password = str_random(8);
-        $user['password'] = bcrypt($unencrypted_password);
+
+        $role = $user['access_level'];
+        unset($user['access_level']);
 
         $userModel = self::create($user);
+        $userModel->assignRole($role);
 
         $userModel->notify(new AccountCreated($userModel, $unencrypted_password));
 
