@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Adjustment;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
 use Unifin\TableFilters\AdminAdjustmentFilter;
 use Unifin\Traits\Paginate;
 
@@ -70,27 +69,4 @@ class AdjustmentsController extends Controller
 
         return $results;
     }
-
-//    /**
-//     * override paginate to include additional search properties
-//     *
-//     * @param $model
-//     * @return mixed
-//     */
-//    protected function paginate($model)
-//    {
-//        $request = request();
-//
-//        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
-//
-//        $pagination = $model->paginate($perPage)->appends([
-//            'sort'     => $request->sort,
-//            'search'   => $request->search,
-//            'per_page' => $request->per_page,
-//            'status'   => $request->created_at,
-////            'paydate'  => $request->paydate,
-//        ]);
-//
-//        return $pagination;
-//    }
 }

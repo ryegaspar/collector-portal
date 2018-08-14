@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Mail\ConfirmUserEmail;
 use App\Rules\UserEmail;
 use App\Rules\Username;
 use App\User;
@@ -22,17 +21,22 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
+        $this->middleware('permission:read users')->only('index', 'edit');
+        $this->middleware('permission:create users')->only('store');
+        $this->middleware('permission:update users')->only('update');
     }
 
     /**
      * display adjustments page
      *
+     * @param AdminUserFilter $adminUserFilter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(AdminUserFilter $adminUserFilter)
     {
         if (request()->wantsJson()) {
             $response = $this->getUsers($adminUserFilter);
+
             return response()->json($response);
         }
 

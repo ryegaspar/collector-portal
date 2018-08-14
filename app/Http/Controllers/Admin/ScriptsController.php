@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Script;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Script;
 use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\AdminScriptFilter;
 use Unifin\Traits\Paginate;
@@ -18,7 +17,7 @@ class ScriptsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser']);
+        $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
     }
 
     /**
@@ -31,14 +30,16 @@ class ScriptsController extends Controller
     {
         if (request()->wantsJson()) {
             $response = $this->getScripts($adminScriptFilter);
+
             return response()->json($response);
 
         }
+
         return view('admin.scripts');
     }
 
     /**
-     * return a lists of the resource in vuetable format
+     * Return specified resource.
      *
      * @param Script $script
      * @return Script
@@ -101,8 +102,8 @@ class ScriptsController extends Controller
     public function update(Script $script)
     {
         $script = request()->validate([
-            'title'   => 'required',
-            'status'    => '',
+            'title'        => 'required',
+            'status'       => '',
             'access_level' => 'required',
         ]);
 
