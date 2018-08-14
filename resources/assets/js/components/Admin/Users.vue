@@ -109,7 +109,7 @@
 
 				if (action === 'edit-item') {
 					this.isAdd = false;
-					let url = `./users/${data.id}`;
+					let url = `/admin/users/${data.id}/edit`;
 					axios.get(url)
                         .then(({data}) => {
                         	$("#modalUser").modal("show");
@@ -176,7 +176,7 @@
 
 		computed: {
 			tableUrl() {
-				return `./users/show`;
+				return `/admin/users`;
 			},
 		},
 

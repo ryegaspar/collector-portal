@@ -29,8 +29,13 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(AdminUserFilter $adminUserFilter)
     {
+        if (request()->wantsJson()) {
+            $response = $this->getUsers($adminUserFilter);
+            return response()->json($response);
+        }
+
         return view('admin.users');
     }
 
@@ -42,10 +47,7 @@ class UsersController extends Controller
      */
     public function show(AdminUserFilter $adminUserFilter)
     {
-        $response = $this->getUsers($adminUserFilter);
-        if (request()->wantsJson()) {
-            return response()->json($response);
-        }
+
     }
 
     /**
@@ -118,7 +120,7 @@ class UsersController extends Controller
      * @param $adminUserFilter
      * @return mixed
      */
-    public function getUsers($adminUserFilter)
+    protected function getUsers($adminUserFilter)
     {
         $adjustments = User::tableFilters($adminUserFilter);
 

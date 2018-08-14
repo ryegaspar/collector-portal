@@ -20,7 +20,7 @@
 Route::group(['prefix' => 'admin'], function () {
     Route::redirect('/', 'admin/dashboard');
 
-    Route::group(['namespace' => 'Auth'], function() {
+    Route::group(['namespace' => 'Auth'], function () {
         Route::get('login', 'AdminLoginController@showLoginForm')->name('admin.login');
         Route::post('login', 'AdminLoginController@login')->name('admin.login.submit');
         Route::post('logout', 'AdminLoginController@logout')->name('admin.logout');
@@ -33,7 +33,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('reset-password', 'ResetPasswordController@reset')->name('admin.reset_password.submit');
     });
 
-    Route::group(['namespace' => 'Admin'], function() {
+    Route::group(['namespace' => 'Admin'], function () {
         Route::get('roles', 'RoleListsController@index')->name('admin.role');
 
         Route::get('profile', 'ProfileController@index')->name('admin.profile');
@@ -45,15 +45,17 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('adjustments', 'AdjustmentsController')
             ->only(['index', 'update'])
             ->names(['index' => 'admin.adjustments', 'update' => 'admin.adjustments.update']);
-//        Route::get('adjustments', 'AdjustmentsController@index')->name('admin.adjustments');
-//        Route::patch('adjustments/{adjustment}', 'AdjustmentsController@update')->name('admin.adjustments.update');
 
-        Route::get('users', 'UsersController@index')->name('admin.users');
-        Route::get('users/show', 'UsersController@show')->name('admin.users.show');
-        Route::post('users', 'UsersController@store')->name('admin.users.store');
-        Route::get('users/{user}', 'UsersController@edit')->name('admin.users.edit');
-        Route::patch('users/{user}', 'UsersController@update')->name('admin.users.update');
-        Route::patch('users/toggle-active/{user}', 'UserToggleActiveController@update')->name('admin.users.toggleActive');
+        Route::resource('users', 'UsersController')
+            ->only(['index', 'store', 'edit', 'update'])
+            ->names([
+                'index'  => 'admin.users',
+                'store'  => 'admin.users.store',
+                'edit'   => 'admin.users.edit',
+                'update' => 'admin.users.update'
+            ]);
+        Route::patch('users/toggle-active/{user}',
+            'UserToggleActiveController@update')->name('admin.users.toggleActive');
 
         Route::get('scripts', 'ScriptsController@index')->name('admin.scripts');
         Route::get('scripts/show/{script}', 'ScriptsController@show')->name('admin.scripts.show');
@@ -63,7 +65,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::patch('scripts/{script}', 'ScriptsController@update')->name('admin.scripts.update');
         Route::patch('scripts/publish/{script}', 'ScriptPublishedController@update')->name('admin.scripts.publish');
 
-        Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function() {
+        Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function () {
             \UniSharp\LaravelFilemanager\Lfm::routes();
         });
     });
@@ -71,13 +73,13 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::redirect('/', '/dashboard');
 
-Route::group(['namespace' => 'Auth'], function() {
+Route::group(['namespace' => 'Auth'], function () {
     Route::get('login', 'LoginController@showLoginForm')->name('user.login');
     Route::post('login', 'LoginController@login')->name('user.login.submit');
     Route::post('logout', 'LoginController@logout')->name('user.logout');
 });
 
-Route::group(['namespace' => 'Users'], function() {
+Route::group(['namespace' => 'Users'], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('user.dashboard');
 
     Route::get('/dashboard/transactions',
