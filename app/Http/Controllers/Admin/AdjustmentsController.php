@@ -17,32 +17,26 @@ class AdjustmentsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser']);
+        $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
+        $this->middleware('permission:read adjustments')->only('index');
+        $this->middleware('permission:update adjustments')->only('update');
     }
 
     /**
      * display adjustments page
      *
+     * @param AdminAdjustmentFilter $adminAdjustmentFilter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(AdminAdjustmentFilter $adminAdjustmentFilter)
     {
-        return view('admin.adjustments');
-    }
-
-    /**
-     * return a lists of the resource in vuetable format
-     *
-     * @param AdminAdjustmentFilter $adminAdjustmentFilter
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(AdminAdjustmentFilter $adminAdjustmentFilter)
-    {
-        $response = $this->getAllAdjustments($adminAdjustmentFilter);
-
         if (request()->wantsJson()) {
+            $response = $this->getAllAdjustments($adminAdjustmentFilter);
+
             return response()->json($response);
         }
+
+        return view('admin.adjustments');
     }
 
     /**
@@ -68,7 +62,7 @@ class AdjustmentsController extends Controller
      * @param $adminAdjustmentFilter
      * @return mixed
      */
-    public function getAllAdjustments($adminAdjustmentFilter)
+    protected function getAllAdjustments($adminAdjustmentFilter)
     {
         $adjustments = Adjustment::tableFilters($adminAdjustmentFilter);
 
@@ -77,26 +71,26 @@ class AdjustmentsController extends Controller
         return $results;
     }
 
-    /**
-     * override paginate to include additional search properties
-     *
-     * @param $model
-     * @return mixed
-     */
-    public function paginate($model)
-    {
-        $request = request();
-
-        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
-
-        $pagination = $model->paginate($perPage)->appends([
-            'sort'     => $request->sort,
-            'search'   => $request->search,
-            'per_page' => $request->per_page,
-            'status'   => $request->created_at,
-//            'paydate'  => $request->paydate,
-        ]);
-
-        return $pagination;
-    }
+//    /**
+//     * override paginate to include additional search properties
+//     *
+//     * @param $model
+//     * @return mixed
+//     */
+//    protected function paginate($model)
+//    {
+//        $request = request();
+//
+//        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
+//
+//        $pagination = $model->paginate($perPage)->appends([
+//            'sort'     => $request->sort,
+//            'search'   => $request->search,
+//            'per_page' => $request->per_page,
+//            'status'   => $request->created_at,
+////            'paydate'  => $request->paydate,
+//        ]);
+//
+//        return $pagination;
+//    }
 }

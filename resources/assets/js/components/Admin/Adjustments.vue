@@ -134,7 +134,7 @@
 
 		computed: {
 			tableUrl() {
-				return `./adjustments/show`;
+				return `/admin/adjustments`;
 			},
 
 			startText() {

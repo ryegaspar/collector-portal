@@ -21,7 +21,7 @@ class UsersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser']);
+        $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
     }
 
     /**

@@ -42,9 +42,11 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
 
-        Route::get('adjustments', 'AdjustmentsController@index')->name('admin.adjustments');
-        Route::get('adjustments/show', 'AdjustmentsController@show')->name('admin.adjustments.show');
-        Route::patch('adjustments/{adjustment}', 'AdjustmentsController@update')->name('admin.adjustments.update');
+        Route::resource('adjustments', 'AdjustmentsController')
+            ->only(['index', 'update'])
+            ->names(['index' => 'admin.adjustments', 'update' => 'admin.adjustments.update']);
+//        Route::get('adjustments', 'AdjustmentsController@index')->name('admin.adjustments');
+//        Route::patch('adjustments/{adjustment}', 'AdjustmentsController@update')->name('admin.adjustments.update');
 
         Route::get('users', 'UsersController@index')->name('admin.users');
         Route::get('users/show', 'UsersController@show')->name('admin.users.show');
