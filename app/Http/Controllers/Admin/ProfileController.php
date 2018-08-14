@@ -25,20 +25,13 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('admin.profile');
-    }
-
-    /**
-     * get the user profile
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show()
-    {
-        $user = User::findOrFail(Auth::user()->id)->first();
         if (request()->wantsJson()) {
+            $user = User::findOrFail(Auth::user()->id)->first();
+
             return response($user, 200);
         }
+
+        return view('admin.profile');
     }
 
     /**
@@ -52,7 +45,8 @@ class ProfileController extends Controller
 
         $request = $this->validateRequest();
 
-        $request['password'] = bcrypt($request['password']);
+        if (array_key_exists('password', $request))
+            $request['password'] = bcrypt($request['password']);
 
         $user->update($request);
 
@@ -78,6 +72,10 @@ class ProfileController extends Controller
 
         $validator->sometimes('old_password', 'hash:' . $user->password, function ($input) {
             return ! empty($input->old_password);
+        });
+
+        $validator->sometimes('old_password', 'required', function ($input) {
+            return ! empty($input->password);
         });
 
         $validator->sometimes('password', 'required|confirmed', function ($input) {

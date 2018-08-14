@@ -114,11 +114,6 @@ class User extends Authenticatable implements CanResetPasswordContract
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public function setPasswordAttribute($value)
-    {
-        return bcrypt($value);
-    }
-
     /**
      * apply filters for table view
      *
@@ -140,6 +135,7 @@ class User extends Authenticatable implements CanResetPasswordContract
     public static function createUser($user)
     {
         $unencrypted_password = str_random(8);
+        $user['password'] = bcrypt($unencrypted_password);
 
         $role = $user['access_level'];
         unset($user['access_level']);

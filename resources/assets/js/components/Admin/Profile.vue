@@ -129,7 +129,7 @@
 		},
 
 		created() {
-			axios.get('./profile/show')
+			axios.get('/admin/profile')
                 .then(({data}) => {
                 	this.form.first_name = data.first_name;
                 	this.form.last_name = data.last_name;

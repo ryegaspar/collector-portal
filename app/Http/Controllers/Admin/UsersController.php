@@ -40,17 +40,6 @@ class UsersController extends Controller
     }
 
     /**
-     * return a lists of the resource in vuetable format
-     *
-     * @param AdminUserFilter $adminUserFilter
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(AdminUserFilter $adminUserFilter)
-    {
-
-    }
-
-    /**
      * persists a new user
      *
      * @param Request $request
