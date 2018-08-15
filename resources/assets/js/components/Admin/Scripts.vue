@@ -38,20 +38,17 @@
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Edit"
-                                            v-if=""
                                             @click="itemAction('edit-script', props.rowData, props.rowIndex, $event)">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
-                                    <!--<button type="button"-->
-                                            <!--class="btn btn-sm"-->
-                                            <!--:class="props.rowData.active ? 'btn-danger' : 'btn-success'"-->
-                                            <!--data-toggle="tooltip"-->
-                                            <!--data-placement="top"-->
-                                            <!--:title="props.rowData.active ? 'Deactivate' : 'Activate'"-->
-                                            <!--v-if="isNotCurrentUser(props.rowData.id)"-->
-                                            <!--@click="itemAction('toggle-active', props.rowData, props.rowIndex, $event)">-->
-                                        <!--<i :class="props.rowData.active ? 'fa fa-thumbs-down' : 'fa fa-thumbs-up'"></i>-->
-                                    <!--</button>-->
+                                    <button type="button"
+                                            class="btn btn-sm btn-danger"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Delete"
+                                            @click="itemAction('delete-script', props.rowData, props.rowIndex, $event)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </div>
                             </template>
                         </vtable>
@@ -69,14 +66,14 @@
 	import Vtable from '../VTable';
 	import ModalScript from './ModalScript'
 
-    export default {
-    	components: {
-    		Vtable, VtableHeader, ModalScript
-        },
+	export default {
+		components: {
+			Vtable, VtableHeader, ModalScript
+		},
 
-        data() {
-    		return {
-    			fieldDefs: VtableScriptsFieldDefs,
+		data() {
+			return {
+				fieldDefs: VtableScriptsFieldDefs,
 				sortOrder: [
 					{
 						field: 'updated_at',
@@ -86,10 +83,10 @@
 				],
 				moreParams: {},
 				perPage: 25,
-            }
-        },
+			}
+		},
 
-        methods: {
+		methods: {
 			itemAction(action, data, index, e) {
 				let innerHTML = e.currentTarget.innerHTML;
 				let button = e.currentTarget;
@@ -105,6 +102,8 @@
 
 					button.removeAttribute("disabled");
 					button.innerHTML = innerHTML;
+
+					return;
 				}
 
 				if (action === 'publish-script') {
@@ -116,8 +115,8 @@
 						dangerMode: true
 					}).then((value) => {
 						if (value) {
-                            axios.patch(`/admin/scripts/publish/${data.id}`)
-                                .then(() => {
+							axios.patch(`/admin/scripts/${data.id}/publish`)
+								.then(() => {
 									swal({
 										title: "Success",
 										text: "Successfully published script",
@@ -128,26 +127,63 @@
 									this.$emit('reload');
 
 								}).catch((error) => {
-                                    swal({
-                                        title: "Error",
-                                        text: "Unable to publish the script",
-                                        icon: 'error',
-                                        timer: 1250
-                                    });
-                            });
+								swal({
+									title: "Error",
+									text: "Unable to publish the script",
+									icon: 'error',
+									timer: 1250
+								});
+							});
 						}
 						button.removeAttribute("disabled");
 						button.innerHTML = innerHTML;
 					});
+
+					return;
 				}
 
 				if (action === 'edit-script') {
-					window.location.assign(`/admin/scripts/${data.id}`);
+					window.location.href = `/admin/scripts/${data.id}/edit`;
 					button.removeAttribute("disabled");
 					button.innerHTML = innerHTML;
-                }
+
+					return;
+				}
+
+				swal({
+					title: "Delete Script",
+					text: `Are you sure you want to delete this script?`,
+					icon: "warning",
+					buttons: true,
+					dangerMode: true
+				}).then((response) => {
+					if (response) {
+						axios.delete(`/admin/scripts/${data.id}`)
+                            .then(() => {
+								swal({
+									title: "Success",
+									text: "Successfully deleted script",
+									icon: 'success',
+									timer: 1250
+								});
+
+								this.$emit('reload');
+                            })
+                            .catch((error) => {
+								swal({
+									title: "Error",
+									text: error.message,
+									icon: 'error',
+									timer: 1250
+								});
+                            });
+                    }
+
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
+				});
 			},
-        },
+		},
 
 		computed: {
 			tableUrl() {
@@ -155,5 +191,5 @@
 			},
 		},
 
-    }
+	}
 </script>

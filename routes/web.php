@@ -17,57 +17,41 @@
 
 //Auth::routes();
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::redirect('/', 'admin/dashboard');
+Route::name('admin.')->prefix('admin')->group(function () {
+    Route::redirect('/', 'admin/dashboard')->name('home');
 
     Route::group(['namespace' => 'Auth'], function () {
-        Route::get('login', 'AdminLoginController@showLoginForm')->name('admin.login');
-        Route::post('login', 'AdminLoginController@login')->name('admin.login.submit');
-        Route::post('logout', 'AdminLoginController@logout')->name('admin.logout');
+        Route::get('login', 'AdminLoginController@showLoginForm')->name('login');
+        Route::post('login', 'AdminLoginController@login')->name('login.submit');
+        Route::post('logout', 'AdminLoginController@logout')->name('logout');
 
-        Route::get('forgot-password', 'ForgotPasswordController@showLinkRequestForm')->name('admin.forgot_password');
-        Route::post('forgot-password',
-            'ForgotPasswordController@sendResetLinkEmail')->name('admin.forgot_password.submit');
+        Route::get('forgot-password', 'ForgotPasswordController@showLinkRequestForm')->name('forgot_password');
+        Route::post('forgot-password', 'ForgotPasswordController@sendResetLinkEmail')->name('forgot_password.submit');
 
-        Route::get('reset-password/{token}', 'ResetPasswordController@showResetForm')->name('admin.reset_password');
-        Route::post('reset-password', 'ResetPasswordController@reset')->name('admin.reset_password.submit');
+        Route::get('reset-password/{token}', 'ResetPasswordController@showResetForm')->name('reset_password');
+        Route::post('reset-password', 'ResetPasswordController@reset')->name('reset_password.submit');
     });
 
-    Route::group(['namespace' => 'Admin'], function () {
-        Route::get('roles', 'RoleListsController@index')->name('admin.role');
+    Route::namespace('Admin')->group(function () {
+        Route::get('roles', 'RoleListsController@index')->name('role');
 
-        Route::get('profile', 'ProfileController@index')->name('admin.profile');
-        Route::patch('profile', 'ProfileController@update')->name('admin.profile.update');
+        Route::get('profile', 'ProfileController@index')->name('profile');
+        Route::patch('profile', 'ProfileController@update')->name('profile.update');
 
-        Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
+        Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
-        Route::resource('adjustments', 'AdjustmentsController')
-            ->only(['index', 'update'])
-            ->names(['index' => 'admin.adjustments', 'update' => 'admin.adjustments.update']);
+        Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
 
-        Route::resource('users', 'UsersController')
-            ->only(['index', 'store', 'edit', 'update'])
-            ->names([
-                'index'  => 'admin.users',
-                'store'  => 'admin.users.store',
-                'edit'   => 'admin.users.edit',
-                'update' => 'admin.users.update'
-            ]);
-        Route::patch('users/toggle-active/{user}',
-            'UserToggleActiveController@update')->name('admin.users.toggleActive');
+        Route::patch('users/{user}/toggle-active', 'UserToggleActiveController@update')->name('users.toggleActive');
+        Route::resource('users', 'UsersController')->only(['index', 'store', 'edit', 'update']);
 
-        Route::get('scripts', 'ScriptsController@index')->name('admin.scripts');
-        Route::get('scripts/show/{script}', 'ScriptsController@show')->name('admin.scripts.show');
-        Route::get('scripts/create', 'ScriptsController@create')->name('admin.scripts.create');
-        Route::post('scripts', 'ScriptsController@store')->name('admin.scripts.store');
-        Route::get('scripts/{script}', 'ScriptsController@edit')->name('admin.scripts.edit');
-        Route::patch('scripts/{script}', 'ScriptsController@update')->name('admin.scripts.update');
-        Route::patch('scripts/publish/{script}', 'ScriptPublishedController@update')->name('admin.scripts.publish');
-
-        Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function () {
-            \UniSharp\LaravelFilemanager\Lfm::routes();
-        });
+        Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish');
+        Route::resource('scripts', 'ScriptsController');
     });
+});
+
+Route::group(['prefix' => 'admin/filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
 Route::redirect('/', '/dashboard');
@@ -101,5 +85,4 @@ Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-pl
 
 //TODO: remove this!
 Route::get('testing', function () {
-    dd(\App\DBR::first());
 });

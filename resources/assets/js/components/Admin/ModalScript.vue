@@ -33,7 +33,7 @@
     			this.scriptTitle = '';
     			this.scriptBody = '';
 
-    			axios.get(`/admin/scripts/show/${id}`)
+    			axios.get(`/admin/scripts/${id}`)
                     .then(({data}) => {
                     	this.scriptTitle = data.title;
                     	this.scriptBody = data.content;

@@ -130,7 +130,7 @@
                     dangerMode: true
 				}).then((willChange) => {
 					if (willChange) {
-						axios.patch(`./users/toggle-active/${data.id}`)
+						axios.patch(`./users/${data.id}/toggle-active`)
 							.then(() => {
 								button.removeAttribute("disabled");
 								button.innerHTML = innerHTML;

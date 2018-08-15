@@ -5,7 +5,7 @@ export default [
 		title: 'ID',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
-		visible: true,
+		visible: false,
 	},
 	{
 		name: 'title',

@@ -18,6 +18,10 @@ class ScriptsController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
+        $this->middleware('permission:read scripts')->only('index');
+        $this->middleware('permission:create scripts')->only(['create', 'store']);
+        $this->middleware('permission:update scripts')->only(['edit', 'update']);
+        $this->middleware('permission:delete scripts')->only('destroy');
     }
 
     /**
@@ -32,7 +36,6 @@ class ScriptsController extends Controller
             $response = $this->getScripts($adminScriptFilter);
 
             return response()->json($response);
-
         }
 
         return view('admin.scripts');
@@ -77,7 +80,7 @@ class ScriptsController extends Controller
     }
 
     /**
-     * get user
+     * Get the specified resource to be edited.
      *
      * @param Script $script
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -101,15 +104,33 @@ class ScriptsController extends Controller
      */
     public function update(Script $script)
     {
-        $script = request()->validate([
+        $updatedScript = request()->validate([
             'title'        => 'required',
+            'content'      => '',
             'status'       => '',
-            'access_level' => 'required',
         ]);
 
-//        $user->update($newUser);
+        if ($script->status) {
+            unset($updatedScript['status']);
+        }
+
+        $script->update($updatedScript);
 
         return response([], 201);
+    }
+
+    /**
+     * Delete the given script.
+     *
+     * @param Script $script
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function destroy(Script $script)
+    {
+        $script->delete();
+
+        return response([], 204);
     }
 
     /**
