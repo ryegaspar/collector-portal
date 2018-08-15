@@ -58,6 +58,11 @@
 						href: 'adjustments',
                         text: 'Adjustments',
                         icon: 'fa fa-line-chart'
+                    },
+                    scripts: {
+						href: 'scripts',
+                        text: 'Scripts',
+                        icon: 'fa fa-pencil-square-o'
                     }
                     // item2: {
 						// href: '#',

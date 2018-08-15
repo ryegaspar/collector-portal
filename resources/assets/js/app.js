@@ -29,6 +29,7 @@ Vue.component('dashboard', require('./components/Users/Dashboard'));
 Vue.component('accounts', require('./components/Users/Accounts'));
 Vue.component('transactions', require('./components/Users/Transactions'));
 Vue.component('adjustments', require('./components/Users/Adjustments'));
+Vue.component('scripts', require('./components/Users/Scripts'));
 
 const app = new Vue({
     el: '#app'

@@ -57,7 +57,7 @@
                     Scripts: {
 						href: '#',
                         text: 'Scripts',
-                        icon: 'fa fa-list-ol',
+                        icon: 'fa fa-pencil-square-o',
                         children: {
                         	ScriptCreate: {
                         		href: '/admin/scripts/create',

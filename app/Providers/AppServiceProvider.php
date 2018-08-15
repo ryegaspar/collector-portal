@@ -18,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('hash', function ($attribute, $value, $parameters, $validator) {
             return Hash::check($value, auth()->user()->password);
         });
+
+//        DB::listen(function($query) {
+//            Log::info($query->sql, $query->bindings, $query->time);
+//        });
     }
 
     /**

@@ -97,7 +97,7 @@
 				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
 
 				if (action === 'show-preview') {
-					this.$refs.modalScript.loadPreview(data.id);
+					this.$refs.modalScript.loadPreview(`/admin/scripts/${data.id}`);
 					$("#modalScript").modal("show");
 
 					button.removeAttribute("disabled");

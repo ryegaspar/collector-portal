@@ -26,6 +26,13 @@ abstract class TableFilter
     protected $searches = [];
 
     /**
+     * searches to operate on with relation
+     *
+     * @var array
+     */
+    protected $searchesAs = [];
+
+    /**
      * default sort
      *
      * @var string
@@ -67,6 +74,20 @@ abstract class TableFilter
         return $this;
     }
 
+    protected function searchAs()
+    {
+        if (!empty($this->searchesAs)) {
+            foreach ($this->searchesAs as $key => $searches) {
+                foreach($searches as $search) {
+                    $this->builder->orWhereHas($key, function ($q) use ($search) {
+                        $q->where($search, 'like', "%{$this->request->search}%");
+                    });
+                }
+            }
+        }
+        return $this;
+    }
+
     /**
      * perform sort
      *
@@ -97,7 +118,7 @@ abstract class TableFilter
     {
         $this->builder = $builder;
 
-        $this->search()->sort();
+        $this->search()->searchAs()->sort();
 
         $filters = preg_grep('/^filter/', get_class_methods($this));
 

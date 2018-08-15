@@ -62,22 +62,25 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('logout', 'LoginController@logout')->name('user.logout');
 });
 
-Route::group(['namespace' => 'Users'], function () {
-    Route::get('/dashboard', 'DashboardController@index')->name('user.dashboard');
+Route::name('user.')->namespace('Users')->group(function () {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::get('/dashboard/transactions',
-        'DashboardTransactionController@index')->name('user.dashboard.transactions');
+        'DashboardTransactionController@index')->name('dashboard.transactions');
 
-    Route::get('/accounts', 'AccountsController@index')->name('user.accounts');
-    Route::get('/accounts/show', 'AccountsController@show')->name('user.accounts.show');
+    Route::get('/accounts', 'AccountsController@index')->name('accounts');
+    Route::get('/accounts/show', 'AccountsController@show')->name('accounts.show');
 
-    Route::get('/transactions', 'TransactionsController@index')->name('user.transactions');
-    Route::get('/transactions/show', 'TransactionsController@show')->name('user.transactions.show');
+    Route::get('/transactions', 'TransactionsController@index')->name('transactions');
+    Route::get('/transactions/show', 'TransactionsController@show')->name('transactions.show');
 
-    Route::get('/adjustments', 'AdjustmentsController@index')->name('user.adjustments');
-    Route::get('/adjustments/show', 'AdjustmentsController@show')->name('user.adjustments.show');
-    Route::post('/adjustments', 'AdjustmentsController@store')->name('user.adjustments.store');
-    Route::delete('/adjustments/{adjustment}', 'AdjustmentsController@destroy')->name('user.adjustments.destroy');
+    Route::get('/adjustments', 'AdjustmentsController@index')->name('adjustments');
+    Route::get('/adjustments/show', 'AdjustmentsController@show')->name('adjustments.show');
+    Route::post('/adjustments', 'AdjustmentsController@store')->name('adjustments.store');
+    Route::delete('/adjustments/{adjustment}', 'AdjustmentsController@destroy')->name('adjustments.destroy');
+
+    Route::get('/scripts', 'ScriptsController@index')->name('scripts');
+    Route::get('/scripts/{script}', 'ScriptsController@show')->name('scripts.show');
 });
 
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');

@@ -29,11 +29,11 @@
             }
         },
     	methods: {
-    		loadPreview(id) {
+    		loadPreview(url) {
     			this.scriptTitle = '';
     			this.scriptBody = '';
 
-    			axios.get(`/admin/scripts/${id}`)
+    			axios.get(url)
                     .then(({data}) => {
                     	this.scriptTitle = data.title;
                     	this.scriptBody = data.content;

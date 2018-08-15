@@ -134,7 +134,7 @@ class ScriptsController extends Controller
     }
 
     /**
-     * get users
+     * get scripts
      *
      * @param $adminScriptFilter
      * @return mixed
