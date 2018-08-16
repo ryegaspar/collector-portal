@@ -37,6 +37,13 @@ export default [
 		title: 'Payment Date',
 		titleClass: 'text-center',
 		dataClass: 'text-right',
+		visible: false,
+	},
+	{
+		name: 'reviewer.username',
+		title: 'Reviewed By',
+		titleClass: 'text-center',
+		dataClass: 'text-right',
 		visible: true,
 	},
 	{

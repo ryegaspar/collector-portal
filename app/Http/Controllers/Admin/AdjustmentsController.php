@@ -30,7 +30,7 @@ class AdjustmentsController extends Controller
     public function index(AdminAdjustmentFilter $adminAdjustmentFilter)
     {
         if (request()->wantsJson()) {
-            $response = $this->getAllAdjustments($adminAdjustmentFilter);
+            $response = $this->getAdjustments($adminAdjustmentFilter);
 
             return response()->json($response);
         }
@@ -50,6 +50,8 @@ class AdjustmentsController extends Controller
             'status' => 'numeric|min:1|max:2'
         ]);
 
+        $data['reviewed_by'] = auth()->user()->id;
+
         $adjustment->update($data);
 
         return response([], 201);
@@ -58,12 +60,12 @@ class AdjustmentsController extends Controller
     /**
      * get all adjustments
      *
-     * @param $adminAdjustmentFilter
+     * @param $adjustmentFilter
      * @return mixed
      */
-    protected function getAllAdjustments($adminAdjustmentFilter)
+    protected function getAdjustments($adjustmentFilter)
     {
-        $adjustments = Adjustment::tableFilters($adminAdjustmentFilter);
+        $adjustments = Adjustment::tableFilters($adjustmentFilter)->with('reviewer');
 
         $results = $this->paginate($adjustments);
 

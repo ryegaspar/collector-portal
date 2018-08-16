@@ -21,6 +21,7 @@ class CreateAdjustmentsTable extends Migration
             $table->string('collector_name', 30);
             $table->string('name', 30);
             $table->float('amount', 11, 2);
+            $table->unsignedInteger('reviewed_by')->nullable();
             $table->date('date');
             $table->float('commission', 11, 2)->default(0);
             $table->unsignedInteger('status')->default(0);

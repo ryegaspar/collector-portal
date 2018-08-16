@@ -5,7 +5,6 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Unifin\TableFilters\AdminAdjustmentFilter;
 use Unifin\TableFilters\TableFilter;
 
 class Adjustment extends Model
@@ -18,6 +17,7 @@ class Adjustment extends Model
         'commission',
         'dbr_no',
         'amount',
+        'reviewed_by',
         'date',
         'status'
     ];
@@ -38,26 +38,14 @@ class Adjustment extends Model
         'date' => 'datetime:m/d/Y',
     ];
 
-
     /**
-     * add adjustments for the collector
+     * An adjustment is reviewed by user
      *
-     * @param $adjustment
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public static function addCollectorAdjustment($adjustment)
+    public function reviewer()
     {
-        $adjustment['date'] = Carbon::parse(request()->date)->format('Y-m-d');
-
-        $debterRecord = DebterPayment::getFirstRecord(request()->dbr_no, request()->amount, request()->date);
-
-        $adjustment['commission'] = $debterRecord->PAY_COMM;
-        $adjustment['name'] = $debterRecord->PAY_NAME;
-        $adjustment['collector_name'] = Auth::user()->USR_NAME;
-        $adjustment['desk_from'] = $debterRecord->DESK;
-        $adjustment['desk'] = Auth::user()->USR_DEF_MOT_DESK;
-
-        return self::create($adjustment);
+        return $this->belongsTo('App\User', 'reviewed_by', 'id');
     }
 
     /**
@@ -129,25 +117,23 @@ class Adjustment extends Model
     }
 
     /**
-     * fetch all adjustments
+     * add adjustments for the collector
      *
-     * @param $request
-     * @param AdminAdjustmentFilter $paginate
+     * @param $adjustment
      * @return mixed
      */
-    public function getAllAdjustments($request, AdminAdjustmentFilter $paginate)
+    public static function addCollectorAdjustment($adjustment)
     {
-        $builder = Adjustment::tableFilters($paginate);
+        $adjustment['date'] = Carbon::parse(request()->date)->format('Y-m-d');
 
-        $perPage = $request->has('per_page') ? (int)$request->per_page : null;
+        $debterRecord = DebterPayment::getFirstRecord(request()->dbr_no, request()->amount, request()->date);
 
-        $pagination = $builder->paginate($perPage);
-        $pagination->appends([
-            'sort'     => $request->sort,
-            'search'   => $request->search,
-            'per_page' => $request->per_page
-        ]);
+        $adjustment['commission'] = $debterRecord->PAY_COMM;
+        $adjustment['name'] = $debterRecord->PAY_NAME;
+        $adjustment['collector_name'] = Auth::user()->USR_NAME;
+        $adjustment['desk_from'] = $debterRecord->DESK;
+        $adjustment['desk'] = Auth::user()->USR_DEF_MOT_DESK;
 
-        return $pagination;
+        return self::create($adjustment);
     }
 }
