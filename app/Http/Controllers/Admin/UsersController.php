@@ -20,7 +20,7 @@ class UsersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
+        $this->middleware(['auth:admin', 'activeUser']);
         $this->middleware('permission:read users')->only('index');
         $this->middleware('permission:create users')->only('store');
         $this->middleware('permission:update users')->only(['edit', 'update']);

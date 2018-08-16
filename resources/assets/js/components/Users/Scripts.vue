@@ -51,9 +51,9 @@
 				fieldDefs: VtableScriptsFieldDefs,
 				sortOrder: [
 					{
-						field: 'published_at',
-						sortField: 'published_at',
-						direction: 'desc'
+						field: 'title',
+						sortField: 'title',
+						direction: 'asc'
 					}
 				],
 				moreParams: {},

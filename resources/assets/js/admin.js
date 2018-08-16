@@ -30,6 +30,7 @@ Vue.component('adjustments', require('./components/Admin/Adjustments'));
 Vue.component('users', require('./components/Admin/Users'));
 Vue.component('scripts', require('./components/Admin/Scripts'));
 Vue.component('script-create-edit', require('./components/Admin/ScriptCreateEdit'));
+Vue.component('roles-permissions', require('./components/Admin/RolesPermissions'));
 
 const app = new Vue({
 	el: '#app'

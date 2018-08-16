@@ -17,7 +17,7 @@ class ScriptsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
+        $this->middleware(['auth:admin', 'activeUser']);
         $this->middleware('permission:read scripts')->only('index');
         $this->middleware('permission:create scripts')->only(['create', 'store']);
         $this->middleware('permission:update scripts')->only(['edit', 'update']);

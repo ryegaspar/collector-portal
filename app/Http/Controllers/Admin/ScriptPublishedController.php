@@ -14,6 +14,7 @@ class ScriptPublishedController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser']);
+        $this->middleware('permission:update scripts')->only('update');
     }
 
     /**

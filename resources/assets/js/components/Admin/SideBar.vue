@@ -49,11 +49,6 @@
 						text: 'Collector Adjustments',
 						icon: 'fa fa-line-chart'
 					},
-					Users: {
-						href: '/admin/users',
-						text: 'Users',
-						icon: 'fa fa-users'
-					},
                     Scripts: {
 						href: '#',
                         text: 'Scripts',
@@ -71,6 +66,16 @@
 							}
                         }
 
+                    },
+					Users: {
+						href: '/admin/users',
+						text: 'Users',
+						icon: 'fa fa-users'
+					},
+                    RolesPermissions: {
+						href: '/admin/roles-permissions',
+                        text: 'Roles & Permissions',
+                        icon: 'fa fa-lock'
                     }
 					// item2: {
 					// href: '#',

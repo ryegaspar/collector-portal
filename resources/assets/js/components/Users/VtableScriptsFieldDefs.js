@@ -15,18 +15,12 @@ export default [
 		visible: true,
 	},
 	{
-		name: 'user.full_name',
-		title: 'Author',
-		titleClass: 'text-center',
-		visible: true,
-	},
-	{
 		name: 'published_at',
 		sortField: 'published_at',
 		title: 'Date Published',
 		titleClass: 'text-center',
 		dataClass: 'text-right',
-		visible: true,
+		visible: false,
 	},
 	{
 		name: '__slot:actions',

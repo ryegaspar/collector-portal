@@ -65,7 +65,7 @@
 				],
 				moreParams: {
 					'date': this.startDate() + '|' + this.endDate()
-                },
+				},
 				perPage: 25,
 			}
 		},
@@ -109,6 +109,14 @@
 										timer: 1000
 									});
 									this.$emit('reload');
+								})
+								.catch((error) => {
+									swal({
+										title: "Error",
+										text: `${error.message}`,
+										icon: 'warning',
+										timer: 1250
+									});
 								});
 							break;
 						case "Approve":
@@ -121,7 +129,15 @@
 										timer: 1000
 									});
 									this.$emit('reload');
-								});
+								})
+								.catch((error) => {
+									swal({
+										title: "Error",
+										text: `${error.message}`,
+										icon: 'warning',
+										timer: 1250
+									});
+								});;
 							break;
 						default:
 					}

@@ -19,12 +19,12 @@ class RoleListsController extends Controller
     /**
      * get all roles
      *
-     * @return \Illuminate\Database\Eloquent\Collection|Role[]
+     * @return \Illuminate\Support\Collection
      */
     public function index()
     {
         if (request()->wantsJson()) {
-            return Role::all();
+            return Role::all()->pluck('name');
         }
     }
 }

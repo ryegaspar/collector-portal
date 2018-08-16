@@ -67,9 +67,9 @@
                                 <select class="form-control"
                                         v-model="form.access_level"
                                         @change="form.errors.clear()">
-                                    <option :value="group.text"
-                                            v-for="group in accessGroups">
-                                        {{ group.text }}
+                                    <option :value="role"
+                                            v-for="role in accessGroups">
+                                        {{ role }}
                                     </option>
                                 </select>
                                 <em class="error invalid-feedback"
@@ -125,10 +125,7 @@
 			axios.get('/admin/roles')
                 .then(({data}) => {
                 	data.forEach((element) => {
-                		let role = Object();
-                		role.value = element.id;
-                		role.text = element.name;
-                		this.accessGroups.push(role);
+                		this.accessGroups.push(element);
                     });
                 })
                 .catch((error) => {

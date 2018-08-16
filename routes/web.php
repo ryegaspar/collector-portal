@@ -47,6 +47,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish');
         Route::resource('scripts', 'ScriptsController');
+
+        Route::resource('roles-permissions', 'RolesPermissionsController');
     });
 });
 
