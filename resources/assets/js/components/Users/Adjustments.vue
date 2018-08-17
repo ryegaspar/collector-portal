@@ -117,19 +117,10 @@
 					if (willDelete) {
 						axios.delete(`./adjustments/${data.id}`)
 							.then(() => {
-								swal({
-									title: "Success",
-									text: "Successfully deleted adjustment data",
-									icon: "success",
-									timer: 1250
-								});
+								lib.swalSuccess("Successfully deleted adjustment data");
 								this.$emit('reload');
 							}).catch((error) => {
-								swal({
-                                    title: "Delete Adjustment",
-                                    text: `${error.message}`,
-                                    icon: "warning",
-                                });
+								lib.swalError(error.message);
 							});
 					}
 					button.removeAttribute("disabled");

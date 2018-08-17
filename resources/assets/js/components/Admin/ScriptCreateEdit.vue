@@ -122,14 +122,8 @@
 						this.persistButtonText = tempButtonText;
 
 						if (!this.isAdd) {
-							swal({
-								title: "Error",
-								text: `Unable to create a script`,
-								icon: 'warning',
-								timer: 1250
-							});
+							lib.swalError(error.message);
 						}
-
 					})
 
 			}

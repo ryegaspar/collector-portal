@@ -56,7 +56,7 @@ Route::group(['prefix' => 'admin/filemanager', 'middleware' => ['web', 'auth:adm
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::redirect('/', '/dashboard');
+Route::redirect('/', '/dashboard')->name('home');
 
 Route::group(['namespace' => 'Auth'], function () {
     Route::get('login', 'LoginController@showLoginForm')->name('user.login');

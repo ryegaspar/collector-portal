@@ -142,21 +142,10 @@
 
 								this.$emit('reload');
 
-								swal({
-									title: "Success",
-									text: "Updated status of the user",
-									icon: 'success',
-									timer: 1250
-								});
+								lib.swalSuccess("Updated status of the user");
 							})
 							.catch((error) => {
-
-								swal({
-									title: "Error",
-									text: "Unable to update the status of the user",
-									icon: 'warning',
-									timer: 1250
-								});
+								lib.swalError(error.message);
 
 								button.removeAttribute("disabled");
 								button.innerHTML = innerHTML;

@@ -168,23 +168,13 @@
 				axios.patch(`/admin/roles-permissions/${this.roleText}`, {permissions: this.permissions})
 					.then(() => {
 
-						swal({
-							title: "Success",
-							text: `Successfuly updated permissions for ${this.roleText}`,
-							icon: 'success',
-							timer: 1250
-						});
+						lib.swalSuccess(`Successfully updated permissions for ${this.roleText}`);
 
 						this.isLoading = false;
 						this.updateText = tempButtonText;
 					})
 					.catch((error) => {
-						swal({
-							title: "Error",
-							text: `${error.message}`,
-							icon: 'warning',
-							timer: 1250
-						});
+						lib.swalError(error.message);
 
 						this.isLoading = false;
 						this.updateText = tempButtonText;

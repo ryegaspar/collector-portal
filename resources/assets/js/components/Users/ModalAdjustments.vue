@@ -110,13 +110,7 @@
 						this.persistButtonText = tempButtonText;
 
 						$("#modalAdjustment").modal('hide');
-
-						swal({
-                            title: "Success",
-                            text: notifyMessage,
-                            icon: 'success',
-                            timer: 1250
-                        });
+						lib.swalSuccess(notifyMessage);
 
 						this.$events.fire('reload-table');
 						// this.$emit('reload');

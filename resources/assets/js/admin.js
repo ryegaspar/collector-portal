@@ -17,9 +17,11 @@ window.moment = require('moment');
  */
 import Form from './utilities/Form';
 import SweetAlert from 'sweetalert';
+import * as lib from './utilities/Lib';
 
 window.Form = Form;
 window.swal = SweetAlert;
+window.lib = lib;
 
 Vue.component('topnavbar', require('./components/Admin/TopNavBar'));
 

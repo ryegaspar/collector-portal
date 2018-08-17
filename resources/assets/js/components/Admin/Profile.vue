@@ -156,12 +156,7 @@
 						this.form.password = '';
 						this.form.password_confirmation = '';
 
-						swal({
-							title: "Success",
-							text: "Profile successfully updated",
-							icon: 'success',
-							timer: 1250
-						});
+						lib.swalSuccess("Profile successfully updated");
                     })
                     .catch((error) => {
 						this.isLoading = false;

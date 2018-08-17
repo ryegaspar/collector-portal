@@ -38,13 +38,8 @@
                     	this.scriptTitle = data.title;
                     	this.scriptBody = data.content;
                     })
-                    .catch(() => {
-						swal({
-							title: "Error",
-							text: "Unable to preview the script",
-							icon: 'warning',
-							timer: 1250
-						});
+                    .catch((error) => {
+                    	lib.swalError(error.message);
                     });
             }
         }

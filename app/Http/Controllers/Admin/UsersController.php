@@ -79,7 +79,6 @@ class UsersController extends Controller
         }
     }
 
-
     /**
      * update the given user
      *

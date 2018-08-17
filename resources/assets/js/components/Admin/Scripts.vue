@@ -117,22 +117,11 @@
 						if (value) {
 							axios.patch(`/admin/scripts/${data.id}/publish`)
 								.then(() => {
-									swal({
-										title: "Success",
-										text: "Successfully published script",
-										icon: 'success',
-										timer: 1250
-									});
+									lib.swalSuccess("Successfully published script");
 
 									this.$emit('reload');
-
 								}).catch((error) => {
-								swal({
-									title: "Error",
-									text: "Unable to publish the script",
-									icon: 'error',
-									timer: 1250
-								});
+									lib.swalError("Unable to publish the script");
 							});
 						}
 						button.removeAttribute("disabled");
@@ -160,22 +149,12 @@
 					if (response) {
 						axios.delete(`/admin/scripts/${data.id}`)
                             .then(() => {
-								swal({
-									title: "Success",
-									text: "Successfully deleted script",
-									icon: 'success',
-									timer: 1250
-								});
+                            	lib.swalSuccess("Successfully deleted script");
 
 								this.$emit('reload');
                             })
                             .catch((error) => {
-								swal({
-									title: "Error",
-									text: error.message,
-									icon: 'error',
-									timer: 1250
-								});
+                            	lib.swalError(error.message);
                             });
                     }
 
@@ -190,6 +169,5 @@
 				return `/admin/scripts`;
 			},
 		},
-
 	}
 </script>

@@ -102,41 +102,21 @@
 						case "Deny":
 							axios.patch(`./adjustments/${data.id}`, {'status': 2})
 								.then(() => {
-									swal({
-										title: "Success",
-										text: "Success - Denied Adjustment!",
-										icon: "success",
-										timer: 1000
-									});
+									lib.swalSuccess("Success - Denied Adjustment");
 									this.$emit('reload');
 								})
 								.catch((error) => {
-									swal({
-										title: "Error",
-										text: `${error.message}`,
-										icon: 'warning',
-										timer: 1250
-									});
+									lib.swalError(error.message);
 								});
 							break;
 						case "Approve":
 							axios.patch(`./adjustments/${data.id}`, {'status': 1})
 								.then(() => {
-									swal({
-										title: "Success",
-										text: "Success - Approve Adjustment!",
-										icon: "success",
-										timer: 1000
-									});
+									lib.swalSuccess("Success - Approved Adjustment");
 									this.$emit('reload');
 								})
 								.catch((error) => {
-									swal({
-										title: "Error",
-										text: `${error.message}`,
-										icon: 'warning',
-										timer: 1250
-									});
+									lib.swalError(error.message);
 								});;
 							break;
 						default:

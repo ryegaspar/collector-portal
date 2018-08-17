@@ -54,6 +54,7 @@
                             <div class="input-group">
                                 <input type="text"
                                        class="form-control text-right"
+                                       :disabled="!isAdd"
                                        v-model="form.email">
                                 <em class="error invalid-feedback"
                                     v-if="form.errors.has('email')">
@@ -129,7 +130,7 @@
                     });
                 })
                 .catch((error) => {
-                	console.log(error);
+                	lib.swalError(error.message);
                 });
         },
 
@@ -155,14 +156,7 @@
 						this.persistButtonText = tempButtonText;
 
 						$("#modalUser").modal('hide');
-
-						swal({
-                            title: "Success",
-                            text: notifyMessage,
-                            icon: 'success',
-                            timer: 1250
-                        });
-
+						lib.swalSuccess(notifyMessage);
 						this.$emit('submitted');
 					})
 					.catch((error) => {
@@ -170,12 +164,7 @@
 						this.persistButtonText = tempButtonText;
 
 						if (!this.isAdd) {
-							swal({
-								title: "Error",
-								text: `Unable to update user`,
-								icon: 'warning',
-								timer: 1250
-							});
+							lib.swalError(error.message);
                         }
 					})
 
