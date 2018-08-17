@@ -68151,7 +68151,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         _this.submitButton = 'Login';
         _this.isLoading = false;
-        location.assign(redirect);
+        location.href = redirect;
       });
     }
   }

@@ -80,7 +80,7 @@
                     .then(({data: {redirect}}) => {
                     	this.submitButton = 'Login';
                     	this.isLoading = false;
-                    	location.assign(redirect);
+                    	location.href = redirect;
                     });
             }
         }

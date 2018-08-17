@@ -95,12 +95,12 @@
 					.then(({data: {redirect}}) => {
 						this.submitButton = 'Login';
 						this.isLoading = false;
-						location.assign(redirect);
+						location.href = redirect;
 					});
 			},
 
             openForgotPassword() {
-				window.location.assign('/admin/forgot-password');
+				window.location.href = '/admin/forgot-password';
             }
 		}
 	}

@@ -55,7 +55,7 @@
             },
 
             viewProfile() {
-    			window.location.assign('/admin/profile');
+    			window.location.href = '/admin/profile';
             }
         },
 
