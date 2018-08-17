@@ -13,7 +13,7 @@ class UserToggleActiveController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
+        $this->middleware(['auth:admin', 'activeUser']);
         $this->middleware('permission:disable users')->only('update');
     }
 
@@ -25,6 +25,10 @@ class UserToggleActiveController extends Controller
      */
     public function update(User $user)
     {
+        if ($user->id == 1) {
+            return response([], 403);
+        }
+
         if (Auth::user()->id == $user->id) {
             return response([], 403);
         }
