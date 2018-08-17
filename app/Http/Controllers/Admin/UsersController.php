@@ -37,7 +37,7 @@ class UsersController extends Controller
         if (request()->wantsJson()) {
             $response = $this->getUsers($adminUserFilter);
 
-            return response()->json($response);
+            return response($response, 200);
         }
 
         return view('admin.users');
@@ -69,13 +69,13 @@ class UsersController extends Controller
     /**
      * get user
      *
-     * @param User $user
+     * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
         if (request()->wantsJson()) {
-            return response($user, 200);
+            return response(User::with('roles')->find($id), 200);
         }
     }
 
@@ -114,7 +114,7 @@ class UsersController extends Controller
      */
     protected function getUsers($adminUserFilter)
     {
-        $adjustments = User::tableFilters($adminUserFilter);
+        $adjustments = User::tableFilters($adminUserFilter)->with('roles');
 
         $results = $this->paginate($adjustments);
 

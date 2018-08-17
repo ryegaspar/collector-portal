@@ -51,8 +51,6 @@ class User extends Authenticatable implements CanResetPasswordContract
         'remember_token',
     ];
 
-    protected $with = ['roles'];
-
     /**
      * append full name to the model
      *
