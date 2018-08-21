@@ -4,6 +4,7 @@
             <ul class="nav">
                 <li class="nav-item"
                     :class="hasChildren(menu) ? 'nav-dropdown': ''"
+                    v-if="canShow(menu)"
                     v-for="menu in menus">
                     <a class="nav-link"
                        :class="hasChildren(menu) ? 'nav-dropdown-toggle': ''"
@@ -13,6 +14,7 @@
                     </a>
                     <ul class="nav-dropdown-items" v-if="hasChildren(menu)">
                         <li class="nav-item" :class="hasChildren(submenu) ? 'nav-dropdown' : ''"
+                            v-if="canShow(submenu)"
                             v-for="submenu in menu.children">
                             <a class="nav-link" :class="hasChildren(submenu) ? 'nav-dropdown-toggle': ''"
                                :href="submenu.href">
@@ -36,8 +38,13 @@
 
 <script>
 	export default {
+		props: [
+			'perms'
+        ],
 		data() {
 			return {
+				permissions: JSON.parse(this.perms),
+
 				menus: {
 					dashboard: {
 						href: '/admin/dashboard',
@@ -47,22 +54,26 @@
 					Adjustments: {
 						href: '/admin/adjustments',
 						text: 'Collector Adjustments',
-						icon: 'fa fa-line-chart'
+						icon: 'fa fa-line-chart',
+                        permission: 'read adjustments'
 					},
                     Scripts: {
 						href: '#',
                         text: 'Scripts',
                         icon: 'fa fa-pencil-square-o',
+                        permission: 'read scripts',
                         children: {
                         	ScriptCreate: {
                         		href: '/admin/scripts/create',
                                 icon: 'fa fa-plus',
-                                text: 'Create Script'
+                                text: 'Create Script',
+                                permission: 'create scripts'
                             },
                             ScriptList: {
                         		href: '/admin/scripts',
 								icon: 'fa fa-list-ol',
-                                text: "Lists"
+                                text: "Lists",
+                                permission: 'read scripts'
 							}
                         }
 
@@ -70,12 +81,15 @@
 					Users: {
 						href: '/admin/users',
 						text: 'Users',
-						icon: 'fa fa-users'
+						icon: 'fa fa-users',
+                        permission: 'read users'
 					},
                     RolesPermissions: {
 						href: '/admin/roles-permissions',
                         text: 'Roles & Permissions',
-                        icon: 'fa fa-lock'
+                        icon: 'fa fa-lock',
+                        permission: 'read roles_permissions'
+
                     }
 					// item2: {
 					// href: '#',
@@ -130,7 +144,14 @@
 		methods: {
 			hasChildren(menu) {
 				return menu.hasOwnProperty('children');
-			}
+			},
+
+            canShow(menu) {
+				if (menu.hasOwnProperty('permission')) {
+					return this.permissions.includes(menu.permission)
+				} else
+					return true;
+            }
 		}
 	}
 </script>

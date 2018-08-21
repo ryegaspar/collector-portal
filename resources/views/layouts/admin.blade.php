@@ -26,7 +26,7 @@
 		@yield('topnavbar')
 
 		<div class="app-body">
-			<sidebar></sidebar>
+			<sidebar perms="{{ $permissions }}"></sidebar>
 			@yield('content')
 		</div>
 

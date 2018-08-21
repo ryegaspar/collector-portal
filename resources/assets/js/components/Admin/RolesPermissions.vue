@@ -24,32 +24,7 @@
                         </div>
                         <div class="filter-bar form-inline">
                             <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-2">Users</label>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read users']">
-                                    <label class="form-check-label">view users</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['create users']">
-                                    <label class="form-check-label">create users</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['update users']">
-                                    <label class="form-check-label">edit users</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['disable users']">
-                                    <label class="form-check-label">disable users</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter-bar form-inline">
-                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-2">Adjustments</label>
+                                <label class="col-md-2"><strong>Adjustments</strong></label>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['read adjustments']">
@@ -64,7 +39,7 @@
                         </div>
                         <div class="filter-bar form-inline">
                             <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-2">Scripts</label>
+                                <label class="col-md-2"><strong>Scripts</strong></label>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['read scripts']">
@@ -87,6 +62,31 @@
                                 </div>
                             </div>
                         </div>
+                        <!--<div class="filter-bar form-inline">-->
+                            <!--<div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">-->
+                                <!--<label class="col-md-2"><strong>Users</strong></label>-->
+                                <!--<div class="btn-group input-group col-sm-2">-->
+                                    <!--<input type="checkbox" class="form-check-input"-->
+                                           <!--v-model="permissions['read users']">-->
+                                    <!--<label class="form-check-label">view users</label>-->
+                                <!--</div>-->
+                                <!--<div class="btn-group input-group col-sm-2">-->
+                                    <!--<input type="checkbox" class="form-check-input"-->
+                                           <!--v-model="permissions['create users']">-->
+                                    <!--<label class="form-check-label">create users</label>-->
+                                <!--</div>-->
+                                <!--<div class="btn-group input-group col-sm-2">-->
+                                    <!--<input type="checkbox" class="form-check-input"-->
+                                           <!--v-model="permissions['update users']">-->
+                                    <!--<label class="form-check-label">edit users</label>-->
+                                <!--</div>-->
+                                <!--<div class="btn-group input-group col-sm-2">-->
+                                    <!--<input type="checkbox" class="form-check-input"-->
+                                           <!--v-model="permissions['disable users']">-->
+                                    <!--<label class="form-check-label">disable users</label>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -118,10 +118,10 @@
 				roleText: 'Role',
 				accessGroups: [],
 				permissions: {
-					'read users': false,
-					'create users': false,
-					'update users': false,
-					'disable users': false,
+					// 'read users': false,
+					// 'create users': false,
+					// 'update users': false,
+					// 'disable users': false,
 
 					'read adjustments': false,
 					'update adjustments': false,

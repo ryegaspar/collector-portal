@@ -16,7 +16,9 @@ class RolesPermissionsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'role:super-admin']);
+        $this->middleware(['auth:admin', 'activeUser']);
+        $this->middleware('permission:read roles_permissions')->only(['index', 'show']);
+        $this->middleware('permission:update roles_permissions')->only('update');
     }
 
     /**
