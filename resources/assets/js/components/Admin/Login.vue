@@ -81,6 +81,7 @@
 				this.isLoading = true;
 				this.submitButton = `<span><i class="fa fa-circle-o-notch fa-spin"></i></span>`;
 				let url = './login';
+
 				axios.post(url, this.form)
 					.catch((error) => {
 						this.$refs.password.focus();
