@@ -57,6 +57,18 @@
 						icon: 'fa fa-line-chart',
                         permission: 'read adjustments'
 					},
+                    Letters: {
+						href:'#',
+                        text: 'Letter Requests',
+                        icon: 'icon-envelope',
+                        children: {
+							LetterRequestType: {
+								href: '/admin/letter-request-type',
+                                icon: 'icon-layers',
+                                text: 'Letter Request Types'
+                            }
+                        }
+                    },
                     Scripts: {
 						href: '#',
                         text: 'Scripts',
@@ -90,7 +102,7 @@
                         icon: 'fa fa-lock',
                         permission: 'read roles_permissions'
 
-                    }
+                    },
 					// item2: {
 					// href: '#',
 					//     text: 'Item 2',

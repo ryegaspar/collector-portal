@@ -48,7 +48,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish');
         Route::resource('scripts', 'ScriptsController');
 
-        Route::resource('roles-permissions', 'RolesPermissionsController');
+        Route::resource('roles-permissions', 'RolesPermissionsController')->only(['index', 'show', 'update']);
     });
 });
 
@@ -83,6 +83,8 @@ Route::name('user.')->namespace('Users')->group(function () {
 
     Route::get('/scripts', 'ScriptsController@index')->name('scripts');
     Route::get('/scripts/{script}', 'ScriptsController@show')->name('scripts.show');
+
+    Route::get('/letter-requests', 'LetterRequestController@index')->name('letter-requests');
 });
 
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');

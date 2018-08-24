@@ -67437,7 +67437,7 @@ if (!Array.prototype.includes) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(213);
-module.exports = __webpack_require__(251);
+module.exports = __webpack_require__(254);
 
 
 /***/ }),
@@ -67483,7 +67483,8 @@ Vue.component('dashboard', __webpack_require__(223));
 Vue.component('accounts', __webpack_require__(226));
 Vue.component('transactions', __webpack_require__(230));
 Vue.component('adjustments', __webpack_require__(239));
-Vue.component('scripts', __webpack_require__(247));
+Vue.component('letter-requests', __webpack_require__(247));
+Vue.component('scripts', __webpack_require__(250));
 
 var app = new Vue({
   el: '#app'
@@ -67855,6 +67856,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                                                       href: 'adjustments',
                                                                       text: 'Adjustments',
                                                                       icon: 'fa fa-line-chart'
+                                                        },
+                                                        letterRequests: {
+                                                                      href: 'letter-requests',
+                                                                      text: 'Letter Requests',
+                                                                      icon: 'icon-envelope'
                                                         },
                                                         scripts: {
                                                                       href: 'scripts',
@@ -72150,7 +72156,243 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(248)
 /* template */
-var __vue_template__ = __webpack_require__(250)
+var __vue_template__ = __webpack_require__(249)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Users\\LetterRequests.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3539df75", Component.options)
+  } else {
+    hotAPI.reload("data-v-3539df75", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 248 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// import VtableHeader from '../VtableHeader';
+// import VtableAdjustmentsFieldDefs from './VtableAdjustmentsFieldDefs';
+// import Vtable from '../VTable';
+// import VueEvents from 'vue-events';
+// import ModalAdjustments from './ModalAdjustments';
+
+// Vue.use(VueEvents);
+
+// Vue.component('vtable-header', VtableHeader);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+	components: {
+		// Vtable,
+		// ModalAdjustments
+	},
+
+	data: function data() {
+		return {
+			// fieldDefs: VtableAdjustmentsFieldDefs,
+			sortOrder: [{
+				field: 'created_at',
+				sortField: 'created_at',
+				direction: 'desc'
+			}],
+			moreParams: {},
+			perPage: 25,
+
+			isAdd: true
+		};
+	},
+
+
+	methods: {
+		addLetterRequest: function addLetterRequest() {
+			console.log('hello!');
+			// this.isAdd = true;
+			// this.$events.fire('modal-reset');
+			// $("#modalAdjustment").modal("show");
+		}
+	},
+
+	computed: {
+		// tableUrl() {
+		// 	return `./adjustments/show`;
+		// },
+		//
+		// startMonthWord() {
+		// 	if (moment().date() > 5)
+		// 		return moment().startOf('month').format("MMMM Do");
+		// 	else
+		// 		return moment().add(-1, 'month').startOf('month').format("MMMM Do");
+		// },
+		//
+		// endMonthWord() {
+		// 	if (moment().date() > 5)
+		// 		return moment().format("MMMM Do");
+		// 	else
+		// 		return moment().add(-1, 'month').endOf('month').format('MMMM Do');
+		// },
+		//
+		// deadlineWord() {
+		// 	if (moment().date() > 5)
+		// 		return moment().add(1, 'month').set('date', 5).format("MMMM D, YYYY")
+		// 	else
+		// 		return moment().set('date', 5).format("MMMM D, YYYY");
+		// }
+	},
+
+	created: function created() {
+		// this.$events.$on('reload-table', eventData => this.onReloadTable());
+	}
+});
+
+/***/ }),
+/* 249 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "animated fadeIn" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "filter-bar" }, [
+              _c("div", { staticClass: "form-inline" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-md-12 input-group",
+                    staticStyle: {
+                      "padding-left": "2px",
+                      "padding-right": "2px"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "btn-group-sm" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary mr-2",
+                          attrs: { type: "button" },
+                          on: { click: _vm.addLetterRequest }
+                        },
+                        [
+                          _c("i", { staticClass: "icon-plus" }),
+                          _vm._v(" New\n                                    ")
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3539df75", module.exports)
+  }
+}
+
+/***/ }),
+/* 250 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(251)
+/* template */
+var __vue_template__ = __webpack_require__(253)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -72189,14 +72431,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 248 */
+/* 251 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VtableHeader__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VtableHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VtableHeader__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VtableScriptsFieldDefs__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VtableScriptsFieldDefs__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VTable__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__VTable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Admin_ModalScript__ = __webpack_require__(206);
@@ -72294,7 +72536,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 249 */
+/* 252 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -72326,7 +72568,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 }]);
 
 /***/ }),
-/* 250 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -72418,7 +72660,7 @@ if (false) {
 }
 
 /***/ }),
-/* 251 */
+/* 254 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
