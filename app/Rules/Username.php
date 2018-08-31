@@ -2,10 +2,7 @@
 
 namespace App\Rules;
 
-use Illuminate\Config\Repository;
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Routing\Router;
 
 class Username implements Rule
 {

@@ -24,15 +24,19 @@ window.swal = SweetAlert;
 window.lib = lib;
 
 Vue.component('topnavbar', require('./components/Admin/TopNavBar'));
-
 Vue.component('sidebar', require('./components/Admin/SideBar'));
+
 Vue.component('login', require('./components/Admin/Login'));
 Vue.component('profile', require('./components/Admin/Profile'));
+
 Vue.component('adjustments', require('./components/Admin/Adjustments'));
-Vue.component('users', require('./components/Admin/Users'));
 Vue.component('scripts', require('./components/Admin/Scripts'));
 Vue.component('script-create-edit', require('./components/Admin/ScriptCreateEdit'));
+Vue.component('collectors', require('./components/Admin/Collectors'));
+Vue.component('admins', require('./components/Admin/Admins'));
 Vue.component('roles-permissions', require('./components/Admin/RolesPermissions'));
+Vue.component('sites', require('./components/Admin/Sites'));
+Vue.component('sub-sites', require('./components/Admin/SubSites'));
 
 const app = new Vue({
 	el: '#app'
@@ -53,6 +57,7 @@ window.axios.interceptors.response.use((response) => {
 	return Promise.reject(error);
 });
 
+// local storage to show swal
 if (localStorage.getItem("swal") != null) {
 	swal(JSON.parse(localStorage.getItem("swal")))
 	localStorage.clear();

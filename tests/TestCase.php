@@ -3,7 +3,7 @@
 namespace Tests;
 
 use App\Admin;
-use App\User;
+use App\Admin;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Schema;
 
@@ -28,7 +28,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function userSignIn($user = null)
     {
-        $user = $user ?: create(User::class);
+        $user = $user ?: create(Admin::class);
         $this->ActingAs($user);
 
         return $this;

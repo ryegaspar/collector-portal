@@ -9,6 +9,11 @@ use Unifin\TableFilters\TableFilter;
 
 class Adjustment extends Model
 {
+    /**
+     * The attributes that are mass assignable
+     *
+     * @var array
+     */
     protected $fillable = [
         'desk',
         'desk_from',
@@ -45,7 +50,7 @@ class Adjustment extends Model
      */
     public function reviewer()
     {
-        return $this->belongsTo('App\User', 'reviewed_by', 'id');
+        return $this->belongsTo('App\Admin', 'reviewed_by', 'id');
     }
 
     /**

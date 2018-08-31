@@ -33,8 +33,6 @@ Route::name('admin.')->prefix('admin')->group(function () {
     });
 
     Route::namespace('Admin')->group(function () {
-        Route::get('roles', 'RoleListsController@index')->name('role');
-
         Route::get('profile', 'ProfileController@index')->name('profile');
         Route::patch('profile', 'ProfileController@update')->name('profile.update');
 
@@ -42,13 +40,20 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
 
-        Route::patch('users/{user}/toggle-active', 'UserToggleActiveController@update')->name('users.toggleActive');
-        Route::resource('users', 'UsersController')->only(['index', 'store', 'edit', 'update']);
-
         Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish');
         Route::resource('scripts', 'ScriptsController');
 
+        Route::get('collectors/leaders', 'CollectorOptionsController@index')->name('team-leader.list');
+        Route::resource('collectors', 'CollectorsController'); //TODO: add 'only' if applicable
+
+        Route::patch('admins/{admin}/toggle-active', 'AdminToggleActiveController@update')->name('admins.toggleActive');
+        Route::resource('admins', 'AdminsController')->only(['index', 'store', 'edit', 'update']);
+
+        Route::get('roles', 'RoleListsController@index')->name('role');
         Route::resource('roles-permissions', 'RolesPermissionsController')->only(['index', 'show', 'update']);
+
+        Route::resource('sites', 'SitesController')->except(['create', 'destroy']);
+        Route::resource('sub-sites', 'SubSitesController'); //TODO: add 'only' or except
     });
 });
 

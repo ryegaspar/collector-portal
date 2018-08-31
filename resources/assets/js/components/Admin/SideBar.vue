@@ -55,7 +55,7 @@
 						href: '/admin/adjustments',
 						text: 'Collector Adjustments',
 						icon: 'fa fa-line-chart',
-                        permission: 'read adjustments'
+                        permission: 'read adjustment'
 					},
                     Letters: {
 						href:'#',
@@ -73,36 +73,60 @@
 						href: '#',
                         text: 'Scripts',
                         icon: 'fa fa-pencil-square-o',
-                        permission: 'read scripts',
+                        permission: 'read script',
                         children: {
                         	ScriptCreate: {
                         		href: '/admin/scripts/create',
                                 icon: 'fa fa-plus',
                                 text: 'Create Script',
-                                permission: 'create scripts'
+                                permission: 'create script'
                             },
                             ScriptList: {
                         		href: '/admin/scripts',
 								icon: 'fa fa-list-ol',
                                 text: "Lists",
-                                permission: 'read scripts'
+                                permission: 'read script'
 							}
                         }
 
                     },
-					Users: {
-						href: '/admin/users',
-						text: 'Users',
-						icon: 'fa fa-users',
-                        permission: 'read users'
+                    Collectors: {
+						href: '/admin/collectors',
+                        text: 'Collectors',
+                        icon: 'fa fa-users',
+                        permission: 'read collector'
+                    },
+					Admins: {
+						href: '/admin/admins',
+						text: 'Admins',
+						icon: 'fa fa-user-secret',
+						permission: 'read admin'
 					},
                     RolesPermissions: {
 						href: '/admin/roles-permissions',
                         text: 'Roles & Permissions',
                         icon: 'fa fa-lock',
-                        permission: 'read roles_permissions'
+                        permission: 'read roles_permission'
 
                     },
+                    Sites: {
+						href: '#',
+                        text: 'Sites',
+                        icon: 'fa fa-sitemap',
+                        permission: 'read site',
+                        children: {
+							Site: {
+								href: '/admin/sites',
+								icon: 'fa fa-object-group',
+								text: 'Sites'
+							},
+                            SubSite: {
+								href: '/admin/sub-sites',
+                                icon: 'fa fa-object-ungroup',
+                                text: 'Sub Sites'
+                            }
+                        }
+                    }
 					// item2: {
 					// href: '#',
 					//     text: 'Item 2',

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lynx\Admin;
 use App\Rules\UserEmail;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,7 +26,7 @@ class ProfileController extends Controller
     public function index()
     {
         if (request()->wantsJson()) {
-            $user = User::findOrFail(Auth::user()->id)->first();
+            $user = Admin::findOrFail(Auth::user()->id)->first();
 
             return response($user, 200);
         }

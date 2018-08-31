@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Placements;
 
-use App\Unifin\Repositories\Placements\Jcap;
-
-//use Illuminate\Contracts\View\View;
-//use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Unifin\Repositories\Placements\Jcap;
+use Illuminate\Http\Request;
+
 
 class JcapController extends Controller
 {

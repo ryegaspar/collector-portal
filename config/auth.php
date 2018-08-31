@@ -77,7 +77,7 @@ return [
 
          'admins' => [
              'driver' => 'eloquent',
-             'model' => App\User::class,
+             'model' => App\Models\Lynx\Admin::class,
 //             'table' => 'users',
          ],
     ],
@@ -103,17 +103,5 @@ return [
             'table'    => 'password_resets',
             'expire'   => 60,
         ],
-//        'admins' => [
-//            'provider' => 'admins',
-//            'table'    => 'password_resets',
-//            'expire'   => 60
-//        ]
     ],
-
-    'reserved_usernames' => [
-        'admin',
-        'moderator',
-        'owner',
-    ],
-
 ];
