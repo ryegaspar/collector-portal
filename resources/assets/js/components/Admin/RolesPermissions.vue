@@ -27,12 +27,12 @@
                                 <label class="col-md-2"><strong>Adjustments</strong></label>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read adjustments']">
+                                           v-model="permissions['read adjustment']">
                                     <label class="form-check-label">view adjustments</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-4">
                                     <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['update adjustments']">
+                                           v-model="permissions['update adjustment']">
                                     <label class="form-check-label">approve/deny adjustments</label>
                                 </div>
                             </div>
@@ -42,22 +42,22 @@
                                 <label class="col-md-2"><strong>Scripts</strong></label>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read scripts']">
+                                           v-model="permissions['read script']">
                                     <label class="form-check-label">view scripts</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['create scripts']">
+                                           v-model="permissions['create script']">
                                     <label class="form-check-label">create scripts</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['update scripts']">
+                                           v-model="permissions['update script']">
                                     <label class="form-check-label">edit scripts</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['delete scripts']">
+                                           v-model="permissions['delete script']">
                                     <label class="form-check-label">delete scripts</label>
                                 </div>
                             </div>
@@ -123,13 +123,13 @@
 					// 'update users': false,
 					// 'disable users': false,
 
-					'read adjustments': false,
-					'update adjustments': false,
+					'read adjustment': false,
+					'update adjustment': false,
 
-					'read scripts': false,
-					'create scripts': false,
-					'update scripts': false,
-					'delete scripts': false,
+					'read script': false,
+					'create script': false,
+					'update script': false,
+					'delete script': false,
 				},
 			}
 		},

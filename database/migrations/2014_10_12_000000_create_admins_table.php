@@ -22,8 +22,8 @@ class CreateAdminsTable extends Migration
             $table->string('password')->default(bcrypt('Password1'));
 //            $table->unsignedSmallInteger('access_level')->default(5);
             $table->boolean('active')->default(true);
-            $table->unsignedInteger('site_id')->default(1);
-            $table->unsignedInteger('sub_site_id')->default(1);
+            $table->unsignedInteger('site_id')->nullable();
+            $table->unsignedInteger('sub_site_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

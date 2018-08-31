@@ -8,7 +8,7 @@ use App\Models\Lynx\Admin;
 class CollectorOptionsController extends Controller
 {
     /**
-     * TeamLeaderListController constructor.
+     * CollectorOptionsController constructor.
      */
     public function __construct()
     {

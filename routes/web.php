@@ -47,6 +47,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('collectors', 'CollectorsController'); //TODO: add 'only' if applicable
 
         Route::patch('admins/{admin}/toggle-active', 'AdminToggleActiveController@update')->name('admins.toggleActive');
+        Route::get('admins/get-options', 'AdminOptionsController@index');
         Route::resource('admins', 'AdminsController')->only(['index', 'store', 'edit', 'update']);
 
         Route::get('roles', 'RoleListsController@index')->name('role');

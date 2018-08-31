@@ -18,6 +18,16 @@ class Site extends Model
     ];
 
     /**
+     * A site has many sub site.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subSite()
+    {
+        return $this->hasMany(Subsite::class);
+    }
+
+    /**
      * apply filters for table view
      *
      * @param $query

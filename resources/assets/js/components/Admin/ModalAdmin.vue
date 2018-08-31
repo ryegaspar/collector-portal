@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="modalUser" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalAdmin" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -79,6 +79,40 @@
                                 </em>
                             </div>
                         </fieldset>
+                        <fieldset class="form-group" v-if="showSite">
+                            <label>Site</label>
+                            <div class="input-group">
+                                <select class="form-control"
+                                        v-model="form.site_id"
+                                        @change="form.errors.clear()">
+                                    <option :value="site.id"
+                                            v-for="site in sites">
+                                        {{ site.name }}
+                                    </option>
+                                </select>
+                                <em class="error invalid-feedback"
+                                    v-if="form.errors.has('site_id')">
+                                    {{ form.errors.get('site_id') }}
+                                </em>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group" v-if="showSubSite">
+                            <label>Sub Site</label>
+                            <div class="input-group">
+                                <select class="form-control"
+                                        v-model="form.sub_site_id"
+                                        @change="form.errors.clear()">
+                                    <option :value="sub_site.id"
+                                            v-for="sub_site in sites[getIndex()].sub_site">
+                                        {{ sub_site.name }}
+                                    </option>
+                                </select>
+                                <em class="error invalid-feedback"
+                                    v-if="form.errors.has('sub_site_id')">
+                                    {{ form.errors.get('sub_site_id') }}
+                                </em>
+                            </div>
+                        </fieldset>
                     </form>
                 </div>
 
@@ -99,7 +133,7 @@
 	export default {
 		props: [
 			'isAdd',
-            'formData'
+			'formData'
 		],
 
 		data() {
@@ -112,27 +146,33 @@
 					username: '',
 					last_name: '',
 					first_name: '',
-                    email: '',
-                    access_level: '',
+					email: '',
+					access_level: '',
+					site_id: '',
+					sub_site_id: '',
 				}),
 
-                updateID: '',
+				updateID: '',
 
-                accessGroups: []
+				accessGroups: [],
+				sites: []
 			}
 		},
 
-        created() {
-			axios.get('/admin/roles')
-                .then(({data}) => {
-                	data.forEach((element) => {
-                		this.accessGroups.push(element);
-                    });
-                })
-                .catch((error) => {
-                	lib.swalError(error.message);
-                });
-        },
+		created() {
+			axios.get('/admin/admins/get-options')
+				.then(({data}) => {
+					data.roles.forEach((element) => {
+						this.accessGroups.push(element);
+					});
+					data.sites.forEach((element) => {
+						this.sites.push(element);
+					})
+				})
+				.catch((error) => {
+					lib.swalError(error.message);
+				});
+		},
 
 		methods: {
 			submit() {
@@ -144,43 +184,53 @@
 				this.isLoading = true;
 				this.persistButtonText = `<i class="fa fa-spinner fa-spin"></i>`
 
-                if (!this.isAdd) {
-                	notifyMessage = "Successfully updated user";
-                	action = 'patch';
-                	url = `/admin/admins/${this.updateID}`;
-                }
+				if (!this.isAdd) {
+					notifyMessage = "Successfully updated user";
+					action = 'patch';
+					url = `/admin/admins/${this.updateID}`;
+				}
 
 				this.form[action](url)
 					.then(() => {
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
 
-						$("#modalUser").modal('hide');
+						$("#modalAdmin").modal('hide');
 						lib.swalSuccess(notifyMessage);
 						this.$emit('submitted');
 					})
 					.catch((error) => {
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
-
-						if (!this.isAdd) {
-							lib.swalError(error.message);
-                        }
 					})
 
 			},
 
-            resetModal() {
-				this.form.errors.clear();
+			resetModal() {
 				this.form.reset();
-            },
+			},
 
-            populateData(data) {
+			populateData(data) {
+				this.form.reset();
 				_.assign(this.form, data);
 				if (data.roles.length >= 1)
-				    this.form.access_level = data.roles[0].name;
+					this.form.access_level = data.roles[0].name;
 				this.updateID = data.id;
-            }
+			},
+
+			getIndex() {
+				return  this.sites.findIndex(site => +site.id === +this.form.site_id);
+			}
+		},
+
+		computed: {
+			showSite() {
+				return this.form.access_level === 'site-manager' || this.form.access_level === 'sub-site-manager' || this.form.access_level === 'team-leader';
+			},
+
+			showSubSite() {
+				return this.form.site_id && (this.form.access_level === 'sub-site-manager' || this.form.access_level === 'team-leader');
+			},
 		},
 
 		watch: {

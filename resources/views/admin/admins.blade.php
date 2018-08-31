@@ -1,7 +1,7 @@
 @extends('layouts.admin')
-@section('title', ' - Users')
+@section('title', ' - Admins')
 @section('topnavbar')
-	<topnavbar title="Users"></topnavbar>
+	<topnavbar title="Admins"></topnavbar>
 @endsection
 @section('content')
 	<!-- Main content -->

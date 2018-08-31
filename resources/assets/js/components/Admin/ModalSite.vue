@@ -110,6 +110,7 @@
 			},
 
 			populateData(data) {
+				this.form.reset();
 				_.assign(this.form, data);
 				this.updateID = data.id;
 			},

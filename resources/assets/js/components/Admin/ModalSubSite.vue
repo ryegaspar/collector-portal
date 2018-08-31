@@ -36,8 +36,8 @@
                                     </option>
                                 </select>
                                 <em class="error invalid-feedback"
-                                    v-if="form.errors.has('site')">
-                                    {{ form.errors.get('site') }}
+                                    v-if="form.errors.has('site_id')">
+                                    {{ form.errors.get('site_id') }}
                                 </em>
                             </div>
                         </fieldset>
@@ -152,6 +152,7 @@
 			},
 
 			populateData(data) {
+				this.form.reset();
 				this.form.name = data.name;
 				this.form.site_id = data.site_id;
 				this.form.description = data.description;

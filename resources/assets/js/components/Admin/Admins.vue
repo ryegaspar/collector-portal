@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <modal-admin ref="modalUser"
+        <modal-admin ref="modalAdmin"
                     :isAdd="isAdd"
                     :formData="formData"
                     @submitted="formSubmitted">
@@ -90,8 +90,8 @@
 		methods: {
 			addUser() {
 				this.isAdd = true;
-				this.$refs.modalUser.resetModal();
-				$("#modalUser").modal("show");
+				this.$refs.modalAdmin.resetModal();
+				$("#modalAdmin").modal("show");
             },
 
             formSubmitted() {
@@ -112,8 +112,8 @@
 					let url = `/admin/admins/${data.id}/edit`;
 					axios.get(url)
                         .then(({data}) => {
-                        	$("#modalUser").modal("show");
-                        	this.$refs.modalUser.populateData(data);
+                        	$("#modalAdmin").modal("show");
+                        	this.$refs.modalAdmin.populateData(data);
 
                         	button.removeAttribute("disabled");
                         	button.innerHTML = innerHTML;

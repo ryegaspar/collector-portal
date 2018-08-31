@@ -37,6 +37,8 @@ class Admin extends Authenticatable implements CanResetPasswordContract
         'first_name',
         'email',
         'active',
+        'site_id',
+        'sub_site_id',
         'confirmation_token'
     ];
 
@@ -126,23 +128,23 @@ class Admin extends Authenticatable implements CanResetPasswordContract
     /**
      * create a new user
      *
-     * @param $user
+     * @param $admin
      * @return \App\Models\Lynx\Admin
      */
-    public static function createUser($user)
+    public static function createAdmin($admin)
     {
         $unencrypted_password = str_random(8);
-        $user['password'] = bcrypt($unencrypted_password);
+        $admin['password'] = bcrypt($unencrypted_password);
 
-        $role = $user['access_level'];
-        unset($user['access_level']);
+        $role = $admin['access_level'];
+        unset($admin['access_level']);
 
-        $userModel = self::create($user);
-        $userModel->assignRole($role);
+        $adminModel = self::create($admin);
+        $adminModel->assignRole($role);
 
-        $userModel->notify(new AccountCreated($userModel, $unencrypted_password));
+        $adminModel->notify(new AccountCreated($adminModel, $unencrypted_password));
 
-        return $userModel;
+        return $adminModel;
     }
 
     /**

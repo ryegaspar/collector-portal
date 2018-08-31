@@ -17,8 +17,8 @@ class RolesPermissionsController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser']);
-        $this->middleware('permission:read roles_permissions')->only(['index', 'show']);
-        $this->middleware('permission:update roles_permissions')->only('update');
+        $this->middleware('permission:read roles_permission')->only(['index', 'show']);
+        $this->middleware('permission:update roles_permission')->only('update');
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Rules\UserEmail;
 use App\Rules\Username;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Unifin\TableFilters\AdminAdminFilter;
 use Unifin\Traits\Paginate;
 
@@ -46,21 +47,13 @@ class AdminsController extends Controller
     /**
      * persists a new user
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        // no additional validation for access_level since the
-        // 'users' control are only accessed by super-admins
-        $user = $request->validate([
-            'username'     => ['required', 'min:6', 'unique:users,username', new Username],
-            'email'        => ['required', 'email', 'unique:users,email', new UserEmail],
-            'first_name'   => ['required'],
-            'last_name'    => ['required'],
-        ]);
+        $request = $this->validateRequest();
 
-        $response = Admin::createUser($user);
+        $response = Admin::createAdmin($request);
 
         return response($response, 200);
     }
@@ -81,26 +74,40 @@ class AdminsController extends Controller
     /**
      * update the given user
      *
-     * @param Admin $user
+     * @param Admin $admin
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function update(Admin $user)
+    public function update(Admin $admin)
     {
-        if (Auth::user()->id == $user->id) {
+        if (Auth::user()->id == $admin->id) {
             return response([], 403);
         }
 
-        $newUser = request()->validate([
-            'first_name'   => 'required',
-            'last_name'    => 'required',
-            'access_level' => 'required',
-        ]);
+        $validator = Validator::make(request()->all(), [
+                'first_name'   => ['required'],
+                'last_name'    => ['required'],
+                'access_level' => ['required'],
+            ]
+        );
 
-        $role = $newUser['access_level'];
-        unset($newUser['access_level']);
+        $validator->sometimes('site_id', 'required|numeric', function ($input) {
+            return $input->access_level == 'site-manager' || $input->access_level == 'sub-site-manager' || $input->access_level == 'team-leader';
+        });
 
-        $user->update($newUser);
-        $user->syncRoles($role);
+        $validator->sometimes('sub_site_id', 'required|numeric', function ($input) {
+            return ! ! $input->site_id && ($input->access_level == 'sub-site-manager' || $input->access_level == 'team-leader');
+        });
+
+        $request = $validator->validate();
+
+        $role = $request['access_level'];
+        if (!($role == 'sub-site-manager' || $role == 'team-leader')) {
+            $request['sub_site_id'] = null;
+        }
+        unset($request['access_level']);
+
+        $admin->update($request);
+        $admin->syncRoles($role);
 
         return response([], 201);
     }
@@ -113,10 +120,37 @@ class AdminsController extends Controller
      */
     protected function getAdmins($adminUserFilter)
     {
-        $admins = Admin::tableFilters($adminUserFilter)->with('roles');
+        $admins = Admin::tableFilters($adminUserFilter)->with('roles:id,name');
 
         $results = $this->paginate($admins);
 
         return $results;
+    }
+
+    /**
+     * validate request
+     *
+     * @return mixed
+     */
+    protected function validateRequest()
+    {
+        $validator = Validator::make(request()->all(), [
+                'username'     => ['required', 'min:6', 'unique:admins,username', new Username],
+                'email'        => ['required', 'email', 'unique:admins,email', new UserEmail],
+                'first_name'   => ['required'],
+                'last_name'    => ['required'],
+                'access_level' => ['required'],
+            ]
+        );
+
+        $validator->sometimes('site_id', 'required|numeric', function ($input) {
+            return $input->access_level == 'site-manager' || $input->access_level == 'sub-site-manager' || $input->access_level == 'team-leader';
+        });
+
+        $validator->sometimes('sub_site_id', 'required|numeric', function ($input) {
+            return ! ! $input->site_id && ($input->access_level == 'sub-site-manager' || $input->access_level == 'team-leader');
+        });
+
+        return $validator->validate();
     }
 }
