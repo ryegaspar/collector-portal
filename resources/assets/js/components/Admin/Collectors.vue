@@ -11,13 +11,13 @@
                         </vtable-sub-header-collectors>
                         <!--<vtable-sub-header-users @addUser="addUser">-->
                         <!--</vtable-sub-header-users>-->
-                        <!--<vtable :api-url="tableUrl"-->
-                                <!--:fields="fieldDefs"-->
-                                <!--:sort-order="sortOrder"-->
-                                <!--:append-params="moreParams"-->
-                                <!--:perPage=perPage>-->
-                            <!--<template slot="actions" slot-scope="props">-->
-                                <!--<div class="custom-actions">-->
+                        <vtable :api-url="tableUrl"
+                                :fields="fieldDefs"
+                                :sort-order="sortOrder"
+                                :append-params="moreParams"
+                                :perPage=perPage>
+                            <template slot="actions" slot-scope="props">
+                                <div class="custom-actions">
                                     <!--<button type="button"-->
                                             <!--class="btn btn-sm btn-info"-->
                                             <!--data-toggle="tooltip"-->
@@ -37,9 +37,9 @@
                                             <!--@click="itemAction('toggle-active', props.rowData, props.rowIndex, $event)">-->
                                         <!--<i :class="props.rowData.active ? 'fa fa-thumbs-down' : 'fa fa-thumbs-up'"></i>-->
                                     <!--</button>-->
-                                <!--</div>-->
-                            <!--</template>-->
-                        <!--</vtable>-->
+                                </div>
+                            </template>
+                        </vtable>
                     </div>
                 </div>
             </div>
@@ -47,11 +47,6 @@
         <modal-collector-create ref="modalCollector"
                                 :isAdd="isAdd">
         </modal-collector-create>
-        <!--<modal-user ref="modalUser"-->
-                    <!--:isAdd="isAdd"-->
-                    <!--:formData="formData"-->
-                    <!--@submitted="formSubmitted">-->
-        <!--</modal-user>-->
     </div>
 </template>
 

@@ -15,16 +15,15 @@ class CreateCollectorsTable extends Migration
     {
         Schema::create('collectors', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tiger_user_id')->nullable();
-            $table->string('desk')->nullable();
+            $table->string('tiger_user_id');
+            $table->string('desk');
             $table->string('username')->unique();
             $table->string('last_name');
             $table->string('first_name');
-            $table->unsignedInteger('site_id')->default(1);
             $table->unsignedInteger('sub_site_id')->default(1);
-            $table->unsignedInteger('manager_id')->default(1);
-            $table->unsignedInteger('team_leader_id')->default(1);
+            $table->unsignedInteger('team_leader_id')->nullable();
             $table->unsignedInteger('department_id')->default(1);
+            $table->unsignedInteger('commission_structure_id')->default(1);
             $table->unsignedInteger('status_id')->default(1);
             $table->date('start_date')->default("01-01-2013");
             $table->date('start_full_month_date')->default("01-01-2013");

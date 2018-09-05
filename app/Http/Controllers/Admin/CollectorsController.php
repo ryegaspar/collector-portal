@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Rules\CollectorId;
+use App\Rules\CollectOneId;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -77,7 +77,7 @@ class CollectorsController extends Controller
             ]
         );
 
-        $validator->sometimes('tiger_user_id', ['required', 'min:3', new CollectorId], function ($input) {
+        $validator->sometimes('tiger_user_id', ['required', 'min:3', new CollectOneId], function ($input) {
             return ! $input->category;
         });
 

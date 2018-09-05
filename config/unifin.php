@@ -2,13 +2,10 @@
 
 return [
 
-    'sites' => [
-        1        => 'US',
-        'EMAPTA',
-        'Sargas' => [
-            1 => 'Manila',
-            'Pampanga',
-        ],
+    'collectone_reserved_id' => [
+        'HSE',
+        'CDS',
+        'ADM',
     ],
 
     'collector_statuses' => [

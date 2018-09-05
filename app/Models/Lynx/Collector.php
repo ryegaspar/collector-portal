@@ -11,22 +11,18 @@ class Collector extends Model
      *
      * @var array
      */
+    
     protected $fillable = [
         'tiger_user_id',
         'desk',
         'username',
         'last_name',
         'first_name',
-        'manager_id',
-        'site_id',
         'sub_site_id',
-        'manager_id',
         'team_leader_id',
-        'hire_at',
-        'status_id',
+        'commission_structure_id',
         'start_date',
-        'start_full_month_at',
-        'password'
+        'start_full_month_date'
     ];
 
     /**

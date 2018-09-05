@@ -15,8 +15,8 @@ class AdminSeeder extends Seeder
         Admin::truncate();
 
         $user = factory(Admin::class)->create([
-            'username'     => 'admin',
-            'password'     => bcrypt('Password'),
+            'username' => 'admin',
+            'password' => bcrypt('Password'),
         ]);
 
         $user->syncRoles('super-admin');
@@ -35,31 +35,46 @@ class AdminSeeder extends Seeder
 
         $site_manager = factory(Admin::class)->create([
             'username' => 'sitemanager',
-            'password' => bcrypt('Password')
+            'password' => bcrypt('Password'),
+            'site_id'  => 1
         ]);
 
         $site_manager->syncRoles('site-manager');
 
         $sub_site_manager = factory(Admin::class)->create([
-            'username' => 'subsitemanager',
-            'password' => bcrypt('Password')
+            'username'    => 'subsitemanager',
+            'password'    => bcrypt('Password'),
+            'site_id'     => 2,
+            'sub_site_id' => 2,
         ]);
 
         $sub_site_manager->syncRoles('sub-site-manager');
 
-
         $teamleader1 = factory(Admin::class)->create([
-            'username' => 'teamleader',
-            'password' => bcrypt('Password'),
+            'username'    => 'teamleader',
+            'password'    => bcrypt('Password'),
+            'site_id'     => 2,
+            'sub_site_id' => 2,
         ]);
 
         $teamleader1->syncRoles('team-leader');
 
         $teamleader2 = factory(Admin::class)->create([
-            'username' => 'teamleader2',
-            'password' => bcrypt('Password'),
+            'username'    => 'teamleader2',
+            'password'    => bcrypt('Password'),
+            'site_id'     => 2,
+            'sub_site_id' => 3,
         ]);
 
         $teamleader2->syncRoles('team-leader');
+
+        $teamleader3 = factory(Admin::class)->create([
+            'username'    => 'teamleader3',
+            'password'    => bcrypt('Password'),
+            'site_id'     => 2,
+            'sub_site_id' => 3,
+        ]);
+
+        $teamleader3->syncRoles('team-leader');
     }
 }

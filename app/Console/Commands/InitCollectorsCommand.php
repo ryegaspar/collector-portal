@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Lynx\Collector;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -39,41 +40,62 @@ class InitCollectorsCommand extends Command
      */
     public function handle()
     {
-        $csvFile = public_path('storage\\files\\cdsusr.csv');
+        $csvFile = public_path('storage\\files\\roster.csv');
 
         $fileHandle = fopen($csvFile, "r");
 
         DB::transaction(function () use ($fileHandle) {
+            $row = 0;
             while (($data = fgetcsv($fileHandle)) !== false) {
-                if ($data[17] == 'Y') {
-                    $nameArr = $this->split_name($data[1]);
-                    Collector::create([
-                        'tiger_user_id'  => $data[0],
-                        'desk'           => $data[16],
-                        'username'       => $nameArr[2],
-                        'last_name'      => $nameArr[1],
-                        'first_name'     => $nameArr[0],
-                        'team_leader_id' => 4,
-                        'manager_id'     => 3,
-                    ]);
+                $row++;
+                if ($row == 1) {
+                    continue;
                 }
+
+                $startDate = Carbon::parse($data[2]);
+                $tempDate = Carbon::parse($data[2])->day(1);
+                $fifteenth = Carbon::parse($data[2])->day(15);
+                $start_full_month_date = Carbon::parse($startDate) <= $fifteenth ? $tempDate : $tempDate->addMonth();
+
+                $lname = $data[0];
+                $fname = $data[1];
+                $username = $this->makeUsername($fname, $lname);
+
+                Collector::create([
+                    'last_name'               => $lname,
+                    'first_name'              => $fname,
+                    'username'                => $username,
+                    'start_date'              => $startDate,
+                    'start_full_month_date'   => $start_full_month_date,
+                    'desk'                    => str_pad($data[3], 3, '0', STR_PAD_LEFT),
+                    'tiger_user_id'           => strtolower($data[4]),
+                    'sub_site_id'             => $data[5],
+                    'commission_structure_id' => $data[6],
+                    'team_leader_id'          => $data[7] ?? null,
+                ]);
             }
         });
+
+        $this->info("Collectors have been synced.");
     }
 
     /**
-     * Split the name into first name, last name
+     * Generate a username
      *
-     * @param $name
+     * @param $fname
+     * @param $lname
      * @return array
      */
-    protected function split_name($name)
+    protected function makeUsername($fname, $lname)
     {
-        $name = trim($name);
-        $last_name = (strpos($name, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
-        $first_name = trim(preg_replace('#' . $last_name . '#', '', $name));
-        $user_name = strtolower($first_name[0] . str_replace(" ", "", $last_name));
+        $username = $maybe_username = strtolower($fname[0] . str_replace(" ", "", $lname));
+        $next = 2;
 
-        return array($first_name, $last_name, $user_name);
+        while (Collector::where('username', '=', $username)->first()) {
+            $username = "{$maybe_username}.$next}";
+            $next++;
+        }
+
+        return $username;
     }
 }

@@ -15,11 +15,17 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Admin::class, function (Faker $faker) {
+
+    $firstName = $faker->firstName;
+    $lastName = $faker->lastName;
+    $tigerId = strtolower($firstName[0] . $lastName[0] . $faker->numberBetween(1, 9));
+
     return [
-        'last_name'      => $faker->lastName,
-        'first_name'     => $faker->firstName,
+        'last_name'      => $lastName,
+        'first_name'     => $firstName,
         'email'          => $faker->email,
         'username'       => $faker->unique()->userName,
+        'tiger_user_id'  => $tigerId,
         'password'       => bcrypt('Password1'),
         'remember_token' => str_random(10),
     ];

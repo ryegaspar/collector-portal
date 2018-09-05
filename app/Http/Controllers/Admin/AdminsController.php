@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lynx\Admin;
+use App\Rules\CollectOneId;
 use App\Rules\UserEmail;
 use App\Rules\Username;
 use Illuminate\Http\Request;
@@ -84,9 +85,9 @@ class AdminsController extends Controller
         }
 
         $validator = Validator::make(request()->all(), [
-                'first_name'   => ['required'],
-                'last_name'    => ['required'],
-                'access_level' => ['required'],
+                'first_name'    => ['required'],
+                'last_name'     => ['required'],
+                'access_level'  => ['required'],
             ]
         );
 
@@ -101,7 +102,7 @@ class AdminsController extends Controller
         $request = $validator->validate();
 
         $role = $request['access_level'];
-        if (!($role == 'sub-site-manager' || $role == 'team-leader')) {
+        if (! ($role == 'sub-site-manager' || $role == 'team-leader')) {
             $request['sub_site_id'] = null;
         }
         unset($request['access_level']);
@@ -135,11 +136,12 @@ class AdminsController extends Controller
     protected function validateRequest()
     {
         $validator = Validator::make(request()->all(), [
-                'username'     => ['required', 'min:6', 'unique:admins,username', new Username],
-                'email'        => ['required', 'email', 'unique:admins,email', new UserEmail],
-                'first_name'   => ['required'],
-                'last_name'    => ['required'],
-                'access_level' => ['required'],
+                'username'      => ['required', 'min:6', 'unique:admins,username', new Username],
+                'email'         => ['required', 'email', 'unique:admins,email', new UserEmail],
+                'first_name'    => ['required'],
+                'last_name'     => ['required'],
+                'tiger_user_id' => ['required', 'max:3', new CollectOneId],
+                'access_level'  => ['required'],
             ]
         );
 

@@ -13,14 +13,14 @@
                 <div class="modal-body">
                     <form @submit.prevent="" @keydown="form.errors.clear()">
                         <fieldset class="form-group">
-                            <label>Category</label>
+                            <label>Sub Site</label>
                             <div class="input-group">
                                 <select class="form-control"
-                                        v-model="form.category"
-                                        @change="form.errors.clear()">
-                                    <option :value="categories.indexOf(category)"
-                                            v-for="category in categories">
-                                        {{ category }}
+                                        v-model="form.sub_site_id"
+                                        @change="onSubSiteChange(form.sub_site_id)">
+                                    <option :value="sub_site.id"
+                                            v-for="sub_site in sub_sites">
+                                        {{ sub_site.name }}
                                     </option>
                                 </select>
                                 <em class="error invalid-feedback"
@@ -29,11 +29,11 @@
                                 </em>
                             </div>
                         </fieldset>
-                        <fieldset class="form-group" v-if="form.category === 0">
-                            <label>User ID:</label>
+                        <fieldset class="form-group" v-if="form.sub_site_id === 1">
+                            <label>CO User ID</label>
                             <div class="input-group">
                                 <input type="text"
-                                       class="form-control text-right"
+                                       class="form-control"
                                        v-model="form.tiger_user_id">
                                 <em class="error invalid-feedback"
                                     v-if="form.errors.has('tiger_user_id')">
@@ -41,8 +41,8 @@
                                 </em>
                             </div>
                         </fieldset>
-                        <fieldset class="form-group" v-if="form.category === 0">
-                            <label>Desk:</label>
+                        <fieldset class="form-group" v-if="form.sub_site_id === 1">
+                            <label>Desk</label>
                             <div class="input-group">
                                 <input type="text"
                                        class="form-control text-right"
@@ -54,7 +54,7 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label>First Name:</label>
+                            <label>First Name</label>
                             <div class="input-group">
                                 <input type="text"
                                        class="form-control text-right"
@@ -66,7 +66,7 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label>Last Name:</label>
+                            <label>Last Name</label>
                             <div class="input-group">
                                 <input type="text"
                                        class="form-control text-right"
@@ -78,7 +78,7 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label>Hire Date:</label>
+                            <label>Hire Date</label>
                             <div class="input-group">
                                 <datepicker style="flex: 1 1 auto;"
                                             input-class="form-control text-right"
@@ -107,14 +107,14 @@
                                 </em>
                             </div>
                         </fieldset>
-                        <fieldset class="form-group" v-if="form.category !== 0">
+                        <fieldset class="form-group" v-if="hasTeamLeader">
                             <label>Team Leader</label>
                             <div class="input-group">
                                 <select class="form-control"
                                         v-model="form.team_leader_id"
                                         @change="form.errors.clear()">
                                     <option :value="team_leader.id"
-                                            v-for="team_leader in team_leaders">
+                                            v-for="team_leader in team_leaders_options">
                                         {{ team_leader.full_name }}
                                     </option>
                                 </select>
@@ -124,7 +124,7 @@
                                 </em>
                             </div>
                         </fieldset>
-                        <em style="font-size: 12px;" v-if="form.category === 0">
+                        <em style="font-size: 12px;" v-if="form.sub_site_id === 1">
                             for US collectors, Add User ID and Desk in CollectOne first, then enter them in the fields above.
                         </em>
                     </form>
@@ -162,31 +162,34 @@
 				isLoading: false,
 
 				form: new Form({
-                    department: '',
+                    sub_site_id: '',
 					tiger_user_id: '',
 					desk: '',
 					last_name: '',
 					first_name: '',
                     start_date: '',
+					manager_id: '',
 					team_leader_id: '',
-                    manager_id: '',
 				}),
 
-                sites: [],
+                sub_sites: [],
+                managers: [],
+				team_leaders_options: [],
 
+				team_leaders: [],
 			}
 		},
 
 		created() {
-			axios.get('/admin/collectors/leaders')
+			axios.get('/admin/collectors/supervisors')
 				.then(({data}) => {
-					data.team_leaders.forEach((element) => {
-						this.team_leaders.push(element);
-					});
+					_.assign(this.sub_sites, data.sub_sites);
 
 					data.managers.forEach((element) => {
 						this.managers.push(element);
                     });
+
+					_.assign(this.team_leaders, data.team_leaders);
 				})
 				.catch((error) => {
 					lib.swalError(error.message);
@@ -227,11 +230,18 @@
 						}
 					})
 			},
-        //
+
 			resetModal() {
 				this.form.errors.clear();
 				this.form.reset();
 			},
+
+            onSubSiteChange(subsite_id) {
+				this.team_leaders_options = this.team_leaders.filter((t) => {
+					return +t.sub_site_id === +subsite_id;
+                });
+				this.form.errors.clear();
+            }
         //
 		// 	populateData(data) {
 		// 		_.assign(this.form, data);
@@ -240,6 +250,15 @@
 		// 		this.updateID = data.id;
 		// 	}
 		},
+
+        computed: {
+			hasTeamLeader() {
+				if (!!this.form.sub_site_id) {
+					let obj = this.sub_sites.find(o => o.id === this.form.sub_site_id);
+					return +obj.has_team_leaders;
+                }
+            }
+        },
         //
 		// watch: {
 		// 	'isAdd': function (newVal, oldVal) {

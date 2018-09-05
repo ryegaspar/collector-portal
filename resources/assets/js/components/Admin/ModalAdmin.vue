@@ -13,10 +13,10 @@
                 <div class="modal-body">
                     <form @submit.prevent="" @keydown="form.errors.clear()">
                         <fieldset class="form-group">
-                            <label>Username:</label>
+                            <label>Username</label>
                             <div class="input-group">
                                 <input type="text"
-                                       class="form-control text-right"
+                                       class="form-control"
                                        :disabled="!isAdd"
                                        v-model="form.username">
                                 <em class="error invalid-feedback"
@@ -26,10 +26,10 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label>First Name:</label>
+                            <label>First Name</label>
                             <div class="input-group">
                                 <input type="text"
-                                       class="form-control text-right"
+                                       class="form-control"
                                        v-model="form.first_name">
                                 <em class="error invalid-feedback"
                                     v-if="form.errors.has('first_name')">
@@ -38,10 +38,10 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
-                            <label>Last Name:</label>
+                            <label>Last Name</label>
                             <div class="input-group">
                                 <input type="text"
-                                       class="form-control text-right"
+                                       class="form-control"
                                        v-model="form.last_name">
                                 <em class="error invalid-feedback"
                                     v-if="form.errors.has('last_name')">
@@ -53,7 +53,7 @@
                             <label>Email</label>
                             <div class="input-group">
                                 <input type="text"
-                                       class="form-control text-right"
+                                       class="form-control"
                                        :disabled="!isAdd"
                                        v-model="form.email">
                                 <em class="error invalid-feedback"
@@ -63,11 +63,24 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
+                            <label>Collect One ID</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       class="form-control"
+                                       :disabled="!isAdd"
+                                       v-model="form.tiger_user_id">
+                                <em class="error invalid-feedback"
+                                    v-if="form.errors.has('tiger_user_id')">
+                                    {{ form.errors.get('tiger_user_id') }}
+                                </em>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
                             <label>Role</label>
                             <div class="input-group">
                                 <select class="form-control"
                                         v-model="form.access_level"
-                                        @change="form.errors.clear()">
+                                        @change="onAccessLevelChange">
                                     <option :value="role"
                                             v-for="role in accessGroups">
                                         {{ role }}
@@ -84,7 +97,7 @@
                             <div class="input-group">
                                 <select class="form-control"
                                         v-model="form.site_id"
-                                        @change="form.errors.clear()">
+                                        @change="onSiteChange">
                                     <option :value="site.id"
                                             v-for="site in sites">
                                         {{ site.name }}
@@ -146,6 +159,7 @@
 					username: '',
 					last_name: '',
 					first_name: '',
+					tiger_user_id: '',
 					email: '',
 					access_level: '',
 					site_id: '',
@@ -219,8 +233,18 @@
 			},
 
 			getIndex() {
-				return  this.sites.findIndex(site => +site.id === +this.form.site_id);
-			}
+				return this.sites.findIndex(site => +site.id === +this.form.site_id);
+			},
+
+            onAccessLevelChange() {
+				this.form.errors.clear();
+                this.form.site_id = '';
+            },
+
+            onSiteChange() {
+				this.form.errors.clear();
+                this.form.sub_site_id = "";
+            }
 		},
 
 		computed: {

@@ -114,6 +114,16 @@ class Admin extends Authenticatable implements CanResetPasswordContract
     }
 
     /**
+     * Mutator for tiger user id.
+     *
+     * @param $value
+     */
+    public function setTigerUserIdAttribute($value)
+    {
+        $this->attributes['tiger_user_id'] = strtolower($value);
+    }
+
+    /**
      * apply filters for table view
      *
      * @param $query

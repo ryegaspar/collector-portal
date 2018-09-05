@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     <form @submit.prevent="" @keydown="form.errors.clear()">
                         <fieldset class="form-group">
-                            <label>Name:</label>
+                            <label>Name</label>
                             <div class="input-group">
                                 <input type="text"
                                        class="form-control"

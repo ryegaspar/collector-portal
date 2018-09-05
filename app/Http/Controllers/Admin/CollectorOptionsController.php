@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lynx\Admin;
+use App\Models\Lynx\Subsite;
 
 class CollectorOptionsController extends Controller
 {
@@ -12,7 +13,7 @@ class CollectorOptionsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:admin', 'activeUser', 'permission:read collectors']);
+        $this->middleware(['auth:admin', 'activeUser', 'permission:read collector']);
     }
 
     /**
@@ -24,15 +25,13 @@ class CollectorOptionsController extends Controller
     {
         if (request()->wantsJson()) {
 
+            $sub_sites = Subsite::select('id', 'name', 'has_team_leaders')->get();
+
             $managers = Admin::select('id', 'first_name', 'last_name')->where('active', true)->role('manager')->get();
 
-            $site_managers = Admin::select('id', 'first_name', 'last_name')->where('active', true)->role('site-manager')->get();
+            $team_leaders = Admin::select('id', 'first_name', 'last_name', 'sub_site_id')->where('active', true)->role('team-leader')->get();
 
-            $sub_site_managers = Admin::select('id', 'first_name', 'last_name')->where('active', true)->role('sub-site-manager')->get();
-
-            $team_leaders = Admin::select('id', 'first_name', 'last_name')->where('active', true)->role('team-leader')->get();
-
-            return Response(compact('managers', 'site_managers', 'sub_site_managers', $team_leaders), 200);
+            return response(compact('sub_sites', 'managers', 'team_leaders'), 200);
         }
     }
 }

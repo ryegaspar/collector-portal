@@ -43,7 +43,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish');
         Route::resource('scripts', 'ScriptsController');
 
-        Route::get('collectors/leaders', 'CollectorOptionsController@index')->name('team-leader.list');
+        Route::get('collectors/supervisors', 'CollectorOptionsController@index')->name('team-leader.list');
         Route::resource('collectors', 'CollectorsController'); //TODO: add 'only' if applicable
 
         Route::patch('admins/{admin}/toggle-active', 'AdminToggleActiveController@update')->name('admins.toggleActive');
