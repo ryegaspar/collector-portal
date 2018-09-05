@@ -103,7 +103,7 @@ class SubSitesController extends Controller
      */
     protected function getSubSites($adminSiteFilter)
     {
-        $sites = Subsite::with('site')->tableFilters($adminSiteFilter);
+        $sites = Subsite::with('site')->withCount('collectors')->tableFilters($adminSiteFilter);
 
         $results = $this->paginate($sites);
 

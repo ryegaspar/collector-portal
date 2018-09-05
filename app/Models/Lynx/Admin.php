@@ -104,7 +104,7 @@ class Admin extends Authenticatable implements CanResetPasswordContract
     }
 
     /**
-     * get full name of the user
+     * Accessor full name
      *
      * @return string
      */

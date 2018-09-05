@@ -114,21 +114,6 @@ class AdminsController extends Controller
     }
 
     /**
-     * get admin
-     *
-     * @param $adminUserFilter
-     * @return mixed
-     */
-    protected function getAdmins($adminUserFilter)
-    {
-        $admins = Admin::tableFilters($adminUserFilter)->with('roles:id,name');
-
-        $results = $this->paginate($admins);
-
-        return $results;
-    }
-
-    /**
      * validate request
      *
      * @return mixed
@@ -154,5 +139,20 @@ class AdminsController extends Controller
         });
 
         return $validator->validate();
+    }
+
+    /**
+     * get admin
+     *
+     * @param $adminUserFilter
+     * @return mixed
+     */
+    protected function getAdmins($adminUserFilter)
+    {
+        $admins = Admin::tableFilters($adminUserFilter)->with('roles:id,name');
+
+        $results = $this->paginate($admins);
+
+        return $results;
     }
 }

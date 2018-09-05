@@ -22,6 +22,14 @@ export default [
 		visible: true,
 	},
 	{
+		name: 'collectors_count',
+		sortField: 'collectors_count',
+		title: 'Collectors',
+		titleClass: 'text-center',
+		dataClass: 'text-center',
+		visible: true
+	},
+	{
 		name: 'has_team_leaders',
 		sortField: 'has_team_leaders',
 		title: 'Team Leaders',

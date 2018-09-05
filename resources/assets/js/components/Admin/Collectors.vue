@@ -52,8 +52,8 @@
 
 <script>
 	import VtableHeader from '../VtableHeader';
-	import VtableUsersFieldDefs from './VtableAdminsFieldDefs';
-	// import Vtable from '../VTable';
+	import VtableCollectorsFieldDefs from './VtableCollectorsFieldDefs';
+	import Vtable from '../VTable';
 	import VueEvents from 'vue-events';
 	import VtableSubHeaderCollectors from './VtableSubHeaderCollectors';
 	import ModalCollectorCreate from './ModalCollectorCreate';
@@ -63,7 +63,7 @@
 	export default {
 
 		components: {
-			// Vtable,
+			Vtable,
 			VtableHeader,
             VtableSubHeaderCollectors,
 			// VtableSubHeaderUsers,
@@ -72,12 +72,12 @@
 
 		data() {
 			return {
-				fieldDefs: VtableUsersFieldDefs,
+				fieldDefs: VtableCollectorsFieldDefs,
 				sortOrder: [
 					{
-						field: 'created_at',
-						sortField: 'created_at',
-						direction: 'desc'
+						field: 'start_date',
+						sortField: 'start_date',
+						direction: 'asc'
 					}
 				],
 				moreParams: {},
@@ -169,13 +169,10 @@
         //
 		},
         //
-		// computed: {
-		// 	tableUrl() {
-		// 		return `/admin/users`;
-		// 	},
-		// },
-        //
-		// mounted() {
-		// }
+		computed: {
+			tableUrl() {
+				return `/admin/collectors`;
+			},
+		},
 	}
 </script>

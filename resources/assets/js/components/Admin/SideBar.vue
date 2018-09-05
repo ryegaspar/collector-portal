@@ -111,7 +111,7 @@
                     },
                     Sites: {
 						href: '#',
-                        text: 'Sites',
+                        text: 'Unifin Sites',
                         icon: 'fa fa-sitemap',
                         permission: 'read site',
                         children: {

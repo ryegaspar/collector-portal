@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Lynx\Collector;
 use App\Rules\CollectOneId;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Unifin\TableFilters\AdminCollectorFilter;
 use Unifin\Traits\Paginate;
 
 class CollectorsController extends Controller
@@ -27,17 +29,17 @@ class CollectorsController extends Controller
     /**
      * display adjustments page
      *
-     * //     * @param AdminUserFilter $adminUserFilter
+     * //     *
+     * @param AdminCollectorFilter $adminCollectorFilter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
-//    public function index(AdminUserFilter $adminUserFilter)
+    public function index(AdminCollectorFilter $adminCollectorFilter)
     {
-//        if (request()->wantsJson()) {
-//            $response = $this->getUsers($adminUserFilter);
-//
-//            return response($response, 200);
-//        }
+        if (request()->wantsJson()) {
+            $response = $this->getCollectors($adminCollectorFilter);
+
+            return response($response, 200);
+        }
 
         return view('admin.collectors');
     }
@@ -45,7 +47,6 @@ class CollectorsController extends Controller
     /**
      * persists a new collector
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function store()
@@ -90,6 +91,21 @@ class CollectorsController extends Controller
         });
 
         return $validator->validate();
+    }
+
+    /**
+     * Get collectors.
+     *
+     * @param $adminCollectorFilter
+     * @return mixed
+     */
+    protected function getCollectors($adminCollectorFilter)
+    {
+        $admins = Collector::tableFilters($adminCollectorFilter)->with('sub_site:id,name');
+
+        $results = $this->paginate($admins);
+
+        return $results;
     }
 
 }

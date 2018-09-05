@@ -30,6 +30,16 @@ class Subsite extends Model
     }
 
     /**
+     * A subsite has many collectors.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function collectors()
+    {
+        return $this->hasMany(Collector::class, 'sub_site_id', 'id');
+    }
+
+    /**
      * apply filters for table view
      *
      * @param $query
