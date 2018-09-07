@@ -93,11 +93,17 @@ class SubSitesController extends Controller
      */
     public function update(Subsite $subSite)
     {
+        request()->merge(['prefixes' => implode(',', request()->prefixes)]);
+
         $newSubSite = request()->validate([
-            'name'             => 'required',
-            'site_id'          => 'required|numeric',
-            'has_team_leaders' => 'boolean',
-            'description'      => '',
+            'name'                            => 'required',
+            'site_id'                         => 'required|numeric',
+            'has_team_leaders'                => 'boolean',
+            'description'                     => '',
+            'min_desk_number'                 => 'required|numeric',
+            'max_desk_number'                 => 'required|numeric',
+            'collectone_id_assignment_method' => 'required|numeric',
+            'prefixes'                        => ''
         ]);
 
         $subSite->update($newSubSite);
