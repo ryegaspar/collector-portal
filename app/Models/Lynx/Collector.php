@@ -79,9 +79,36 @@ class Collector extends Model
         return Carbon::parse($date)->toFormattedDateString();
     }
 
+    /**
+     * Accessor for start full month date.
+     *
+     * @param $date
+     * @return string
+     */
+    public function getStartFullMonthDateAttribute($date)
+    {
+        return Carbon::parse($date)->toFormattedDateString();
+    }
+
+    /**
+     * Accessor for commission structure name.
+     *
+     * @param $value
+     * @return mixed
+     */
     public function getCommissionStructureIdAttribute($value)
     {
         return collect(config('unifin.collector_commission_structures'))[$value];
+    }
+
+    /**
+     * Accessor full name
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 
     /**
@@ -94,15 +121,5 @@ class Collector extends Model
     public function scopeTableFilters($query, TableFilter $paginate)
     {
         return $paginate->apply($query);
-    }
-
-    /**
-     * Accessor full name
-     *
-     * @return string
-     */
-    public function getFullNameAttribute()
-    {
-        return "{$this->first_name} {$this->last_name}";
     }
 }

@@ -17,6 +17,10 @@ class Subsite extends Model
         'site_id',
         'has_team_leaders',
         'description',
+        'min_desk_number',
+        'max_desk_number',
+        'collectone_id_assignment_method',
+        'prefixes'
     ];
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Lynx\Collector;
+use App\Models\Lynx\Subsite;
 use App\Rules\CollectOneId;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -68,26 +69,20 @@ class CollectorsController extends Controller
      */
     protected function validateNewCollector()
     {
-
         $validator = Validator::make(request()->all(), [
-                'category'       => 'required',
-                'first_name'     => ['required'],
-                'last_name'      => ['required'],
-                'start_date'     => ['required'],
-                'manager_id'     => ['required', 'numeric']
+                'sub_site_id' => ['required'],
+                'first_name'  => ['required'],
+                'last_name'   => ['required'],
+                'start_date'  => ['required'],
+                'manager_id'  => ['required', 'numeric']
             ]
         );
 
-        $validator->sometimes('tiger_user_id', ['required', 'min:3', new CollectOneId], function ($input) {
-            return ! $input->category;
-        });
-
-        $validator->sometimes('desk', ['required'], function ($input) {
-            return ! $input->category;
-        });
-
         $validator->sometimes('team_leader_id', ['required', 'numeric'], function ($input) {
-            return $input->category != 0;
+            if (empty($input->sub_site_id))
+                return false;
+            $site = Subsite::find($input->sub_site_id);
+            return !!$site->has_team_leaders;
         });
 
         return $validator->validate();

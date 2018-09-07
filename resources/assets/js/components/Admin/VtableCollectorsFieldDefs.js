@@ -54,6 +54,14 @@ export default [
 		visible: true,
 	},
 	{
+		name: 'start_full_month_date',
+		sortField: 'start_full_month_date',
+		title: 'Start Full Month',
+		titleClass: 'text-center',
+		dataClass: 'text-right',
+		visible: true,
+	},
+	{
 		name: 'active',
 		sortField: 'active',
 		title: 'Status',

@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" id="modalAdmin" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" v-if="isAdd">Add User</h4>
@@ -12,120 +12,126 @@
 
                 <div class="modal-body">
                     <form @submit.prevent="" @keydown="form.errors.clear()">
-                        <fieldset class="form-group">
-                            <label>Username</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       :disabled="!isAdd"
-                                       v-model="form.username">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('username')">
-                                    {{ form.errors.get('username') }}
-                                </em>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label>Username</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               :disabled="!isAdd"
+                                               v-model="form.username">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('username')">
+                                            {{ form.errors.get('username') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>First Name</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               v-model="form.first_name">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('first_name')">
+                                            {{ form.errors.get('first_name') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Last Name</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               v-model="form.last_name">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('last_name')">
+                                            {{ form.errors.get('last_name') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Email</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               :disabled="!isAdd"
+                                               v-model="form.email">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('email')">
+                                            {{ form.errors.get('email') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
                             </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>First Name</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="form.first_name">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('first_name')">
-                                    {{ form.errors.get('first_name') }}
-                                </em>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label>Collect One ID</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               :disabled="!isAdd"
+                                               v-model="form.tiger_user_id">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('tiger_user_id')">
+                                            {{ form.errors.get('tiger_user_id') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Role</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.access_level"
+                                                @change="onAccessLevelChange">
+                                            <option :value="role"
+                                                    v-for="role in accessGroups">
+                                                {{ role }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('access_level')">
+                                            {{ form.errors.get('access_level') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group" v-if="showSite">
+                                    <label>Site</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.site_id"
+                                                @change="onSiteChange">
+                                            <option :value="site.id"
+                                                    v-for="site in sites">
+                                                {{ site.name }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('site_id')">
+                                            {{ form.errors.get('site_id') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group" v-if="showSubSite">
+                                    <label>Sub Site</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.sub_site_id"
+                                                @change="form.errors.clear()">
+                                            <option :value="sub_site.id"
+                                                    v-for="sub_site in sites[getIndex()].sub_site">
+                                                {{ sub_site.name }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('sub_site_id')">
+                                            {{ form.errors.get('sub_site_id') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
                             </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Last Name</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="form.last_name">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('last_name')">
-                                    {{ form.errors.get('last_name') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Email</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       :disabled="!isAdd"
-                                       v-model="form.email">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('email')">
-                                    {{ form.errors.get('email') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Collect One ID</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       :disabled="!isAdd"
-                                       v-model="form.tiger_user_id">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('tiger_user_id')">
-                                    {{ form.errors.get('tiger_user_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Role</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.access_level"
-                                        @change="onAccessLevelChange">
-                                    <option :value="role"
-                                            v-for="role in accessGroups">
-                                        {{ role }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('access_level')">
-                                    {{ form.errors.get('access_level') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group" v-if="showSite">
-                            <label>Site</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.site_id"
-                                        @change="onSiteChange">
-                                    <option :value="site.id"
-                                            v-for="site in sites">
-                                        {{ site.name }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('site_id')">
-                                    {{ form.errors.get('site_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group" v-if="showSubSite">
-                            <label>Sub Site</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.sub_site_id"
-                                        @change="form.errors.clear()">
-                                    <option :value="sub_site.id"
-                                            v-for="sub_site in sites[getIndex()].sub_site">
-                                        {{ sub_site.name }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('sub_site_id')">
-                                    {{ form.errors.get('sub_site_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
+                        </div>
                     </form>
                 </div>
 

@@ -27,11 +27,11 @@ class CollectorOptionsController extends Controller
 
             $sub_sites = Subsite::select('id', 'name', 'has_team_leaders')->get();
 
-            $managers = Admin::select('id', 'first_name', 'last_name')->where('active', true)->role('manager')->get();
-
             $team_leaders = Admin::select('id', 'first_name', 'last_name', 'sub_site_id')->where('active', true)->role('team-leader')->get();
 
-            return response(compact('sub_sites', 'managers', 'team_leaders'), 200);
+            $commission_structures = config('unifin.collector_commission_structures');
+
+            return response(compact('sub_sites', 'commission_structures', 'team_leaders'), 200);
         }
     }
 }

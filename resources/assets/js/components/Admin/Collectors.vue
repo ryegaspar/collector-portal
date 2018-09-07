@@ -6,7 +6,7 @@
                     <div class="card-body">
                         <vtable-header :perPage=perPage
                                        :fields="fieldDefs"
-                                       placeholder="id, username, name"></vtable-header>
+                                       placeholder="username, name, desk"></vtable-header>
                         <vtable-sub-header-collectors @addCollector="addCollector">
                         </vtable-sub-header-collectors>
                         <!--<vtable-sub-header-users @addUser="addUser">-->
@@ -77,7 +77,7 @@
 					{
 						field: 'start_date',
 						sortField: 'start_date',
-						direction: 'asc'
+						direction: 'desc'
 					}
 				],
 				moreParams: {},

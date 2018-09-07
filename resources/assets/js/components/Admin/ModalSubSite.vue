@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" id="modalSubSite" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" v-if="isAdd">Add Sub Site</h4>
@@ -12,60 +12,122 @@
 
                 <div class="modal-body">
                     <form @submit.prevent="" @keydown="form.errors.clear()">
-                        <fieldset class="form-group">
-                            <label>Name</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="form.name">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('name')">
-                                    {{ form.errors.get('name') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Site</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.site_id"
-                                        @change="form.errors.clear()">
-                                    <option :value="site.id"
-                                            v-for="site in sites">
-                                        {{ site.name }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('site_id')">
-                                    {{ form.errors.get('site_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group row">
-                            <label class="col-md-6 col-form-label">Has Team Leaders</label>
-                            <div class="col-md-6 col-form-label">
-                                <div class="form-check checkbox">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="form.has_team_leaders">
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Description:</label>
-                            <div class="input-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label>Name</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               v-model="form.name">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('name')">
+                                            {{ form.errors.get('name') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Site</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.site_id"
+                                                @change="form.errors.clear()">
+                                            <option :value="site.id"
+                                                    v-for="site in sites">
+                                                {{ site.name }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('site_id')">
+                                            {{ form.errors.get('site_id') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row">
+                                    <label class="col-md-6 col-form-label">Has Team Leaders</label>
+                                    <div class="col-md-6 col-form-label">
+                                        <div class="form-check checkbox">
+                                            <input type="checkbox" class="form-check-input"
+                                                   v-model="form.has_team_leaders">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Description:</label>
+                                    <div class="input-group">
                                 <textarea class="form-control"
                                           rows="5"
                                           style="resize:none"
                                           v-model="form.description">
                                 </textarea>
+                                    </div>
+                                </fieldset>
                             </div>
-                        </fieldset>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label>Minimum Desk Number</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control text-right"
+                                               v-model="form.min_desk_number">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('min_desk_number')">
+                                            {{ form.errors.get('min_desk_number') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Maximum Desk Number</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control text-right"
+                                               v-model="form.max_desk_number">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('max_desk_number')">
+                                            {{ form.errors.get('max_desk_number') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label class="input-group">CollectOne ID Assignment Method</label>
+                                    <div class="input">
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" value="1"
+                                                   v-model="form.collectone_id_assignment_method">
+                                            <label class="form-check-label">Use Initials and a Number</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" value="2"
+                                                   v-model="form.collectone_id_assignment_method">
+                                            <label class="form-check-label">Use Fix Prefix + Number</label>
+                                        </div>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('collectone_id_assignment_method')">
+                                            {{ form.errors.get('collectone_id_assignment_method') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group row" v-if="showPrefixes">
+                                    <label class="col-md-3 col-form-label">Prefixes</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" v-model="form.prefixes" multiple="true">
+                                            <option :value="String.fromCharCode(96 + alphabet)" v-for="alphabet in 26">
+                                                {{ String.fromCharCode(64 + alphabet)}}
+                                            </option>
+                                            <!--<option>A</option>-->
+                                            <!--<option>B</option>-->
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
                     </form>
                 </div>
 
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
+                    <button type="submit"
+                            :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
                             @click="submit"
                             :disabled="isLoading || form.errors.any()"
                             v-html="persistButtonText">
@@ -91,12 +153,16 @@
 
 				form: new Form({
 					name: '',
-                    site_id: '',
-                    has_team_leaders: false,
+					site_id: '',
+					has_team_leaders: false,
 					description: '',
+					min_desk_number: '',
+					max_desk_number: '',
+					collectone_id_assignment_method: '',
+					prefixes: [],
 				}),
 
-                sites: [],
+				sites: [],
 
 				updateID: '',
 			}
@@ -149,6 +215,7 @@
 			resetModal() {
 				this.form.reset();
 				this.form.has_team_leaders = false;
+				this.form.prefixes = [];
 			},
 
 			populateData(data) {
@@ -157,9 +224,20 @@
 				this.form.site_id = data.site_id;
 				this.form.description = data.description;
 				this.form.has_team_leaders = !!+data.has_team_leaders;
+				this.form.min_desk_number = data.min_desk_number;
+				this.form.max_desk_number = data.max_desk_number;
+				this.form.collectone_id_assignment_method = data.collectone_id_assignment_method;
+				this.form.prefixes = data.prefixes;
+
 				this.updateID = data.id;
 			},
 		},
+
+        computed: {
+			showPrefixes() {
+				return +this.form.collectone_id_assignment_method === 2;
+			}
+        },
 
 		watch: {
 			'isAdd': function (newVal, oldVal) {

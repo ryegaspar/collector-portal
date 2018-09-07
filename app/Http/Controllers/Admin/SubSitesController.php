@@ -50,16 +50,22 @@ class SubSitesController extends Controller
     {
         // no additional validation for access_level since the
         // 'users' control are only accessed by super-admins
-        $SubSite = $request->validate([
-            'name'             => 'required',
-            'site_id'          => 'required|numeric',
-            'has_team_leaders' => 'boolean',
-            'description'      => '',
+        $request->merge(['prefixes' => implode(',', $request->prefixes)]);
+
+        $subSite = $request->validate([
+            'name'                            => 'required',
+            'site_id'                         => 'required|numeric',
+            'has_team_leaders'                => 'boolean',
+            'description'                     => '',
+            'min_desk_number'                 => 'required|numeric',
+            'max_desk_number'                 => 'required|numeric',
+            'collectone_id_assignment_method' => 'required|numeric',
+            'prefixes'                        => ''
         ]);
 
-        $response = Subsite::create($SubSite);
+        $response = Subsite::create($subSite);
 
-        return response([], 200);
+        return response($response, 200);
     }
 
     /**
@@ -70,6 +76,10 @@ class SubSitesController extends Controller
      */
     public function edit(Subsite $subSite)
     {
+        if ($subSite->prefixes) {
+            $subSite->prefixes = explode(',', $subSite->prefixes);
+        }
+
         if (request()->wantsJson()) {
             return response($subSite, 200);
         }

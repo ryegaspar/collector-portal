@@ -9,7 +9,7 @@ class AdminCollectorFilter extends TableFilter
      *
      * @var array
      */
-    protected $searches = ['first_name', 'last_name' , 'username', 'id'];
+    protected $searches = ['first_name', 'last_name' , 'username', 'desk'];
 
     /**
      * default sort column

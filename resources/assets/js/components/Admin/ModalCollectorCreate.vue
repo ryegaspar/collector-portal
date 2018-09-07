@@ -24,32 +24,8 @@
                                     </option>
                                 </select>
                                 <em class="error invalid-feedback"
-                                    v-if="form.errors.has('category')">
-                                    {{ form.errors.get('category') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group" v-if="form.sub_site_id === 1">
-                            <label>CO User ID</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="form.tiger_user_id">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('tiger_user_id')">
-                                    {{ form.errors.get('tiger_user_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group" v-if="form.sub_site_id === 1">
-                            <label>Desk</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control text-right"
-                                       v-model="form.desk">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('desk')">
-                                    {{ form.errors.get('desk') }}
+                                    v-if="form.errors.has('sub_site_id')">
+                                    {{ form.errors.get('sub_site_id') }}
                                 </em>
                             </div>
                         </fieldset>
@@ -90,23 +66,6 @@
                                 </em>
                             </div>
                         </fieldset>
-                        <fieldset class="form-group">
-                            <label>Manager</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.manager_id"
-                                        @change="form.errors.clear()">
-                                    <option :value="manager.id"
-                                            v-for="manager in managers">
-                                        {{ manager.full_name }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('manager_id')">
-                                    {{ form.errors.get('manager_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
                         <fieldset class="form-group" v-if="hasTeamLeader">
                             <label>Team Leader</label>
                             <div class="input-group">
@@ -124,9 +83,23 @@
                                 </em>
                             </div>
                         </fieldset>
-                        <em style="font-size: 12px;" v-if="form.sub_site_id === 1">
-                            for US collectors, Add User ID and Desk in CollectOne first, then enter them in the fields above.
-                        </em>
+                        <fieldset class="form-group">
+                            <label>Commission Structure</label>
+                            <div class="input-group">
+                                <select class="form-control"
+                                        v-model="form.commission_structure_id">
+                                        <!--@change="onSubSiteChange(form.sub_site_id)">-->
+                                    <option :value="index"
+                                            v-for="(commission_structure, index) in commission_structures">
+                                        {{ commission_structure }}
+                                    </option>
+                                </select>
+                                <em class="error invalid-feedback"
+                                    v-if="form.errors.has('commission_structure_id')">
+                                    {{ form.errors.get('commission_structure_id') }}
+                                </em>
+                            </div>
+                        </fieldset>
                     </form>
                 </div>
 
@@ -168,12 +141,12 @@
 					last_name: '',
 					first_name: '',
                     start_date: '',
-					manager_id: '',
 					team_leader_id: '',
+                    commission_structure_id: ''
 				}),
 
                 sub_sites: [],
-                managers: [],
+                commission_structures: {},
 				team_leaders_options: [],
 
 				team_leaders: [],
@@ -181,13 +154,11 @@
 		},
 
 		created() {
-			axios.get('/admin/collectors/supervisors')
+			axios.get('/admin/collectors/collector-options')
 				.then(({data}) => {
 					_.assign(this.sub_sites, data.sub_sites);
 
-					data.managers.forEach((element) => {
-						this.managers.push(element);
-                    });
+					_.assign(this.commission_structures, data.commission_structures);
 
 					_.assign(this.team_leaders, data.team_leaders);
 				})

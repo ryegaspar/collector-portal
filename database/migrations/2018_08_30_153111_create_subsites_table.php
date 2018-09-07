@@ -19,6 +19,10 @@ class CreateSubsitesTable extends Migration
             $table->unsignedInteger('site_id');
             $table->boolean('has_team_leaders');
             $table->text('description')->nullable();
+            $table->unsignedInteger('min_desk_number');
+            $table->unsignedInteger('max_desk_number');
+            $table->unsignedInteger('collectone_id_assignment_method');
+            $table->string('prefixes')->nullable();
             $table->timestamps();
         });
     }
