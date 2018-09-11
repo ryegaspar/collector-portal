@@ -69,11 +69,11 @@ export default [
 		dataClass: 'text-center',
 		visible: true,
 		callback: function (value) {
-			if (value) {
-				return `<span class="badge badge-pill badge-info">Active</span>`;
-			} else {
-				return `<span class="badge badge-pill badge-danger">Inactive</span>`;
+			if (+value) {
+				return `<span class="badge badge-pill badge-success">Active</span>`;
 			}
+
+			return `<span class="badge badge-pill badge-danger">Inactive</span>`;
 		}
 	},
 	{

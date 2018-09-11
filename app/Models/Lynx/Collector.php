@@ -2,6 +2,7 @@
 
 namespace App\Models\Lynx;
 
+use App\Unifin\Classes\NewCollector;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Unifin\TableFilters\TableFilter;
@@ -72,10 +73,6 @@ class Collector extends Model
      */
     public function getStartDateAttribute($date)
     {
-        if (Carbon::parse($date)->diffInDays(Carbon::now()) <= 5) {
-            return Carbon::parse($date)->diffForHumans();
-        }
-
         return Carbon::parse($date)->toFormattedDateString();
     }
 
@@ -121,5 +118,28 @@ class Collector extends Model
     public function scopeTableFilters($query, TableFilter $paginate)
     {
         return $paginate->apply($query);
+    }
+
+    /**
+     * Create a new collector account.
+     *
+     * @param $validatedData
+     */
+    public static function createCollector($validatedData)
+    {
+        $ids = (new NewCollector($validatedData['sub_site_id'], $validatedData['first_name'],
+            $validatedData['last_name']))
+            ->generateId();
+
+        $startDate = Carbon::parse($validatedData['start_date']);
+        $tempDate = Carbon::parse($validatedData['start_date'])->day(1);
+        $fifteenth = Carbon::parse($validatedData['start_date'])->day(15);
+        $validatedData['start_full_month_date'] = Carbon::parse($startDate) <= $fifteenth ? $tempDate : $tempDate->addMonth();
+
+        $validatedData['desk'] = $ids[0];
+        $validatedData['tiger_user_id'] = $ids[1];
+        $validatedData['username'] = $ids[2];
+
+        self::create($validatedData);
     }
 }

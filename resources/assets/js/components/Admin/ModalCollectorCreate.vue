@@ -190,6 +190,7 @@
 
 						$("#modalCollectorCreate").modal('hide');
 						lib.swalSuccess(notifyMessage);
+
 						this.$emit('submitted');
 					})
 					.catch((error) => {

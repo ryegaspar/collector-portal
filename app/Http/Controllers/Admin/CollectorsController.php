@@ -52,15 +52,12 @@ class CollectorsController extends Controller
      */
     public function store()
     {
+        $validatedData = $this->validateNewCollector();
 
-        $request = $this->validateNewCollector();
+        $response = Collector::createCollector($validatedData);
 
-//        $response = Admin::createUser($user);
-
-        return response([], 200);
-//        return response($response, 201);
+        return response($response, 200);
     }
-
 
     /**
      * validate new collector
@@ -70,19 +67,21 @@ class CollectorsController extends Controller
     protected function validateNewCollector()
     {
         $validator = Validator::make(request()->all(), [
-                'sub_site_id' => ['required'],
-                'first_name'  => ['required'],
-                'last_name'   => ['required'],
-                'start_date'  => ['required'],
-                'manager_id'  => ['required', 'numeric']
+                'sub_site_id'             => ['required'],
+                'first_name'              => ['required'],
+                'last_name'               => ['required'],
+                'start_date'              => ['required'],
+                'commission_structure_id' => ['required']
             ]
         );
 
         $validator->sometimes('team_leader_id', ['required', 'numeric'], function ($input) {
-            if (empty($input->sub_site_id))
+            if (empty($input->sub_site_id)) {
                 return false;
+            }
             $site = Subsite::find($input->sub_site_id);
-            return !!$site->has_team_leaders;
+
+            return ! ! $site->has_team_leaders;
         });
 
         return $validator->validate();
