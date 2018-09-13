@@ -46,6 +46,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::get('collectors/collector-options', 'CollectorOptionsController@index')->name('team-leader.list');
         Route::resource('collectors', 'CollectorsController'); //TODO: add 'only' if applicable
 
+        Route::resource('collector-batches', 'CollectorBatchesController'); //TODO: add 'only' if applicable
+
         Route::patch('admins/{admin}/toggle-active', 'AdminToggleActiveController@update')->name('admins.toggleActive');
         Route::get('admins/get-options', 'AdminOptionsController@index');
         Route::resource('admins', 'AdminsController')->only(['index', 'store', 'edit', 'update']);

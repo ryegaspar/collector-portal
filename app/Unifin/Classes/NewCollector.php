@@ -140,7 +140,7 @@ class NewCollector
         $next = 2;
 
         while (Collector::where('username', '=', $username)->first()) {
-            $username = "{$maybe_username}.$next}";
+            $username = $maybe_username.$next;
             $next++;
         }
 

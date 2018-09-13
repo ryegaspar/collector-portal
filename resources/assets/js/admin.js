@@ -33,6 +33,7 @@ Vue.component('adjustments', require('./components/Admin/Adjustments'));
 Vue.component('scripts', require('./components/Admin/Scripts'));
 Vue.component('script-create-edit', require('./components/Admin/ScriptCreateEdit'));
 Vue.component('collectors', require('./components/Admin/Collectors'));
+Vue.component('collector-batches', require('./components/Admin/CollectorBatches'));
 Vue.component('admins', require('./components/Admin/Admins'));
 Vue.component('roles-permissions', require('./components/Admin/RolesPermissions'));
 Vue.component('sites', require('./components/Admin/Sites'));

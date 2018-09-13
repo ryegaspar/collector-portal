@@ -55,11 +55,8 @@
 	import VtableHeader from '../VtableHeader';
 	import VtableCollectorsFieldDefs from './VtableCollectorsFieldDefs';
 	import Vtable from '../VTable';
-	import VueEvents from 'vue-events';
 	import VtableSubHeaderCollectors from './VtableSubHeaderCollectors';
 	import ModalCollectorCreate from './ModalCollectorCreate';
-
-	Vue.use(VueEvents);
 
 	export default {
 

@@ -51,7 +51,7 @@ class Collector extends Model
      * @var array
      */
     protected $casts = [
-        'hire_at'             => 'datetime:m/d/Y',
+        'start_date'          => 'datetime:m/d/Y',
         'start_full_month_at' => 'datetime:m/d/Y',
     ];
 

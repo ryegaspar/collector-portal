@@ -28,6 +28,10 @@ class RoleAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'update collector', 'guard_name' => 'admin']);
         Permission::create(['name' => 'disable collector', 'guard_name' => 'admin']);
 
+        Permission::create(['name' => 'create collector-batch', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'read collector-batch', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'delete collector-batch', 'guard_name' => 'admin']);
+
         Permission::create(['name' => 'create admin', 'guard_name' => 'admin']);
         Permission::create(['name' => 'read admin', 'guard_name' => 'admin']);
         Permission::create(['name' => 'update admin', 'guard_name' => 'admin']);
@@ -52,6 +56,7 @@ class RoleAndPermissionsSeeder extends Seeder
         $superadmin->givePermissionTo(['read adjustment', 'update adjustment']);
         $superadmin->givePermissionTo(['create script', 'read script', 'update script', 'delete script']);
         $superadmin->givePermissionTo(['create collector', 'read collector', 'update collector', 'disable collector']);
+        $superadmin->givePermissionTo(['create collector-batch', 'read collector-batch', 'delete collector-batch']);
         $superadmin->givePermissionTo(['create admin', 'read admin', 'update admin', 'disable admin']);
         $superadmin->givePermissionTo(['read roles_permission', 'update roles_permission']);
         $superadmin->givePermissionTo(['create site', 'read site', 'update site', 'delete site']);

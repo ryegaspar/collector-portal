@@ -20,11 +20,12 @@ class CreateCollectorsTable extends Migration
             $table->string('username')->unique();
             $table->string('last_name');
             $table->string('first_name');
-            $table->unsignedInteger('sub_site_id')->default(1);
+            $table->unsignedInteger('sub_site_id');
             $table->unsignedInteger('team_leader_id')->nullable();
             $table->unsignedInteger('department_id')->default(1);
             $table->unsignedInteger('commission_structure_id')->default(1);
             $table->unsignedInteger('status_id')->default(1);
+            $table->unsignedInteger('batch_id')->nullable();
             $table->date('start_date')->default("01-01-2013");
             $table->date('start_full_month_date')->default("01-01-2013");
             $table->date('change_pass_at')->nullable();

@@ -91,10 +91,23 @@
 
                     },
                     Collectors: {
-						href: '/admin/collectors',
+						href: '#',
                         text: 'Collectors',
                         icon: 'fa fa-users',
-                        permission: 'read collector'
+                        children: {
+							Collectors: {
+								href: '/admin/collectors',
+                                icon: 'fa fa-user',
+                                text: 'Collectors',
+								permission: 'read collector',
+							},
+                            BatchCollectors: {
+								href: '/admin/collector-batches',
+                                icon: 'fa fa-stack-exchange',
+                                text: 'Collector Batches',
+                                permission: 'read collector-batch'
+                            }
+                        }
                     },
 					Admins: {
 						href: '/admin/admins',
