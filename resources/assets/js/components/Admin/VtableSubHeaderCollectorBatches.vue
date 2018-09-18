@@ -11,24 +11,6 @@
                             <i class="icon-plus"></i> New Batch
                         </button>
                     </div>
-                    <!--<label class="col-form-label-sm mr-1">Status</label>-->
-                    <!--<div class="dropdown">-->
-                    <!--<button type="button"-->
-                    <!--class="btn btn-outline-cyan btn-sm dropdown-toggle mr-1"-->
-                    <!--data-toggle="dropdown"-->
-                    <!--aria-haspopup="true"-->
-                    <!--aria-expanded="false">-->
-                    <!--<i class="fa fa-filter"></i> {{ filter2Text }} <span class="caret"></span>-->
-                    <!--</button>-->
-                    <!--<div class="dropdown-menu">-->
-                    <!--&lt;!&ndash; list item&ndash;&gt;-->
-                    <!--<a v-for="item in filter2Menus"-->
-                    <!--class="dropdown-item"-->
-                    <!--@click="filter2Run(item.code, item.text)"-->
-                    <!--href="#">{{ item.text }}-->
-                    <!--</a>-->
-                    <!--</div>-->
-                    <!--</div>-->
                 </div>
             </div>
             <div class="col-md-6 input-group" style="padding-left: 2px;padding-right: 2px">
@@ -44,18 +26,6 @@
 
 		data() {
 			return {
-				// filter1Text: 'Group',
-				// filter1Menus: [
-				//     { code: "A", text: "All" },
-				//     { code: "1", text: "SuperAdmin" },
-				//     { code: "2", text: "Admin" }
-				// ],
-				// filter2Text: 'Status',
-				// filter2Menus: [
-				// 	{ code: "A", text: "All" },
-				// 	{ code: "1", text: "Active" },
-				// 	{ code: "0", text: "Inactive" },
-				// ],
 			}
 		},
 
@@ -63,16 +33,6 @@
 			newBatch() {
 				this.$emit('newBatch');
             }
-
-			// filter1Run(code, text) {
-			// 	this.filter1Text = text;
-			// 	this.$events.fire('filter1-change', code);
-			// },
-
-			// filter2Run(code, text) {
-			// 	this.filter2Text = text;
-			// 	this.$events.fire('filter2-change', code);
-			// },
 		},
 	}
 </script>

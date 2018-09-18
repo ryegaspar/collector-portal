@@ -101,5 +101,4 @@ class CollectorsController extends Controller
 
         return $results;
     }
-
 }

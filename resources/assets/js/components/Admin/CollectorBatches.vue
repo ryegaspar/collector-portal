@@ -84,65 +84,58 @@
 			submitted() {
 				this.$emit('reload');
 			},
-			//
-			// 	itemAction(action, data, index, e) {
-			// 		let innerHTML = e.currentTarget.innerHTML;
-			// 		let button = e.currentTarget;
-			//
-			// 		$('[data-toggle="tooltip"]').tooltip('hide');
-			//
-			// 		button.setAttribute("disabled", true);
-			// 		button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
-			//
-			// 		if (action === 'edit-item') {
-			// 			this.isAdd = false;
-			// 			let url = `/admin/users/${data.id}/edit`;
-			// 			axios.get(url)
-			// 				.then(({data}) => {
-			// 					$("#modalUser").modal("show");
-			// 					this.$refs.modalUser.populateData(data);
-			//
-			// 					button.removeAttribute("disabled");
-			// 					button.innerHTML = innerHTML;
-			// 				});
-			//
-			// 			return;
-			// 		}
-			//
-			// 		swal({
-			// 			title: "Change user status",
-			// 			text: `Are you sure you want to change the status of ${data.full_name}`,
-			// 			icon: "warning",
-			// 			buttons: true,
-			// 			dangerMode: true
-			// 		}).then((willChange) => {
-			// 			if (willChange) {
-			// 				axios.patch(`./users/${data.id}/toggle-active`)
-			// 					.then(() => {
-			// 						button.removeAttribute("disabled");
-			// 						button.innerHTML = innerHTML;
-			//
-			// 						if (button.childNodes[0].className === 'fa fa-thumbs-up')
-			// 							button.childNodes[0].className = 'fa fa-thumbs-down';
-			// 						else
-			// 							button.childNodes[0].className = 'fa fa-thumbs-up';
-			//
-			// 						this.$emit('reload');
-			//
-			// 						lib.swalSuccess("Updated status of the user");
-			// 					})
-			// 					.catch((error) => {
-			// 						lib.swalError(error.message);
-			//
-			// 						button.removeAttribute("disabled");
-			// 						button.innerHTML = innerHTML;
-			// 					});
-			// 			} else {
-			// 				button.removeAttribute("disabled");
-			// 				button.innerHTML = innerHTML;
-			// 			}
-			// 		})
-			// 	},
+
+			itemAction(action, data, index, e) {
+				let innerHTML = e.currentTarget.innerHTML;
+				let button = e.currentTarget;
+
+				$('[data-toggle="tooltip"]').tooltip('hide');
+
+				button.setAttribute("disabled", true);
+				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
+
+				if (action === 'view-item') {
+					window.location.href = `/admin/collector-batches/${data.id}/list`;
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
+
+					return;
+				}
+
+				// swal({
+				// 	title: "Change user status",
+				// 	text: `Are you sure you want to change the status of ${data.full_name}`,
+				// 	icon: "warning",
+				// 	buttons: true,
+				// 	dangerMode: true
+				// }).then((willChange) => {
+				// 	if (willChange) {
+				// 		axios.patch(`./users/${data.id}/toggle-active`)
+				// 			.then(() => {
+				// 				button.removeAttribute("disabled");
+				// 				button.innerHTML = innerHTML;
+				//
+				// 				if (button.childNodes[0].className === 'fa fa-thumbs-up')
+				// 					button.childNodes[0].className = 'fa fa-thumbs-down';
+				// 				else
+				// 					button.childNodes[0].className = 'fa fa-thumbs-up';
+				//
+				// 				this.$emit('reload');
+				//
+				// 				lib.swalSuccess("Updated status of the user");
+				// 			})
+				// 			.catch((error) => {
+				// 				lib.swalError(error.message);
+				//
+				// 				button.removeAttribute("disabled");
+				// 				button.innerHTML = innerHTML;
+				// 			});
+				// 	} else {
+				// 		button.removeAttribute("disabled");
+				// 		button.innerHTML = innerHTML;
+				// 	}
+				// })
+			},
 		},
 
 		computed: {

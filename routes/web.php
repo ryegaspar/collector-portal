@@ -11,12 +11,6 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-//Auth::routes();
-
 Route::name('admin.')->prefix('admin')->group(function () {
     Route::redirect('/', 'admin/dashboard')->name('home');
 
@@ -43,9 +37,10 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish');
         Route::resource('scripts', 'ScriptsController');
 
-        Route::get('collectors/collector-options', 'CollectorOptionsController@index')->name('team-leader.list');
+        Route::get('collectors/collector-options', 'CollectorOptionsController@index')->name('collector-option-lists');
         Route::resource('collectors', 'CollectorsController'); //TODO: add 'only' if applicable
 
+        Route::get('collector-batches/{id}/list', 'CollectorBatchListsController@index')->name('collector-batch-lists');
         Route::resource('collector-batches', 'CollectorBatchesController'); //TODO: add 'only' if applicable
 
         Route::patch('admins/{admin}/toggle-active', 'AdminToggleActiveController@update')->name('admins.toggleActive');

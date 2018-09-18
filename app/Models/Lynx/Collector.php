@@ -66,6 +66,16 @@ class Collector extends Model
     }
 
     /**
+     * A collector has team leader.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function team_leader()
+    {
+        return $this->belongsTo(Admin::class, 'team_leader_id', 'id');
+    }
+
+    /**
      * Accessor for created_at
      *
      * @param $date

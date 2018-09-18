@@ -1,0 +1,63 @@
+export default [
+	{
+		name: 'full_name',
+		sortField: 'first_name',
+		title: 'Name',
+		titleClass: 'text-center',
+		visible: true,
+	},
+	{
+		name: 'desk',
+		sortField: 'desk',
+		title: 'Desk',
+		titleClass: 'text-center',
+		dataClass: 'text-center',
+		visible: true,
+	},
+	{
+		name: 'tiger_user_id',
+		sortField: 'tiger_user_id',
+		title: 'CollectOne',
+		titleClass: 'text-center',
+		dataClass: 'text-center',
+		visible: true,
+	},
+	{
+		name: 'username',
+		sortField: 'username',
+		title: 'Portal Username',
+		titleClass: 'text-center',
+		visible: true,
+	},
+	{
+		name: 'team_leader.full_name',
+		sortField: 'team_leader_id',
+		title: 'Team Leader',
+		titleClass: 'text-center',
+		dataClass: 'text-center',
+		visible: true,
+	},
+	{
+		name: 'sub_site.name',
+		sortField: 'sub_site_id',
+		title: 'Sub Site',
+		titleClass: 'text-center',
+		dataClass: 'text-center',
+		visible: true
+	},
+	{
+		name: 'commission_structure_id',
+		sortField: 'commission_structure_id',
+		title: 'Commission',
+		titleClass: 'text-center',
+		visible: true,
+	},
+	{
+		name: 'start_date',
+		sortField: 'start_date',
+		title: 'Start Date',
+		titleClass: 'text-center',
+		dataClass: 'text-right',
+		visible: true,
+	},
+]
