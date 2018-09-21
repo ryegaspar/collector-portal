@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Lynx\Collector;
 use App\Models\Lynx\CollectorBatch;
 use App\Models\Lynx\Subsite;
-use App\Unifin\Classes\NewCollector;
+use App\Unifin\Classes\NewCollectorFromBatch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,6 +25,7 @@ class CollectorBatchesController extends Controller
 
         $this->middleware('permission:read collector-batch')->only('index');
         $this->middleware('permission:create collector-batch')->only('store');
+        $this->middleware('permission:delete collector-batch')->only('destroy');
     }
 
     /**
@@ -37,9 +37,13 @@ class CollectorBatchesController extends Controller
     public function index(AdminCollectorBatchFilter $adminCollectorBatchFilter)
     {
         if (request()->wantsJson()) {
-            $response = $this->getCollectorBatches($adminCollectorBatchFilter);
+            $collectorBatches = CollectorBatch::tableFilters($adminCollectorBatchFilter)
+                ->with('sub_site:id,name')
+                ->withCount('collectors');
 
-            return response($response, 200);
+            $result = $this->paginate($collectorBatches);
+
+            return response($result, 200);
         }
 
         return view('admin.collector-batches');
@@ -58,36 +62,23 @@ class CollectorBatchesController extends Controller
 
         $collectorBatch = CollectorBatch::create($validatedData);
 
-        $fileHandle = $this->openUploadedFile($request->file('csv_file'));
-
-        $row = 0;
-        while (($data = fgetcsv($fileHandle)) !== false) {
-            $row++;
-            if ($row == 1) {
-                continue;
-            }
-
-            $newCollector = $this->makeCollectorFromBatch($data, $validatedData);
-
-            $collectorBatch->collectors()->save($newCollector);
-        }
+        (new NewCollectorFromBatch($request->file('csv_file'), $validatedData, $collectorBatch))->makeCollectors();
 
         return response([], 200);
     }
 
     /**
-     * Get collectors.
+     * Remove the specified resource from storage.
      *
-     * @param $adminCollectorBatches
-     * @return mixed
+     * @param CollectorBatch $collectorBatch
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
-    protected function getCollectorBatches($adminCollectorBatches)
+    public function destroy(CollectorBatch $collectorBatch)
     {
-        $collectorBatches = CollectorBatch::tableFilters($adminCollectorBatches)->with('sub_site:id,name')->withCount('collectors');
+        $collectorBatch->delete();
 
-        $results = $this->paginate($collectorBatches);
-
-        return $results;
+        return response([], 204);
     }
 
     /**
@@ -116,55 +107,5 @@ class CollectorBatchesController extends Controller
         });
 
         return $validator->validate();
-    }
-
-    /**
-     * Open uploaded csv file.
-     *
-     * @param $file
-     * @return bool|resource
-     */
-    protected function openUploadedFile($file)
-    {
-        $file->storeAs('public\files', request()->name . ".csv");
-
-        $filename = request()->name . ".csv";
-        $filePath = public_path('storage\\files\\' . $filename);
-
-        return fopen($filePath, "r");
-    }
-
-    /**
-     * Create a new collector from csv file.
-     *
-     * @param $dataFromFile
-     * @param $validatedData
-     * @return Collector
-     */
-    protected function makeCollectorFromBatch($dataFromFile, $validatedData)
-    {
-        $startDate = Carbon::parse($validatedData['start_date']);
-        $lastName = $dataFromFile[0];
-        $firstName = $dataFromFile[1];
-
-        $ids = (new NewCollector($validatedData['sub_site_id'], $firstName, $lastName))
-            ->generateId();
-
-        $tempDate = Carbon::parse($validatedData['start_date'])->day(1);
-        $fifteenth = Carbon::parse($validatedData['start_date'])->day(15);
-        $validatedData['start_full_month_date'] = $startDate <= $fifteenth ? $tempDate : $tempDate->addMonth();
-
-        return new Collector([
-            'desk'                    => $ids[0],
-            'tiger_user_id'           => $ids[1],
-            'username'                => $ids[2],
-            'last_name'               => $lastName,
-            'first_name'              => $firstName,
-            'sub_site_id'             => $validatedData['sub_site_id'],
-            'team_leader_id'          => $validatedData['team_leader_id'],
-            'commission_structure_id' => $validatedData['commission_structure_id'],
-            'start_date'              => $validatedData['start_date'],
-            'start_full_month_date'   => $validatedData['start_full_month_date']
-        ]);
     }
 }

@@ -102,39 +102,36 @@
 					return;
 				}
 
-				// swal({
-				// 	title: "Change user status",
-				// 	text: `Are you sure you want to change the status of ${data.full_name}`,
-				// 	icon: "warning",
-				// 	buttons: true,
-				// 	dangerMode: true
-				// }).then((willChange) => {
-				// 	if (willChange) {
-				// 		axios.patch(`./users/${data.id}/toggle-active`)
-				// 			.then(() => {
-				// 				button.removeAttribute("disabled");
-				// 				button.innerHTML = innerHTML;
-				//
-				// 				if (button.childNodes[0].className === 'fa fa-thumbs-up')
-				// 					button.childNodes[0].className = 'fa fa-thumbs-down';
-				// 				else
-				// 					button.childNodes[0].className = 'fa fa-thumbs-up';
-				//
-				// 				this.$emit('reload');
-				//
-				// 				lib.swalSuccess("Updated status of the user");
-				// 			})
-				// 			.catch((error) => {
-				// 				lib.swalError(error.message);
-				//
-				// 				button.removeAttribute("disabled");
-				// 				button.innerHTML = innerHTML;
-				// 			});
-				// 	} else {
-				// 		button.removeAttribute("disabled");
-				// 		button.innerHTML = innerHTML;
-				// 	}
-				// })
+				swal({
+					title: "Delete collector batch",
+					text: `Are you sure you want to delete ${data.name}, this action also deletes the collector list under it, and is IRREVERSIBLE`,
+					icon: "warning",
+					buttons: true,
+					dangerMode: true
+				}).then((willChange) => {
+					if (willChange) {
+						axios.delete(`/admin/collector-batches/${data.id}`)
+                            .then(() => {
+								button.removeAttribute("disabled");
+								button.innerHTML = innerHTML;
+
+								this.$emit('reload');
+
+								lib.swalSuccess("Successfully deleted collector batch");
+                            })
+							.catch((error) => {
+								lib.swalError(error.message);
+
+								button.removeAttribute("disabled");
+								button.innerHTML = innerHTML;
+							});
+						button.removeAttribute("disabled");
+						button.innerHTML = innerHTML;
+					} else {
+						button.removeAttribute("disabled");
+						button.innerHTML = innerHTML;
+					}
+				})
 			},
 		},
 

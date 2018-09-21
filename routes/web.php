@@ -14,7 +14,7 @@
 Route::name('admin.')->prefix('admin')->group(function () {
     Route::redirect('/', 'admin/dashboard')->name('home');
 
-    Route::group(['namespace' => 'Auth'], function () {
+    Route::namespace('Auth')->group(function () {
         Route::get('login', 'AdminLoginController@showLoginForm')->name('login');
         Route::post('login', 'AdminLoginController@login')->name('login.submit');
         Route::post('logout', 'AdminLoginController@logout')->name('logout');
@@ -41,7 +41,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('collectors', 'CollectorsController'); //TODO: add 'only' if applicable
 
         Route::get('collector-batches/{id}/list', 'CollectorBatchListsController@index')->name('collector-batch-lists');
-        Route::resource('collector-batches', 'CollectorBatchesController'); //TODO: add 'only' if applicable
+        Route::resource('collector-batches', 'CollectorBatchesController')->only(['index', 'store', 'destroy']);
 
         Route::patch('admins/{admin}/toggle-active', 'AdminToggleActiveController@update')->name('admins.toggleActive');
         Route::get('admins/get-options', 'AdminOptionsController@index');

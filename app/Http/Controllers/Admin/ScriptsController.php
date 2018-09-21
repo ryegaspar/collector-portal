@@ -25,7 +25,7 @@ class ScriptsController extends Controller
     }
 
     /**
-     * display adjustments page
+     * Display script page.
      *
      * @param AdminScriptFilter $adminScriptFilter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

@@ -74,7 +74,7 @@ class SitesController extends Controller
     }
 
     /**
-     * update the given site
+     * Update the given site
      *
      * @param Site $site
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response

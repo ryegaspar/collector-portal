@@ -35,6 +35,8 @@ class CreateCollectorsTable extends Migration
 
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('batch_id')->references('id')->on('collector_batches')->onDelete('cascade');
         });
     }
 
