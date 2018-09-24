@@ -44,6 +44,9 @@ class InitCollectorsCommand extends Command
 
         $fileHandle = fopen($csvFile, "r");
 
+        $dispatcher = Collector::getEventDispatcher();
+        Collector::unsetEventDispatcher();
+
         DB::transaction(function () use ($fileHandle) {
             $row = 0;
             while (($data = fgetcsv($fileHandle)) !== false) {
@@ -61,7 +64,7 @@ class InitCollectorsCommand extends Command
                 $fname = $data[1];
                 $username = $this->makeUsername($fname, $lname);
 
-                Collector::create([
+                $collector = Collector::create([
                     'last_name'               => $lname,
                     'first_name'              => $fname,
                     'username'                => $username,
@@ -75,6 +78,8 @@ class InitCollectorsCommand extends Command
                 ]);
             }
         });
+
+        Collector::setEventDispatcher($dispatcher);
 
         $this->info("Collectors have been synced.");
     }

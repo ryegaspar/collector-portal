@@ -85,7 +85,7 @@ return [
             'database' => env('DB_DATABASE2', 'forge'),
             'username' => env('DB_USERNAME2', 'forge'),
             'password' => env('DB_PASSWORD2', ''),
-            'charset'  => 'utf8',
+            'charset'  => 'latin1',
             'prefix'   => '',
         ],
 

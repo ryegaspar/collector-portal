@@ -2,6 +2,8 @@
 
 namespace App\Models\Lynx;
 
+use App\Models\Tiger\DSK;
+use App\Models\Tiger\USR;
 use App\Unifin\Classes\NewCollector;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -54,6 +56,19 @@ class Collector extends Model
         'start_date'          => 'datetime:m/d/Y',
         'start_full_month_at' => 'datetime:m/d/Y',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($collector) {
+            USR::makeCollectOneUser($collector);
+            DSK::makeCollectOneDesk($collector);
+        });
+    }
 
     /**
      * Fetch the subsite of a collector.
