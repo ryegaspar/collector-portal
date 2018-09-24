@@ -56,7 +56,7 @@ class DSK extends Model
     public static function makeCollectOneDesk($collector)
     {
         $data = [
-            'DSK_NAME'                => $collector->full_name,
+            'DSK_NAME'                => substr($collector->full_name, 0, 29),
             'DSK_GOAL'                => 0,
             'DSK_PHONE'               => 0,
             'DSK_TITLE'               => '',

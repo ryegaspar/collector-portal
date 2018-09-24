@@ -88,7 +88,7 @@ class USR extends Authenticatable
     public static function makeCollectOneUser($collector)
     {
         $data = [
-            'USR_NAME'                 => $collector->full_name,
+            'USR_NAME'                 => substr($collector->full_name, 0, 29),
             'USR_SECURITY'             => "5",
             'USR_PW'                   => $collector->tiger_user_id,
             'USR_OVR_DESK'             => 'N',
