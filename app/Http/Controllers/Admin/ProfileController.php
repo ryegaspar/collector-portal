@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lynx\Admin;
-use App\Rules\UserEmail;
+use App\Rules\AdminEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -64,7 +64,7 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make(request()->all(), [
-                'email'      => ['required', 'email', "unique:users,email,{$user->id}", new UserEmail],
+                'email'      => ['required', 'email', "unique:users,email,{$user->id}", new AdminEmail],
                 'first_name' => ['required'],
                 'last_name'  => ['required'],
             ]

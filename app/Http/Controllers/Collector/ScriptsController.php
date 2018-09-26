@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\Collector;
 
 use App\Script;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Unifin\TableFilters\UserScriptFilter;
+use Unifin\TableFilters\CollectorScriptFilter;
 use Unifin\Traits\Paginate;
 
 class ScriptsController extends Controller
@@ -24,10 +24,10 @@ class ScriptsController extends Controller
     /**
      * show scripts page
      *
-     * @param UserScriptFilter $scriptFilter
+     * @param CollectorScriptFilter $scriptFilter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function index(UserScriptFilter $scriptFilter)
+    public function index(CollectorScriptFilter $scriptFilter)
     {
         if (request()->wantsJson()) {
             $response = $this->getScripts($scriptFilter);

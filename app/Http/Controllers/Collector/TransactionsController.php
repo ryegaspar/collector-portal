@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\Collector;
 
 use App\DebterPayment;
 use App\Http\Controllers\Controller;
-use Unifin\TableFilters\UserTransactionFilter;
+use Unifin\TableFilters\CollectorTransactionFilter;
 use Unifin\Traits\Paginate;
 
 class TransactionsController extends Controller
@@ -30,10 +30,10 @@ class TransactionsController extends Controller
     /**
      * display specified resource
      *
-     * @param UserTransactionFilter $userTransactionFilter
+     * @param CollectorTransactionFilter $userTransactionFilter
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(UserTransactionFilter $userTransactionFilter)
+    public function show(CollectorTransactionFilter $userTransactionFilter)
     {
         $transactions = $this->getTransactions($userTransactionFilter);
 

@@ -4,7 +4,7 @@ namespace Unifin\TableFilters;
 
 use Carbon\Carbon;
 
-class UserTransactionFilter extends TableFilter
+class CollectorTransactionFilter extends TableFilter
 {
     /**
      * columns to search

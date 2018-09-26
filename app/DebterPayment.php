@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Unifin\TableFilters\UserTransactionFilter;
+use Unifin\TableFilters\CollectorTransactionFilter;
 
 class DebterPayment extends Model
 {
@@ -121,10 +121,10 @@ class DebterPayment extends Model
      * apply tabulation to relevant debter payment
      *
      * @param $query
-     * @param UserTransactionFilter $paginate
+     * @param CollectorTransactionFilter $paginate
      * @return mixed
      */
-    public function scopeTabulate($query, UserTransactionFilter $paginate)
+    public function scopeTabulate($query, CollectorTransactionFilter $paginate)
     {
         return $paginate->apply($query);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\Collector;
 
 use App\Http\Controllers\Controller;
 use Unifin\Repositories\RawQueries;

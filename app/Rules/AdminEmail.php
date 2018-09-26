@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class UserEmail implements Rule
+class AdminEmail implements Rule
 {
     /**
      * Determine if the validation rule passes.

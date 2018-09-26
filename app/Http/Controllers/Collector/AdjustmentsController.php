@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\Collector;
 
 use App\Adjustment;
 use App\Http\Controllers\Controller;
@@ -8,7 +8,7 @@ use App\Rules\AdjustmentAmount;
 use App\Rules\AdjustmentDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Unifin\TableFilters\UserAdjustmentFilter;
+use Unifin\TableFilters\CollectorAdjustmentFilter;
 use Unifin\Traits\Paginate;
 
 class AdjustmentsController extends Controller
@@ -59,10 +59,10 @@ class AdjustmentsController extends Controller
     /**
      * return a lists of the resource in vuetable format
      *
-     * @param UserAdjustmentFilter $userAdjustmentFilter
+     * @param CollectorAdjustmentFilter $userAdjustmentFilter
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(UserAdjustmentFilter $userAdjustmentFilter)
+    public function show(CollectorAdjustmentFilter $userAdjustmentFilter)
     {
         $response = $this->getUserAdjustments($userAdjustmentFilter);
         if (request()->wantsJson()) {

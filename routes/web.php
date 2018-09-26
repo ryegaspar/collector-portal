@@ -68,7 +68,7 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('logout', 'LoginController@logout')->name('user.logout');
 });
 
-Route::name('user.')->namespace('Users')->group(function () {
+Route::name('collector.')->namespace('Collector')->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::get('/dashboard/transactions',

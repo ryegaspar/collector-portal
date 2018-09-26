@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lynx\Admin;
 use App\Rules\CollectOneId;
-use App\Rules\UserEmail;
+use App\Rules\AdminEmail;
 use App\Rules\Username;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -122,7 +122,7 @@ class AdminsController extends Controller
     {
         $validator = Validator::make(request()->all(), [
                 'username'      => ['required', 'min:6', 'unique:admins,username', new Username],
-                'email'         => ['required', 'email', 'unique:admins,email', new UserEmail],
+                'email'         => ['required', 'email', 'unique:admins,email', new AdminEmail],
                 'first_name'    => ['required'],
                 'last_name'     => ['required'],
                 'tiger_user_id' => ['required', 'max:3', new CollectOneId],

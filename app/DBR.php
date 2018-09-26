@@ -5,7 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Unifin\TableFilters\UserAccountFilter;
+use Unifin\TableFilters\CollectorAccountFilter;
 
 class DBR extends Model
 {
@@ -299,10 +299,10 @@ class DBR extends Model
      * apply filters to relevant dbr
      *
      * @param $query
-     * @param UserAccountFilter $paginate
+     * @param CollectorAccountFilter $paginate
      * @return mixed
      */
-    public function scopeTableFilters($query, UserAccountFilter $paginate)
+    public function scopeTableFilters($query, CollectorAccountFilter $paginate)
     {
        return $paginate->apply($query);
     }

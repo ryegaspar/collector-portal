@@ -2,20 +2,19 @@
 
 namespace Unifin\TableFilters;
 
-
-class UserAdjustmentFilter extends TableFilter
+class CollectorAccountFilter extends TableFilter
 {
     /**
      * columns to search
      *
      * @var array
      */
-    protected $searches = ['dbr_no'];
+    protected $searches = ['DBR_NAME1', 'DBR_NO'];
 
     /**
      * default sort column
      *
      * @var string
      */
-    protected $defaultSort = 'date';
+    protected $defaultSort = 'DBR_NO';
 }
