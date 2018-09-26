@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lynx\Admin;
-use App\Rules\CollectOneId;
 use App\Rules\AdminEmail;
+use App\Rules\CollectOneId;
 use App\Rules\Username;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Unifin\TableFilters\AdminAdminFilter;
@@ -52,9 +51,9 @@ class AdminsController extends Controller
      */
     public function store()
     {
-        $request = $this->validateRequest();
+        $validatedData = $this->validateRequest();
 
-        $response = Admin::createAdmin($request);
+        $response = Admin::createAdmin($validatedData);
 
         return response($response, 200);
     }

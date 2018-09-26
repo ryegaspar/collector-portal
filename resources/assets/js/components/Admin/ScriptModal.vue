@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="modalScript" tabindex="-1" role="dialog">
+    <div class="modal fade" id="scriptModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

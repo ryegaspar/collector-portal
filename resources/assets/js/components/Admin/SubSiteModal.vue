@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="modalSubSite" tabindex="-1" role="dialog">
+    <div class="modal fade" id="subSiteModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -201,7 +201,7 @@
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
 
-						$("#modalSubSite").modal('hide');
+						$("#subSiteModal").modal('hide');
 						lib.swalSuccess(notifyMessage);
 						this.$emit('submitted');
 					})

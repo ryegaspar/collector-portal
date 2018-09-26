@@ -30,10 +30,10 @@
                 </div>
             </div>
         </div>
-        <modal-sub-site ref="modalSubSite"
+        <sub-site-modal ref="subSiteModal"
                         :isAdd="isAdd"
                         @submitted="formSubmitted">
-        </modal-sub-site>
+        </sub-site-modal>
     </div>
 </template>
 
@@ -41,7 +41,7 @@
 	import VtableHeader from '../VtableHeader';
 	import VtableSubSitesFieldDefs from './VtableSubSitesFieldDefs';
 	import VtableSubHeaderSubSites from './VtableSubHeadersSubSites';
-	import ModalSubSite from './ModalSubSite';
+	import SubSiteModal from './SubSiteModal';
 	import Vtable from '../VTable';
 
 	export default {
@@ -50,7 +50,7 @@
 			VtableHeader,
             VtableSubHeaderSubSites,
 			Vtable,
-			ModalSubSite,
+			SubSiteModal,
 		},
 
 		data() {
@@ -73,8 +73,8 @@
 		methods: {
 			addSubSite() {
 				this.isAdd = true;
-				this.$refs.modalSubSite.resetModal();
-				$("#modalSubSite").modal("show");
+				this.$refs.subSiteModal.resetModal();
+				$("#subSiteModal").modal("show");
 			},
 
 			formSubmitted() {
@@ -95,8 +95,8 @@
 
 				axios.get(url)
 					.then(({data}) => {
-						$("#modalSubSite").modal("show");
-						this.$refs.modalSubSite.populateData(data);
+						$("#subSiteModal").modal("show");
+						this.$refs.subSiteModal.populateData(data);
 
 						button.removeAttribute("disabled");
 						button.innerHTML = innerHTML;

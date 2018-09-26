@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="modalAdmin" tabindex="-1" role="dialog">
+    <div class="modal fade" id="adminModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
@@ -215,7 +215,7 @@
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
 
-						$("#modalAdmin").modal('hide');
+						$("#adminModal").modal('hide');
 						lib.swalSuccess(notifyMessage);
 						this.$emit('submitted');
 					})

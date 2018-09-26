@@ -36,6 +36,7 @@ class Admin extends Authenticatable implements CanResetPasswordContract
         'last_name',
         'first_name',
         'email',
+        'tiger_user_id',
         'active',
         'site_id',
         'sub_site_id',

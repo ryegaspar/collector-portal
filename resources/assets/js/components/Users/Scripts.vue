@@ -39,7 +39,7 @@
 	import VtableHeader from '../VtableHeader';
 	import VtableScriptsFieldDefs from './VtableScriptsFieldDefs';
 	import Vtable from '../VTable';
-	import ModalScript from '../Admin/ModalScript';
+	import ModalScript from '../Admin/ScriptModal';
 
 	export default {
 		components: {

@@ -56,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <modal-script ref="modalScript"></modal-script>
+        <script-modal ref="scriptModal"></script-modal>
     </div>
 </template>
 
@@ -64,11 +64,11 @@
 	import VtableHeader from '../VtableHeader';
 	import VtableScriptsFieldDefs from './VtableScriptsFieldDefs';
 	import Vtable from '../VTable';
-	import ModalScript from './ModalScript'
+	import ScriptModal from './ScriptModal'
 
 	export default {
 		components: {
-			Vtable, VtableHeader, ModalScript
+			Vtable, VtableHeader, ScriptModal
 		},
 
 		data() {
@@ -97,8 +97,8 @@
 				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
 
 				if (action === 'show-preview') {
-					this.$refs.modalScript.loadPreview(`/admin/scripts/${data.id}`);
-					$("#modalScript").modal("show");
+					this.$refs.scriptModal.loadPreview(`/admin/scripts/${data.id}`);
+					$("#scriptModal").modal("show");
 
 					button.removeAttribute("disabled");
 					button.innerHTML = innerHTML;

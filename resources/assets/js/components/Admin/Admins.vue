@@ -42,11 +42,11 @@
                 </div>
             </div>
         </div>
-        <modal-admin ref="modalAdmin"
+        <admin-modal ref="adminModal"
                     :isAdd="isAdd"
                     :formData="formData"
                     @submitted="formSubmitted">
-        </modal-admin>
+        </admin-modal>
     </div>
 </template>
 
@@ -55,7 +55,7 @@
 	import VtableAdminsFieldDefs from './VtableAdminsFieldDefs';
 	import Vtable from '../VTable';
 	import VtableSubHeaderAdmins from './VtableSubHeaderAdmins';
-	import ModalAdmin from './ModalAdmin'
+	import AdminModal from './AdminModal'
 
 	export default {
 
@@ -63,7 +63,7 @@
 			Vtable,
 			VtableHeader,
             VtableSubHeaderAdmins,
-            ModalAdmin
+            AdminModal
 		},
 
 		data() {
@@ -87,8 +87,8 @@
 		methods: {
 			addUser() {
 				this.isAdd = true;
-				this.$refs.modalAdmin.resetModal();
-				$("#modalAdmin").modal("show");
+				this.$refs.adminModal.resetModal();
+				$("#adminModal").modal("show");
             },
 
             formSubmitted() {
@@ -109,8 +109,8 @@
 					let url = `/admin/admins/${data.id}/edit`;
 					axios.get(url)
                         .then(({data}) => {
-                        	$("#modalAdmin").modal("show");
-                        	this.$refs.modalAdmin.populateData(data);
+                        	$("#adminModal").modal("show");
+                        	this.$refs.adminModal.populateData(data);
 
                         	button.removeAttribute("disabled");
                         	button.innerHTML = innerHTML;
