@@ -37,6 +37,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish');
         Route::resource('scripts', 'ScriptsController');
 
+        Route::patch('collectors/{collector}/reset-password', 'CollectorResetPasswordController@update');
         Route::patch('collectors/{collector}/toggle-active', 'CollectorToggleActiveController@update');
         Route::get('collectors/collector-options', 'CollectorOptionsController@index')->name('collector-option-lists');
         Route::resource('collectors', 'CollectorsController')->only(['index', 'store', 'edit', 'update']);

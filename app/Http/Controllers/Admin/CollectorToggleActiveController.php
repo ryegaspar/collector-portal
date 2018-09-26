@@ -17,7 +17,7 @@ class CollectorToggleActiveController extends Controller
     }
 
     /**
-     * toggle user state
+     * Toggle collector active/inactive.
      *
      * @param Collector $collector
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response

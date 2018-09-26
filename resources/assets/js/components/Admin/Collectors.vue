@@ -25,6 +25,14 @@
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
                                     <button type="button"
+                                            class="btn btn-sm btn-primary"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Reset Password"
+                                            @click="itemAction('reset-password', props.rowData, props.rowIndex, $event)">
+                                        <i class="fa fa-recycle"></i>
+                                    </button>
+                                    <button type="button"
                                             class="btn btn-sm"
                                             :class="props.rowData.active ? 'btn-danger' : 'btn-success'"
                                             data-toggle="tooltip"
@@ -116,6 +124,36 @@
 
 					return;
 				}
+
+				if (action === 'reset-password') {
+					swal({
+                        title: "Reset Password",
+                        text: `Reset password for ${data.full_name}?`,
+                        icon: "warning",
+                        buttons: true,
+                    }).then((willChange) => {
+                    	if (willChange) {
+                    		axios.patch(`/admin/collectors/${data.id}/reset-password`)
+                                .then(() => {
+									lib.swalSuccess("Reset Password Success");
+
+									button.removeAttribute("disabled");
+									button.innerHTML = innerHTML;
+                                })
+                                .catch((error) => {
+									lib.swalError(error.message);
+
+									button.removeAttribute("disabled");
+									button.innerHTML = innerHTML;
+                                });
+                        } else {
+							button.removeAttribute("disabled");
+							button.innerHTML = innerHTML;
+                        }
+                    });
+
+                    return;
+                }
 
 				swal({
 					title: "Change collector status",

@@ -27,7 +27,10 @@ class Collector extends Model
         'commission_structure_id',
         'status_id',
         'start_date',
-        'start_full_month_date'
+        'start_full_month_date',
+
+        'change_pass_at',
+        'password'
     ];
 
     /**
