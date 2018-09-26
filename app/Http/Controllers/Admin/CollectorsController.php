@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Lynx\Collector;
 use App\Models\Lynx\Subsite;
 use App\Rules\CollectOneId;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -52,7 +53,7 @@ class CollectorsController extends Controller
      */
     public function store()
     {
-        $validatedData = $this->validateNewCollector();
+        $validatedData = $this->validateCollector();
 
         $response = Collector::createCollector($validatedData);
 
@@ -60,18 +61,55 @@ class CollectorsController extends Controller
     }
 
     /**
-     * validate new collector
+     * get collector
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function edit($id)
+    {
+        if (request()->wantsJson()) {
+            return response(Collector::find($id), 200);
+        }
+    }
+
+    /**
+     * Update the given resource.
+     *
+     * @param Collector $collector
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function update(Collector $collector)
+    {
+        $validatedData = $this->validateCollector();
+
+        unset($validatedData['sub_site_id']);
+
+        $startDate = Carbon::parse($validatedData['start_date']);
+        $tempDate = Carbon::parse($validatedData['start_date'])->day(1);
+        $fifteenth = Carbon::parse($validatedData['start_date'])->day(15);
+        $validatedData['start_full_month_date'] = Carbon::parse($startDate) <= $fifteenth ? $tempDate : $tempDate->addMonth();
+        $validatedData['start_date'] = $startDate;
+
+        $collector->update($validatedData);
+
+        return response([], 201);
+    }
+
+    /**
+     * Validate new collector.
      *
      * @return mixed
      */
-    protected function validateNewCollector()
+    protected function validateCollector()
     {
         $validator = Validator::make(request()->all(), [
                 'sub_site_id'             => ['required'],
                 'first_name'              => ['required'],
                 'last_name'               => ['required'],
                 'start_date'              => ['required'],
-                'commission_structure_id' => ['required']
+                'commission_structure_id' => ['required'],
+                'status_id'               => ['required']
             ]
         );
 

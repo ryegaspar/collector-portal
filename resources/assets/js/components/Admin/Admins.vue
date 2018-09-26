@@ -54,11 +54,8 @@
 	import VtableHeader from '../VtableHeader';
 	import VtableAdminsFieldDefs from './VtableAdminsFieldDefs';
 	import Vtable from '../VTable';
-	import VueEvents from 'vue-events';
 	import VtableSubHeaderAdmins from './VtableSubHeaderAdmins';
 	import ModalAdmin from './ModalAdmin'
-
-	Vue.use(VueEvents);
 
 	export default {
 
@@ -130,7 +127,7 @@
                     dangerMode: true
 				}).then((willChange) => {
 					if (willChange) {
-						axios.patch(`./users/${data.id}/toggle-active`)
+						axios.patch(`./admins/${data.id}/toggle-active`)
 							.then(() => {
 								button.removeAttribute("disabled");
 								button.innerHTML = innerHTML;

@@ -18,35 +18,36 @@ class AdminCollectorFilter extends TableFilter
      */
     protected $defaultSort = 'start_date';
 
-//    /**
-//     * filter by group
-//     *
-//     * @return $this
-//     */
-//    public function filterGroup()
-//    {
-//        if (!is_null($this->request->filter1)) {
-//            if ($this->request->filter1 != "A") {
-//                $this->builder->where("access_level", "=", $this->request->filter1);
-//            }
-//        }
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * filter by status
-//     *
-//     * @return $this
-//     */
-//    public function filterStatus()
-//    {
-//        if (!is_null($this->request->filter2)) {
-//            if ($this->request->filter2 != "A") {
-//                $this->builder->where("active", "=", !! $this->request->filter2);
-//            }
-//        }
-//
-//        return $this;
-//    }
+    /**
+     * Filter active/inactive.
+     *
+     * @return $this
+     */
+    public function filterActive()
+    {
+        if (!is_null($this->request->filter1)) {
+            if ($this->request->filter1 != "A") {
+                $this->builder->where("active", "=", !! $this->request->filter1);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Filter status.
+     *
+     * @return $this
+     */
+    public function filterStatus()
+    {
+        if (!is_null($this->request->filter2)) {
+            if ($this->request->filter2 != "A") {
+                $this->builder->where("status_id", "=", $this->request->filter2);
+            }
+        }
+
+        return $this;
+    }
+
 }

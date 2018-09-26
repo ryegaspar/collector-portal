@@ -25,6 +25,7 @@ class Collector extends Model
         'sub_site_id',
         'team_leader_id',
         'commission_structure_id',
+        'status_id',
         'start_date',
         'start_full_month_date'
     ];
@@ -45,7 +46,7 @@ class Collector extends Model
      *
      * @var array
      */
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'status'];
 
     /**
      * convert columns to their appropriate types
@@ -55,6 +56,7 @@ class Collector extends Model
     protected $casts = [
         'start_date'          => 'datetime:m/d/Y',
         'start_full_month_at' => 'datetime:m/d/Y',
+        'active' => 'boolean'
     ];
 
     /**
@@ -68,6 +70,16 @@ class Collector extends Model
             USR::makeCollectOneUser($collector);
             DSK::makeCollectOneDesk($collector);
         });
+    }
+
+    /**
+     * set username column
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'username';
     }
 
     /**
@@ -118,9 +130,20 @@ class Collector extends Model
      * @param $value
      * @return mixed
      */
-    public function getCommissionStructureIdAttribute($value)
+    public function getCommissionStructureAttribute($value)
     {
         return collect(config('unifin.collector_commission_structures'))[$value];
+    }
+
+    /**
+     * Accessor to collector status.
+     *
+     * @param $value
+     * @return mixed
+     */
+    public function getStatusAttribute()
+    {
+        return collect(config('unifin.collector_statuses'))[$this->status_id];
     }
 
     /**

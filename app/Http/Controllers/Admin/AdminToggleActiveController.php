@@ -14,7 +14,7 @@ class AdminToggleActiveController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser']);
-        $this->middleware('permission:disable users')->only('update');
+        $this->middleware('permission:disable admin')->only('update');
     }
 
     /**

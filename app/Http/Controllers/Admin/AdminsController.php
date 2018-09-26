@@ -73,7 +73,7 @@ class AdminsController extends Controller
     }
 
     /**
-     * update the given user
+     * Update the given resource.
      *
      * @param Admin $admin
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response

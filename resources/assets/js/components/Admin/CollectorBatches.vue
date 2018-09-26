@@ -104,7 +104,7 @@
 
 				swal({
 					title: "Delete collector batch",
-					text: `Are you sure you want to delete ${data.name}, this action also deletes the collector list under it, and is IRREVERSIBLE`,
+					text: `Are you sure you want to delete ${data.name}? This action also deletes the collector list under it, and is IRREVERSIBLE.`,
 					icon: "warning",
 					buttons: true,
 					dangerMode: true

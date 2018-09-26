@@ -28,7 +28,7 @@ export default [
 		title: 'CollectOne',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
-		visible: true,
+		visible: false,
 	},
 	{
 		name: 'sub_site.name',
@@ -62,18 +62,26 @@ export default [
 		visible: true,
 	},
 	{
+		name: 'status',
+		sortField: 'status_id',
+		title: 'Status',
+		titleClass: 'text-center',
+		dataClass: 'text-center',
+		visible: true,
+	},
+	{
 		name: 'active',
 		sortField: 'active',
-		title: 'Status',
+		title: 'Active',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
 		visible: true,
 		callback: function (value) {
 			if (+value) {
-				return `<span class="badge badge-pill badge-success">Active</span>`;
+				return `<span class="badge badge-pill badge-success">Yes</span>`;
 			}
 
-			return `<span class="badge badge-pill badge-danger">Inactive</span>`;
+			return `<span class="badge badge-pill badge-danger">No</span>`;
 		}
 	},
 	{

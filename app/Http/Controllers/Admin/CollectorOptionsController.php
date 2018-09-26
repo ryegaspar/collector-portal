@@ -31,7 +31,9 @@ class CollectorOptionsController extends Controller
 
             $commission_structures = config('unifin.collector_commission_structures');
 
-            return response(compact('sub_sites', 'commission_structures', 'team_leaders'), 200);
+            $statuses = config('unifin.collector_statuses');
+
+            return response(compact('sub_sites', 'commission_structures', 'team_leaders', 'statuses'), 200);
         }
     }
 }
