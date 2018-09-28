@@ -94,6 +94,7 @@
 						href: '#',
                         text: 'Collectors',
                         icon: 'fa fa-users',
+                        permission: 'read collector',
                         children: {
 							Collectors: {
 								href: '/admin/collectors',

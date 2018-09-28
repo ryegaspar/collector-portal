@@ -29,7 +29,7 @@
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Publish"
-                                            v-if="!props.rowData.status"
+                                            v-if="props.rowData.published_at === 'Never'"
                                             @click="itemAction('publish-script', props.rowData, props.rowIndex, $event)">
                                         <i class="fa fa-upload"></i>
                                     </button>

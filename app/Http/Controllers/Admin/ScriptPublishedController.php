@@ -14,7 +14,7 @@ class ScriptPublishedController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser']);
-        $this->middleware('permission:update scripts')->only('update');
+        $this->middleware('permission:update script')->only('update');
     }
 
     /**
@@ -25,7 +25,6 @@ class ScriptPublishedController extends Controller
      */
     public function update(Script $script)
     {
-        $script->status = 1;
         $script->published_at = new Carbon;
 
         $script->save();

@@ -112,7 +112,7 @@
 							text: notifyMessage,
 							icon: 'success',
 							timer: 1250
-                        }
+                        };
 
                         localStorage.setItem("swal", JSON.stringify(swalNotify));
 						window.location.href = `/admin/scripts`;
@@ -131,13 +131,15 @@
 
         mounted() {
 			if (!this.isAdd) {
-				console.log('loading data');
 				axios.get(`/admin/scripts/${this.id}`)
                     .then(({data}) => {
                     	this.form.title = data.title;
-						this.originalStatus = data.status;
+						this.originalStatus = true;
 						this.form.status = data.status;
                     	this.form.content = data.content;
+
+						if (data.published_at === 'Never')
+							this.originalStatus = false;
                     });
 
 				this.persistButtonText = `<i class="fa fa-save"></i> Update`;

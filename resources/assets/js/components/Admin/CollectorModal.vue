@@ -43,7 +43,7 @@
                             <label>First Name</label>
                             <div class="input-group">
                                 <input type="text"
-                                       class="form-control text-right"
+                                       class="form-control"
                                        v-model="form.first_name">
                                 <em class="error invalid-feedback"
                                     v-if="form.errors.has('first_name')">
@@ -55,7 +55,7 @@
                             <label>Last Name</label>
                             <div class="input-group">
                                 <input type="text"
-                                       class="form-control text-right"
+                                       class="form-control"
                                        v-model="form.last_name">
                                 <em class="error invalid-feedback"
                                     v-if="form.errors.has('last_name')">

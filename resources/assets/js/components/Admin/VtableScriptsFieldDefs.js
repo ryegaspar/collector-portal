@@ -15,7 +15,7 @@ export default [
 		visible: true,
 	},
 	{
-		name: 'user.full_name',
+		name: 'admin.full_name',
 		title: 'Author',
 		titleClass: 'text-center',
 		visible: true,
@@ -35,20 +35,6 @@ export default [
 		titleClass: 'text-center',
 		dataClass: 'text-right',
 		visible: true,
-	},
-	{
-		name: 'status',
-		sortField: 'status',
-		title: 'Status',
-		titleClass: 'text-center',
-		dataClass: 'text-center',
-		visible: true,
-		callback: function (value) {
-			if (value) {
-				return `<span class="badge badge-pill badge-success">Published</span>`;
-			}
-			return `<span class="badge badge-pill badge-info">Unpublished</span>`;
-		}
 	},
 	{
 		name: '__slot:actions',

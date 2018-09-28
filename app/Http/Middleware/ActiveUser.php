@@ -16,7 +16,7 @@ class ActiveUser
      */
     public function handle($request, Closure $next)
     {
-        $user = Auth::user();
+        $user = $request->user();
 
         if (!$user->active) {
             Auth::logout();

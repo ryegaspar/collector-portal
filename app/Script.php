@@ -13,30 +13,23 @@ class Script extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'content', 'author_id', 'status', 'published_at'];
-
-    /**
-     * the attributes that should be cast to native types
-     *
-     * @var array
-     */
-    protected $casts = ['status' => 'boolean'];
+    protected $fillable = ['title', 'content', 'admin_id', 'published_at'];
 
     /**
      * the attributes that are eager loaded
      *
      * @var array
      */
-    protected $with = ['user'];
+    protected $with = ['admin'];
 
     /**
-     * a script belongs to a user
+     * A script belongs to an admin
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function admin()
     {
-        return $this->belongsTo('App\Admin');
+        return $this->belongsTo('App\Models\Lynx\Admin');
     }
 
     /**
@@ -83,5 +76,21 @@ class Script extends Model
         }
 
         return Carbon::parse($date)->toFormattedDateString();
+    }
+
+    /**
+     * create a script for the user
+     *
+     * @param $script
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public static function createScript($script)
+    {
+        if (request()->status) {
+            $script['published_at'] = new Carbon;
+        }
+        $script['admin_id'] = request()->user()->id;
+
+        return self::create($script);
     }
 }

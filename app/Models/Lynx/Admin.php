@@ -168,19 +168,4 @@ class Admin extends Authenticatable implements CanResetPasswordContract
     {
         $this->notify(new ResetPassword($token));
     }
-
-    /**
-     * create a script for the user
-     *
-     * @param $script
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function createScript($script)
-    {
-        if (request()->status) {
-            $script['published_at'] = $this->freshTimestamp();
-        }
-
-        return $this->scripts()->create($script);
-    }
 }

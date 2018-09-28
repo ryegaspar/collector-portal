@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Script;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Unifin\TableFilters\AdminScriptFilter;
 use Unifin\Traits\Paginate;
 
@@ -18,10 +19,10 @@ class ScriptsController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser']);
-        $this->middleware('permission:read scripts')->only('index');
-        $this->middleware('permission:create scripts')->only(['create', 'store']);
-        $this->middleware('permission:update scripts')->only(['edit', 'update']);
-        $this->middleware('permission:delete scripts')->only('destroy');
+        $this->middleware('permission:read script')->only('index');
+        $this->middleware('permission:create script')->only(['create', 'store']);
+        $this->middleware('permission:update script')->only(['edit', 'update']);
+        $this->middleware('permission:delete script')->only('destroy');
     }
 
     /**
@@ -64,17 +65,18 @@ class ScriptsController extends Controller
     /**
      * persists a new script
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        $script = request()->validate([
+        $script = $request->validate([
             'title'   => 'required',
             'content' => '',
             'status'  => ''
         ]);
 
-        $response = Auth::user()->createScript($script);
+        $response = Script::createScript($script);
 
         return response($response, 201);
     }
@@ -105,13 +107,13 @@ class ScriptsController extends Controller
     public function update(Script $script)
     {
         $updatedScript = request()->validate([
-            'title'        => 'required',
-            'content'      => '',
-            'status'       => '',
+            'title'   => 'required',
+            'content' => '',
+            'status'  => '',
         ]);
 
-        if ($script->status) {
-            unset($updatedScript['status']);
+        if ($script->published_at == 'Never' && request()->status) {
+            $updatedScript['published_at'] = new Carbon;
         }
 
         $script->update($updatedScript);
