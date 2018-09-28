@@ -149,7 +149,11 @@
 </template>
 
 <script>
+    import AdminOptionsStore from './AdminOptionsStore';
+
 	export default {
+		store: AdminOptionsStore,
+
 		props: [
 			'isAdd',
 			'formData'
@@ -173,25 +177,11 @@
 				}),
 
 				updateID: '',
-
-				accessGroups: [],
-				sites: []
 			}
 		},
 
 		beforeCreate() {
-			axios.get('/admin/admins/admin-options')
-				.then(({data}) => {
-					data.roles.forEach((element) => {
-						this.accessGroups.push(element);
-					});
-					data.sites.forEach((element) => {
-						this.sites.push(element);
-					})
-				})
-				.catch((error) => {
-					lib.swalError(error.message);
-				});
+			this.$store.dispatch('loadData');
 		},
 
 		methods: {
@@ -254,6 +244,14 @@
 		},
 
 		computed: {
+			accessGroups() {
+				return this.$store.state.accessGroups;
+            },
+
+            sites() {
+				return this.$store.state.sites;
+            },
+
 			showSite() {
 				return this.form.access_level === 'site-manager' || this.form.access_level === 'sub-site-manager' || this.form.access_level === 'team-leader';
 			},
