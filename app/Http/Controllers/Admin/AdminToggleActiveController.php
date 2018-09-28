@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lynx\Admin;
+use App\Models\Lynx\Collector;
 use Illuminate\Support\Facades\Auth;
 
 class AdminToggleActiveController extends Controller
@@ -31,6 +32,11 @@ class AdminToggleActiveController extends Controller
 
         if (Auth::user()->id == $admin->id) {
             return response([], 403);
+        }
+
+        if ($admin->hasAnyRole('team-leader') && $admin->active) {
+            if (Collector::where('team_leader_id', $admin->id)->where('active', true)->count() > 0)
+                return response(['message' => 'Unable to disable team leader if it has people under it.'], 405);
         }
 
         $admin->active = !$admin->active;

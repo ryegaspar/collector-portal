@@ -142,6 +142,15 @@
 								lib.swalSuccess("Updated status of the user");
 							})
 							.catch((error) => {
+								if (error.response.status === 405) {
+									lib.swalError(error.response.data.message);
+
+									button.removeAttribute("disabled");
+									button.innerHTML = innerHTML;
+
+									return;
+                                }
+
 								lib.swalError(error.message);
 
 								button.removeAttribute("disabled");

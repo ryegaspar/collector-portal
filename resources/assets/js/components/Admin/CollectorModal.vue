@@ -151,10 +151,6 @@
 		props: [
 			'isAdd',
 			'formData',
-			// 'sub_sites',
-			// 'commission_structures',
-			// 'team_leaders',
-			// 'statuses'
 		],
 
 		data() {

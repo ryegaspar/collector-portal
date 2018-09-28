@@ -179,8 +179,8 @@
 			}
 		},
 
-		created() {
-			axios.get('/admin/admins/get-options')
+		beforeCreate() {
+			axios.get('/admin/admins/admin-options')
 				.then(({data}) => {
 					data.roles.forEach((element) => {
 						this.accessGroups.push(element);
