@@ -50,4 +50,35 @@ class AdminCollectorFilter extends TableFilter
         return $this;
     }
 
+    /**
+     * Filter Sub site.
+     *
+     * @return $this
+     */
+    public function filterSubSite()
+    {
+        if (!is_null($this->request->filter3)) {
+            if ($this->request->filter3 != "A") {
+                $this->builder->where('sub_site_id', $this->request->filter3);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Filter team leader.
+     *
+     * @return $this
+     */
+    public function filterTeamLeader()
+    {
+        if (!is_null($this->request->filter4)) {
+            if ($this->request->filter4 != "A") {
+                $this->builder->where('team_leader_id', $this->request->filter4);
+            }
+        }
+
+        return $this;
+    }
 }

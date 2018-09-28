@@ -78,6 +78,8 @@
 
 			this.$events.$on('filter1-change', eventData => this.onFilter1Change(eventData));
 			this.$events.$on('filter2-change', eventData => this.onFilter2Change(eventData));
+			this.$events.$on('filter3-change', eventData => this.onFilter3Change(eventData));
+			this.$events.$on('filter4-change', eventData => this.onFilter4Change(eventData));
 		},
 
 		render(h) {
@@ -217,6 +219,16 @@
             onFilter2Change(filter) {
 				this.appendParams.filter2 = filter;
 				Vue.nextTick(() => this.$refs.vuetable.refresh());
+            },
+
+            onFilter3Change(filter) {
+				this.appendParams.filter3 = filter;
+				Vue.nextTick(() => this.$refs.vuetable.refresh());
+            },
+
+            onFilter4Change(filter) {
+				this.appendParams.filter4 = filter;
+				Vue.nextTick(() => this.$refs.vuetable.refresh());
             }
 		},
 
@@ -231,12 +243,6 @@
 				field.visible = !field.visible;
 				this.$refs.vuetable.normalizeFields();
 			}
-		},
-
-		computed: {
-			// fields() {
-			// return this.columns;
-			// }
 		},
 
 		watch: {

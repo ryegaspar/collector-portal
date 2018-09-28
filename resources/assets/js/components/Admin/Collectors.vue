@@ -61,14 +61,16 @@
 	import Vtable from '../VTable';
 	import VtableSubHeaderCollectors from './VtableSubHeaderCollectors';
 	import CollectorModal from './CollectorModal';
+	import CollectorOptionStore from './CollectorOptionStore';
 
 	export default {
+
+		store: CollectorOptionStore,
 
 		components: {
 			Vtable,
 			VtableHeader,
 			VtableSubHeaderCollectors,
-			// VtableSubHeaderUsers,
 			CollectorModal
 		},
 
@@ -89,6 +91,10 @@
 				formData: '',
 			}
 		},
+
+        beforeCreate() {
+			this.$store.dispatch('loadData');
+        },
 
 		methods: {
 			addCollector() {
@@ -196,5 +202,6 @@
 				return `/admin/collectors?filter1=1`;
 			},
 		},
+
 	}
 </script>

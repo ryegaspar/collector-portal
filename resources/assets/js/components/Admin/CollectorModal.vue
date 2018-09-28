@@ -150,7 +150,11 @@
 		},
 		props: [
 			'isAdd',
-			'formData'
+			'formData',
+			// 'sub_sites',
+			// 'commission_structures',
+			// 'team_leaders',
+			// 'statuses'
 		],
 
 		data() {
@@ -173,30 +177,10 @@
                     status_id: ''
 				}),
 
-				sub_sites: [],
-				commission_structures: {},
 				team_leaders_options: [],
-                statuses: [],
 
-				team_leaders: [],
 				hasTeamLeader: false,
 			}
-		},
-
-		created() {
-			axios.get('/admin/collectors/collector-options')
-				.then(({data}) => {
-					_.assign(this.sub_sites, data.sub_sites);
-
-					_.assign(this.commission_structures, data.commission_structures);
-
-					_.assign(this.team_leaders, data.team_leaders);
-
-					_.assign(this.statuses, data.statuses);
-				})
-				.catch((error) => {
-					lib.swalError(error.message);
-				});
 		},
 
 		methods: {
@@ -253,6 +237,24 @@
                 this.updateID = data.id;
 			}
 		},
+
+        computed: {
+			sub_sites() {
+				return this.$store.state.sub_sites;
+			},
+
+            commission_structures() {
+				return this.$store.state.commission_structures;
+            },
+
+            team_leaders() {
+				return this.$store.state.team_leaders;
+            },
+
+            statuses() {
+				return this.$store.state.statuses;
+            }
+        },
 
 		watch: {
 			'isAdd': function (newVal, oldVal) {

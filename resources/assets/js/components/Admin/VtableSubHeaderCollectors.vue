@@ -2,7 +2,7 @@
     <div class="filter-bar">
         <div class="form-inline">
             <!--<div class="toolbar">-->
-            <div class="col-md-6 input-group" style="padding-left: 2px;padding-right: 2px">
+            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
                 <div class="btn-group input-group-append">
                     <div class="btn-group-sm">
                         <button type="button"
@@ -47,6 +47,46 @@
                             </a>
                         </div>
                     </div>
+                    <label class="col-form-label-sm mr-1">Sub Site</label>
+                    <div class="dropdown">
+                        <button type="button"
+                                class="btn btn-outline-cyan btn-sm dropdown-toggle mr-1"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="fa fa-filter"></i> {{ filter3Text }} <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <!-- list item-->
+                            <a href="#" class="dropdown-item" @click="filter3Run('A','All')">All</a>
+                            <a href="#"
+                               class="dropdown-item"
+                               v-for="sub_site in sub_sites"
+                               @click="filter3Run(sub_site.id, sub_site.name)">
+                                {{ sub_site.name }}
+                            </a>
+                        </div>
+                    </div>
+                    <label class="col-form-label-sm mr-1">Team Leader</label>
+                    <div class="dropdown">
+                        <button type="button"
+                                class="btn btn-outline-cyan btn-sm dropdown-toggle mr-1"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="fa fa-filter"></i> {{ filter4Text }} <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <!-- list item-->
+                            <a href="#" class="dropdown-item" @click="filter4Run('A','All')">All</a>
+                            <a href="#"
+                               class="dropdown-item"
+                               v-for="team_leader in team_leaders"
+                               @click="filter4Run(team_leader.id, team_leader.full_name)">
+                                {{ team_leader.full_name }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 input-group" style="padding-left: 2px;padding-right: 2px">
@@ -59,6 +99,8 @@
 	export default {
 		components: {
 		},
+
+        // props: ['sub_sites'],
 
 		data() {
 			return {
@@ -76,6 +118,12 @@
 					{ code: 2, text: "Part Time" },
 					{ code: 3, text: "Medical Leave" },
 				],
+
+                filter3Text: 'Sub Site',
+                filter4Text: 'Team Leader',
+
+                selectedSubSite: '',
+                selectedTeamLeader: '',
 			}
 		},
 
@@ -84,16 +132,47 @@
 				this.$emit('addCollector');
 			},
 
-			filter1Run(code, text) {
+			filter1Run(code, text) { //active
 				this.filter1Text = text;
 				this.$events.fire('filter1-change', code);
 			},
 
-			filter2Run(code, text) {
+			filter2Run(code, text) { //status
 				this.filter2Text = text;
 				this.$events.fire('filter2-change', code);
 			},
+
+            filter3Run(code, text) { //sub site
+				this.filter3Text = text;
+				this.selectedSubSite = code;
+
+				Vue.nextTick(() => {
+					this.$events.fire('filter3-change', code);
+				});
+			},
+
+            filter4Run(code, text) { //team leader
+				this.filter4Text = text;
+				this.selectedTeamLeader = code;
+				this.$events.fire('filter4-change', code);
+            }
 		},
+
+        computed: {
+			sub_sites() {
+				return this.$store.state.sub_sites;
+			},
+
+            team_leaders() {
+				if (this.selectedSubSite && this.selectedSubSite !== 'A') {
+					return this.$store.state.team_leaders.filter((t) => {
+						return +t.sub_site_id === +this.selectedSubSite;
+                    })
+                }
+
+				return this.$store.state.team_leaders;
+            }
+        },
 	}
 </script>
 
