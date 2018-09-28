@@ -20,7 +20,7 @@ class SubSitesController extends Controller
         $this->middleware(['auth:admin', 'activeUser']);
         $this->middleware('permission:read site')->only('index');
         $this->middleware('permission:create site')->only('store');
-//        $this->middleware('permission:update site')->only(['edit', 'update']);
+        $this->middleware('permission:update site')->only(['edit', 'update']);
     }
 
     /**
@@ -119,7 +119,11 @@ class SubSitesController extends Controller
      */
     protected function getSubSites($adminSiteFilter)
     {
-        $sites = Subsite::with('site')->withCount('collectors')->tableFilters($adminSiteFilter);
+        $sites = Subsite::with('site')
+            ->withCount(['collectors' => function ($query) {
+                $query->where('active', true);
+            }])
+            ->tableFilters($adminSiteFilter);
 
         $results = $this->paginate($sites);
 
