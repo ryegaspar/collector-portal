@@ -6,10 +6,10 @@ use App\Models\Tiger\DSK;
 use App\Models\Tiger\USR;
 use App\Unifin\Classes\NewCollector;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Unifin\TableFilters\TableFilter;
 
-class Collector extends Model
+class Collector extends Authenticatable
 {
     /**
      * The attributes that are mass assignable

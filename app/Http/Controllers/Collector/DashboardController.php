@@ -24,6 +24,6 @@ class DashboardController extends Controller
     {
         $accountSummary = RawQueries::UserAccountSummary();
 
-        return view('users.dashboard', compact('accountSummary'));
+        return view('collector.dashboard', compact('accountSummary'));
     }
 }

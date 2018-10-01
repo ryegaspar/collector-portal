@@ -72,13 +72,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => App\USR::class,
+            'model'  => App\Models\Lynx\Collector::class,
         ],
 
          'admins' => [
              'driver' => 'eloquent',
              'model' => App\Models\Lynx\Admin::class,
-//             'table' => 'users',
          ],
     ],
 

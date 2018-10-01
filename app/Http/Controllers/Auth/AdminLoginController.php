@@ -19,7 +19,7 @@ class AdminLoginController extends Controller
     protected $redirectTo = '../../admin/dashboard';
 
     /**
-     * set decay minutes for login throttling
+     * Set decay minutes for login throttling
      *
      * @var int
      */

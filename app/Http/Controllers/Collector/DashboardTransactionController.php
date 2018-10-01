@@ -24,7 +24,7 @@ class DashboardTransactionController extends Controller
      */
     public function index(Request $request)
     {
-        list($transactions, $pdc) = RawQueries::UserMonthlyTransactions($request->date);
+        list($transactions, $pdc) = RawQueries::UserMonthlyTransactions($request);
 
         if ($request->wantsJson()) {
             return response(compact( 'transactions', 'pdc'), 200);

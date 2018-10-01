@@ -14,6 +14,7 @@
                        style="border: 1px solid #888"
                        :class="hasErrors ? 'is-invalid': ''"
                        v-model="form.username"
+                       ref="username"
                        placeholder="Username">
             </div>
             <div class="input-group mb-3">
@@ -30,6 +31,12 @@
                        @focus="$event.target.select()"
                        ref="password"
                        placeholder="Password">
+            </div>
+            <div class="input-group mb-4 ml-5">
+                <input type="checkbox"
+                       class="input-group-prepend"
+                       v-model="form.remember">
+                <div><span style="margin-left:10px;color: #94a0b2">Remember me</span></div>
             </div>
             <div class="input-group mb-4">
                 <em class="error invalid-feedback" v-if="hasErrors">{{ errorMessage }}</em>
@@ -70,9 +77,14 @@
 				this.submitButton = `<span><i class="fa fa-spinner fa-spin"></i></span>`;
 				let url = './login';
 				axios.post(url, this.form)
-                    .catch(() => {
+                    .catch((error) => {
 						this.$refs.password.focus();
-                        this.errorMessage = 'invalid username/password';
+						if (error.response.data.errors.username) {
+							this.errorMessage = error.response.data.errors.username[0];
+							this.$refs.username.focus();
+						}
+						else
+							this.errorMessage = error.response.data.errors.password[0];
 						this.hasErrors = true;
 						this.isLoading = false;
 						this.submitButton = 'Login';
