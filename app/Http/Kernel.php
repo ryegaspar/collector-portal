@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'activeUser' => \App\Http\Middleware\ActiveUser::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'collectorResetPassword' => \App\Http\Middleware\CollectorResetPassword::class,
     ];
 }

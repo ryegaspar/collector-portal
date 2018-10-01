@@ -70,6 +70,9 @@ Route::group(['namespace' => 'Auth'], function () {
 });
 
 Route::name('collector.')->namespace('Collector')->group(function () {
+    Route::get('/reset-password', 'CollectorResetPasswordController@index')->name('collector-reset-password');
+    Route::post('/reset-password', 'CollectorResetPasswordController@reset')->name('collector-reset-password.submit');
+
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::get('/dashboard/transactions',
