@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models\Tiger;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -315,6 +315,6 @@ class DBR extends Model
      */
     public function scopeUserAccounts($builder)
     {
-        return $builder->where('DBR_DESK', Auth::user()->USR_DEF_MOT_DESK);
+        return $builder->where('DBR_DESK', Auth::user()->desk);
     }
 }

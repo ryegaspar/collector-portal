@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models\Lynx;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

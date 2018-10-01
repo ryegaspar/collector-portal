@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Collector;
 
-use App\DebterPayment;
 use App\Http\Controllers\Controller;
+use App\Models\Tiger\DebterPayment;
 use Unifin\TableFilters\CollectorTransactionFilter;
 use Unifin\Traits\Paginate;
 
@@ -24,7 +24,7 @@ class TransactionsController extends Controller
      */
     public function index()
     {
-        return view('users.transactions');
+        return view('collector.transactions');
     }
 
     /**

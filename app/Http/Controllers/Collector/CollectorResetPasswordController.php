@@ -6,6 +6,7 @@ use App\Models\Lynx\Collector;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class CollectorResetPasswordController extends Controller
 {
@@ -38,7 +39,7 @@ class CollectorResetPasswordController extends Controller
     public function reset(Request $request)
     {
         $validatedData = $request->validate([
-            'password' => 'required|confirmed|min:8'
+            'password' => ['required', 'confirmed', 'min:8', 'notIn:Password1']
         ]);
 
         $collector = Collector::find($request->user()->id);

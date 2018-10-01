@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Collector;
 
-use App\DBR;
-use Unifin\Traits\Paginate;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Tiger\DBR;
 use Unifin\TableFilters\CollectorAccountFilter;
+use Unifin\Traits\Paginate;
 
 class AccountsController extends Controller
 {
@@ -25,7 +24,7 @@ class AccountsController extends Controller
      */
     public function index()
     {
-        return view('users.accounts');
+        return view('collector.accounts');
     }
 
     /**

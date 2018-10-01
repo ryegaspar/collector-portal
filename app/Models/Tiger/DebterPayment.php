@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models\Tiger;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -137,7 +137,7 @@ class DebterPayment extends Model
      */
     public function scopeUserAccounts($builder)
     {
-        return $builder->where('DESK', Auth::user()->USR_DEF_MOT_DESK);
+        return $builder->where('DESK', Auth::user()->desk);
     }
 
     /**

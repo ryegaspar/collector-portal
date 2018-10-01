@@ -23,16 +23,16 @@ window.Form = Form;
 window.swal = SweetAlert;
 window.lib = lib;
 
-Vue.component('topnavbar', require('./components/Users/TopNavBar'));
+Vue.component('topnavbar', require('./components/Collector/TopNavBar'));
 
-Vue.component('sidebar', require('./components/Users/SideBar'));
-Vue.component('login', require('./components/Users/Login'));
-Vue.component('dashboard', require('./components/Users/Dashboard'));
-Vue.component('accounts', require('./components/Users/Accounts'));
-Vue.component('transactions', require('./components/Users/Transactions'));
-Vue.component('adjustments', require('./components/Users/Adjustments'));
-Vue.component('letter-requests', require('./components/Users/LetterRequests'));
-Vue.component('scripts', require('./components/Users/Scripts'));
+Vue.component('sidebar', require('./components/Collector/SideBar'));
+Vue.component('login', require('./components/Collector/Login'));
+Vue.component('dashboard', require('./components/Collector/Dashboard'));
+Vue.component('accounts', require('./components/Collector/Accounts'));
+Vue.component('transactions', require('./components/Collector/Transactions'));
+Vue.component('adjustments', require('./components/Collector/Adjustments'));
+Vue.component('letter-requests', require('./components/Collector/LetterRequests'));
+Vue.component('scripts', require('./components/Collector/Scripts'));
 
 const app = new Vue({
     el: '#app'
