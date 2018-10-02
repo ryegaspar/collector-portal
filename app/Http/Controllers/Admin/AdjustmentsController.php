@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Adjustment;
 use App\Http\Controllers\Controller;
+use App\Models\Lynx\Adjustment;
 use Unifin\TableFilters\AdminAdjustmentFilter;
 use Unifin\Traits\Paginate;
 
@@ -17,8 +17,8 @@ class AdjustmentsController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser']);
-        $this->middleware('permission:read adjustments')->only('index');
-        $this->middleware('permission:update adjustments')->only('update');
+        $this->middleware('permission:read adjustment')->only('index');
+        $this->middleware('permission:update adjustment')->only('update');
     }
 
     /**

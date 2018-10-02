@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Adjustment;
+use App\Models\Lynx\Adjustment;
 use App\Policies\AdjustmentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;

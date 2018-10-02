@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Collector;
 
-use App\Adjustment;
 use App\Http\Controllers\Controller;
+use App\Models\Lynx\Adjustment;
 use App\Rules\AdjustmentAmount;
 use App\Rules\AdjustmentDate;
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class AdjustmentsController extends Controller
      */
     public function index()
     {
-        return view('users.adjustments');
+        return view('collector.adjustments');
     }
 
     /**

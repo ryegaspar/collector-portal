@@ -2,6 +2,7 @@
 
 namespace App\Models\Lynx;
 
+use App\Models\Tiger\DebterPayment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +51,7 @@ class Adjustment extends Model
      */
     public function reviewer()
     {
-        return $this->belongsTo('App\Admin', 'reviewed_by', 'id');
+        return $this->belongsTo('App\Models\Lynx\Admin', 'reviewed_by', 'id');
     }
 
     /**
@@ -106,7 +107,7 @@ class Adjustment extends Model
      */
     public function scopeUserAdjustments($builder)
     {
-        return $builder->where('desk', Auth::user()->USR_DEF_MOT_DESK);
+        return $builder->where('desk', Auth::user()->desk);
     }
 
     /**
@@ -135,9 +136,9 @@ class Adjustment extends Model
 
         $adjustment['commission'] = $debterRecord->PAY_COMM;
         $adjustment['name'] = $debterRecord->PAY_NAME;
-        $adjustment['collector_name'] = Auth::user()->USR_NAME;
+        $adjustment['collector_name'] = Auth::user()->full_name;
         $adjustment['desk_from'] = $debterRecord->DESK;
-        $adjustment['desk'] = Auth::user()->USR_DEF_MOT_DESK;
+        $adjustment['desk'] = Auth::user()->desk;
 
         return self::create($adjustment);
     }

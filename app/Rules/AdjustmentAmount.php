@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use App\Adjustment;
-use App\DebterPayment;
+use App\Models\Lynx\Adjustment;
+use App\Models\Tiger\DebterPayment;
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -24,14 +24,14 @@ class AdjustmentAmount implements Rule
         $debterPayment = DebterPayment::where('PAY_DBR_NO', '=', request()->dbr_no)
             ->whereDate('PAY_DATE_O', '=', $date)
             ->where('PAY_AMT', '=', $value)
-            ->where('DESK', '!=', Auth::user()->USR_DEF_MOT_DESK)
+            ->where('DESK', '!=', Auth::user()->desk)
             ->where('PAY_STATUS', '=', 'T')
             ->count();
 
         $adjustment = Adjustment::where('dbr_no', '=', request()->dbr_no)
             ->whereDate('date', '=', $date)
             ->where('amount', '=', $value)
-            ->where('desk', '=', Auth::user()->USR_DEF_MOT_DESK)
+            ->where('desk', '=', Auth::user()->desk)
             ->count();
 
         return $debterPayment > 0 && $debterPayment > $adjustment;

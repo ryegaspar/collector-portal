@@ -24,7 +24,8 @@ class AdjustmentDate implements Rule
             return $dateGiven >= $firstDayOfMonth && $dateGiven <= $dateNow ;
         } else {
             $lastMonth = Carbon::parse("first day of last month")->startOfMonth();
-            return $lastMonth >= $dateGiven && $dateGiven <= $dateNow;
+
+            return $dateGiven >= $lastMonth && $dateGiven <= $dateNow;
         }
     }
 

@@ -63,36 +63,39 @@ Route::group(['prefix' => 'admin/filemanager', 'middleware' => ['web', 'auth:adm
 
 Route::redirect('/', '/dashboard')->name('home');
 
-Route::group(['namespace' => 'Auth'], function () {
-    Route::get('login', 'LoginController@showLoginForm')->name('user.login');
-    Route::post('login', 'LoginController@login')->name('user.login.submit');
-    Route::post('logout', 'LoginController@logout')->name('user.logout');
-});
+Route::name('collector.')->group(function () {
 
-Route::name('collector.')->namespace('Collector')->group(function () {
-    Route::get('/reset-password', 'CollectorResetPasswordController@index')->name('collector-reset-password');
-    Route::post('/reset-password', 'CollectorResetPasswordController@reset')->name('collector-reset-password.submit');
+    Route::namespace('Auth')->group(function () {
+        Route::get('login', 'LoginController@showLoginForm')->name('login');
+        Route::post('login', 'LoginController@login')->name('login.submit');
+        Route::post('logout', 'LoginController@logout')->name('logout');
+    });
 
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::namespace('Collector')->group(function() {
+        Route::get('/reset-password', 'CollectorResetPasswordController@index')->name('collector-reset-password');
+        Route::post('/reset-password', 'CollectorResetPasswordController@reset')->name('collector-reset-password.submit');
 
-    Route::get('/dashboard/transactions',
-        'DashboardTransactionController@index')->name('dashboard.transactions');
+        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-    Route::get('/accounts', 'AccountsController@index')->name('accounts');
-    Route::get('/accounts/show', 'AccountsController@show')->name('accounts.show');
+        Route::get('/dashboard/transactions',
+            'DashboardTransactionController@index')->name('dashboard.transactions');
 
-    Route::get('/transactions', 'TransactionsController@index')->name('transactions');
-    Route::get('/transactions/show', 'TransactionsController@show')->name('transactions.show');
+        Route::get('/accounts', 'AccountsController@index')->name('accounts');
+        Route::get('/accounts/show', 'AccountsController@show')->name('accounts.show');
 
-    Route::get('/adjustments', 'AdjustmentsController@index')->name('adjustments');
-    Route::get('/adjustments/show', 'AdjustmentsController@show')->name('adjustments.show');
-    Route::post('/adjustments', 'AdjustmentsController@store')->name('adjustments.store');
-    Route::delete('/adjustments/{adjustment}', 'AdjustmentsController@destroy')->name('adjustments.destroy');
+        Route::get('/transactions', 'TransactionsController@index')->name('transactions');
+        Route::get('/transactions/show', 'TransactionsController@show')->name('transactions.show');
 
-    Route::get('/scripts', 'ScriptsController@index')->name('scripts');
-    Route::get('/scripts/{script}', 'ScriptsController@show')->name('scripts.show');
+        Route::get('/adjustments', 'AdjustmentsController@index')->name('adjustments');
+        Route::get('/adjustments/show', 'AdjustmentsController@show')->name('adjustments.show');
+        Route::post('/adjustments', 'AdjustmentsController@store')->name('adjustments.store');
+        Route::delete('/adjustments/{adjustment}', 'AdjustmentsController@destroy')->name('adjustments.destroy');
 
-    Route::get('/letter-requests', 'LetterRequestController@index')->name('letter-requests');
+        Route::get('/scripts', 'ScriptsController@index')->name('scripts');
+        Route::get('/scripts/{script}', 'ScriptsController@show')->name('scripts.show');
+
+        Route::get('/letter-requests', 'LetterRequestController@index')->name('letter-requests');
+    });
 });
 
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');

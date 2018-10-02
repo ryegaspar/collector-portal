@@ -63,7 +63,7 @@ class Handler extends ExceptionHandler
                 $login = 'admin.login';
                 break;
             default:
-                $login = 'user.login';
+                $login = 'collector.login';
                 break;
         }
         return $request->expectsJson()

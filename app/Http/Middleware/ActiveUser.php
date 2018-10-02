@@ -21,7 +21,11 @@ class ActiveUser
         if (!$user->active) {
             Auth::logout();
 
-            return redirect()->route('admin.login');
+            if (is_null($user->desk)) {
+                return redirect()->route('admin.login');
+            }
+
+            return redirect()->route('collector.login');
         }
 
         return $next($request);

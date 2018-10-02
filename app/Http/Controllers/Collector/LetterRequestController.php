@@ -34,6 +34,6 @@ class LetterRequestController extends Controller
 //            return response()->json($response);
 //        }
 
-        return view('users.letter-requests');
+        return view('collector.letter-requests');
     }
 }
