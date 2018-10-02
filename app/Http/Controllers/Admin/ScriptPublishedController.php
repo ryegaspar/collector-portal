@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Script;
+use App\Models\Lynx\Script;
 use Carbon\Carbon;
 
 class ScriptPublishedController extends Controller
