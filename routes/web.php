@@ -71,7 +71,7 @@ Route::name('collector.')->group(function () {
         Route::post('logout', 'LoginController@logout')->name('logout');
     });
 
-    Route::namespace('Collector')->group(function() {
+    Route::namespace('Collector')->middleware(['auth', 'activeCollector'])->group(function() {
         Route::get('/reset-password', 'CollectorResetPasswordController@index')->name('collector-reset-password');
         Route::post('/reset-password', 'CollectorResetPasswordController@reset')->name('collector-reset-password.submit');
 

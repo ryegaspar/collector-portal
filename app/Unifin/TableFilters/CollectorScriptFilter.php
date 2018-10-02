@@ -18,7 +18,7 @@ class CollectorScriptFilter extends TableFilter
      *
      * @var array
      */
-    protected $searchesAs = ['user' => ['first_name', 'last_name']];
+    protected $searchesAs = ['admin' => ['first_name', 'last_name']];
 
     /**
      * default sort column

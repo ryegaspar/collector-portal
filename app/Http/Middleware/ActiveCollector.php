@@ -5,20 +5,20 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class ActiveUser
+class ActiveCollector
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $user = $request->user();
+        $collector = $request->user();
 
-        if (!$user->active) {
+        if (! is_null($collector->date_terminated)) {
             Auth::logout();
 
             return redirect()->route('collector.login');

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Collector;
 
-use App\Script;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Lynx\Script;
 use Unifin\TableFilters\CollectorScriptFilter;
 use Unifin\Traits\Paginate;
 
@@ -17,8 +16,7 @@ class ScriptsController extends Controller
      */
     public function __construct()
     {
-
-        $this->middleware('auth');
+        $this->middleware('collectorResetPassword');
     }
 
     /**
@@ -35,7 +33,7 @@ class ScriptsController extends Controller
             return response()->json($response);
         }
 
-        return view('users.scripts');
+        return view('collector.scripts');
     }
 
     /**

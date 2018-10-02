@@ -6,20 +6,9 @@ use App\Models\Lynx\Collector;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\Rule;
 
 class CollectorResetPasswordController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(['auth', 'activeUser']);
-    }
-
     /**
      * Display the password reset form.
      *
