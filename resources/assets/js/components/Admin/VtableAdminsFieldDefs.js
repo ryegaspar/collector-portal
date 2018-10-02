@@ -19,7 +19,7 @@ export default [
 		sortField: 'email',
 		title: 'Email',
 		titleClass: 'text-center',
-		visible: true
+		visible: false
 	},
 	{
 		name: 'full_name',

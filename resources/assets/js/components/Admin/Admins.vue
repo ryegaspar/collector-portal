@@ -26,14 +26,13 @@
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
                                     <button type="button"
-                                            class="btn btn-sm"
-                                            :class="props.rowData.active ? 'btn-danger' : 'btn-success'"
+                                            class="btn btn-sm btn-warning"
                                             data-toggle="tooltip"
                                             data-placement="top"
-                                            :title="props.rowData.active ? 'Deactivate' : 'Activate'"
+                                            title="Toggle Active"
                                             v-if="isNotCurrentUser(props.rowData.id)"
                                             @click="itemAction('toggle-active', props.rowData, props.rowIndex, $event)">
-                                        <i :class="props.rowData.active ? 'fa fa-thumbs-down' : 'fa fa-thumbs-up'"></i>
+                                        <i class="fa fa-exchange"></i>
                                     </button>
                                 </div>
                             </template>
@@ -132,10 +131,10 @@
 								button.removeAttribute("disabled");
 								button.innerHTML = innerHTML;
 
-								if (button.childNodes[0].className === 'fa fa-thumbs-up')
-									button.childNodes[0].className = 'fa fa-thumbs-down';
-								else
-									button.childNodes[0].className = 'fa fa-thumbs-up';
+								// if (button.childNodes[0].className === 'fa fa-thumbs-up')
+								// 	button.childNodes[0].className = 'fa fa-thumbs-down';
+								// else
+								// 	button.childNodes[0].className = 'fa fa-thumbs-up';
 
 								this.$emit('reload');
 

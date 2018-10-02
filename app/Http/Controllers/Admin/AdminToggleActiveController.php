@@ -35,7 +35,7 @@ class AdminToggleActiveController extends Controller
         }
 
         if ($admin->hasAnyRole('team-leader') && $admin->active) {
-            if (Collector::where('team_leader_id', $admin->id)->where('active', true)->count() > 0)
+            if (Collector::where('team_leader_id', $admin->id)->whereNull('date_terminated')->count() > 0)
                 return response(['message' => 'Unable to disable team leader if it has people under it.'], 405);
         }
 
