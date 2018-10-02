@@ -49,7 +49,7 @@ class NewCollector
      */
     protected function desk()
     {
-        $collectorDesk = Collector::where('active', true)->orderBy('desk')->pluck('desk')->filter(function ($value) {
+        $collectorDesk = Collector::whereNull('date_terminated')->orderBy('desk')->pluck('desk')->filter(function ($value) {
             return ($value >= $this->subsite->min_desk_number && $value <= $this->subsite->max_desk_number);
         });
 

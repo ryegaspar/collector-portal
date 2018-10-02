@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lynx\Collector;
+use Carbon\Carbon;
 
 class CollectorToggleActiveController extends Controller
 {
@@ -24,9 +25,12 @@ class CollectorToggleActiveController extends Controller
      */
     public function update(Collector $collector)
     {
-        $collector->active = ! $collector->active;
-        $collector->save();
+        if (is_null($collector->date_terminated))
+            $collector->date_terminated = new Carbon;
+        else
+            $collector->date_terminated = null;
 
+        $collector->save();
         return response([], 201);
     }
 }

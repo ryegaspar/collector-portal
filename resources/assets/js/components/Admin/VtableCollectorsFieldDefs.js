@@ -70,17 +70,16 @@ export default [
 		visible: true,
 	},
 	{
-		name: 'active',
-		sortField: 'active',
+		name: 'date_terminated',
+		sortField: 'date_terminated',
 		title: 'Active',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
 		visible: true,
 		callback: function (value) {
-			if (+value) {
+			if (value === null) {
 				return `<span class="badge badge-pill badge-success">Yes</span>`;
 			}
-
 			return `<span class="badge badge-pill badge-danger">No</span>`;
 		}
 	},

@@ -33,13 +33,12 @@
                                         <i class="fa fa-recycle"></i>
                                     </button>
                                     <button type="button"
-                                            class="btn btn-sm"
-                                            :class="props.rowData.active ? 'btn-danger' : 'btn-success'"
+                                            class="btn btn-sm btn-warning"
                                             data-toggle="tooltip"
                                             data-placement="top"
-                                            :title="props.rowData.active ? 'Deactivate' : 'Activate'"
+                                            title="Toggle Active"
                                             @click="itemAction('toggle-active', props.rowData, props.rowIndex, $event)">
-                                        <i :class="props.rowData.active ? 'fa fa-thumbs-down' : 'fa fa-thumbs-up'"></i>
+                                        <i class="fa fa-exchange"></i>
                                     </button>
                                 </div>
                             </template>
@@ -92,9 +91,9 @@
 			}
 		},
 
-        beforeCreate() {
+		beforeCreate() {
 			this.$store.dispatch('loadData');
-        },
+		},
 
 		methods: {
 			addCollector() {
@@ -133,33 +132,33 @@
 
 				if (action === 'reset-password') {
 					swal({
-                        title: "Reset Password",
-                        text: `Reset password for ${data.full_name}?`,
-                        icon: "warning",
-                        buttons: true,
-                    }).then((willChange) => {
-                    	if (willChange) {
-                    		axios.patch(`/admin/collectors/${data.id}/reset-password`)
-                                .then(() => {
+						title: "Reset Password",
+						text: `Reset password for ${data.full_name}?`,
+						icon: "warning",
+						buttons: true,
+					}).then((willChange) => {
+						if (willChange) {
+							axios.patch(`/admin/collectors/${data.id}/reset-password`)
+								.then(() => {
 									lib.swalSuccess("Reset Password Success");
 
 									button.removeAttribute("disabled");
 									button.innerHTML = innerHTML;
-                                })
-                                .catch((error) => {
+								})
+								.catch((error) => {
 									lib.swalError(error.message);
 
 									button.removeAttribute("disabled");
 									button.innerHTML = innerHTML;
-                                });
-                        } else {
+								});
+						} else {
 							button.removeAttribute("disabled");
 							button.innerHTML = innerHTML;
-                        }
-                    });
+						}
+					});
 
-                    return;
-                }
+					return;
+				}
 
 				swal({
 					title: "Change collector status",
@@ -173,11 +172,6 @@
 							.then(() => {
 								button.removeAttribute("disabled");
 								button.innerHTML = innerHTML;
-
-								if (button.childNodes[0].className === 'fa fa-thumbs-up')
-									button.childNodes[0].className = 'fa fa-thumbs-down';
-								else
-									button.childNodes[0].className = 'fa fa-thumbs-up';
 
 								this.$emit('reload');
 

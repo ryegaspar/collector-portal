@@ -31,7 +31,7 @@ class CreateCollectorsTable extends Migration
             $table->date('change_pass_at')->nullable();
 
             $table->string('password')->default(bcrypt('Password1'));
-            $table->boolean('active')->default(true);
+            $table->date('date_terminated')->nullable();
 
             $table->rememberToken();
             $table->timestamps();
