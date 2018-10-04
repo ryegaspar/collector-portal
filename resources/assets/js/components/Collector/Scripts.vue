@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <modal-script ref="modalScript"></modal-script>
+        <script-modal ref="scriptModal"></script-modal>
     </div>
 </template>
 
@@ -39,11 +39,11 @@
 	import VtableHeader from '../VtableHeader';
 	import VtableScriptsFieldDefs from './VtableScriptsFieldDefs';
 	import Vtable from '../VTable';
-	import ModalScript from '../Admin/ScriptModal';
+	import ScriptModal from '../Admin/ScriptModal';
 
 	export default {
 		components: {
-			Vtable, VtableHeader, ModalScript
+			Vtable, VtableHeader, ScriptModal
 		},
 
 		data() {
@@ -72,8 +72,8 @@
 				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
 
 				if (action === 'show') {
-					this.$refs.modalScript.loadPreview(`/scripts/${data.id}`);
-					$("#modalScript").modal("show");
+					this.$refs.scriptModal.loadPreview(`/scripts/${data.id}`);
+					$("#scriptModal").modal("show");
 
 					button.removeAttribute("disabled");
 					button.innerHTML = innerHTML;

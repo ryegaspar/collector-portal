@@ -1,7 +1,7 @@
 @component('mail::message')
 ## Welcome to Unifin {{ $user->first_name }},<br>
 
-These will be your login credentials:<br>
+This will be your login credential:<br>
 username: {{ $user->username }}<br>
 password: {{ $unencrypted_password }}<br>
 

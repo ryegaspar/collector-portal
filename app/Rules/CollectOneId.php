@@ -21,7 +21,7 @@ class CollectOneId implements Rule
             return strtolower($default) == $value;
         })->count();
 
-        $activeCollectOneIdCount = Collector::where('active', true)
+        $activeCollectOneIdCount = Collector::whereNotNull('date_terminated')
                 ->where('tiger_user_id', $value)
                 ->count() +
             Admin::where('active', true)

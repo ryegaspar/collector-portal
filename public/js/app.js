@@ -72558,7 +72558,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	components: {
-		Vtable: __WEBPACK_IMPORTED_MODULE_2__VTable___default.a, VtableHeader: __WEBPACK_IMPORTED_MODULE_0__VtableHeader___default.a, ModalScript: __WEBPACK_IMPORTED_MODULE_3__Admin_ScriptModal___default.a
+		Vtable: __WEBPACK_IMPORTED_MODULE_2__VTable___default.a, VtableHeader: __WEBPACK_IMPORTED_MODULE_0__VtableHeader___default.a, ScriptModal: __WEBPACK_IMPORTED_MODULE_3__Admin_ScriptModal___default.a
 	},
 
 	data: function data() {
@@ -72586,8 +72586,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			button.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
 			if (action === 'show') {
-				this.$refs.modalScript.loadPreview('/scripts/' + data.id);
-				$("#modalScript").modal("show");
+				this.$refs.scriptModal.loadPreview('/scripts/' + data.id);
+				$("#scriptModal").modal("show");
 
 				button.removeAttribute("disabled");
 				button.innerHTML = innerHTML;
@@ -72714,7 +72714,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("modal-script", { ref: "modalScript" })
+      _c("script-modal", { ref: "scriptModal" })
     ],
     1
   )

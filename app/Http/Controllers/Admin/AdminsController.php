@@ -121,7 +121,7 @@ class AdminsController extends Controller
     {
         $validator = Validator::make(request()->all(), [
                 'username'      => ['required', 'min:6', 'unique:admins,username', new Username],
-                'email'         => ['required', 'email', 'unique:admins,email', new AdminEmail],
+                'email'         => ['required', 'email', 'unique:admins,email'], // removed new AdminEmail
                 'first_name'    => ['required'],
                 'last_name'     => ['required'],
                 'tiger_user_id' => ['required', 'max:3', new CollectOneId],

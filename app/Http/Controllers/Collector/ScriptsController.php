@@ -55,7 +55,7 @@ class ScriptsController extends Controller
      */
     public function getScripts($adminScriptFilter)
     {
-        $scripts = Script::tableFilters($adminScriptFilter)->where('status', 1);
+        $scripts = Script::tableFilters($adminScriptFilter)->whereNotNull('published_at');
 
         $results = $this->paginate($scripts);
 
