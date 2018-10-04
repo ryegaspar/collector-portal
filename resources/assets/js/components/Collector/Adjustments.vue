@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <modal-adjustments :isAdd="isAdd"></modal-adjustments>
+        <adjustment-modal :isAdd="isAdd"></adjustment-modal>
     </div>
 </template>
 
@@ -57,7 +57,7 @@
 	import VtableAdjustmentsFieldDefs from './VtableAdjustmentsFieldDefs';
 	import Vtable from '../VTable';
 	import VueEvents from 'vue-events';
-	import ModalAdjustments from './ModalAdjustments';
+	import AdjustmentModal from './AdjustmentModal';
 
 	Vue.use(VueEvents);
 
@@ -67,7 +67,7 @@
 
 		components: {
 			Vtable,
-			ModalAdjustments
+			AdjustmentModal
 		},
 
 		data() {
@@ -91,7 +91,7 @@
 			addAdjustment() {
 				this.isAdd = true;
 				this.$events.fire('modal-reset');
-				$("#modalAdjustment").modal("show");
+				$("#adjustmentModal").modal("show");
 			},
 
 			onReloadTable() {

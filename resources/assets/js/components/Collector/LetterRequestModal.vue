@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="modalAdjustment" tabindex="-1" role="dialog">
+    <div class="modal fade" id="letterRequestModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">

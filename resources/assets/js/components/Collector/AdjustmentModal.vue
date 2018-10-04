@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="modalAdjustment" tabindex="-1" role="dialog">
+    <div class="modal fade" id="adjustmentModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -109,7 +109,7 @@
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
 
-						$("#modalAdjustment").modal('hide');
+						$("#adjustmentModal").modal('hide');
 						lib.swalSuccess(notifyMessage);
 
 						this.$events.fire('reload-table');
@@ -119,7 +119,6 @@
 						this.isLoading = false;
 						this.persistButtonText = tempButtonText;
 					})
-
 			},
 
             onResetModal() {
