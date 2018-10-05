@@ -62,6 +62,51 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="filter-bar form-inline">
+                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
+                                <label class="col-md-2"><strong>Collector</strong></label>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['read collector']">
+                                    <label class="form-check-label">view collector</label>
+                                </div>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['create collector']">
+                                    <label class="form-check-label">create collector</label>
+                                </div>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['update collector']">
+                                    <label class="form-check-label">edit collectors</label>
+                                </div>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['disable collector']">
+                                    <label class="form-check-label">disable collector</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-bar form-inline">
+                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
+                                <label class="col-md-2"><strong>Collector Batches</strong></label>
+                                <div class="btn-group input-group col-sm-3">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['read collector-batch']">
+                                    <label class="form-check-label">view collector batch</label>
+                                </div>
+                                <div class="btn-group input-group col-sm-3">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['create collector-batch']">
+                                    <label class="form-check-label">create collector batch</label>
+                                </div>
+                                <div class="btn-group input-group col-sm-3">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['delete collector-batch']">
+                                    <label class="form-check-label">delete collector batch</label>
+                                </div>
+                            </div>
+                        </div>
                         <!--<div class="filter-bar form-inline">-->
                             <!--<div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">-->
                                 <!--<label class="col-md-2"><strong>Users</strong></label>-->

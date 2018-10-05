@@ -125,7 +125,12 @@
 
 							button.removeAttribute("disabled");
 							button.innerHTML = innerHTML;
-						});
+						}).catch((error) => {
+						    lib.swalError(error.message);
+
+						    button.removeAttribute("disabled");
+						    button.innerHTML = innerHTML;
+					    });
 
 					return;
 				}

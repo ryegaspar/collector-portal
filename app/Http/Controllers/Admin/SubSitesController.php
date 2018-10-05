@@ -121,7 +121,7 @@ class SubSitesController extends Controller
     {
         $sites = Subsite::with('site')
             ->withCount(['collectors' => function ($query) {
-                $query->where('active', true);
+                $query->whereNull('date_terminated');
             }])
             ->tableFilters($adminSiteFilter);
 
