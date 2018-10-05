@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class AdjustmentDate implements Rule
 {
@@ -19,6 +20,9 @@ class AdjustmentDate implements Rule
         $dateNow = Carbon::now();
         $firstDayOfMonth = Carbon::now()->startOfMonth();
         $dateGiven = Carbon::parse($value);
+
+        if ($dateNow < Carbon::parse(Auth::user()->start_date))
+            return false;
 
         if ($dateNow->day > 5) {
             return $dateGiven >= $firstDayOfMonth && $dateGiven <= $dateNow ;

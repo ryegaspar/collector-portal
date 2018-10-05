@@ -59,11 +59,11 @@
                         text: 'Adjustments',
                         icon: 'fa fa-line-chart'
                     },
-                    letterRequests: {
-						href: 'letter-requests',
-                        text: 'Letter Requests',
-                        icon: 'icon-envelope'
-                    },
+                    // letterRequests: {
+					// 	href: 'letter-requests',
+                    //     text: 'Letter Requests',
+                    //     icon: 'icon-envelope'
+                    // },
                     scripts: {
 						href: 'scripts',
                         text: 'Scripts',

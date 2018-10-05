@@ -57,18 +57,18 @@
 						icon: 'fa fa-line-chart',
                         permission: 'read adjustment'
 					},
-                    Letters: {
-						href:'#',
-                        text: 'Letter Requests',
-                        icon: 'icon-envelope',
-                        children: {
-							LetterRequestType: {
-								href: '/admin/letter-request-type',
-                                icon: 'icon-layers',
-                                text: 'Letter Request Types'
-                            }
-                        }
-                    },
+                    // Letters: {
+					// 	href:'#',
+                    //     text: 'Letter Requests',
+                    //     icon: 'icon-envelope',
+                    //     children: {
+					// 		LetterRequestType: {
+					// 			href: '/admin/letter-request-type',
+                    //             icon: 'icon-layers',
+                    //             text: 'Letter Request Types'
+                    //         }
+                    //     }
+                    // },
                     Scripts: {
 						href: '#',
                         text: 'Scripts',

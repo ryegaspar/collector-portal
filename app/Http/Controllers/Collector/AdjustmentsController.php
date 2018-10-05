@@ -100,6 +100,4 @@ class AdjustmentsController extends Controller
 
         return $results;
     }
-
-
 }
