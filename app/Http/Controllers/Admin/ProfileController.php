@@ -26,7 +26,7 @@ class ProfileController extends Controller
     public function index()
     {
         if (request()->wantsJson()) {
-            $user = Admin::findOrFail(Auth::user()->id)->first();
+            $user = Admin::findOrFail(Auth::user()->id);
 
             return response($user, 200);
         }
@@ -41,16 +41,16 @@ class ProfileController extends Controller
      */
     public function update()
     {
-        $user = Auth::user();
+        $admin = Admin::findOrFail(Auth::user()->id);
 
         $request = $this->validateRequest();
 
         if (array_key_exists('password', $request))
             $request['password'] = bcrypt($request['password']);
 
-        $user->update($request);
+        $admin->update($request);
 
-        return response($user, 201);
+        return response($admin, 201);
     }
 
 
@@ -61,16 +61,16 @@ class ProfileController extends Controller
      */
     protected function validateRequest()
     {
-        $user = Auth::user();
+        $admin = Admin::findOrFail(Auth::user()->id);
 
         $validator = Validator::make(request()->all(), [
-                'email'      => ['required', 'email', "unique:users,email,{$user->id}", new AdminEmail],
+                'email'      => ['required', 'email', "unique:admins,email,{$admin->id}"], //removed new AdminEmail
                 'first_name' => ['required'],
                 'last_name'  => ['required'],
             ]
         );
 
-        $validator->sometimes('old_password', 'hash:' . $user->password, function ($input) {
+        $validator->sometimes('old_password', 'hash:' . $admin->password, function ($input) {
             return ! empty($input->old_password);
         });
 

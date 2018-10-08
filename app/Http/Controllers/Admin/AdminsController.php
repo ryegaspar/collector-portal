@@ -79,6 +79,10 @@ class AdminsController extends Controller
      */
     public function update(Admin $admin)
     {
+        if ($admin->id == 1) {
+            return response([], 403);
+        }
+
         if (Auth::user()->id == $admin->id) {
             return response([], 403);
         }

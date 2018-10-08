@@ -86,8 +86,8 @@ class NewCollector
         $next = 1;
         $collectOneId = $maybe_username = strtolower($this->first_name[0] . $this->last_name[0]) . $next;
 
-        while (Collector::where('tiger_user_id', '=', $collectOneId)->where('active',
-                true)->first() || Admin::where('tiger_user_id', '=',
+        while (Collector::where('tiger_user_id', '=', $collectOneId)->whereNull('date_terminated')
+                ->first() || Admin::where('tiger_user_id', '=',
                 $collectOneId)->where('active', true)->first()) {
 
             $next++;
