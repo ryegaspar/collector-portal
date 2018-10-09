@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class CollectorToggleActiveController extends Controller
 {
     /**
-     * UserToggleActiveController constructor.
+     * CollectorToggleActiveController constructor.
      */
     public function __construct()
     {

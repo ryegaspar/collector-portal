@@ -34,6 +34,9 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
 
+        Route::patch('letter-request-type/{letterRequestType}/toggle-active', 'LetterRequestTypeToggleActiveController@update');
+        Route::resource('letter-request-type', 'LetterRequestTypeController'); // TODO: add 'only' or 'except'
+
         Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish');
         Route::resource('scripts', 'ScriptsController');
 
@@ -53,7 +56,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('roles-permissions', 'RolesPermissionsController')->only(['index', 'show', 'update']);
 
         Route::resource('sites', 'SitesController')->except(['create', 'destroy']);
-        Route::resource('sub-sites', 'SubSitesController'); //TODO: add 'only' or except
+        Route::resource('sub-sites', 'SubSitesController')->only(['index', 'store', 'edit', 'update']);
     });
 });
 

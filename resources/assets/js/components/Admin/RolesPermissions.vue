@@ -24,86 +24,111 @@
                         </div>
                         <div class="filter-bar form-inline">
                             <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-2"><strong>Adjustments</strong></label>
+                                <label class="col-md-3"><strong>Adjustments</strong></label>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['read adjustment']">
-                                    <label class="form-check-label">view adjustments</label>
+                                    <label class="form-check-label">view</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-4">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['update adjustment']">
-                                    <label class="form-check-label">approve/deny adjustments</label>
+                                    <label class="form-check-label">approve/deny</label>
                                 </div>
                             </div>
                         </div>
                         <div class="filter-bar form-inline">
                             <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-2"><strong>Scripts</strong></label>
+                                <label class="col-md-3"><strong>Letter Request Types</strong></label>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['read letter-request-type']">
+                                    <label class="form-check-label">view</label>
+                                </div>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['create letter-request-type']">
+                                    <label class="form-check-label">create</label>
+                                </div>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['update letter-request-type']">
+                                    <label class="form-check-label">edit</label>
+                                </div>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['disable letter-request-type']">
+                                    <label class="form-check-label">disable</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-bar form-inline">
+                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
+                                <label class="col-md-3"><strong>Scripts</strong></label>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['read script']">
-                                    <label class="form-check-label">view scripts</label>
+                                    <label class="form-check-label">view</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['create script']">
-                                    <label class="form-check-label">create scripts</label>
+                                    <label class="form-check-label">create</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['update script']">
-                                    <label class="form-check-label">edit scripts</label>
+                                    <label class="form-check-label">edit</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['delete script']">
-                                    <label class="form-check-label">delete scripts</label>
+                                    <label class="form-check-label">delete</label>
                                 </div>
                             </div>
                         </div>
                         <div class="filter-bar form-inline">
                             <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-2"><strong>Collector</strong></label>
+                                <label class="col-md-3"><strong>Collector</strong></label>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['read collector']">
-                                    <label class="form-check-label">view collector</label>
+                                    <label class="form-check-label">view</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['create collector']">
-                                    <label class="form-check-label">create collector</label>
+                                    <label class="form-check-label">create</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['update collector']">
-                                    <label class="form-check-label">edit collectors</label>
+                                    <label class="form-check-label">edit</label>
                                 </div>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['disable collector']">
-                                    <label class="form-check-label">disable collector</label>
+                                    <label class="form-check-label">disable</label>
                                 </div>
                             </div>
                         </div>
                         <div class="filter-bar form-inline">
                             <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-2"><strong>Collector Batches</strong></label>
-                                <div class="btn-group input-group col-sm-3">
+                                <label class="col-md-3"><strong>Collector Batches</strong></label>
+                                <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['read collector-batch']">
-                                    <label class="form-check-label">view collector batch</label>
+                                    <label class="form-check-label">view</label>
                                 </div>
-                                <div class="btn-group input-group col-sm-3">
+                                <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['create collector-batch']">
-                                    <label class="form-check-label">create collector batch</label>
+                                    <label class="form-check-label">create</label>
                                 </div>
-                                <div class="btn-group input-group col-sm-3">
+                                <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"
                                            v-model="permissions['delete collector-batch']">
-                                    <label class="form-check-label">delete collector batch</label>
+                                    <label class="form-check-label">delete</label>
                                 </div>
                             </div>
                         </div>

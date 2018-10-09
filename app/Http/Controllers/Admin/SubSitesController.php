@@ -13,7 +13,7 @@ class SubSitesController extends Controller
     use Paginate;
 
     /**
-     * AdminController constructor.
+     * SubSitesController constructor.
      */
     public function __construct()
     {
@@ -24,7 +24,7 @@ class SubSitesController extends Controller
     }
 
     /**
-     * Display site page
+     * Display listing of the resource.
      *
      * @param AdminSubSiteFilter $adminSubSiteFilter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -41,7 +41,7 @@ class SubSitesController extends Controller
     }
 
     /**
-     * persists a new sub site
+     * Store a newly created resource in storage.
      *
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -69,7 +69,7 @@ class SubSitesController extends Controller
     }
 
     /**
-     * get a sub site
+     * Show the form for editing the specified resource.
      *
      * @param Subsite $subSite
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -86,7 +86,7 @@ class SubSitesController extends Controller
     }
 
     /**
-     * update the given sub site
+     * Update the specified resource in storage.
      *
      * @param Subsite $subSite
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response

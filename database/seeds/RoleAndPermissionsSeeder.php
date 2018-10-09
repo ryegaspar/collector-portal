@@ -45,13 +45,9 @@ class RoleAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'update site', 'guard_name' => 'admin']);
         Permission::create(['name' => 'delete site', 'guard_name' => 'admin']);
 
-        $superadmin = Role::create(['name' => 'super-admin', 'guard_name' => 'admin']);
-        $admin = Role::create(['name' => 'admin', 'guard_name' => 'admin']);
-        $office_support = Role::create(['name' => 'office-support', 'guard_name' => 'admin']);
-        $manager = Role::create(['name' => 'manager', 'guard_name' => 'admin']);
-        $site_manager = Role::create(['name' => 'site-manager', 'guard_name' => 'admin']);
-        $sub_site_manager = Role::create(['name' => 'sub-site-manager', 'guard_name' => 'admin']);
-        $team_leader = Role::create(['name' => 'team-leader', 'guard_name' => 'admin']);
+        $superadmin = Role::findByName('super-admin', 'admin');
+        $admin = Role::findByName('admin', 'admin');
+        $manager = Role::findByName('manager', 'admin');
 
         $superadmin->givePermissionTo(['read adjustment', 'update adjustment']);
         $superadmin->givePermissionTo(['create script', 'read script', 'update script', 'delete script']);

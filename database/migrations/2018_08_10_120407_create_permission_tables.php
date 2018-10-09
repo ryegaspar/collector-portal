@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Spatie\Permission\Models\Role;
 
 class CreatePermissionTables extends Migration
 {
@@ -38,7 +39,8 @@ class CreatePermissionTables extends Migration
                 ->on($tableNames['permissions'])
                 ->onDelete('cascade');
 
-            $table->primary(['permission_id', 'model_id', 'model_type'], 'model_has_permissions_permission_model_type_primary');
+            $table->primary(['permission_id', 'model_id', 'model_type'],
+                'model_has_permissions_permission_model_type_primary');
         });
 
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames) {
@@ -71,6 +73,14 @@ class CreatePermissionTables extends Migration
 
             app('cache')->forget('spatie.permission.cache');
         });
+
+        Role::create(['name' => 'super-admin', 'guard_name' => 'admin']);
+        Role::create(['name' => 'admin', 'guard_name' => 'admin']);
+        Role::create(['name' => 'office-support', 'guard_name' => 'admin']);
+        Role::create(['name' => 'manager', 'guard_name' => 'admin']);
+        Role::create(['name' => 'site-manager', 'guard_name' => 'admin']);
+        Role::create(['name' => 'sub-site-manager', 'guard_name' => 'admin']);
+        Role::create(['name' => 'team-leader', 'guard_name' => 'admin']);
     }
 
     /**
