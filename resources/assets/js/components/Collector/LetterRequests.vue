@@ -17,57 +17,70 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<vtable-header :perPage=perPage-->
-                                       <!--:fields="fieldDefs"-->
-                                       <!--placeholder="name, id"></vtable-header>-->
-                        <!--<vtable :api-url="tableUrl"-->
-                                <!--:fields="fieldDefs"-->
-                                <!--:sort-order="sortOrder"-->
-                                <!--:append-params="moreParams"-->
-                                <!--:perPage=perPage>-->
-                            <!--<template slot="actions" slot-scope="props">-->
-                                <!--<div class="custom-actions">-->
-                                    <!--<button v-if="props.rowData.status==='0'"-->
-                                            <!--type="button"-->
-                                            <!--class="btn btn-danger btn-sm"-->
-                                            <!--data-toggle="tooltip"-->
-                                            <!--data-placement="top"-->
-                                            <!--title="delete"-->
-                                            <!--@click="itemAction('delete-item', props.rowData, props.rowIndex, $event)">-->
-                                        <!--<i class="fa fa-trash-o"></i>-->
-                                    <!--</button>-->
-                                <!--</div>-->
-                            <!--</template>-->
-                        <!--</vtable>-->
+                        <vtable-header :perPage=perPage
+                                       :fields="fieldDefs"
+                                       placeholder="name, dbr no"></vtable-header>
+                        <vtable :api-url="tableUrl"
+                                :fields="fieldDefs"
+                                :sort-order="sortOrder"
+                                :append-params="moreParams"
+                                :perPage=perPage>
+                            <template slot="actions" slot-scope="props">
+                                    <div class="custom-actions" v-if="props.rowData.status==='0' &&
+                                                                props.rowData.requestable_type==='App\\Models\\Lynx\\Collector' &&
+                                                                +props.rowData.requestable_id===+collectorId">
+                                    <button type="button"
+                                            class="btn btn-sm btn-info"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Edit"
+                                            @click="itemAction('edit-item', props.rowData, props.rowIndex, $event)">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="delete"
+                                            @click="itemAction('delete-item', props.rowData, props.rowIndex, $event)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </div>
+                            </template>
+                        </vtable>
                     </div>
                 </div>
             </div>
         </div>
-        <!--<modal-adjustments :isAdd="isAdd"></modal-adjustments>-->
+        <letter-request-modal :isAdd="isAdd"
+                              @submitted="formSubmitted"
+                              ref="letterRequestModal">
+        </letter-request-modal>
     </div>
 </template>
 
 <script>
-	// import VtableHeader from '../VtableHeader';
-	// import VtableAdjustmentsFieldDefs from './VtableAdjustmentsFieldDefs';
-	// import Vtable from '../VTable';
-	// import VueEvents from 'vue-events';
-	// import ModalAdjustments from './ModalAdjustments';
-
-	// Vue.use(VueEvents);
-
-	// Vue.component('vtable-header', VtableHeader);
+	import VtableLetterRequestsFieldDefs from './VtableLetterRequestsFieldDefs';
+	import Vtable from '../VTable';
+	import LetterRequestModal from './LetterRequestModal';
+	import CollectorOptionStore from './Store';
 
 	export default {
 
+		store: CollectorOptionStore,
+
 		components: {
-			// Vtable,
+			Vtable,
 			// ModalAdjustments
+			LetterRequestModal
 		},
 
 		data() {
 			return {
-				// fieldDefs: VtableAdjustmentsFieldDefs,
+				collectorId: window.App.id,
+
+				fieldDefs: VtableLetterRequestsFieldDefs,
+
 				sortOrder: [
 					{
 						field: 'created_at',
@@ -82,68 +95,93 @@
 			}
 		},
 
+		beforeCreate() {
+			this.$store.dispatch('loadLetterRequestType');
+		},
+
 		methods: {
 			addLetterRequest() {
-				console.log('hello!');
-				// this.isAdd = true;
-				// this.$events.fire('modal-reset');
-				// $("#modalAdjustment").modal("show");
+				this.isAdd = true;
+				this.$refs.letterRequestModal.resetModal();
+				$("#letterRequestModal").modal("show");
 			},
 
-			// onReloadTable() {
-			// 	this.$emit('reload');
-			// },
-            //
-			// itemAction(action, data, index, e) {
-			// 	let innerHTML = e.currentTarget.innerHTML;
-			// 	let button = e.currentTarget;
-            //
-			// 	$('[data-toggle="tooltip"]').tooltip('hide');
-            //
-			// 	button.setAttribute("disabled", true);
-			// 	button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`
-            //
-			// 	swal({
-			// 		title: "Are you sure?",
-			// 		text: "You will not be able to recover this data",
-			// 		icon: "warning",
-			// 		buttons: true,
-			// 		dangerMode: true,
-			// 	}).then((willDelete) => {
-			// 		if (willDelete) {
-			// 			axios.delete(`./adjustments/${data.id}`)
-			// 				.then(() => {
-			// 					lib.swalSuccess("Successfully deleted adjustment data");
-			// 					this.$emit('reload');
-			// 				}).catch((error) => {
-			// 				lib.swalError(error.message);
-			// 			});
-			// 		}
-			// 		button.removeAttribute("disabled");
-			// 		button.innerHTML = innerHTML;
-			// 	})
-			// }
+			formSubmitted() {
+				this.$emit('reload');
+			},
+
+			itemAction(action, data, index, e) {
+				let innerHTML = e.currentTarget.innerHTML;
+				let button = e.currentTarget;
+
+				$('[data-toggle="tooltip"]').tooltip('hide');
+
+				button.setAttribute("disabled", true);
+				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`
+
+				if (action === 'edit-item') {
+					this.isAdd = false;
+					let url = `letter-requests/${data.id}/edit`;
+					axios.get(url)
+						.then(({data}) => {
+							$("#letterRequestModal").modal("show");
+							this.$refs.letterRequestModal.populateData(data);
+
+							button.removeAttribute("disabled");
+							button.innerHTML = innerHTML;
+						})
+						.catch((error) => {
+							lib.swalError(error.message);
+
+							button.removeAttribute("disabled");
+							button.innerHTML = innerHTML;
+						});
+
+					return;
+				}
+
+				swal({
+					title: "Are you sure?",
+					text: "You will not be able to recover this data",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				}).then((willDelete) => {
+					if (willDelete) {
+						axios.delete(`./letter-requests/${data.id}`)
+							.then(() => {
+								lib.swalSuccess("Successfully deleted letter request");
+								this.$emit('reload');
+							})
+							.catch((error) => {
+								lib.swalError(error.message);
+							});
+					}
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
+				})
+			}
 		},
 
 		computed: {
-			// tableUrl() {
-			// 	return `./adjustments/show`;
-			// },
-            //
+			tableUrl() {
+				return `/letter-requests`;
+			},
+			//
 			// startMonthWord() {
 			// 	if (moment().date() > 5)
 			// 		return moment().startOf('month').format("MMMM Do");
 			// 	else
 			// 		return moment().add(-1, 'month').startOf('month').format("MMMM Do");
 			// },
-            //
+			//
 			// endMonthWord() {
 			// 	if (moment().date() > 5)
 			// 		return moment().format("MMMM Do");
 			// 	else
 			// 		return moment().add(-1, 'month').endOf('month').format('MMMM Do');
 			// },
-            //
+			//
 			// deadlineWord() {
 			// 	if (moment().date() > 5)
 			// 		return moment().add(1, 'month').set('date', 5).format("MMMM D, YYYY")

@@ -21,26 +21,33 @@ class TransactionsController extends Controller
 
     /**
      * show transactions page
+     * @param CollectorTransactionFilter $collectorTransactionFilter
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function index()
+    public function index(CollectorTransactionFilter $collectorTransactionFilter)
     {
+        if (request()->wantsJson()) {
+            $transactions = $this->getTransactions($collectorTransactionFilter);
+
+            return $transactions;
+        }
         return view('collector.transactions');
     }
 
-    /**
-     * display specified resource
-     *
-     * @param CollectorTransactionFilter $userTransactionFilter
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(CollectorTransactionFilter $userTransactionFilter)
-    {
-        $transactions = $this->getTransactions($userTransactionFilter);
-
-        if (request()->wantsJson()) {
-            return $transactions;
-        }
-    }
+//    /**
+//     * display specified resource
+//     *
+//     * @param CollectorTransactionFilter $userTransactionFilter
+//     * @return \Illuminate\Http\JsonResponse
+//     */
+//    public function show(CollectorTransactionFilter $userTransactionFilter)
+//    {
+//        $transactions = $this->getTransactions($userTransactionFilter);
+//
+//        if (request()->wantsJson()) {
+//            return $transactions;
+//        }
+//    }
 
     /**
      * get transactions of the current user

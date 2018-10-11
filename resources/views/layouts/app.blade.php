@@ -15,7 +15,8 @@
 	@yield('header')
 	<script>
 		window.App = {!! json_encode([
-			'name' => Auth::user()->full_name
+			'name' => Auth::user()->full_name,
+			'id' => Auth::user()->id
 		]) !!}
 	</script>
 </head>

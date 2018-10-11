@@ -85,7 +85,7 @@
 
 		computed: {
 			tableUrl() {
-				return `./transactions/show`;
+				return `./transactions`;
 			},
 
             startText() {

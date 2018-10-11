@@ -2,24 +2,23 @@
 
 namespace App\Policies;
 
-use App\Adjustment;
-use App\USR;
+use App\Models\Lynx\Adjustment;
+use App\Models\Lynx\Collector;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Auth;
 
 class AdjustmentPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * determine if the user has permission to delete the adjustment
+     * Determine if the user has permission to delete the adjustment.
      *
-     * @param USR $usr
+     * @param Collector $collector
      * @param Adjustment $adjustment
      * @return bool
      */
-    public function delete(USR $usr, Adjustment $adjustment)
+    public function delete(Collector $collector, Adjustment $adjustment)
     {
-        return $adjustment->status == 0 && $adjustment->desk == $usr->USR_DEF_MOT_DESK;
+        return $adjustment->status == 0 && $adjustment->desk == $collector->desk;
     }
 }

@@ -26,10 +26,17 @@ class AdjustmentsController extends Controller
     /**
      * display adjustments page
      *
+     * @param CollectorAdjustmentFilter $collectorAdjustmentFilter
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(CollectorAdjustmentFilter $collectorAdjustmentFilter)
     {
+        if (request()->wantsJson()) {
+            $response = $this->getUserAdjustments($collectorAdjustmentFilter);
+
+            return response()->json($response);
+        }
+
         return view('collector.adjustments');
     }
 
@@ -81,9 +88,11 @@ class AdjustmentsController extends Controller
     {
         if (Auth::user()->can('delete', $adjustment)) {
             $adjustment->delete();
+
             return response([], 204);
-        } else
+        } else {
             return response([], 403);
+        }
     }
 
     /**

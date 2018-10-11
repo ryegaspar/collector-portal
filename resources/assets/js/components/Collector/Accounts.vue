@@ -69,7 +69,7 @@
 
         computed: {
 			tableUrl() {
-				return `./accounts/show`;
+				return `./accounts`;
             }
         }
     }

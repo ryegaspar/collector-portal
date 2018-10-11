@@ -57,10 +57,14 @@ class CreateLetterRequestTypesTable extends Migration
     protected function seed()
     {
         $types = collect([
+            'First Demand Letter',
+            'Second Demand Letter',
             'Settlement Agreement Letter',
             'Payment Receipt',
             'Payment Plan Letter',
             'Payment Reminder Letter',
+            'Release of Obligation Letter',
+            'Zero Balance Letter',
             'Co-Borrower Release'
         ]);
 

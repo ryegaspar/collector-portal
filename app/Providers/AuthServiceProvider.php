@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Lynx\Adjustment;
+use App\Models\Lynx\LetterRequest;
 use App\Policies\AdjustmentPolicy;
+use App\Policies\LetterRequestPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,8 +17,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model'       => 'App\Policies\ModelPolicy',
-        Adjustment::class => AdjustmentPolicy::class,
+        'App\Model'          => 'App\Policies\ModelPolicy',
+        Adjustment::class    => AdjustmentPolicy::class,
+        LetterRequest::class => LetterRequestPolicy::class,
     ];
 
     /**

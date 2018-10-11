@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Unifin\Repositories\NewCollector\NewCollector;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 

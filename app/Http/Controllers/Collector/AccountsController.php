@@ -21,25 +21,18 @@ class AccountsController extends Controller
 
     /**
      * show accounts page
+     * @param CollectorAccountFilter $collectorAccountFilter
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
      */
-    public function index()
+    public function index(CollectorAccountFilter $collectorAccountFilter)
     {
-        return view('collector.accounts');
-    }
-
-    /**
-     * display specified resource
-     *
-     * @param CollectorAccountFilter $userAccountFilter
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show(CollectorAccountFilter $userAccountFilter)
-    {
-        $dbr = $this->getUserAccounts($userAccountFilter);
-
         if (request()->wantsJson()) {
+            $dbr = $this->getUserAccounts($collectorAccountFilter);
+
             return $dbr;
         }
+
+        return view('collector.accounts');
     }
 
     /**

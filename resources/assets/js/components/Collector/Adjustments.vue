@@ -131,7 +131,7 @@
 
 		computed: {
 			tableUrl() {
-				return `./adjustments/show`;
+				return `./adjustments`;
 			},
 
 			startMonthWord() {

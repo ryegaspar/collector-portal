@@ -6,6 +6,7 @@ use App\Models\Lynx\Collector;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CollectorResetPasswordController extends Controller
 {
@@ -16,6 +17,10 @@ class CollectorResetPasswordController extends Controller
      */
     public function index()
     {
+        if (!is_null(Auth::user()->change_pass_at)) {
+            return redirect()->route('collector.dashboard');
+        }
+
         return view('collector.password-reset');
     }
 
@@ -27,6 +32,10 @@ class CollectorResetPasswordController extends Controller
      */
     public function reset(Request $request)
     {
+        if (!is_null(Auth::user()->change_pass_at)) {
+            return redirect()->route('collector.dashboard');
+        }
+
         $validatedData = $request->validate([
             'password' => ['required', 'confirmed', 'min:8', 'notIn:Password1']
         ]);

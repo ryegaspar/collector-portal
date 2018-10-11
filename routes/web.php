@@ -75,29 +75,24 @@ Route::name('collector.')->group(function () {
     });
 
     Route::namespace('Collector')->middleware(['auth', 'activeCollector'])->group(function() {
-        Route::get('/reset-password', 'CollectorResetPasswordController@index')->name('collector-reset-password');
-        Route::post('/reset-password', 'CollectorResetPasswordController@reset')->name('collector-reset-password.submit');
+        Route::get('reset-password', 'CollectorResetPasswordController@index')->name('collector-reset-password');
+        Route::post('reset-password', 'CollectorResetPasswordController@reset')->name('collector-reset-password.submit');
 
-        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('dashboard/transactions', 'DashboardTransactionController@index')->name('dashboard.transactions');
 
-        Route::get('/dashboard/transactions',
-            'DashboardTransactionController@index')->name('dashboard.transactions');
+        Route::get('accounts', 'AccountsController@index')->name('accounts');
 
-        Route::get('/accounts', 'AccountsController@index')->name('accounts');
-        Route::get('/accounts/show', 'AccountsController@show')->name('accounts.show');
+        Route::get('transactions', 'TransactionsController@index')->name('transactions');
 
-        Route::get('/transactions', 'TransactionsController@index')->name('transactions');
-        Route::get('/transactions/show', 'TransactionsController@show')->name('transactions.show');
+        Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'store', 'destroy']);
 
-        Route::get('/adjustments', 'AdjustmentsController@index')->name('adjustments');
-        Route::get('/adjustments/show', 'AdjustmentsController@show')->name('adjustments.show');
-        Route::post('/adjustments', 'AdjustmentsController@store')->name('adjustments.store');
-        Route::delete('/adjustments/{adjustment}', 'AdjustmentsController@destroy')->name('adjustments.destroy');
+        Route::get('letter-request-types', 'LetterRequestTypesController@index');
+        Route::resource('letter-requests', 'LetterRequestController'); //TODO: add only
+//        Route::get('')
 
-        Route::get('/scripts', 'ScriptsController@index')->name('scripts');
-        Route::get('/scripts/{script}', 'ScriptsController@show')->name('scripts.show');
-
-        Route::get('/letter-requests', 'LetterRequestController@index')->name('letter-requests');
+        Route::get('scripts', 'ScriptsController@index')->name('scripts');
+        Route::get('scripts/{script}', 'ScriptsController@show')->name('scripts.show');
     });
 });
 

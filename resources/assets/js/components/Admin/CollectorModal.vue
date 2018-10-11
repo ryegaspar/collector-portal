@@ -150,7 +150,6 @@
 		},
 		props: [
 			'isAdd',
-			'formData',
 		],
 
 		data() {
