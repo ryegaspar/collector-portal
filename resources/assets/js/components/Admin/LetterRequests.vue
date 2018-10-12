@@ -76,6 +76,7 @@
                               ref="letterRequestModal">
         </letter-request-modal>
         <letter-request-notes-modal ref="letterRequestNotesModal"></letter-request-notes-modal>
+        <letter-request-reject-reason-modal :rejectedId="rejectedId" @submitted="formSubmitted"></letter-request-reject-reason-modal>
     </div>
 </template>
 
@@ -85,6 +86,7 @@
 	import Vtable from '../VTable';
 	import LetterRequestModal from './LetterRequestModal';
 	import LetterRequestNotesModal from '../Collector/LetterRequestNotesModal';
+	import LetterRequestRejectReasonModal from './LetterRequestRejectReasonModal';
 	import CollectorOptionStore from './Store';
 	import VtableSubHeaderLetterRequests from './VtableSubHeaderLetterRequests';
 
@@ -98,11 +100,13 @@
 			VtableSubHeaderLetterRequests,
 			LetterRequestModal,
 			LetterRequestNotesModal,
+            LetterRequestRejectReasonModal,
 		},
 
 		data() {
 			return {
 				adminId: window.App.userId,
+                rejectedId: '',
 
 				fieldDefs: VtableLetterRequestsFieldDefs,
 
@@ -113,6 +117,7 @@
 						direction: 'desc'
 					}
 				],
+
 				moreParams: {},
 				perPage: 25,
 
@@ -155,8 +160,6 @@
 				}
 
 				if (action === 'approve-item') {
-					console.log(innerHTML);
-
 					axios.patch(`/admin/letter-requests/${data.id}/approve`)
 						.then(({data}) => {
 							lib.swalSuccess("Successfully changed the status of letter request");
@@ -177,23 +180,26 @@
 				}
 
 				if (action === 'deny-item') {
-					console.log(innerHTML);
-					axios.patch(`/admin/letter-requests/${data.id}/deny`)
-						.then(({data}) => {
-							lib.swalSuccess("Successfully changed the status of letter request");
-
-							button.removeAttribute("disabled");
-							button.innerHTML = `<i class="fa fa-thumbs-up"></i>`;
-
-							this.$emit('reload');
-						})
-						.catch((error) => {
-							lib.swalError(error.message);
-
-							button.removeAttribute("disabled");
-							button.innerHTML = innerHTML;
-						});
-
+					this.rejectedId = data.id;
+					$("#letterRequestRejectReasonModal").modal("show");
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
+					// axios.patch(`/admin/letter-requests/${data.id}/deny`)
+					// 	.then(({data}) => {
+					// 		lib.swalSuccess("Successfully changed the status of letter request");
+                    //
+					// 		button.removeAttribute("disabled");
+					// 		button.innerHTML = `<i class="fa fa-thumbs-up"></i>`;
+                    //
+					// 		this.$emit('reload');
+					// 	})
+					// 	.catch((error) => {
+					// 		lib.swalError(error.message);
+                    //
+					// 		button.removeAttribute("disabled");
+					// 		button.innerHTML = innerHTML;
+					// 	});
+                    //
 					return;
 				}
 

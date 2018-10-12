@@ -39,8 +39,11 @@ class LetterRequestFulfillController extends Controller
      */
     public function deny(LetterRequest $letterRequest)
     {
+        $reason = chr(13) . chr(10) . "=============================" . chr(13) . chr(10) . "REJECT REASON:" . chr(13) . chr(10) . request()->reason . chr(13) . chr(10) . " - " . request()->user()->full_name;
+
         $letterRequest->fulfilled_by = request()->user()->id;
         $letterRequest->status = 2;
+        $letterRequest->notes = $letterRequest->notes . $reason;
 
         $letterRequest->save();
 
