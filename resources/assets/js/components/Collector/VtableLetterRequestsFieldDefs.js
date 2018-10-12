@@ -46,10 +46,10 @@ export default [
 	{
 		name: 'borrower_type',
 		sortField: 'borrower_type',
-		title: 'Borrower/Co-Borrower',
+		title: 'Borrower/Co',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
-		visible: false,
+		visible: true,
 		callback: function (value) {
 			let obj = (LetterRequestOptions.borrower_types).find(o => +o.id === +value);
 			return obj.name;

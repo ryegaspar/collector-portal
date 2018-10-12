@@ -69499,10 +69499,10 @@ if (false) {
 }, {
 	name: 'borrower_type',
 	sortField: 'borrower_type',
-	title: 'Borrower/Co-Borrower',
+	title: 'Borrower/Co',
 	titleClass: 'text-center',
 	dataClass: 'text-center',
-	visible: false,
+	visible: true,
 	callback: function callback(value) {
 		var obj = __WEBPACK_IMPORTED_MODULE_0__utilities_LetterRequestOptions__["a" /* borrower_types */].find(function (o) {
 			return +o.id === +value;
@@ -74240,93 +74240,106 @@ var render = function() {
                       key: "actions",
                       fn: function(props) {
                         return [
-                          _c("div", { staticClass: "custom-actions" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-sm btn-purple",
-                                attrs: {
-                                  type: "button",
-                                  "data-toggle": "tooltip",
-                                  "data-placement": "top",
-                                  title: "Notes"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    _vm.itemAction(
-                                      "show-notes",
-                                      props.rowData,
-                                      props.rowIndex,
-                                      $event
-                                    )
+                          _c(
+                            "div",
+                            {
+                              staticClass: "custom-actions",
+                              staticStyle: {
+                                "white-space": "nowrap !important"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-purple",
+                                  attrs: {
+                                    type: "button",
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "top",
+                                    title: "Notes"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.itemAction(
+                                        "show-notes",
+                                        props.rowData,
+                                        props.rowIndex,
+                                        $event
+                                      )
+                                    }
                                   }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-sticky-note-o" })]
-                            ),
-                            _vm._v(" "),
-                            props.rowData.status === "0" &&
-                            props.rowData.requestable_type ===
-                              "App\\Models\\Lynx\\Collector" &&
-                            +props.rowData.requestable_id === +_vm.collectorId
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-sm btn-info",
-                                    attrs: {
-                                      type: "button",
-                                      "data-toggle": "tooltip",
-                                      "data-placement": "top",
-                                      title: "Edit"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.itemAction(
-                                          "edit-item",
-                                          props.rowData,
-                                          props.rowIndex,
-                                          $event
-                                        )
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fa fa-sticky-note-o"
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              props.rowData.status === "0" &&
+                              props.rowData.requestable_type ===
+                                "App\\Models\\Lynx\\Collector" &&
+                              +props.rowData.requestable_id === +_vm.collectorId
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-sm btn-info",
+                                      attrs: {
+                                        type: "button",
+                                        "data-toggle": "tooltip",
+                                        "data-placement": "top",
+                                        title: "Edit"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.itemAction(
+                                            "edit-item",
+                                            props.rowData,
+                                            props.rowIndex,
+                                            $event
+                                          )
+                                        }
                                       }
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fa fa-pencil-square-o"
-                                    })
-                                  ]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            props.rowData.status === "0" &&
-                            props.rowData.requestable_type ===
-                              "App\\Models\\Lynx\\Collector" &&
-                            +props.rowData.requestable_id === +_vm.collectorId
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-danger btn-sm",
-                                    attrs: {
-                                      type: "button",
-                                      "data-toggle": "tooltip",
-                                      "data-placement": "top",
-                                      title: "delete"
                                     },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.itemAction(
-                                          "delete-item",
-                                          props.rowData,
-                                          props.rowIndex,
-                                          $event
-                                        )
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-pencil-square-o"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.rowData.status === "0" &&
+                              props.rowData.requestable_type ===
+                                "App\\Models\\Lynx\\Collector" &&
+                              +props.rowData.requestable_id === +_vm.collectorId
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-danger btn-sm",
+                                      attrs: {
+                                        type: "button",
+                                        "data-toggle": "tooltip",
+                                        "data-placement": "top",
+                                        title: "delete"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.itemAction(
+                                            "delete-item",
+                                            props.rowData,
+                                            props.rowIndex,
+                                            $event
+                                          )
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_c("i", { staticClass: "fa fa-trash-o" })]
-                                )
-                              : _vm._e()
-                          ])
+                                    },
+                                    [_c("i", { staticClass: "fa fa-trash-o" })]
+                                  )
+                                : _vm._e()
+                            ]
+                          )
                         ]
                       }
                     }
