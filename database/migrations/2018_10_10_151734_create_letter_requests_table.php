@@ -19,7 +19,7 @@ class CreateLetterRequestsTable extends Migration
             $table->unsignedInteger('fulfilled_by')->nullable();
             $table->string('creator_name'); //temporary fix, filter eager loaded in polymorphic relations not working in sqlsrv
             $table->morphs('requestable');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->unsignedInteger('request_method');
             $table->unsignedInteger('type');
             $table->unsignedInteger('status')->default(0);

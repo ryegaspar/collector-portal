@@ -3,6 +3,7 @@
 namespace Unifin\Traits;
 
 use App\Models\Lynx\LetterRequest;
+use App\Rules\LetterRequestType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\CollectorLetterRequestFilter;
@@ -109,9 +110,9 @@ trait LetterRequestCrud
     private function getLetterRequests($collectorLetterRequestFilter)
     {
         $letterRequests = LetterRequest::tableFilters($collectorLetterRequestFilter)
-            ->with('requestable')
-            ->with('types')
-            ->with('checked_by');
+            ->with('requestable:id,tiger_user_id,last_name,first_name')
+            ->with('types:id,name,active')
+            ->with('checked_by:id,last_name,first_name');
 
         $results = $this->paginate($letterRequests);
 
@@ -129,8 +130,8 @@ trait LetterRequestCrud
 
         return request()->validate([
             'dbr_no'         => 'required|exists:sqlsrv2.CDS.DBR,DBR_NO',
-            'request_method' => 'required|numeric',
-            'type'           => 'required|numeric',
+            'request_method' => ['required', 'numeric'],
+            'type'           => ['required', 'numeric', new LetterRequestType],
             'borrower_type'  => 'required|numeric',
             'notes'          => ''
         ]);

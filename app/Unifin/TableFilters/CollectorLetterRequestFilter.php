@@ -33,4 +33,16 @@ class CollectorLetterRequestFilter extends TableFilter
 
         return $this;
     }
+
+    public function filterCreatedByCollector()
+    {
+        if (! is_null($this->request->filter2)) {
+            if ($this->request->filter2 != "A") {
+                $this->builder->where("requestable_id", "=", request()->user()->id)
+                    ->where('requestable_type', 'App\Models\Lynx\Collector');
+            }
+        }
+
+        return $this;
+    }
 }

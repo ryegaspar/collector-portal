@@ -4,22 +4,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="filter-bar">
-                            <div class="form-inline">
-                                <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                    <div class="btn-group-sm">
-                                        <button type="button"
-                                                class="btn btn-primary mr-2"
-                                                @click="addLetterRequest">
-                                            <i class="icon-plus"></i> New
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <vtable-header :perPage=perPage
                                        :fields="fieldDefs"
                                        placeholder="name, dbr no"></vtable-header>
+                        <vtable-sub-header-letter-requests
+                                @addLetterRequest="addLetterRequest"></vtable-sub-header-letter-requests>
                         <vtable :api-url="tableUrl"
                                 :fields="fieldDefs"
                                 :sort-order="sortOrder"
@@ -75,6 +64,7 @@
 <script>
 	import VtableLetterRequestsFieldDefs from './VtableLetterRequestsFieldDefs';
 	import Vtable from '../VTable';
+	import VtableSubHeaderLetterRequests from './VtableSubHeaderLetterRequests';
 	import LetterRequestModal from './LetterRequestModal';
 	import LetterRequestNotesModal from './LetterRequestNotesModal';
 	import CollectorOptionStore from './Store';
@@ -85,6 +75,7 @@
 
 		components: {
 			Vtable,
+            VtableSubHeaderLetterRequests,
 			LetterRequestModal,
 			LetterRequestNotesModal,
 		},
@@ -189,7 +180,7 @@
 
 		computed: {
 			tableUrl() {
-				return `/letter-requests`;
+				return `/letter-requests?filter2=${this.collectorId}`;
 			},
 		},
 	}

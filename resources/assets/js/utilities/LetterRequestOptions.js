@@ -3,11 +3,11 @@
 export const request_methods = [
 	{
 		id: 0,
-		name: 'Address',
+		name: 'E-mail'
 	},
 	{
 		id: 1,
-		name: 'E-mail'
+		name: 'Address',
 	},
 	{
 		id: 2,
