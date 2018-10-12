@@ -80,6 +80,16 @@ class Admin extends Authenticatable implements CanResetPasswordContract
     }
 
     /**
+     * An admin has many letter requests.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function letter_requests()
+    {
+        return $this->morphMany(LetterRequest::class, 'requestable');
+    }
+
+    /**
      * user has many scripts
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

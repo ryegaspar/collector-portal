@@ -17,4 +17,20 @@ class CollectorLetterRequestFilter extends TableFilter
      * @var string
      */
     protected $defaultSort = 'updated_at';
+
+    /**
+     * Filter status.
+     *
+     * @return $this
+     */
+    public function filterStatus()
+    {
+        if (! is_null($this->request->filter1)) {
+            if ($this->request->filter1 != "A") {
+                $this->builder->where("status", "=", $this->request->filter1);
+            }
+        }
+
+        return $this;
+    }
 }

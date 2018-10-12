@@ -26,15 +26,24 @@
                                 :append-params="moreParams"
                                 :perPage=perPage>
                             <template slot="actions" slot-scope="props">
-                                    <div class="custom-actions" v-if="props.rowData.status==='0' &&
-                                                                props.rowData.requestable_type==='App\\Models\\Lynx\\Collector' &&
-                                                                +props.rowData.requestable_id===+collectorId">
+                                <div class="custom-actions">
+                                    <button type="button"
+                                            class="btn btn-sm btn-purple"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Notes"
+                                            @click="itemAction('show-notes', props.rowData, props.rowIndex, $event)">
+                                        <i class="fa fa-sticky-note-o"></i>
+                                    </button>
                                     <button type="button"
                                             class="btn btn-sm btn-info"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Edit"
-                                            @click="itemAction('edit-item', props.rowData, props.rowIndex, $event)">
+                                            @click="itemAction('edit-item', props.rowData, props.rowIndex, $event)"
+                                            v-if="props.rowData.status==='0' &&
+                                                                props.rowData.requestable_type==='App\\Models\\Lynx\\Collector' &&
+                                                                +props.rowData.requestable_id===+collectorId">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
                                     <button type="button"
@@ -42,7 +51,10 @@
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="delete"
-                                            @click="itemAction('delete-item', props.rowData, props.rowIndex, $event)">
+                                            @click="itemAction('delete-item', props.rowData, props.rowIndex, $event)"
+                                            v-if="props.rowData.status==='0' &&
+                                                                props.rowData.requestable_type==='App\\Models\\Lynx\\Collector' &&
+                                                                +props.rowData.requestable_id===+collectorId">
                                         <i class="fa fa-trash-o"></i>
                                     </button>
                                 </div>
@@ -56,6 +68,7 @@
                               @submitted="formSubmitted"
                               ref="letterRequestModal">
         </letter-request-modal>
+        <letter-request-notes-modal ref="letterRequestNotesModal"></letter-request-notes-modal>
     </div>
 </template>
 
@@ -63,6 +76,7 @@
 	import VtableLetterRequestsFieldDefs from './VtableLetterRequestsFieldDefs';
 	import Vtable from '../VTable';
 	import LetterRequestModal from './LetterRequestModal';
+	import LetterRequestNotesModal from './LetterRequestNotesModal';
 	import CollectorOptionStore from './Store';
 
 	export default {
@@ -71,13 +85,13 @@
 
 		components: {
 			Vtable,
-			// ModalAdjustments
-			LetterRequestModal
+			LetterRequestModal,
+			LetterRequestNotesModal,
 		},
 
 		data() {
 			return {
-				collectorId: window.App.id,
+				collectorId: window.App.userId,
 
 				fieldDefs: VtableLetterRequestsFieldDefs,
 
@@ -117,7 +131,17 @@
 				$('[data-toggle="tooltip"]').tooltip('hide');
 
 				button.setAttribute("disabled", true);
-				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`
+				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
+
+				if (action === 'show-notes') {
+					this.$refs.letterRequestNotesModal.populateData(data.notes);
+					$("#letterRequestNotesModal").modal("show");
+
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
+
+					return;
+				}
 
 				if (action === 'edit-item') {
 					this.isAdd = false;
@@ -167,31 +191,6 @@
 			tableUrl() {
 				return `/letter-requests`;
 			},
-			//
-			// startMonthWord() {
-			// 	if (moment().date() > 5)
-			// 		return moment().startOf('month').format("MMMM Do");
-			// 	else
-			// 		return moment().add(-1, 'month').startOf('month').format("MMMM Do");
-			// },
-			//
-			// endMonthWord() {
-			// 	if (moment().date() > 5)
-			// 		return moment().format("MMMM Do");
-			// 	else
-			// 		return moment().add(-1, 'month').endOf('month').format('MMMM Do');
-			// },
-			//
-			// deadlineWord() {
-			// 	if (moment().date() > 5)
-			// 		return moment().add(1, 'month').set('date', 5).format("MMMM D, YYYY")
-			// 	else
-			// 		return moment().set('date', 5).format("MMMM D, YYYY");
-			// }
 		},
-
-		created() {
-			// this.$events.$on('reload-table', eventData => this.onReloadTable());
-		}
 	}
 </script>

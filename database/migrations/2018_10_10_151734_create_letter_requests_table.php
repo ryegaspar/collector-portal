@@ -16,6 +16,7 @@ class CreateLetterRequestsTable extends Migration
         Schema::create('letter_requests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('dbr_no', 10);
+            $table->unsignedInteger('fulfilled_by')->nullable();
             $table->string('creator_name'); //temporary fix, filter eager loaded in polymorphic relations not working in sqlsrv
             $table->morphs('requestable');
             $table->text('notes');

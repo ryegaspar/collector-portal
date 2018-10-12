@@ -21,6 +21,7 @@ class LetterRequest extends Model
         'borrower_type',
         'notes',
         'collector_id',
+        'fulfilled_by',
     ];
 
     /**
@@ -45,9 +46,24 @@ class LetterRequest extends Model
         return $this->morphTo();
     }
 
+    /**
+     * A letter request belongs to letter request type.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function types()
     {
         return $this->belongsTo(LetterRequestType::class, 'type');
+    }
+
+    /**
+     * A letter request is fulfilled by an admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function checked_by()
+    {
+        return $this->belongsTo(Admin::class, 'fulfilled_by');
     }
 
     /**

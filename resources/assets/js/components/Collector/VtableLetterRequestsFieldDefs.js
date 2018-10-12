@@ -73,7 +73,15 @@ export default [
 		title: 'Date Created',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
-		visible: true,
+		visible: false,
+	},
+	{
+		name: 'checked_by.full_name',
+		sortField: 'fulfilled_by',
+		title: 'Fulfilled By',
+		titleClass: 'text-center',
+		dataClass: 'text-center',
+		visible: true
 	},
 	{
 		name: 'updated_at',

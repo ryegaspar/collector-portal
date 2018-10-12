@@ -61,13 +61,17 @@
 						href:'#',
                         text: 'Letter Requests',
                         icon: 'icon-envelope',
-                        // permission: 'read letter-request',
                         children: {
+							LetterRequest: {
+								href: '/admin/letter-requests',
+                                icon: 'icon-envelope',
+                                text: 'Letter Requests'
+                            },
 							LetterRequestType: {
 								href: '/admin/letter-request-type',
                                 icon: 'icon-layers',
                                 text: 'Letter Request Types',
-                                // permission: 'read letter-request-type'
+                                permission: 'read letter-request-type'
                             }
                         }
                     },

@@ -16,7 +16,7 @@
 	<script>
 		window.App = {!! json_encode([
 			'name' => Auth::user()->full_name,
-			'id' => Auth::user()->id
+			'userId' => Auth::user()->id
 		]) !!}
 	</script>
 </head>

@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Lynx\Collector;
 use App\Models\Lynx\LetterRequest;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -13,13 +12,13 @@ class LetterRequestPolicy
     /**
      * Determine if the user has permission to delete the adjustment.
      *
-     * @param Collector $collector
+     * @param $user
      * @param LetterRequest $letterRequest
      * @return bool
      */
-    public function collectorModify(Collector $collector, LetterRequest $letterRequest)
+    public function modify($user, LetterRequest $letterRequest)
     {
-        if ($letterRequest->requestable_type == 'App\Models\Lynx\Collector' && $letterRequest->status == 0 && $letterRequest->requestable_id == $collector->id) {
+        if (($user instanceof $letterRequest->requestable_type) && $letterRequest->status == 0 && $letterRequest->requestable_id == $user->id) {
             return true;
         }
 

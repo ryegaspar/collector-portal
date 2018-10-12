@@ -86,16 +86,6 @@ class Collector extends Authenticatable
     }
 
     /**
-     * A collector belongs to a sub site.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function sub_site()
-    {
-        return $this->belongsTo(Subsite::class, 'sub_site_id', 'id');
-    }
-
-    /**
      * A collector has many letter requests.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
@@ -103,6 +93,16 @@ class Collector extends Authenticatable
     public function letter_requests()
     {
         return $this->morphMany(LetterRequest::class, 'requestable');
+    }
+
+    /**
+     * A collector belongs to a sub site.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sub_site()
+    {
+        return $this->belongsTo(Subsite::class, 'sub_site_id', 'id');
     }
 
     /**

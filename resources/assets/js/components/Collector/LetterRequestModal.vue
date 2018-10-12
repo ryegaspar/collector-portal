@@ -133,10 +133,6 @@
 			}
 		},
 
-		created() {
-			// this.$events.$on('modal-reset', eventData => this.onResetModal());
-		},
-
 		methods: {
 			submit() {
 				let tempButtonText = this.persistButtonText;

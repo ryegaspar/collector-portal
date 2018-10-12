@@ -309,4 +309,13 @@
     th.sortable:hover {
         text-decoration: none !important;
     }
+
+     td, thead {
+         font-family: Tahoma, Geneva, sans-serif;
+         font-size: 0.75rem;
+     }
+
+    .table td {
+        padding: 0.75rem 0.35rem;
+    }
 </style>
