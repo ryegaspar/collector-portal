@@ -15,7 +15,7 @@
                                 :append-params="moreParams"
                                 :perPage=perPage>
                             <template slot="actions" slot-scope="props">
-                                <div class="custom-actions">
+                                <div class="custom-actions" style="white-space: nowrap !important">
                                     <button type="button"
                                             class="btn btn-sm btn-info"
                                             data-toggle="tooltip"
