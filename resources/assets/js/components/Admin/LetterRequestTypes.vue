@@ -102,21 +102,12 @@
 
 				if (action === 'edit-item') {
 					this.isAdd = false;
-					let url = `/admin/letter-request-type/${data.id}/edit`;
-					axios.get(url)
-						.then(({data}) => {
-							$("#letterRequestTypeModal").modal("show");
-							this.$refs.letterRequestTypeModal.populateData(data);
 
-							button.removeAttribute("disabled");
-							button.innerHTML = innerHTML;
-						})
-						.catch((error) => {
-							lib.swalError(error.message);
+					this.$refs.letterRequestTypeModal.populateData(data);
+					$("#letterRequestTypeModal").modal("show");
 
-							button.removeAttribute("disabled");
-							button.innerHTML = innerHTML;
-						});
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
 
 					return;
 				}

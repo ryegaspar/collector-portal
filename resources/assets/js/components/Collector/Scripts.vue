@@ -72,7 +72,7 @@
 				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
 
 				if (action === 'show') {
-					this.$refs.scriptModal.loadPreview(`/scripts/${data.id}`);
+					this.$refs.scriptModal.loadPreview(data);
 					$("#scriptModal").modal("show");
 
 					button.removeAttribute("disabled");

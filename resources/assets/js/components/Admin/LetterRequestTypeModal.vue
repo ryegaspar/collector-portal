@@ -2,16 +2,16 @@
     <div class="modal fade" id="letterRequestTypeModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" v-if="isAdd">Add Letter Request Type</h4>
-                    <h4 class="modal-title" v-else>Edit Letter Request Type</h4>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <form @submit.prevent="submit" @keydown="form.errors.clear()">
+                    <div class="modal-header">
+                        <h4 class="modal-title" v-if="isAdd">Add Letter Request Type</h4>
+                        <h4 class="modal-title" v-else>Edit Letter Request Type</h4>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-                <div class="modal-body">
-                    <form @submit.prevent="submit" @keydown="form.errors.clear()">
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <fieldset class="form-group">
@@ -34,18 +34,17 @@
                                 </fieldset>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button type="submit"
-                            :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
-                            @click="submit"
-                            :disabled="isLoading || form.errors.any()"
-                            v-html="persistButtonText">
-                    </button>
-                </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                        <button type="submit"
+                                :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
+                                :disabled="isLoading || form.errors.any()"
+                                v-html="persistButtonText">
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

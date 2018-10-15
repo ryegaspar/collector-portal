@@ -184,42 +184,19 @@
 					$("#letterRequestRejectReasonModal").modal("show");
 					button.removeAttribute("disabled");
 					button.innerHTML = innerHTML;
-					// axios.patch(`/admin/letter-requests/${data.id}/deny`)
-					// 	.then(({data}) => {
-					// 		lib.swalSuccess("Successfully changed the status of letter request");
-                    //
-					// 		button.removeAttribute("disabled");
-					// 		button.innerHTML = `<i class="fa fa-thumbs-up"></i>`;
-                    //
-					// 		this.$emit('reload');
-					// 	})
-					// 	.catch((error) => {
-					// 		lib.swalError(error.message);
-                    //
-					// 		button.removeAttribute("disabled");
-					// 		button.innerHTML = innerHTML;
-					// 	});
-                    //
+
 					return;
 				}
 
 				if (action === 'edit-item') {
 					this.isAdd = false;
 					let url = `/admin/letter-requests/${data.id}/edit`;
-					axios.get(url)
-						.then(({data}) => {
-							$("#letterRequestModal").modal("show");
-							this.$refs.letterRequestModal.populateData(data);
 
-							button.removeAttribute("disabled");
-							button.innerHTML = innerHTML;
-						})
-						.catch((error) => {
-							lib.swalError(error.message);
+					this.$refs.letterRequestModal.populateData(data);
+					$("#letterRequestModal").modal("show");
 
-							button.removeAttribute("disabled");
-							button.innerHTML = innerHTML;
-						});
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
 
 					return;
 				}

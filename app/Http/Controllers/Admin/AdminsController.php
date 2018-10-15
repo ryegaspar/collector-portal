@@ -59,19 +59,6 @@ class AdminsController extends Controller
     }
 
     /**
-     * get admin
-     *
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function edit($id)
-    {
-        if (request()->wantsJson()) {
-            return response(Admin::with('roles')->find($id), 200);
-        }
-    }
-
-    /**
      * Update the given resource.
      *
      * @param Admin $admin

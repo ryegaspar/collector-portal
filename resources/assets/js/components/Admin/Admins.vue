@@ -105,15 +105,12 @@
 
 				if (action === 'edit-item') {
 					this.isAdd = false;
-					let url = `/admin/admins/${data.id}/edit`;
-					axios.get(url)
-                        .then(({data}) => {
-                        	$("#adminModal").modal("show");
-                        	this.$refs.adminModal.populateData(data);
 
-                        	button.removeAttribute("disabled");
-                        	button.innerHTML = innerHTML;
-                        });
+					this.$refs.adminModal.populateData(data);
+					$("#adminModal").modal("show");
+
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
 
                     return;
                 }

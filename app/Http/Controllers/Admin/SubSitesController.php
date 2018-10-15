@@ -20,7 +20,7 @@ class SubSitesController extends Controller
         $this->middleware(['auth:admin', 'activeUser']);
         $this->middleware('permission:read site')->only('index');
         $this->middleware('permission:create site')->only('store');
-        $this->middleware('permission:update site')->only(['edit', 'update']);
+        $this->middleware('permission:update site')->only('update');
     }
 
     /**
@@ -66,23 +66,6 @@ class SubSitesController extends Controller
         $response = Subsite::create($subSite);
 
         return response($response, 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Subsite $subSite
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function edit(Subsite $subSite)
-    {
-        if ($subSite->prefixes) {
-            $subSite->prefixes = explode(',', $subSite->prefixes);
-        }
-
-        if (request()->wantsJson()) {
-            return response($subSite, 200);
-        }
     }
 
     /**

@@ -2,16 +2,16 @@
     <div class="modal fade" id="subSiteModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" v-if="isAdd">Add Sub Site</h4>
-                    <h4 class="modal-title" v-else>Edit Sub Site</h4>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <form @submit.prevent="submit" @keydown="form.errors.clear()">
+                    <div class="modal-header">
+                        <h4 class="modal-title" v-if="isAdd">Add Sub Site</h4>
+                        <h4 class="modal-title" v-else>Edit Sub Site</h4>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-                <div class="modal-body">
-                    <form @submit.prevent="" @keydown="form.errors.clear()">
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <fieldset class="form-group">
@@ -94,7 +94,7 @@
                                         <div class="form-check">
                                             <input type="radio" class="form-check-input" value="1"
                                                    v-model="form.collectone_id_assignment_method">
-                                            <label class="form-check-label">Use Initials and a Number</label>
+                                            <label class="form-check-label">Use Initials + Number</label>
                                         </div>
                                         <div class="form-check">
                                             <input type="radio" class="form-check-input" value="2"
@@ -121,18 +121,17 @@
                                 </fieldset>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button type="submit"
-                            :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
-                            @click="submit"
-                            :disabled="isLoading || form.errors.any()"
-                            v-html="persistButtonText">
-                    </button>
-                </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                        <button type="submit"
+                                :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
+                                :disabled="isLoading || form.errors.any()"
+                                v-html="persistButtonText">
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -227,17 +226,19 @@
 				this.form.min_desk_number = data.min_desk_number;
 				this.form.max_desk_number = data.max_desk_number;
 				this.form.collectone_id_assignment_method = data.collectone_id_assignment_method;
-				this.form.prefixes = data.prefixes;
+				if (data.prefixes) {
+					this.form.prefixes = data.prefixes.split(",");
+				}
 
 				this.updateID = data.id;
 			},
 		},
 
-        computed: {
+		computed: {
 			showPrefixes() {
 				return +this.form.collectone_id_assignment_method === 2;
 			}
-        },
+		},
 
 		watch: {
 			'isAdd': function (newVal, oldVal) {

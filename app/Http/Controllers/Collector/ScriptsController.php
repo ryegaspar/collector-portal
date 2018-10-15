@@ -37,17 +37,6 @@ class ScriptsController extends Controller
     }
 
     /**
-     * Return specified resource.
-     *
-     * @param Script $script
-     * @return Script
-     */
-    public function show(Script $script)
-    {
-        return $script;
-    }
-
-    /**
      * get scripts
      *
      * @param $adminScriptFilter

@@ -25,7 +25,7 @@ class CollectorsController extends Controller
 
         $this->middleware('permission:read collector')->only('index');
         $this->middleware('permission:create collector')->only('store');
-        $this->middleware('permission:update collector')->only(['edit', 'update']);
+        $this->middleware('permission:update collector')->only('update');
     }
 
     /**
@@ -58,19 +58,6 @@ class CollectorsController extends Controller
         $response = Collector::createCollector($validatedData);
 
         return response($response, 200);
-    }
-
-    /**
-     * get collector
-     *
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function edit($id)
-    {
-        if (request()->wantsJson()) {
-            return response(Collector::find($id), 200);
-        }
     }
 
     /**

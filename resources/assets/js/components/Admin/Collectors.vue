@@ -117,21 +117,12 @@
 
 				if (action === 'edit-item') {
 					this.isAdd = false;
-					let url = `/admin/collectors/${data.id}/edit`;
-					axios.get(url)
-						.then(({data}) => {
-							$("#collectorModal").modal("show");
-							this.$refs.collectorModal.populateData(data);
 
-							button.removeAttribute("disabled");
-							button.innerHTML = innerHTML;
-						})
-						.catch((error) => {
-							lib.swalError(error.message);
+					this.$refs.collectorModal.populateData(data);
+					$("#collectorModal").modal("show");
 
-							button.removeAttribute("disabled");
-							button.innerHTML = innerHTML;
-						});
+					button.removeAttribute("disabled");
+					button.innerHTML = innerHTML;
 
 					return;
 				}

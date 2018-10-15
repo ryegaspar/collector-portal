@@ -29,18 +29,12 @@
             }
         },
     	methods: {
-    		loadPreview(url) {
+    		loadPreview(data) {
     			this.scriptTitle = '';
     			this.scriptBody = '';
 
-    			axios.get(url)
-                    .then(({data}) => {
-                    	this.scriptTitle = data.title;
-                    	this.scriptBody = data.content;
-                    })
-                    .catch((error) => {
-                    	lib.swalError(error.message);
-                    });
+    			this.scriptTitle = data.title;
+    			this.scriptBody = data.content;
             }
         }
     }

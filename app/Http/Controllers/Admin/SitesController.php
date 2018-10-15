@@ -20,7 +20,7 @@ class SitesController extends Controller
         $this->middleware(['auth:admin', 'activeUser']);
         $this->middleware('permission:read site')->only('index');
         $this->middleware('permission:create site')->only('store');
-        $this->middleware('permission:update site')->only(['edit', 'update']);
+        $this->middleware('permission:update site')->only('update');
     }
 
     /**
@@ -58,19 +58,6 @@ class SitesController extends Controller
         $response = Site::create($site);
 
         return response($response, 200);
-    }
-
-    /**
-     * get sites
-     *
-     * @param Site $site
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function edit(Site $site)
-    {
-        if (request()->wantsJson()) {
-            return response($site, 200);
-        }
     }
 
     /**

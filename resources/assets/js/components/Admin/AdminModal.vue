@@ -2,16 +2,17 @@
     <div class="modal fade" id="adminModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" v-if="isAdd">Add User</h4>
-                    <h4 class="modal-title" v-else>Edit User</h4>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <form @submit.prevent="submit" @keydown="form.errors.clear()">
 
-                <div class="modal-body">
-                    <form @submit.prevent="" @keydown="form.errors.clear()">
+                    <div class="modal-header">
+                        <h4 class="modal-title" v-if="isAdd">Add User</h4>
+                        <h4 class="modal-title" v-else>Edit User</h4>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <fieldset class="form-group">
@@ -132,24 +133,24 @@
                                 </fieldset>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
-                            @click="submit"
-                            :disabled="isLoading || form.errors.any()"
-                            v-html="persistButtonText">
-                    </button>
-                </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                        <button :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
+                                type="submit"
+                                :disabled="isLoading || form.errors.any()"
+                                v-html="persistButtonText">
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import AdminOptionsStore from './AdminOptionsStore';
+	import AdminOptionsStore from './AdminOptionsStore';
 
 	export default {
 		store: AdminOptionsStore,
@@ -232,25 +233,25 @@
 				return this.sites.findIndex(site => +site.id === +this.form.site_id);
 			},
 
-            onAccessLevelChange() {
+			onAccessLevelChange() {
 				this.form.errors.clear();
-                this.form.site_id = '';
-            },
+				this.form.site_id = '';
+			},
 
-            onSiteChange() {
+			onSiteChange() {
 				this.form.errors.clear();
-                this.form.sub_site_id = "";
-            }
+				this.form.sub_site_id = "";
+			}
 		},
 
 		computed: {
 			accessGroups() {
 				return this.$store.state.accessGroups;
-            },
+			},
 
-            sites() {
+			sites() {
 				return this.$store.state.sites;
-            },
+			},
 
 			showSite() {
 				return this.form.access_level === 'site-manager' || this.form.access_level === 'sub-site-manager' || this.form.access_level === 'team-leader';

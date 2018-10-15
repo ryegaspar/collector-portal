@@ -2,16 +2,17 @@
     <div class="modal fade" id="collectorModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" v-if="isAdd">Add Collector</h4>
-                    <h4 class="modal-title" v-else>Edit Collector</h4>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <form @submit.prevent="submit" @keydown="form.errors.clear()">
 
-                <div class="modal-body">
-                    <form @submit.prevent="" @keydown="form.errors.clear()">
+                    <div class="modal-header">
+                        <h4 class="modal-title" v-if="isAdd">Add Collector</h4>
+                        <h4 class="modal-title" v-else>Edit Collector</h4>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
                         <fieldset class="form-group">
                             <label>Sub Site</label>
                             <div class="input-group">
@@ -125,17 +126,19 @@
                                 </em>
                             </div>
                         </fieldset>
-                    </form>
-                </div>
+                    </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
-                            @click="submit"
-                            :disabled="isLoading || form.errors.any()"
-                            v-html="persistButtonText">
-                    </button>
-                </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary"
+                                type="button"
+                                data-dismiss="modal">Close</button>
+                        <button :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
+                                type="submit"
+                                :disabled="isLoading || form.errors.any()"
+                                v-html="persistButtonText">
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -161,7 +164,7 @@
 
 				form: new Form({
 					sub_site_id: '',
-                    username: '',
+					username: '',
 					tiger_user_id: '',
 					desk: '',
 					last_name: '',
@@ -169,7 +172,7 @@
 					start_date: '',
 					team_leader_id: '',
 					commission_structure_id: '',
-                    status_id: ''
+					status_id: ''
 				}),
 
 				team_leaders_options: [],
@@ -229,27 +232,27 @@
 				Vue.nextTick(() => {
 					this.form.team_leader_id = data.team_leader_id;
 				});
-                this.updateID = data.id;
+				this.updateID = data.id;
 			}
 		},
 
-        computed: {
+		computed: {
 			sub_sites() {
 				return this.$store.state.sub_sites;
 			},
 
-            commission_structures() {
+			commission_structures() {
 				return this.$store.state.commission_structures;
-            },
+			},
 
-            team_leaders() {
+			team_leaders() {
 				return this.$store.state.team_leaders;
-            },
+			},
 
-            statuses() {
+			statuses() {
 				return this.$store.state.statuses;
-            }
-        },
+			}
+		},
 
 		watch: {
 			'isAdd': function (newVal, oldVal) {
@@ -269,7 +272,7 @@
 					this.team_leaders_options = this.team_leaders.filter((t) => {
 						return +t.sub_site_id === +newVal;
 					});
-                }
+				}
 			}
 		},
 	}

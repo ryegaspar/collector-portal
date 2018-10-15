@@ -49,18 +49,18 @@ trait LetterRequestCrud
         return response($response, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function edit($id)
-    {
-        if (request()->wantsJson()) {
-            return response(LetterRequest::find($id), 200);
-        }
-    }
+//    /**
+//     * Show the form for editing the specified resource.
+//     *
+//     * @param $id
+//     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+//     */
+//    public function edit($id)
+//    {
+//        if (request()->wantsJson()) {
+//            return response(LetterRequest::find($id), 200);
+//        }
+//    }
 
     /**
      * Update the specified resource in storage.

@@ -91,19 +91,12 @@
 				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
 
 				this.isAdd = false;
-				let url = `/admin/sites/${data.id}/edit`;
 
-				axios.get(url)
-					.then(({data}) => {
-						$("#siteModal").modal("show");
-						this.$refs.siteModal.populateData(data);
+				this.$refs.siteModal.populateData(data);
+				$("#siteModal").modal("show");
 
-						button.removeAttribute("disabled");
-						button.innerHTML = innerHTML;
-					})
-                    .catch((error) => {
-						lib.swalError(error.message);
-                    });
+				button.removeAttribute("disabled");
+				button.innerHTML = innerHTML;
 			},
 		},
 
