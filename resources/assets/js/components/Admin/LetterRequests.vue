@@ -26,18 +26,12 @@
                                     </button>
                                     <button type="button"
                                             class="btn btn-sm btn-success"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Sent"
                                             @click="itemAction('approve-item', props.rowData, props.rowIndex, $event)"
                                             v-if="props.rowData.status==='0' || props.rowData.status==='2'">
                                         <i class="fa fa-thumbs-up"></i>
                                     </button>
                                     <button type="button"
                                             class="btn btn-sm btn-red"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Rejected"
                                             @click="itemAction('deny-item', props.rowData, props.rowIndex, $event)"
                                             v-if="props.rowData.status==='0' || props.rowData.status==='1'">
                                         <i class="fa fa-thumbs-down"></i>
@@ -121,7 +115,9 @@
 				moreParams: {},
 				perPage: 25,
 
-				isAdd: true
+				isAdd: true,
+
+                targetButton: '',
 			}
 		},
 
@@ -141,20 +137,11 @@
 			},
 
 			itemAction(action, data, index, e) {
-				let innerHTML = e.currentTarget.innerHTML;
-				let button = e.currentTarget;
-
 				$('[data-toggle="tooltip"]').tooltip('hide');
-
-				button.setAttribute("disabled", true);
-				button.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`
 
 				if (action === 'show-notes') {
 					this.$refs.letterRequestNotesModal.populateData(data.notes);
 					$("#letterRequestNotesModal").modal("show");
-
-					button.removeAttribute("disabled");
-					button.innerHTML = innerHTML;
 
 					return;
 				}
@@ -164,16 +151,10 @@
 						.then(({data}) => {
 							lib.swalSuccess("Successfully changed the status of letter request");
 
-							button.removeAttribute("disabled");
-							button.innerHTML = `<i class="fa fa-thumbs-down"></i>`;
-
 							this.$emit('reload');
 						})
 						.catch((error) => {
 							lib.swalError(error.message);
-
-							button.removeAttribute("disabled");
-							button.innerHTML = innerHTML;
 						});
 
 					return;
@@ -181,9 +162,8 @@
 
 				if (action === 'deny-item') {
 					this.rejectedId = data.id;
+
 					$("#letterRequestRejectReasonModal").modal("show");
-					button.removeAttribute("disabled");
-					button.innerHTML = innerHTML;
 
 					return;
 				}
@@ -194,9 +174,6 @@
 
 					this.$refs.letterRequestModal.populateData(data);
 					$("#letterRequestModal").modal("show");
-
-					button.removeAttribute("disabled");
-					button.innerHTML = innerHTML;
 
 					return;
 				}
@@ -218,8 +195,6 @@
 								lib.swalError(error.message);
 							});
 					}
-					button.removeAttribute("disabled");
-					button.innerHTML = innerHTML;
 				})
 			}
 		},
@@ -229,9 +204,5 @@
 				return `/admin/letter-requests`;
 			},
 		},
-
-		// created() {
-		// 	// this.$events.$on('reload-table', eventData => this.onReloadTable());
-		// }
 	}
 </script>

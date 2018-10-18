@@ -49,7 +49,7 @@ class Collector extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['full_name', 'status'];
+    protected $appends = ['full_name', 'status', 'commission_structure'];
 
     /**
      * convert columns to their appropriate types
@@ -143,9 +143,9 @@ class Collector extends Authenticatable
      * @param $value
      * @return mixed
      */
-    public function getCommissionStructureAttribute($value)
+    public function getCommissionStructureAttribute()
     {
-        return collect(config('unifin.collector_commission_structures'))[$value];
+        return collect(config('unifin.collector_commission_structures'))[$this->commission_structure_id];
     }
 
     /**

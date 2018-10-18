@@ -34,7 +34,7 @@ class CollectorBatchListsController extends Controller
      */
     public function index($id, AdminCollectorFilter $adminCollectorFilter)
     {
-        if (request()->wantsJson() || request()->has('import')) {
+        if (request()->wantsJson() || request()->has('export')) {
 
             $collectors = Collector::tableFilters($adminCollectorFilter)
                 ->where('batch_id', $id)
@@ -45,7 +45,7 @@ class CollectorBatchListsController extends Controller
                 return response($this->paginate($collectors), 200);
             }
 
-            if (request()->import == 'excel') {
+            if (request()->export == 'excel') {
 
                 $fileName = CollectorBatch::find($id)->name;
 
@@ -67,11 +67,11 @@ class CollectorBatchListsController extends Controller
                     "username",
                     ["team_leader", "full_name"],
                     ["sub_site", "name"],
-                    "commission_structure_id",
+                    "commission_structure",
                     "start_date"
                 ]);
 
-                (new Report)->makeSimpleXlsxFromModel($collectors, $fileName,$headers, $columns);
+                (new Report)->makeSimpleXlsxFromCollection($collectors->get(), $fileName,$headers, $columns);
 
                 return;
             }

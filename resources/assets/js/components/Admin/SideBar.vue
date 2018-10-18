@@ -96,6 +96,24 @@
                         }
 
                     },
+                    Closures: {
+						href: '#',
+                        text: 'Closures',
+                        icon: 'fa fa-times-circle-o',
+                        permission: 'view closure-report',
+                        children: {
+							SifClosures: {
+								href: '/admin/closures/sif-closures',
+                                icon: 'fa fa-minus-circle',
+                                text: 'SIF Closures',
+                            },
+                            Recalls: {
+								href: '/admin/closures/recalls',
+                                icon: 'fa fa-times',
+                                text: 'Recalls'
+                            }
+                        }
+                    },
                     Collectors: {
 						href: '#',
                         text: 'Collectors',

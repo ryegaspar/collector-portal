@@ -42,7 +42,7 @@
             },
 
             exportExcel() {
-				window.location.href = `/admin/collector-batches/${this.id}/list?import=excel`;
+				window.location.href = `/admin/collector-batches/${this.id}/list?export=excel`;
 				// axios({
                 //     url: `/admin/collector-batches/${this.id}/list?import=excel`,
                 //     method: 'get',

@@ -80,6 +80,8 @@
 			this.$events.$on('filter2-change', eventData => this.onFilter2Change(eventData));
 			this.$events.$on('filter3-change', eventData => this.onFilter3Change(eventData));
 			this.$events.$on('filter4-change', eventData => this.onFilter4Change(eventData));
+
+			this.$events.$on('download-file', eventData => this.onDownload(eventData));
 		},
 
 		render(h) {
@@ -229,13 +231,21 @@
             onFilter4Change(filter) {
 				this.appendParams.filter4 = filter;
 				Vue.nextTick(() => this.$refs.vuetable.refresh());
+            },
+
+            onDownload(file) {
+				this.appendParams.download = file;
+				Vue.nextTick(() => {
+					this.$refs.vuetable.refresh();
+					delete this.appendParams.download;
+				});
             }
 		},
 
 		created() {
 			this.$parent.$on('reload', () => {
 				this.$refs.vuetable.reload();
-			})
+			});
 		},
 
 		events: {

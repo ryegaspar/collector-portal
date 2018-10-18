@@ -45,6 +45,37 @@ return [
         'Philippine Manager',
         'Training Manager',
         'None'
+    ],
+
+    'client_lists' => [
+        'AFF' => 'American First Finance',
+        'ARA' => 'Autumn Holdings LLC',
+        'ARS' => 'Asset Recovery Solutions LLC',
+        'ASG' => 'Acceptance Solutions Group',
+        'CAP' => 'Capio',
+        'CCS' => 'Complete Credit Solutions Inc.',
+        'CLA' => 'Community Loans of America Inc.',
+        'CSD' => 'Cascade Receivable Management LLC',
+        'DEV' => 'Deville Asset Management',
+        'DMP' => 'Debt Management Partners',
+        'DNF' => 'Diverse Funding Associates LLC',
+        'EOS' => 'EOS USA',
+        'FAM' => 'First Financial Portfolio Services LLC',
+        'GPR' => 'Georgia Prep Sports Academy Inc.',
+        'GSD' => 'GS Holdings LLC',
+        'HCU' => 'Harvard University Employees Credit Union',
+        'HSF' => 'HS Financial Group',
+        'HVS' => 'Harvest Strategy Group, Inc.',
+        'JCA' => 'Jefferson Capital Systems, LLC',
+        'LAU' => 'Laureate',
+        'LRR' => 'Link Revenue Resources, LLC',
+        'LTD' => 'LTD Financial Services',
+        'MDL' => 'Medical Diagnostics Laboratory LLC',
+        'MUS' => 'Musicians Institute',
+        'NCA' => 'National Credit Adjusters',
+        'ORI' => 'Orion Portfolios Services LLC',
+        'PEN' => 'Pendrick Capital Partners',
+        'PLS' => 'PLS Financial Services',
     ]
 
 ];

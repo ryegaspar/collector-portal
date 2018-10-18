@@ -46,7 +46,7 @@ export default [
 		visible: true
 	},
 	{
-		name: 'commission_structure_id',
+		name: 'commission_structure',
 		sortField: 'commission_structure_id',
 		title: 'Commission',
 		titleClass: 'text-center',

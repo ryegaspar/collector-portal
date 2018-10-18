@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\CollectorAccountFilter;
+use Unifin\TableFilters\TableFilter;
 
 class DBR extends Model
 {
@@ -54,8 +55,6 @@ class DBR extends Model
      */
     protected $hidden = [
         'DBR_AGENCY',
-        'DBR_CLIENT',
-        'DBR_CLI_REF_NO',
         'DBR_ACN',
         'DBR_NEXT_LTR_DATE',
         'DBR_NEXT_LTR_NO',
@@ -212,6 +211,46 @@ class DBR extends Model
         'client', 'last_worked', 'last_transaction'];
 
     /**
+     * A dbr has many trs.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function trs()
+    {
+        return $this->hasMany(TRS::class, 'TRS_DBR_NO', 'DBR_NO');
+    }
+
+    /**
+     * A dbr has many chk.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function chk()
+    {
+        return $this->hasMany(CHK::class, 'CHK_DBR_NO', 'DBR_NO');
+    }
+
+    /**
+     * A dbr has many udw.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function udw()
+    {
+        return $this->hasMany(UDW::class, 'UDW_DBR_NO', 'DBR_NO');
+    }
+
+    /**
+     * A dbr has many clt.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function clt()
+    {
+        return $this->hasMany(CLT::class, 'CLT_NO', 'DBR_CLIENT');
+    }
+
+    /**
      * accessor to full name, capitalize first word, capitalize first word, capitalize first word, capitalize first word
      *
      * @return string
@@ -299,12 +338,12 @@ class DBR extends Model
      * apply filters to relevant dbr
      *
      * @param $query
-     * @param CollectorAccountFilter $paginate
+     * @param TableFilter $tableFilter
      * @return mixed
      */
-    public function scopeTableFilters($query, CollectorAccountFilter $paginate)
+    public function scopeTableFilters($query, TableFilter $tableFilter)
     {
-       return $paginate->apply($query);
+       return $tableFilter->apply($query);
     }
 
     /**

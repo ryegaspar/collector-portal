@@ -89,6 +89,16 @@
                         </div>
                         <div class="filter-bar form-inline">
                             <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
+                                <label class="col-md-3"><strong>Closure Reports</strong></label>
+                                <div class="btn-group input-group col-sm-2">
+                                    <input type="checkbox" class="form-check-input"
+                                           v-model="permissions['view closure-report']">
+                                    <label class="form-check-label">view</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-bar form-inline">
+                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
                                 <label class="col-md-3"><strong>Collector</strong></label>
                                 <div class="btn-group input-group col-sm-2">
                                     <input type="checkbox" class="form-check-input"

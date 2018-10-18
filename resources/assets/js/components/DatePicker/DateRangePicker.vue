@@ -162,7 +162,7 @@
 				}
 			},
 			clickedApply() {
-				this.open = false
+				this.open = false;
 				// this.$emit('update', {startDate: this.start, endDate: this.end})
 				this.$events.fire('date-change', moment(this.start).format("YYYY-MM-DD"), moment(this.end).format("YYYY-MM-DD"));
 			},

@@ -45,6 +45,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish')->name('publish-script');
         Route::resource('scripts', 'ScriptsController');
 
+        Route::resource('closures/sif-closures', 'SifClosuresController');
+
         Route::patch('collectors/{collector}/reset-password', 'CollectorResetPasswordController@update')->name('collector.reset-password');
         Route::patch('collectors/{collector}/toggle-active', 'CollectorToggleActiveController@update')->name('collector.toggle-active');
         Route::get('collectors/collector-options', 'CollectorOptionsController@index')->name('collector-option-lists');
@@ -60,7 +62,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::get('roles', 'RoleListsController@index')->name('role');
         Route::resource('roles-permissions', 'RolesPermissionsController')->only(['index', 'show', 'update']);
 
-        Route::resource('sites', 'SitesController')->except(['create', 'destroy', 'edit']);
+        Route::resource('sites', 'SitesController')->only(['index', 'store', 'update']);
 
         Route::resource('sub-sites', 'SubSitesController')->only(['index', 'store', 'update']);
     });
@@ -104,5 +106,5 @@ Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-pl
 Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-plc.view');
 
 //TODO: remove this!
-Route::get('testing', function () {
-});
+//Route::get('testing', function () {
+//});

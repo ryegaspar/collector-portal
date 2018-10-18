@@ -57,4 +57,14 @@ class RawQueries
 
         return [$transactions, $pdc];
     }
+
+    public static function SifClosures($startDate, $endDate)
+    {
+        /*
+         *  SELECT "DBR"."DBR_NO", "DBR"."DBR_CLI_REF_NO", "DBR"."DBR_ASSIGN_AMT", "DBR"."DBR_RECVD_TOT", "TRS"."TRS_TRUST_CODE", "TRS"."TRS_TRX_DATE_O", "UDW"."UDW_FLD1", "UDW"."UDW_FLD2", "UDW"."UDW_FLD3", "UDW"."UDW_SEQ", "DBR"."DBR_STATUS", "CLT"."CLT_NOTE_TO_COLL", "DBR"."DBR_CLIENT", "DBR"."DBR_ASSIGN_DATE_O"
+ FROM   ("tiger"."CDS"."UDW" "UDW" INNER JOIN ("tiger"."CDS"."TRS" "TRS" INNER JOIN "tiger"."CDS"."DBR" "DBR" ON "TRS"."TRS_DBR_NO"="DBR"."DBR_NO") ON "UDW"."UDW_DBR_NO"="DBR"."DBR_NO") INNER JOIN "tiger"."CDS"."CLT" "CLT" ON "DBR"."DBR_CLIENT"="CLT"."CLT_NO"
+ WHERE  "UDW"."UDW_SEQ"='0ST' AND "TRS"."TRS_TRUST_CODE"<>0 AND  NOT ("DBR"."DBR_STATUS"='DUP' OR "DBR"."DBR_STATUS"='PIF' OR "DBR"."DBR_STATUS"='SIF' OR "DBR"."DBR_STATUS"='XCR') AND ("TRS"."TRS_TRX_DATE_O">={ts '2018-10-01 00:00:00'} AND "TRS"."TRS_TRX_DATE_O"<{ts '2018-10-15 00:00:01'})
+         */
+
+    }
 }
