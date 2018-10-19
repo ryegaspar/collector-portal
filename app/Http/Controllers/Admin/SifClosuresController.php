@@ -10,7 +10,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Unifin\TableFilters\AdminSifClosureFilter;
 
 class SifClosuresController extends Controller
 {
@@ -64,10 +63,12 @@ class SifClosuresController extends Controller
             ->select(DB::raw('DBR_NO, DBR_CLI_REF_NO, DBR_STATUS, DBR_RECVD_TOT, DBR_NAME1, DBR_CLIENT, DBR_CL_MISC_1, UDW_FLD1, UDW_FLD2, UDW_FLD3, (SELECT COUNT(*) FROM CDSMSC.CHK WHERE CDS.DBR.DBR_NO = CDSMSC.CHK.CHK_DBR_NO) as [chk_count]'))
             ->whereRaw("(DBR_NO LIKE ? OR DBR_CLIENT LIKE ?) AND EXISTS (SELECT * FROM CDS.TRS WHERE CDS.DBR.DBR_NO = CDS.TRS.TRS_DBR_NO AND TRS_TRUST_CODE <> ? AND TRS_TRX_DATE_O BETWEEN ? and ?) AND DBR_STATUS NOT IN (?, ?, ?, ?)",
                 ["%{$request->search}%", "%{$request->search}%", 0, $startDate, $endDate, "DUP", "PIF", "SIF", "XCR"])
-            ->orderBy($sortCol, $sortDir)->get()->toArray();
+            ->orderBy($sortCol, $sortDir)->get();
+
+        $accountsWithTransactions = json_decode(json_encode($accountsWithTransactions), true);
 
         $sifed = collect($accountsWithTransactions)->filter(function ($item) {
-            return (float)$item->DBR_RECVD_TOT == (float)$item->UDW_FLD1 && $item->UDW_FLD3 == 'SIF';
+            return (float)$item['DBR_RECVD_TOT'] == (float)$item['UDW_FLD1'] && $item['UDW_FLD3'] == 'SIF';
         });
 
         return $this->present($sifed);
@@ -98,7 +99,7 @@ class SifClosuresController extends Controller
             $columns = collect([
                 'DBR_NO',
                 'DBR_CLI_REF_NO',
-                'full_name',
+                'DBR_NAME1',
                 'DBR_STATUS',
                 'DBR_CL_MISC_1',
                 'chk_count'
