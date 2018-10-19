@@ -18,7 +18,7 @@ class ViewUdwSt extends Model
      *
      * @var string
      */
-    protected $table = 'UFN.UDW0ST';
+    protected $table = 'UFN.UDW_0ST';
 
     /**
      * define the primary key for the table
