@@ -241,6 +241,16 @@ class DBR extends Model
     }
 
     /**
+     * A dbr has many udwst.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function viewUdwSt()
+    {
+        return $this->hasMany(ViewUdwSt::class, 'UDW_DBR_NO', 'DBR_NO');
+    }
+
+    /**
      * A dbr has many clt.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

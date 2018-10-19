@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tiger\DBR;
 use App\Unifin\Classes\Report;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Unifin\TableFilters\AdminSifClosureFilter;
 
 class SifClosuresController extends Controller
@@ -25,15 +26,15 @@ class SifClosuresController extends Controller
     /**
      * Display script page.
      *
-     * @param AdminSifClosureFilter $adminSifClosureFilter
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function index(AdminSifClosureFilter $adminSifClosureFilter)
+    public function index(Request $request)
     {
-        if (request()->wantsJson() || request()->has('export')) {
-            $response = $this->getSifedAccounts($adminSifClosureFilter);
+        if ($request->wantsJson() || $request->has('export')) {
+            $response = $this->getSifedAccounts($request);
 
             return response($response, 200);
         }
@@ -44,50 +45,29 @@ class SifClosuresController extends Controller
     /**
      * Get SIFed accounts.
      *
-     * @param $adminSifClosureFilter
+     * @param $request
      * @return LengthAwarePaginator|void
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    protected function getSifedAccounts($adminSifClosureFilter)
+    protected function getSifedAccounts($request)
     {
-        if (request()->has('date')) {
-            list($startDate, $endDate) = explode('|', request()->date);
-            $startDate = Carbon::parse($startDate);
-            $endDate = Carbon::parse($endDate);
-        }
+        list($startDate, $endDate) = explode('|', $request->date);
+        $startDate = Carbon::parse($startDate);
+        $endDate = Carbon::parse($endDate);
 
-        $accountsWithTransactions = DBR::tableFilters($adminSifClosureFilter)
-            ->select([
-                'DBR_NO',
-                'DBR_CLI_REF_NO',
-                'DBR_STATUS',
-                'DBR_RECVD_TOT',
-                'DBR_NAME1',
-                'DBR_CLIENT',
-                'DBR_CL_MISC_1'
-            ])
-            ->whereHas('trs', function ($query) use ($startDate, $endDate) {
-                $query->where('TRS_TRUST_CODE', '<>', 0)
-                    ->whereBetween('TRS_TRX_DATE_O', [$startDate, $endDate]);
-            })
-            ->whereNotIn('DBR_STATUS', ['DUP', 'PIF', 'SIF', 'XCR'])
-            ->with([
-                'udw' => function ($query) {
-                    $query->select('UDW_DBR_NO', 'UDW_SEQ', 'UDW_FLD1', 'UDW_FLD2', 'UDW_FLD3')
-                        ->where('UDW_SEQ', '0ST');
-                }
-            ])
-            ->withCount('chk' )
-            ->get()->toArray();
+        list($sortCol, $sortDir) = explode('|', $request->sort);
+
+        $accountsWithTransactions = DB::connection('sqlsrv2')
+            ->table('CDS.DBR')
+            ->leftJoin('UFN.UDW0ST', 'CDS.DBR.DBR_NO', '=', 'UFN.UDW0ST.UDW_DBR_NO')
+            ->select(DB::raw('DBR_NO, DBR_CLI_REF_NO, DBR_STATUS, DBR_RECVD_TOT, DBR_NAME1, DBR_CLIENT, DBR_CL_MISC_1, UDW_FLD1, UDW_FLD2, UDW_FLD3, (SELECT COUNT(*) FROM CDSMSC.CHK WHERE CDS.DBR.DBR_NO = CDSMSC.CHK.CHK_DBR_NO) as [chk_count]'))
+            ->whereRaw("(DBR_NO LIKE ? OR DBR_CLIENT LIKE ?) AND EXISTS (SELECT * FROM CDS.TRS WHERE CDS.DBR.DBR_NO = CDS.TRS.TRS_DBR_NO AND TRS_TRUST_CODE <> ? AND TRS_TRX_DATE_O BETWEEN ? and ?) AND DBR_STATUS NOT IN (?, ?, ?, ?)",
+                ["%{$request->search}%", "%{$request->search}%", 0, $startDate, $endDate, "DUP", "PIF", "SIF", "XCR"])
+            ->orderBy($sortCol, $sortDir)->get()->toArray();
 
         $sifed = collect($accountsWithTransactions)->filter(function ($item) {
-            if (! empty($item['udw'])) {
-                return (float)$item['DBR_RECVD_TOT'] == (float)$item['udw'][0]['UDW_FLD1'] &&
-                    $item['udw'][0]['UDW_FLD3'] == 'SIF';
-            }
-
-            return false;
+            return (float)$item->DBR_RECVD_TOT == (float)$item->UDW_FLD1 && $item->UDW_FLD3 == 'SIF';
         });
 
         return $this->present($sifed);
@@ -129,7 +109,7 @@ class SifClosuresController extends Controller
             return;
         }
 
-        $perPage = request()->has('per_page') ? (int) request()->per_page : 25;
+        $perPage = request()->has('per_page') ? (int)request()->per_page : 25;
 
         return $this->paginate($collection, $perPage);
     }

@@ -16,11 +16,19 @@ export default [
 		visible: true,
 	},
 	{
-		name: 'full_name',
+		name: 'DBR_NAME1',
+		sortField: 'DBR_NAME1',
 		title: 'Name',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
 		visible: true,
+		callback: function (value) {
+			let str = value.toLowerCase();
+			return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+				function(s){
+					return s.toUpperCase();
+				});
+		}
 	},
 	{
 		name: 'DBR_STATUS',
@@ -39,12 +47,19 @@ export default [
 		visible: false
 	},
 	{
-		name: 'client',
-		sortField: 'DBR_CLIENT',
+		name: 'DBR_CL_MISC_1',
+		sortField: 'DBR_CL_MISC_1',
 		title: 'Client',
 		titleClass: 'text-center',
 		dataClass: 'text-center',
 		visible: true,
+		callback: function (value) {
+			let str = value.toLowerCase();
+			return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+				function(s){
+					return s.toUpperCase();
+				});
+		}
 	},
 	{
 		name: 'chk_count',
