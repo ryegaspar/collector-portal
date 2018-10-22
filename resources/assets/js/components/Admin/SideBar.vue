@@ -140,31 +140,39 @@
 						icon: 'fa fa-user-secret',
 						permission: 'read admin'
 					},
-                    RolesPermissions: {
-						href: '/admin/roles-permissions',
-                        text: 'Roles & Permissions',
-                        icon: 'fa fa-lock',
-                        permission: 'read roles_permission'
-
-                    },
-                    Sites: {
+                    Settings: {
 						href: '#',
-                        text: 'Unifin Sites',
-                        icon: 'fa fa-sitemap',
-                        permission: 'read site',
+                        text: 'Settings',
+                        icon: 'fa fa-cog',
+                        permission: 'read roles_permission',
                         children: {
-							Site: {
-								href: '/admin/sites',
-								icon: 'fa fa-object-group',
-								text: 'Sites'
+							RolesPermissions: {
+								href: '/admin/roles-permissions',
+								text: 'Roles & Permissions',
+								icon: 'fa fa-lock',
+								permission: 'read roles_permission'
+
 							},
-                            SubSite: {
-								href: '/admin/sub-sites',
-                                icon: 'fa fa-object-ungroup',
-                                text: 'Sub Sites'
-                            }
+							Sites: {
+								href: '#',
+								text: 'Unifin Sites',
+								icon: 'fa fa-sitemap',
+								permission: 'read site',
+								children: {
+									Site: {
+										href: '/admin/sites',
+										icon: 'fa fa-object-group',
+										text: 'Sites'
+									},
+									SubSite: {
+										href: '/admin/sub-sites',
+										icon: 'fa fa-object-ungroup',
+										text: 'Sub Sites'
+									}
+								}
+							}
                         }
-                    }
+                    },
 					// item2: {
 					// href: '#',
 					//     text: 'Item 2',

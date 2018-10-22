@@ -27,8 +27,13 @@ class CollectorToggleActiveController extends Controller
     {
         if (is_null($collector->date_terminated))
             $collector->date_terminated = new Carbon;
-        else
+        else {
+            $activeCollectors = Collector::where('desk', $collector->desk)->whereNull('date_terminated')->count();
+            if (!!$activeCollectors)
+                return response([], 409);
+
             $collector->date_terminated = null;
+        }
 
         $collector->save();
         return response([], 201);

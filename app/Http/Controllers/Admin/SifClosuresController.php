@@ -68,7 +68,14 @@ class SifClosuresController extends Controller
         $accountsWithTransactions = json_decode(json_encode($accountsWithTransactions), true);
 
         $sifed = collect($accountsWithTransactions)->filter(function ($item) {
-            return (float)$item['DBR_RECVD_TOT'] == (float)$item['UDW_FLD1'] && $item['UDW_FLD3'] == 'SIF';
+            $matches = [];
+            $udwFld1 = 0;
+
+            preg_match('/[^\$+]?(\d+[,]?\d*\.?\d+?)$/', $item['UDW_FLD1'], $matches);
+            if ($matches)
+                $udwFld1 = str_replace(',', '', $matches[0]);
+
+            return (float)$item['DBR_RECVD_TOT'] == (float)$udwFld1 && $item['UDW_FLD3'] == 'SIF';
         });
 
         return $this->present($sifed);

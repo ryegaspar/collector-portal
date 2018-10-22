@@ -19,7 +19,7 @@ class CreateLetterRequestTypesTable extends Migration
         Schema::create('letter_request_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

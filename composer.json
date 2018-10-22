@@ -11,7 +11,8 @@
 		"laravel/tinker": "^1.0",
 		"phpoffice/phpspreadsheet": "^1.4",
 		"spatie/laravel-permission": "^2.13",
-		"unisharp/laravel-filemanager": "v2.0.0-alpha4"
+		"unisharp/laravel-filemanager": "v2.0.0-alpha4",
+		"doctrine/dbal":"v2.8.0"
 	},
 	"require-dev": {
 		"beyondcode/laravel-query-detector": "^0.5.0",
