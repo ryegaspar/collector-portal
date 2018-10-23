@@ -102,6 +102,11 @@
                         icon: 'fa fa-times-circle-o',
                         permission: 'view closure-report',
                         children: {
+							ClosedAccountsPdc: {
+								href: '/admin/closures/closed-accounts-pdc',
+                                icon: 'fa fa-cc',
+                                text: 'Closed Accounts PDC'
+                            },
 							SifClosures: {
 								href: '/admin/closures/sif-closures',
                                 icon: 'fa fa-minus-circle',

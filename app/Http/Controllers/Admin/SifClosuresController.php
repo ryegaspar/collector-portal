@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class SifClosuresController extends Controller
 {
     /**
-     * UsersController constructor.
+     * SifClosuresController constructor.
      */
     public function __construct()
     {

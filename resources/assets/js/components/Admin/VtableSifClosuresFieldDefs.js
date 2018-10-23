@@ -23,7 +23,7 @@ export default [
 		dataClass: 'text-center',
 		visible: true,
 		callback: function (value) {
-			let str = value.toLowerCase();
+			let str = value.toLowerCase().replace(",", ", ");
 			return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
 				function(s){
 					return s.toUpperCase();

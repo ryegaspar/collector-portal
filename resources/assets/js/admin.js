@@ -35,6 +35,7 @@ Vue.component('letter-request-types', require('./components/Admin/LetterRequestT
 Vue.component('scripts', require('./components/Admin/Scripts'));
 Vue.component('script-create-edit', require('./components/Admin/ScriptCreateEdit'));
 Vue.component('sif-closures', require('./components/Admin/SifClosures'));
+Vue.component('closed-accounts-pdc', require('./components/Admin/ClosedAccountsPdc'));
 Vue.component('collectors', require('./components/Admin/Collectors'));
 Vue.component('collector-batches', require('./components/Admin/CollectorBatches'));
 Vue.component('collector-batch-lists', require('./components/Admin/CollectorBatchLists'));

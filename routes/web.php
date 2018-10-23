@@ -46,6 +46,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('scripts', 'ScriptsController');
 
         Route::get('closures/sif-closures', 'SifClosuresController@index')->name('closures.sif-closures');
+        Route::get('closures/closed-accounts-pdc', 'ClosedAccountsPdcController@index')->name('closures.closed-accounts-pdc');
 
         Route::patch('collectors/{collector}/reset-password', 'CollectorResetPasswordController@update')->name('collector.reset-password');
         Route::patch('collectors/{collector}/toggle-active', 'CollectorToggleActiveController@update')->name('collector.toggle-active');
