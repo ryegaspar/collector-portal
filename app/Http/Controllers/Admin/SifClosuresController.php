@@ -23,7 +23,7 @@ class SifClosuresController extends Controller
     }
 
     /**
-     * Display script page.
+     * Display listing of the resource.
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

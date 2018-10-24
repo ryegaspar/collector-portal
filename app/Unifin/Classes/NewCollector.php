@@ -136,7 +136,7 @@ class NewCollector
      */
     protected function lynxId()
     {
-        $username = $maybe_username = strtolower($this->first_name[0] . str_replace(" ", "", $this->last_name));
+        $username = $maybe_username = strtolower($this->first_name[0] . str_slug($this->last_name, ''));
         $next = 2;
 
         while (Collector::where('username', '=', $username)->first()) {
