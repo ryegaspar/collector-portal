@@ -7,6 +7,7 @@
 	<!-- Main content -->
 	<main class="main">
 		<div class="container-fluid">
+			<dashboard :Totals="{{ $todaysTotals }}" class="mt-md-4"></dashboard>
 		</div>
 	</main>
 @endsection
