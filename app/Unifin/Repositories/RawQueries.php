@@ -29,8 +29,8 @@ class RawQueries
     {
         $todaysTotals = DB::connection('sqlsrv2')
             ->table('CDSMSC.CHK')
-            ->innerJoin('CDS.USR', 'USR.USR_CODE', '=', 'CHK.CHK_USERID')
-			->innerJoin('CDS.UGP', 'UGP.UGP_CODE', '=', 'USR.USR_GROUP')
+            ->join('CDS.USR', 'USR.USR_CODE', '=', 'CHK.CHK_USERID')
+			->join('CDS.UGP', 'UGP.UGP_CODE', '=', 'USR.USR_GROUP')
             ->select(DB::raw("COALESCE(UGP.UGP_DESC, 'Total') as UGP_DESC,
 			SUM(IIF(CHK_POST_DATE_O = CAST(GETDATE() as date), CHK_CHECK_AMOUNT, 0.00)) as 'GFT',
 			SUM(IIF(DATEPART(m, CHK_POST_DATE_O) = DATEPART(m ,GETDATE()) AND DATEPART(yyyy, CHK_POST_DATE_O) = DATEPART(yyyy,GETDATE()), CHK_CHECK_AMOUNT, 0.00)) as 'CurrentMonth',
