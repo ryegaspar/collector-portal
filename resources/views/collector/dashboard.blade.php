@@ -9,5 +9,8 @@
 		<div class="container-fluid">
 			<dashboard :Summary="{{ $accountSummary }}" class="mt-md-4"></dashboard>
 		</div>
+		<div class="container-fluid">
+			<dashboard :Totals="{{ $todaysTotals }}" class="mt-md-4"></dashboard>
+		</div>
 	</main>
 @endsection
