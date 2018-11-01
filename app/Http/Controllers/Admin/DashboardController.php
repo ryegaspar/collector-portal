@@ -64,25 +64,25 @@ class DashboardController extends Controller
 
             $data[$group]['currentMonth'] = $chkToday->sum(function ($item) use ($group) {
                 $currentMonth = Carbon::now()->firstOfMonth();
-                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($currentMonth)))
+                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($currentMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($currentMonth)))
                     return $item['CHK_CHECK_AMOUNT'];
             });
 
             $data[$group]['nextMonth'] = $chkToday->sum(function ($item) use ($group) {
                 $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
-                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth)))
+                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
                     return $item['CHK_CHECK_AMOUNT'];
             });
 
             $data[$group]['next30'] = $chkToday->sum(function ($item) use ($group) {
-                $startDate = Carbon::now();
+                $startDate = Carbon::now()->addDay(-1);
                 $endDate = Carbon::now()->addDay(30);
                 if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->between($startDate, $endDate)))
                     return $item['CHK_CHECK_AMOUNT'];
             });
 
             $data[$group]['next120'] = $chkToday->sum(function ($item) use ($group) {
-                $startDate = Carbon::now();
+                $startDate = Carbon::now()->addDay(-1);
                 $endDate = Carbon::now()->addDay(120);
                 if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->between($startDate, $endDate)))
                     return $item['CHK_CHECK_AMOUNT'];
