@@ -23,7 +23,6 @@ class DashboardController extends Controller
     public function index()
     {
         $accountSummary = RawQueries::UserAccountSummary();
-        $todaysTotals = RawQueries::AdminTodayTotals();
 
         return view('collector.dashboard', compact('accountSummary'), compact('todaysTotals'));
     }

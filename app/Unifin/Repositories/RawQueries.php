@@ -24,29 +24,6 @@ class RawQueries
 
         return $accountSummary;
     }
-    
-    public static function AdminTodayTotals()
-    {
-         $startDate = Carbon::parse('10/30/2018')->toDateString();
-    
-        $todaysTotals = DB::connection('sqlsrv2')
-            ->table('CDSMSC.CHK')
-            ->join('CDS.USR', 'USR.USR_CODE', '=', 'CHK.CHK_USERID')
-			->join('CDS.UGP', 'UGP.UGP_CODE', '=', 'USR.USR_GROUP')
-            ->select(DB::raw("UGP.UGP_DESC,
-			SUM(IIF(CHK_POST_DATE_O = CAST(GETDATE() as date), CHK_CHECK_AMOUNT, 0.00)) as 'GFT',
-			SUM(IIF(DATEPART(m, CHK_POST_DATE_O) = DATEPART(m ,GETDATE()) AND DATEPART(yyyy, CHK_POST_DATE_O) = DATEPART(yyyy,GETDATE()), CHK_CHECK_AMOUNT, 0.00)) as 'CurrentMonth',
-			SUM(IIF(DATEPART(m, CHK_POST_DATE_O) = DATEPART(m ,DATEADD(month, 1,GETDATE())) AND DATEPART(yyyy, CHK_POST_DATE_O) = DATEPART(yyyy ,DATEADD(month, 1,GETDATE())), CHK_CHECK_AMOUNT, 0.00)) as 'NextMonth',
-			SUM(IIF(CHK_POST_DATE_O <= CAST(GETDATE()+30 as date), CHK_CHECK_AMOUNT, 0.00)) as '30Day',
-			SUM(IIF(CHK_POST_DATE_O <= CAST(GETDATE()+90 as date), CHK_CHECK_AMOUNT, 0.00)) as '90Day',
-			SUM(CHK_CHECK_AMOUNT) as 'AllIn'"))
-            ->where('EntryDate', $startDate)
-            ->groupBy('UGP_DESC')
-            ->get();
-
-
-        return $todaysTotals;
-    }
 
     public static function UserMonthlyTransactions($request)
     {

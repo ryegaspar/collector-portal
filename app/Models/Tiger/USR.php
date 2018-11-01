@@ -81,6 +81,16 @@ class USR extends Authenticatable
     }
 
     /**
+     * USR belongs too a ugp.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function ugp()
+    {
+        return $this->belongsTo(UGP::class, 'USR_GROUP', 'UGP_CODE');
+    }
+
+    /**
      * Make CollectOne User.
      *
      * @param $collector

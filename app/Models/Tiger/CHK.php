@@ -2,6 +2,7 @@
 
 namespace App\Models\Tiger;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class CHK extends Model
@@ -34,13 +35,28 @@ class CHK extends Model
      */
     public $incrementing = false;
 
+    public function scopeSetupToday($query)
+    {
+        return $query->whereDate('EntryDate', Carbon::now()->toDateString());
+    }
+
     /**
-     * UDW belongs to a dbr
+     * CHK belongs to a dbr
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function dbr()
     {
         return $this->belongsTo(DBR::class,'CHK_DBR_NO','DBR_NO');
+    }
+
+    /**
+     * CHK belongs to a usr
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function usr()
+    {
+        return $this->belongsTo(USR::class, 'CHK_USERID', 'USR_CODE');
     }
 }
