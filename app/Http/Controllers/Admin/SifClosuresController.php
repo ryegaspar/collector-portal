@@ -63,7 +63,8 @@ class SifClosuresController extends Controller
             ->select(DB::raw('DBR_NO, DBR_CLI_REF_NO, DBR_STATUS, DBR_RECVD_TOT, DBR_NAME1, DBR_CLIENT, DBR_CL_MISC_1, UDW_FLD1, UDW_FLD2, UDW_FLD3, (SELECT COUNT(*) FROM CDSMSC.CHK WHERE CDS.DBR.DBR_NO = CDSMSC.CHK.CHK_DBR_NO) as [chk_count]'))
             ->whereRaw("(DBR_NO LIKE ? OR DBR_CLIENT LIKE ?) AND EXISTS (SELECT * FROM CDS.TRS WHERE CDS.DBR.DBR_NO = CDS.TRS.TRS_DBR_NO AND TRS_TRUST_CODE <> ? AND TRS_TRX_DATE_O BETWEEN ? and ?) AND DBR_STATUS NOT IN (?, ?, ?, ?)",
                 ["%{$request->search}%", "%{$request->search}%", 0, $startDate, $endDate, "DUP", "PIF", "SIF", "XCR"])
-            ->orderBy($sortCol, $sortDir)->get();
+            ->orderBy($sortCol, $sortDir)
+            ->get();
 
         $accountsWithTransactions = json_decode(json_encode($accountsWithTransactions), true);
 

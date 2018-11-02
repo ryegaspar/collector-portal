@@ -9,8 +9,8 @@ class ApiController extends Controller
 {
     public function clients()
     {
-        $clients = config('unifin.client_lists');
+        $client_lists = config('unifin.client_lists');
 
-        return response(compact('clients'), 200);
+        return response(compact('client_lists'), 200);
     }
 }

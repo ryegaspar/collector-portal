@@ -47,6 +47,7 @@ class ClosedAccountsPdcController extends Controller
             ->select(DB::raw("DBR_NO, DBR_CLI_REF_NO, DBR_CLIENT, DBR_ASSIGN_AMT, DBR_STATUS, DBR_NAME1, DBR_CL_MISC_1, (SELECT COUNT(CDSMSC.CHK.CHK_DBR_NO) FROM CDSMSC.CHK WHERE CDS.DBR.DBR_NO = CDSMSC.CHK.CHK_DBR_NO) as chk_count"))
             ->whereRaw("(DBR_NO LIKE ? OR DBR_CLIENT LIKE ?) AND DBR_STATUS IN (?, ?, ?, ?)",
                 ["%{$request->search}%", "%{$request->search}%", "DUP", "PIF", "SIF", "XCR"])
+            ->where('CHK_STATUS', '<>', 'P')
             ->havingRaw("COUNT(CDSMSC.CHK.CHK_DBR_NO) > ?", [0])
             ->groupBy('DBR_NO', 'DBR_CLI_REF_NO', 'DBR_CLIENT', 'DBR_ASSIGN_AMT', 'DBR_STATUS', 'DBR_NAME1', 'DBR_CL_MISC_1')
             ->orderBy($sortCol, $sortDir)
