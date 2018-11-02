@@ -34,26 +34,21 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
 
-        Route::get('active-letter-request-types',
-            'ActiveLetterRequestTypesController@index')->name('active-letter-request-types');
-        Route::patch('letter-requests/{letter_request}/approve',
-            'LetterRequestFulfillController@approve')->name('letter-request.fulfill');
-        Route::patch('letter-requests/{letter_request}/deny',
-            'LetterRequestFulfillController@deny')->name('letter-request.deny');
+        Route::get('active-letter-request-types', 'ActiveLetterRequestTypesController@index')->name('active-letter-request-types');
+        Route::patch('letter-requests/{letter_request}/approve', 'LetterRequestFulfillController@approve')->name('letter-request.fulfill');
+        Route::patch('letter-requests/{letter_request}/deny', 'LetterRequestFulfillController@deny')->name('letter-request.deny');
         Route::resource('letter-requests', 'LetterRequestController')->except(['show', 'create', 'edit']);
 
-        Route::patch('letter-request-type/{letterRequestType}/toggle-active',
-            'LetterRequestTypeToggleActiveController@update')->name('letter-request-types');
+        Route::patch('letter-request-type/{letterRequestType}/toggle-active', 'LetterRequestTypeToggleActiveController@update')->name('letter-request-types');
         Route::resource('letter-request-type', 'LetterRequestTypeController')->only(['index', 'store', 'update']);
 
-        Route::patch('scripts/{script}/publish',
-            'ScriptPublishedController@update')->name('scripts.publish')->name('publish-script');
+        Route::patch('scripts/{script}/publish', 'ScriptPublishedController@update')->name('scripts.publish')->name('publish-script');
         Route::resource('scripts', 'ScriptsController');
 
         Route::get('closures/sif-closures', 'SifClosuresController@index')->name('closures.sif-closures');
-        Route::get('closures/closed-accounts-pdc',
-            'ClosedAccountsPdcController@index')->name('closures.closed-accounts-pdc');
+        Route::get('closures/closed-accounts-pdc', 'ClosedAccountsPdcController@index')->name('closures.closed-accounts-pdc');
         Route::get('closures/recalls', 'RecallController@index')->name('closures.recall');
+        Route::post('closures/recalls', 'RecallController@store')->name('closures.recall.store');
 
         Route::patch('collectors/{collector}/reset-password', 'CollectorResetPasswordController@update')->name('collector.reset-password');
         Route::patch('collectors/{collector}/toggle-active', 'CollectorToggleActiveController@update')->name('collector.toggle-active');
@@ -63,8 +58,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::get('collector-batches/{id}/list', 'CollectorBatchListsController@index')->name('collector-batch-lists');
         Route::resource('collector-batches', 'CollectorBatchesController')->only(['index', 'store', 'destroy']);
 
-        Route::patch('admins/{admin}/toggle-active',
-            'AdminToggleActiveController@update')->name('admins.toggle-active');
+        Route::patch('admins/{admin}/toggle-active', 'AdminToggleActiveController@update')->name('admins.toggle-active');
         Route::get('admins/admin-options', 'AdminOptionsController@index')->name('admin-options');
         Route::resource('admins', 'AdminsController')->only(['index', 'store', 'update']);
 

@@ -7,7 +7,6 @@ use App\Models\Lynx\LetterRequest;
 use App\Policies\AdjustmentPolicy;
 use App\Policies\LetterRequestPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
