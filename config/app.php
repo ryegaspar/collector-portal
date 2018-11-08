@@ -165,6 +165,8 @@ return [
          */
         \App\Providers\ComposerServiceProvider::class,
 
+        \App\Providers\UnifinServiceProvider::class,
+
     ],
 
     /*

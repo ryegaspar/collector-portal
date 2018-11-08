@@ -231,9 +231,8 @@
 
 					const url = window.URL.createObjectURL(new Blob([response.data]));
 					const link = document.createElement('a');
-					let date = moment(this.form.assigned_date).format("MM-DD-YYYY");
 					link.href = url;
-					link.setAttribute('download', `${this.form.client} - ${date}.xlsx`);
+					link.setAttribute('download', `${this.form.client} - recall.csv`);
 					document.body.appendChild(link);
 					link.click();
 				}).catch((error) => {

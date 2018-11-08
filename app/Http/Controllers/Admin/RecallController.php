@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Rules\RecallClassExists;
 use App\Unifin\Classes\Report;
-use App\Unifin\Repositories\Recalls\JcaRecallEntity;
+use App\Unifin\Repositories\Recalls\JcaRecall;
+use App\Unifin\Repositories\Recalls\RecallInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,13 +14,18 @@ use Illuminate\Support\Facades\Validator;
 
 class RecallController extends Controller
 {
+    protected $recall;
+
     /**
      * RecallController constructor.
+     * @param RecallInterface $recall
      */
-    public function __construct()
+    public function __construct(RecallInterface $recall)
     {
         $this->middleware(['auth:admin', 'activeUser']);
         $this->middleware('permission:view closure-report')->only('index');
+
+        $this->recall = $recall;
     }
 
     /**
@@ -52,72 +59,26 @@ class RecallController extends Controller
     {
         $this->validateRecall();
 
-        $last30 = Carbon::now()->subDay(30)->toDateString();
-
-        /*
-         * count_trs_last_30,
-         * , (SELECT COUNT(*) FROM CDS.TRS WHERE DBR.DBR_NO = TRS.TRS_DBR_NO AND cast([TRS_TRX_DATE_O] as date) > {$last30}) as count_trs_last_30
-         * XCR_CODE,
-         */
-        $headers = collect([
-            'DBR_CLI_REF_NO',
-            'ADR_NAME',
-            'DBR_NO',
-            'DBR_NAME1',
-            'DBR_ASSIGN_DATE_O',
-            'DBR_CLOSE_DATE_O',
-            'DBR_ASSIGN_AMT',
-            'DBR_RECVD_TOT',
-            'STS_DESC',
-            'DBR_COM_RATE',
-            'DBR_CLIENT',
-            'DBR_LAST_WORKED_O',
-            'DBR_STATUS',
-            'count_pdc',
-            'XCR_CODE'
-        ]);
-
-        $columns = collect([
-            'DBR_CLI_REF_NO',
-            'ADR_NAME',
-            'DBR_NO',
-            'DBR_NAME1',
-            'DBR_ASSIGN_DATE_O',
-            'DBR_CLOSE_DATE_O',
-            'DBR_ASSIGN_AMT',
-            'DBR_RECVD_TOT',
-            'STS_DESC',
-            'DBR_COM_RATE',
-            'DBR_CLIENT',
-            'DBR_LAST_WORKED_O',
-            'DBR_STATUS',
-            'count_pdc',
-            'XCR_CODE'
-        ]);
-
         if ($request->recall_method == 0) { // by date
-            $dateAssigned = Carbon::parse($request->assigned_date)->toDateString();
-
-            $accounts = DB::connection('sqlsrv2')
-                ->table('CDS.DBR')
-                ->select(DB::raw("DBR_CLI_REF_NO, (SELECT ADR_NAME FROM CDS.ADR WHERE DBR.DBR_NO = ADR.ADR_DBR_NO AND ADR.ADR_SEQ_NO = 'R2') as ADR_NAME, DBR_NO, DBR_NAME1, DBR_ASSIGN_DATE_O, DBR_CLOSE_DATE_O, DBR_ASSIGN_AMT, DBR_RECVD_TOT, STS.STS_DESC, DBR_COM_RATE, DBR_CLIENT, DBR_LAST_WORKED_O, DBR_STATUS, (SELECT COUNT(*) FROM CDSMSC.CHK WHERE DBR.DBR_NO = CHK.CHK_DBR_NO) as count_pdc, DBR_NO+'01XCR' as XCR_CODE"))
-                ->leftJoin('CDS.STS', 'DBR.DBR_STATUS', '=', 'STS.STS_CODE')
-                ->whereRaw('DBR_CLIENT LIKE ?', ["%{$request->client}%"])
-                ->whereDate('DBR_ASSIGN_DATE_O', $dateAssigned)
-                ->get();
-//                ->toArray();
-
-            $accounts = collect(json_decode(json_encode($accounts), true));
-
-            if ($accounts->isEmpty()) {
-                throw \Illuminate\Validation\ValidationException::withMessages(['client' => 'No results found']);
-            }
-
-            $fileName = "{$request->client} - {$dateAssigned}";
-
-            (new Report)->makeSimpleXlsxFromCollection($accounts, $fileName, $headers, $columns);
+            $this->recall
+                ->makeRecallByAssignedDate($request->client, Carbon::parse($request->assigned_date)->toDateString());
 
             return;
+        }
+
+        $fileName = $request->file('file_input')->getClientOriginalName();
+
+        $request->file('file_input')->storeAs('public\files\recalls', $fileName);
+
+        $filePath = public_path('storage\\files\\recalls\\' . $fileName);
+
+        if ($request->file_type == 0) { // generic
+            $this->recall->makeRecallByFileGeneric($request->client, $filePath, $request->generic_type);
+        }
+
+        return;
+
+        if ($request->recall_method == 0) { // by date
 
         } else { // by file
 
@@ -138,11 +99,6 @@ class RecallController extends Controller
                 'count_pdc',
                 'XCR_CODE'
             ]);
-
-            $request->file('file_input')->storeAs('public\files\recalls',
-                $request->file('file_input')->getClientOriginalName());
-
-            $filePath = public_path('storage\\files\\recalls\\' . $request->file('file_input')->getClientOriginalName());
 
             $handle = fopen($filePath, "r");
 
@@ -211,19 +167,30 @@ class RecallController extends Controller
                 });
 
             } else { // client specific format
-                $interface = '\\App\\Unifin\\Repositories\\Recalls\\' . ucfirst(strtolower($request->client)) . 'RecallInterface';
 
-                if (! interface_exists($interface)) {
-                    throw \Illuminate\Validation\ValidationException::withMessages(['client' => 'no defined format found']);
-                }
-
-                list($accountsStatus, $columns) = (new JcaRecallEntity)->generateReport();
+                list($accountsStatus, $columns) = (new JcaRecall)->generateReport($filePath);
             }
 
             $accounts = collect(json_decode(json_encode($accountsStatus), true));
 
-            (new Report)->makeSimpleXlsxFromCollection($accounts, $request->file('file_input')->getClientOriginalName(), $columns, $columns);
+            (new Report)->makeSimpleXlsxFromCollection($accounts, $request->file('file_input')->getClientOriginalName(),
+                $columns, $columns);
 
+//            $filename = $request->file('file_input')->getClientOriginalName();
+//
+//            $csvFileName = public_path('storage\\files\\recalls\\' . $filename . '.csv');
+//
+//            $fp = fopen($csvFileName, 'w');
+//
+//            fputcsv($fp, $columns->toArray());
+//
+//            $accounts->each(function ($item) use ($fp) {
+//                fputcsv($fp, $item);
+//            });
+//
+//            fclose($fp);
+//
+//            return response()->download($csvFileName);
         }
     }
 
@@ -254,6 +221,10 @@ class RecallController extends Controller
 
         $validator->sometimes('generic_type', ['required', 'numeric'], function ($input) {
             return $input->file_type == 0 && $input->recall_method == 1;
+        });
+
+        $validator->sometimes('client', [new RecallClassExists], function ($input) {
+            return $input->file_type == 1 && $input->recall_method == 1;
         });
 
         return $validator->validate();
