@@ -67,4 +67,17 @@ class RawQueries
          */
 
     }
+    public static function CollectorHoursWorked()
+    {
+        $hoursWorked = DB::connection('sqlsrv2')
+            ->table('UFN.CollectorHoursWorked')
+            ->select(DB::raw("[UGP_DESC] as name,count(USR_NAME) as number, sum([Time_Worked]) as time"))
+            ->groupBy('UFN.CollectorHoursWorked.UGP_DESC')
+            ->orderBy('UFN.CollectorHoursWorked.UGP_DESC', 'desc')
+            ->get();
+//            ->toSql();
+//        dd($hoursWorked);
+
+        return $hoursWorked;
+    }
 }
