@@ -70,15 +70,15 @@ class DebterPayment extends Model
             return 'never';
         }
 
-        if ((Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) <= 5) &&
-            (Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) >= 0)) {
-            return Carbon::parse($this->PAY_DATE_O)->diffForHumans();
-        }
-
-        if ((Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) >= -5) &&
-            (Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) < 0)) {
-            return Carbon::parse($this->PAY_DATE_O)->diffForHumans();
-        }
+//        if ((Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) <= 5) &&
+//            (Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) >= 0)) {
+//           return Carbon::parse($this->PAY_DATE_O)->diffForHumans();
+//        }
+//
+//        if ((Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) >= -5) &&
+//            (Carbon::parse($this->PAY_DATE_O)->diffInDays(Carbon::now()) < 0)) {
+//           return Carbon::parse($this->PAY_DATE_O)->diffForHumans();
+//        }
 
         return Carbon::parse($this->PAY_DATE_O)->toFormattedDateString();
     }
