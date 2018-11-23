@@ -8,6 +8,14 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-responsive-sm table-striped">
+                            <colgroup>
+                                <col>
+                                <col span="3" style="background-color:lightcyan;">
+                                <col span="3" style="background-color:lavender;">
+                                <col span="3" style="background-color:lightcyan;">
+                                <col span="3" style="background-color:lavender;">
+                                <col span="3" style="background-color:lightcyan;">
+                            </colgroup>
                             <thead>
                             <tr>
                                 <th>Collection Group</th>
@@ -61,6 +69,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">Collection Hours</h4>
+                        <object align="right"><a href="/admin/collector-hours" class="btn btn-info btn-md">Go to Detailed Hours</a></object>
                     </div>
                     <div class="card-body">
                         <table class="table table-responsive-sm table-striped">

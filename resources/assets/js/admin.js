@@ -30,6 +30,7 @@ Vue.component('login', require('./components/Admin/Login'));
 Vue.component('profile', require('./components/Admin/Profile'));
 
 Vue.component('dashboard', require('./components/Admin/Dashboard'));
+Vue.component('collector-hours', require('./components/Admin/CollectorHoursDetail'));
 Vue.component('adjustments', require('./components/Admin/Adjustments'));
 Vue.component('letter-requests', require('./components/Admin/LetterRequests'));
 Vue.component('letter-request-types', require('./components/Admin/LetterRequestTypes'));

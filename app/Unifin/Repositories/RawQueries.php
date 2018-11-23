@@ -80,4 +80,15 @@ class RawQueries
 
         return $hoursWorked;
     }
+    public static function CollectorHoursWorkedDetail()
+    {
+        $hoursWorkedDetail = DB::connection('sqlsrv2')
+            ->table('UFN.CollectorHoursWorked')
+            ->select(DB::raw("[UGP_DESC] as name, [USR_NAME] as collector, [Time_Worked] as time"))
+            ->orderBy('UFN.CollectorHoursWorked.UGP_DESC', 'desc')
+            ->get();
+//        dd($hoursWorkedDetail);
+
+        return $hoursWorkedDetail;
+    }
 }
