@@ -72,6 +72,7 @@ class RawQueries
         $hoursWorked = DB::connection('sqlsrv2')
             ->table('UFN.CollectorHoursWorked')
             ->select(DB::raw("[UGP_DESC] as name,count(USR_NAME) as number, sum([Time_Worked]) as time"))
+            ->where('Time_Worked', '>=',.5)
             ->groupBy('UFN.CollectorHoursWorked.UGP_DESC')
             ->orderBy('UFN.CollectorHoursWorked.UGP_DESC', 'desc')
             ->get();
@@ -85,6 +86,7 @@ class RawQueries
         $hoursWorkedDetail = DB::connection('sqlsrv2')
             ->table('UFN.CollectorHoursWorked')
             ->select(DB::raw("[UGP_DESC] as name, [USR_NAME] as collector, [Time_Worked] as time"))
+            ->where('Time_Worked', '>=',.5)
             ->orderBy('UFN.CollectorHoursWorked.UGP_DESC', 'desc')
             ->get();
 //        dd($hoursWorkedDetail);
