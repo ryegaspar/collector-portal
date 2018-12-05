@@ -96,6 +96,7 @@ Route::name('collector.')->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         Route::get('dashboard/transactions', 'DashboardTransactionController@index')->name('dashboard.transactions');
 
+        Route::get('collectorPDC', 'CollectorPDCController@index')->name('collectorPDC');
         Route::get('accounts', 'AccountsController@index')->name('accounts');
 
         Route::get('transactions', 'TransactionsController@index')->name('transactions');
