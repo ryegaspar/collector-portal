@@ -14,11 +14,14 @@
                                 <th>Collection Group</th>
                                 <th>Employee Name</th>
                                 <th>Total Hours Worked</th>
+                                <th>Current Goal</th>
                             </tr>
                             </thead>
                             <tbody id="collectorHours">
                                 <tr v-for="item in collectionhours">
                                     <td v-for="(place, index) in item" :class="getClass(index)">{{ toNumber(place, index) }}</td>
+                                    <td class="text-right" v-if="item.name.match(/Unifin.*/) == Unifin ">{{ (item.time*37.5).toFixed(2) }}</td>
+                                    <td class="text-right" v-else>{{ (item.time*125).toFixed(2) }}</td>
                                 </tr>
                             </tbody>
                         </table>

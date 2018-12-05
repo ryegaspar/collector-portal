@@ -107,29 +107,29 @@ class DashboardController extends Controller
                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($currentMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($currentMonth)))
                    return 1;
            }));
-
-            $data[$group]['nextMonth'] = $chkToday->sum(function ($item) use ($group) {
-                $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
-                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
-                    return $item['CHK_CHECK_AMOUNT'];
-            });
-
-             $data[$group]['nextMonthCount'] = $chkToday->sum(function ($item) use ($group) {
-                $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
-                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
-                    return 1;
-            });
-
-            $data[$group]['nextMonthAverage'] = $chkToday->sum(function ($item) use ($group) {
-                $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
-                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
-                    return $item['CHK_CHECK_AMOUNT'];
-            })/(0.00000000000001 + $chkToday->sum(function ($item) use ($group) {
-                $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
-                if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
-                    return 1;
-            }));
-
+// Next Month
+//           $data[$group]['nextMonth'] = $chkToday->sum(function ($item) use ($group) {
+//               $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
+//               if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
+//                   return $item['CHK_CHECK_AMOUNT'];
+//           });
+//
+//            $data[$group]['nextMonthCount'] = $chkToday->sum(function ($item) use ($group) {
+//               $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
+//               if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
+//                   return 1;
+//           });
+//
+//           $data[$group]['nextMonthAverage'] = $chkToday->sum(function ($item) use ($group) {
+//               $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
+//               if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
+//                   return $item['CHK_CHECK_AMOUNT'];
+//           })/(0.00000000000001 + $chkToday->sum(function ($item) use ($group) {
+//               $nextMonth = Carbon::now()->firstOfMonth()->addMonths(1);
+//               if (($item['Group'] == $group) && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameMonth($nextMonth))  && (Carbon::parse($item['CHK_POST_DATE_O'])->isSameYear($nextMonth)))
+//                   return 1;
+//           }));
+//
             $data[$group]['next30'] = $chkToday->sum(function ($item) use ($group) {
                 $startDate = Carbon::now()->addDay(-1);
                 $endDate = Carbon::now()->addDay(30);

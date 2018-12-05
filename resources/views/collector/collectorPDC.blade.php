@@ -33,8 +33,8 @@
 	   	    style="width:100%">
         <thead>
           <tr>
-			<th data-field="name" data-sortable="true" data-filter-control="select">Name</th>
-			<th data-field="desk" data-sortable="true" data-filter-control="select">Desk</th>
+			<th data-field="name" data-sortable="true" data-filter-control="input">Name</th>
+			<th data-field="desk" data-sortable="true" data-filter-control="input">Desk</th>
 			<th data-field="collectiongroup" data-filter-control="select" data-sortable="true">Group</th>
 			<th data-field="goal" data-sortable="true">Goal</th>
 			<th data-field="percentToGoal" data-sortable="true">Percent to Goal</th>
