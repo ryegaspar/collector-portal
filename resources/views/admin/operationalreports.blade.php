@@ -33,9 +33,11 @@
 	   	    style="width:100%">
         <thead>
           <tr>
-			<th data-field="name" data-filter-control="input" data-sortable="true">Name</th>
-			<th data-field="desk" data-filter-control="input" data-sortable="true">Desk</th>
+			<th data-field="name" data-sortable="true" data-filter-control="select">Name</th>
+			<th data-field="desk" data-sortable="true" data-filter-control="select">Desk</th>
 			<th data-field="collectiongroup" data-filter-control="select" data-sortable="true">Group</th>
+			<th data-field="goal" data-sortable="true">Goal</th>
+			<th data-field="percentToGoal" data-sortable="true">Percent to Goal</th>
 			<th data-field="mtdtransaction" data-sortable="true">{{ date('M') }} Transactions</th>
 			<th data-field="mtdpostdates" data-sortable="true">{{ date('M') }} Postdates</th>
 			<th data-field="mtdtotal" data-sortable="true">{{ date('F') }} Total</th>
@@ -48,19 +50,21 @@
         <tbody>
           @foreach($two as $two)
             <tr>
-              <td class="test {{$two->User_Group}}">{{$two->Collector_Name}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->Desk}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->User_Group}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->CurrentMonthTrs}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->CurrentMonthPDC}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->CurrentMonthTotal}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->NextMonth1Total}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->NextMonth2Total}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->NextMonth3Total}}</td>
-              <td class="test {{$two->User_Group}}">{{$two->NextMonth4Total}}</td>
+              <td class="StandardTableRow">{{$two->Collector_Name}}</td>
+              <td class="StandardTableRow">{{$two->Desk}}</td>
+              <td class="StandardTableRow">{{$two->User_Group}}</td>
+							<td class="StandardTableRow">{{$two->Goal}}</td>
+							<td class="StandardTableRow">{{ number_format(($two->CurrentMonthTotal/$two->Goal)*100, 2) }}</td>
+              <td class="StandardTableRow">{{$two->CurrentMonthTrs}}</td>
+              <td class="StandardTableRow">{{$two->CurrentMonthPDC}}</td>
+              <td class="StandardTableRow">{{$two->CurrentMonthTotal}}</td>
+              <td class="StandardTableRow">{{$two->NextMonth1Total}}</td>
+              <td class="StandardTableRow">{{$two->NextMonth2Total}}</td>
+              <td class="StandardTableRow">{{$two->NextMonth3Total}}</td>
+              <td class="StandardTableRow">{{$two->NextMonth4Total}}</td>
             </tr>
           @endforeach
-		</tbody>
+			</tbody>
 		</table>
 		</div>
 	</main>

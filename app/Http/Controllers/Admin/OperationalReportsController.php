@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tiger\COLPDC;
+use App\Models\Lynx\Collector;
 use Carbon\Carbon;
 use Unifin\Repositories\RawQueries;
 
@@ -25,6 +26,7 @@ class OperationalReportsController extends Controller
     public function index()
     {
         $two = COLPDC::all();
+       
         return view('admin.operationalreports')->with('two', $two);
     }
     
