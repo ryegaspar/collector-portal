@@ -41,6 +41,10 @@ class ResurgentSufMonthly implements ReportInterface
                 ->table('RCS.PDC')
                 ->select(DB::raw("*"))      
                 ->get();
+        $wor = DB::connection('sqlsrv2')
+                ->table('RCS.WOR')
+                ->select(DB::raw("*"))
+                ->get();
         
     //FHD Overall File Header       
         $report = '';
@@ -200,6 +204,30 @@ class ResurgentSufMonthly implements ReportInterface
             $report .= "\t".$itempdc->BankAccountNumber;
             $report .= "\t".$itempdc->CCAcctType;
             $report .= "\n";
+        }
+//WOR Data Row Count
+        $worcount = count($wor);
+ //WOR Header
+        $report .= 'RHD';
+        $report .= "\t".'01';
+        $report .= "\t".'WOR';
+        $report .= "\t".'01';
+        $report .= "\t".$worcount;
+        $report .= "\n";
+//WOR File Data
+        foreach($wor as $item) {
+                $report .= $item->RecType;
+                $report .= "\t" .$item->AcctID;
+                $report .= "\t" .$item->AcctNumber;
+                $report .= "\t" .$item->Status;
+                $report .= "\t" .$item->CloseAndReturn;
+                $report .= "\t" .$item->CommRate;
+                $report .= "\t" .$item->OtherAssets;
+                $report .= "\t" .$item->LastLetterDate;
+                $report .= "\t" .$item->LastCallDate;
+                $report .= "\t" .$item->LastSkipDate;
+                $report .= "\t" .$item->LastGLBNoticeDate;
+                $report .= "\n";
         }
 
 
