@@ -35,6 +35,9 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::get('calendars', 'CalendarsController@index')->name('calendars');
 
+        Route::get('clientreports', 'ClientReportingController@index');
+        Route::post('clientreports', 'ClientReportingController@compute');
+
         Route::get('operationalreports', 'OperationalReportsController@index')->name('operationalreports');
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
