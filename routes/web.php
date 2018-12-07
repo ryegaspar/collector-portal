@@ -33,6 +33,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         Route::get('collector-hours', 'CollectorHoursController@index')->name('collector-hours');
 
+        Route::get('calendars', 'CalendarsController@index')->name('calendars');
+
         Route::get('operationalreports', 'OperationalReportsController@index')->name('operationalreports');
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);

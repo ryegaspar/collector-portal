@@ -54,7 +54,7 @@
               <td class="StandardTableRow">{{$two->Desk}}</td>
               <td class="StandardTableRow">{{$two->User_Group}}</td>
 							<td class="StandardTableRow">{{$two->Goal}}</td>
-							<td class="StandardTableRow">{{ number_format(($two->CurrentMonthTotal/$two->Goal)*100, 2) }}</td>
+							<td class="StandardTableRow">{{ number_format(($two->CurrentMonthTotal/(($two->Goal)+.0000000001))*100, 2) }}</td>
               <td class="StandardTableRow">{{$two->CurrentMonthTrs}}</td>
               <td class="StandardTableRow">{{$two->CurrentMonthPDC}}</td>
               <td class="StandardTableRow">{{$two->CurrentMonthTotal}}</td>
@@ -66,7 +66,7 @@
           @endforeach
 			</tbody>
 		</table>
-		</div>
+	</div>
 	</main>
 <script>
 </script>
