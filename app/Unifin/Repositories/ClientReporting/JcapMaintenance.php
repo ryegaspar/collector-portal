@@ -63,20 +63,39 @@ class JcapMaintenance implements ReportInterface
         $report = '';
 
         foreach($data as $item) {
-            $report .= $item->DBR_CLI_REF_NO',';
-            $report .= $item->UDW_FLD1',';
-            $report .= "\t" . str_replace('#', '', $item->ADR_NAME);
+            $report .= $item->DBR_CLI_REF_NO;
+            $report .= $item->UDW_FLD1;
+            $report .= $item->DBR_ASSIGN_DATE_O;
+            $report .= $item->DBR_CL_MISC_2;
+            $report .= "MG";
+            $report .= str_replace('#', '', $item->ADR_NAME);
+            $report .= Carbon::parse($item->TRS_TRX_DATE_O)->format('Ymd');
+
+
+            $report .= str_replace(',', '', $item->ADR_ADDR1);
+            $report .= str_replace(',', '', $item->ADR_ADDR2);
+            $report .= $item->ADR_CITY;
+            $report .= $item->ADR_STATE;
+            $report .= $item->ADR_ZIP_CODE;
+            $report .= "USA";
+            $report .= "\n";
+
+
+
+
+
+
             $report .= "\tUNIFIN";
             $report .= "\t".$item->DBR_NO;
             $report .= "\t".$item->TRS_TRUST_CODE;
-            $report .= "MT";
+            $report .= "USA";
             $report .= "\t".Carbon::parse($item->TRS_TRX_DATE_O)->format('Ymd');
             $report .= "\t";
             $report .= "\t $".number_format($item->DBR_PRINCIPAL_DUE,2);
             $report .= "\t $".number_format($item->TRS_AMT,2);
             $report .= "\t $".number_format($item->TRS_COMM_AMT,2);
             $report .= "\t\t".$item->TRS_DBR_NO.'-'. $item->TRS_SEQ_NO;
-            $report .= "\n";
+            
         }
 
 

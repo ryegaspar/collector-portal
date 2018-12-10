@@ -37,7 +37,7 @@ class ResurgentSufMonthly implements ReportInterface
                 ->select(DB::raw("*"))      
                 ->get();
 
-         $pdc = DB::connection('sqlsrv2')
+        $pdc = DB::connection('sqlsrv2')
                 ->table('RCS.PDC')
                 ->select(DB::raw("*"))      
                 ->get();
