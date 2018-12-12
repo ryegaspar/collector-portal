@@ -1,20 +1,21 @@
 <template>
     <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title mb-0">Detailed Collection Hours</h4>
-                    </div>
-                    <input class="form-control" id="searchHoursInput" type="text" placeholder="Search...">
-                    <div class="card-body">
-                        <table class="table table-responsive-sm table-outlined table-hover">
+ 
+                    <h1 align="center">Detailed Collection Hours</h1>
+                            <table id="TodaysTotals" 
+                                data-toggle="table"
+                                data-search="true"
+                                data-filter-control="true" 
+                                data-show-export="true"
+                                class="table table-striped table-bordered"
+                                style="width:100%">
                             <thead>
                             <tr>
-                                <th>Collection Group</th>
-                                <th>Employee Name</th>
-                                <th>Total Hours Worked</th>
-                                <th>Current Goal</th>
+                                <th data-field="collectiongroup" data-filter-control="select" data-sortable="true">Collection Group</th>
+                                <th data-field="collectorname" data-filter-control="input" data-sortable="true">Employee Name</th>
+                                <th data-field="hoursworked" data-sortable="true">Total Hours Worked</th>
+                                <th data-field="30day" data-sortable="true">Current 30 Day</th>
+                                <th data-field="goal" data-sortable="true">Current Goal</th>
                             </tr>
                             </thead>
                             <tbody id="collectorHours">
@@ -25,10 +26,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 

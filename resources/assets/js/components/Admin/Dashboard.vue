@@ -83,6 +83,7 @@
                                 <th>Collection Group</th>
                                 <th class="text-right">Number of Active Employees</th>
                                 <th class="text-right">Total Hours Worked</th>
+                                <th class="text-right">Current 30 Day</th>
                                 <th class="text-right">Current Goal</th>
                             </tr>
                             </thead>
