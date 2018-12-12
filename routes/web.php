@@ -32,6 +32,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         Route::get('collector-hours', 'CollectorHoursController@index')->name('collector-hours');
+        Route::get('todays-totals', 'TodaysTotalsController@index')->name('todays-totals');
 
         Route::get('calendars', 'CalendarsController@index')->name('calendars');
 

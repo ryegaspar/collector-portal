@@ -5,9 +5,7 @@
 @endsection
 @section('content')
 <head>
-	<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.min.css">
-	<link rel="stylesheet" type="text/css" href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.js"></script>
@@ -19,7 +17,6 @@
 	<!-- Main content -->	
 	<main class="main">
 		<div class="container-fluid">
-			<operationalreports class="mt-md-4"></operationalreports>
 
 <h1 align="center">Collector PDC</h1>
 
@@ -31,11 +28,12 @@
 			data-show-export="false"
       		class="table table-striped table-bordered"
 	   	    style="width:100%">
-        <thead>
+					 <thead>
           <tr>
 			<th data-field="name" data-sortable="true" data-filter-control="input">Name</th>
 			<th data-field="desk" data-sortable="true" data-filter-control="input">Desk</th>
 			<th data-field="collectiongroup" data-filter-control="select" data-sortable="true">Group</th>
+			<th data-field="firstmonth" data-sortable="true">FirstMonth</th>
 			<th data-field="goal" data-sortable="true">Goal</th>
 			<th data-field="percentToGoal" data-sortable="true">Percent to Goal</th>
 			<th data-field="mtdtransaction" data-sortable="true">{{ date('M') }} Transactions</th>
@@ -51,10 +49,11 @@
           @foreach($two as $two)
             <tr>
               <td class="StandardTableRow">{{$two->Collector_Name}}</td>
-              <td class="StandardTableRow">{{$two->Desk}}</td>
+              <td class="StandardTableRow">{{str_pad($two->Desk,3,'0',STR_PAD_LEFT)}}</td>
               <td class="StandardTableRow">{{$two->User_Group}}</td>
+							<td class="StandardTableRow">{{date("m/d/Y", strtotime($two->FirstMonth))}}</td>
 							<td class="StandardTableRow">{{$two->Goal}}</td>
-							<td class="StandardTableRow">{{ $two->Goal ?? number_format(($two->CurrentMonthTotal/$two->Goal)*100, 2) }}</td>
+							<td class="StandardTableRow">{{$two->Goal == 0 ? 0 :number_format(($two->CurrentMonthTotal/$two->Goal)*100, 2)}}</td>
               <td class="StandardTableRow">{{$two->CurrentMonthTrs}}</td>
               <td class="StandardTableRow">{{$two->CurrentMonthPDC}}</td>
               <td class="StandardTableRow">{{$two->CurrentMonthTotal}}</td>

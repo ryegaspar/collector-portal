@@ -5,6 +5,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">Today's Totals</h4>
+                        <object align="right"><a href="/admin/todays-totals" class="btn btn-info btn-md">Go to Detailed Totals</a></object>
                     </div>
                     <div class="card-body">
                         <table class="table table-responsive-sm table-striped">

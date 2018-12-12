@@ -93,4 +93,22 @@ class RawQueries
 
         return $hoursWorkedDetail;
     }
+    public static function TodaysTotalsDetail()
+    {
+        $todaystotals = DB::connection('sqlsrv2')
+            ->table('CDSMSC.CHK')
+            ->Join('CDS.USR', 'CDSMSC.CHK.CHK_USERID', '=', 'CDS.USR.USR_CODE')
+            ->Join('CDS.UGP', 'CDS.USR.USR_GROUP', '=', 'CDS.UGP.UGP_CODE')
+            ->Join('CDS.DBR', 'CDS.DBR.DBR_NO', '=', 'CDSMSC.CHK.CHK_DBR_NO')
+            ->Join('CDS.CLT', 'CDS.DBR.DBR_CLIENT', '=', 'CDS.CLT.CLT_NO')
+            ->select(DB::raw("CHK_DBR_NO as DebtorNumber, DBR_CLIENT as ClientCode, CLT_NAME_1 as ClientName, CHK_CHECK_AMOUNT as CheckAmount, CHK_POST_DATE_O as PaymentDate, USR_NAME as UserName, UGP_DESC as CollectorGroup"))
+            ->whereDate('CHK.EntryDate', '=', Carbon::now()->toDateString())
+            ->orderBy('DebtorNumber', 'desc')
+            ->get();
+//            ->toSql();
+//        dd($todaystotals);
+
+        return $todaystotals;
+    }
+
 }
