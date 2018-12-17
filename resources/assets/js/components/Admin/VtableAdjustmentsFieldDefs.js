@@ -1,5 +1,13 @@
 export default [
 	{
+		name: 'dbr_no',
+		sortField: 'dbr_no',
+		title: 'Debtor Number',
+		titleClass: 'text-center',
+		dataClass: 'text-center',
+		visible: true,
+	},
+	{
 		name: 'collector_name',
 		sortField: 'collector_name',
 		title: 'Collector',
