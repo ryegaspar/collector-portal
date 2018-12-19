@@ -47,6 +47,8 @@
 				if (index === 'name')
 					return value;
                 if (index === 'collector')
+                    return value;
+                if (index === 'teamleader')
 					return value;
                 if (Number.isInteger(value) === true)
                     var number = (Number(value)).toFixed(0).replace(/\d(?=(\d{3})+\.)/g, '$&,')
