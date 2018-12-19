@@ -32,6 +32,7 @@
         <thead>
           <tr>
 			<th data-field="name" data-sortable="true" data-filter-control="input">Name</th>
+			<th data-field="teamleader" data-sortable="true" data-filter-control="input">Team Leader</th>
 			<th data-field="desk" data-sortable="true" data-filter-control="input">Desk</th>
 			<th data-field="collectiongroup" data-filter-control="select" data-sortable="true">Group</th>
 			<th data-field="firstmonth" data-sortable="true">FirstMonth</th>
@@ -42,14 +43,14 @@
 			<th data-field="mtdtotal" data-sortable="true">{{ date('F') }} Total</th>
 			<th data-field="nextmonth1" data-sortable="true">{{ Carbon\Carbon::now()->addMonths(1)->format('F') }} Total</th>
 			<th data-field="nextmonth2" data-sortable="true">{{ Carbon\Carbon::now()->addMonths(2)->format('F') }} Total</th>
-			<th data-field="nextmonth3" data-sortable="true">{{ Carbon\Carbon::now()->addMonths(3)->format('F') }} Total</th>
-			<th data-field="nextmonth4" data-sortable="true">{{ Carbon\Carbon::now()->addMonths(4)->format('F') }} Total</th>
-          </tr>
+			<th data-field="lastmonth" data-sortable="true">Last Month ({{ Carbon\Carbon::now()->addMonths(-1)->format('M') }}) Final </th>
+         </tr>
         </thead>
         <tbody>
           @foreach($two as $two)
             <tr>
               <td class="StandardTableRow">{{$two->Collector_Name}}</td>
+							<td class="StandardTableRow">{{$two->Team_Leader}}</td>
               <td class="StandardTableRow">{{str_pad($two->Desk,3,'0',STR_PAD_LEFT)}}</td>
               <td class="StandardTableRow">{{$two->User_Group}}</td>
 							<td class="StandardTableRow">{{date("m/d/Y", strtotime($two->FirstMonth))}}</td>
@@ -60,8 +61,7 @@
               <td class="StandardTableRow">{{$two->CurrentMonthTotal}}</td>
               <td class="StandardTableRow">{{$two->NextMonth1Total}}</td>
               <td class="StandardTableRow">{{$two->NextMonth2Total}}</td>
-              <td class="StandardTableRow">{{$two->NextMonth3Total}}</td>
-              <td class="StandardTableRow">{{$two->NextMonth4Total}}</td>
+              <td class="StandardTableRow">{{$two->LastMonthFinal}}</td>
             </tr>
           @endforeach
 			</tbody>

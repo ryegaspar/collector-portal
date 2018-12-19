@@ -84,7 +84,7 @@ class RawQueries
     {
         $hoursWorkedDetail = DB::connection('sqlsrv2')
             ->table('UFN.CollectorHoursWorked')
-            ->select(DB::raw("[UGP_DESC] as name, [USR_NAME] as collector, [Time_Worked] as time, [Collector30Day] as Collector30Day"))
+            ->select(DB::raw("[UGP_DESC] as name, [USR_NAME] as collector,[Team_Leader] as teamleader, [Time_Worked] as time, [Collector30Day] as Collector30Day"))
             ->orderBy('UFN.CollectorHoursWorked.UGP_DESC', 'desc')
             ->get();
 //        dd($hoursWorkedDetail);

@@ -13,6 +13,7 @@
                             <tr>
                                 <th data-field="collectiongroup" data-filter-control="select" data-sortable="true">Collection Group</th>
                                 <th data-field="collectorname" data-filter-control="input" data-sortable="true">Employee Name</th>
+                                <th data-field="teamleader" data-filter-control="input" data-sortable="true">Team Leader</th>
                                 <th data-field="hoursworked" data-sortable="true">Total Hours Worked</th>
                                 <th data-field="30day" data-sortable="true">Current 30 Day</th>
                                 <th data-field="goal" data-sortable="true">Current Goal</th>
