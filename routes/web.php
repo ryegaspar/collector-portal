@@ -31,6 +31,15 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('profile', 'ProfileController@update')->name('profile.update');
 
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('collector-hours', 'CollectorHoursController@index')->name('collector-hours');
+        Route::get('todays-totals', 'TodaysTotalsController@index')->name('todays-totals');
+
+        Route::get('calendars', 'CalendarsController@index')->name('calendars');
+
+        Route::get('clientreports', 'ClientReportingController@index');
+        Route::post('clientreports', 'ClientReportingController@compute');
+
+        Route::get('operationalreports', 'OperationalReportsController@index')->name('operationalreports');
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
 
@@ -93,6 +102,7 @@ Route::name('collector.')->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         Route::get('dashboard/transactions', 'DashboardTransactionController@index')->name('dashboard.transactions');
 
+        Route::get('collectorPDC', 'CollectorPDCController@index')->name('collectorPDC');
         Route::get('accounts', 'AccountsController@index')->name('accounts');
 
         Route::get('transactions', 'TransactionsController@index')->name('transactions');

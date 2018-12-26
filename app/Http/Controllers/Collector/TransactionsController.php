@@ -31,6 +31,8 @@ class TransactionsController extends Controller
 
             return $transactions;
         }
+
+
         return view('collector.transactions');
     }
 

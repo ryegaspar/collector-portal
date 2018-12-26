@@ -54,6 +54,11 @@
                         text: 'Transactions',
                         icon: 'fa fa-credit-card'
                     },
+                    collectorPDC: {
+						href: 'collectorPDC',
+                        text: 'CollectorPDC',
+                        icon: 'fa fa-apple'
+                    },
                     adjustments: {
 						href: 'adjustments',
                         text: 'Adjustments',

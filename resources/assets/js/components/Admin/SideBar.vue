@@ -145,6 +145,17 @@
 						icon: 'fa fa-user-secret',
 						permission: 'read admin'
 					},
+					OperationalReports: {
+						href: '/admin/operationalreports',
+						text: 'Operational Reports',
+						icon: 'fa fa-apple'
+					},
+					Calendars: {
+						href: '/admin/calendars',
+						text: 'Calendars',
+						icon: 'fa fa-calendar',
+						permission: 'read calendar'
+					},
                     Settings: {
 						href: '#',
                         text: 'Settings',
