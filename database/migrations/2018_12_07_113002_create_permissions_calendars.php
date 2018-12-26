@@ -15,15 +15,13 @@ class CreatePermissionsCalendars extends Migration
      */
     public function up()
     {
-        //
+        Permission::create(['name' => 'read calendar', 'guard_name' => 'admin']);
 
-            Permission::create(['name' => 'read calendar', 'guard_name' => 'admin']);
 
-    
-            $superadmin = Role::findByName('super-admin', 'admin');
-            $superadmin->givePermissionTo([
-                'read calendar'
-            ]);
+        $superadmin = Role::findByName('super-admin', 'admin');
+        $superadmin->givePermissionTo([
+            'read calendar'
+        ]);
     }
 
     /**
@@ -33,6 +31,9 @@ class CreatePermissionsCalendars extends Migration
      */
     public function down()
     {
-        //
+        $superadmin = Role::findByName('super-admin', 'admin');
+        $superadmin->revokePermissionTo(['read calendar']);
+
+        Permission::findByName('read calendar', 'admin')->delete();
     }
 }

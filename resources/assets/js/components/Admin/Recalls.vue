@@ -231,67 +231,34 @@
 
 					const url = window.URL.createObjectURL(new Blob([response.data]));
 					const link = document.createElement('a');
-					let date = moment(this.form.assigned_date).format("MM-DD-YYYY");
 					link.href = url;
-					link.setAttribute('download', `${this.form.client} - ${date}.xlsx`);
+					link.setAttribute('download', `${this.form.client} - recall.xlsx`);
 					document.body.appendChild(link);
 					link.click();
 				}).catch((error) => {
 
-                    if (error.response.status === 422) {
-						const {data} = error.response;
+						if (error.response.status === 422) {
+							const {data} = error.response;
 
-						const reader = new FileReader();
+							const reader = new FileReader();
 
-                        reader.onload = (() => {
-                            const message = JSON.parse(reader.result);
+							reader.onload = (() => {
+								const message = JSON.parse(reader.result);
 
-                            let error = {data: message};
+								let error = {data: message};
 
-                            this.form.onFail(error);
-                        });
+								this.form.onFail(error);
+							});
 
-                        reader.readAsText(data);
-                    } else {
-                        lib.swalError(error.message);
-                    }
+							reader.readAsText(data);
+						} else {
+							lib.swalError(error.message);
+						}
 
-						// const file = FileReader.readAsText(data);
-						//
-						// console.log(error.response);
-                    this.isLoading = false;
-                    this.persistButtonText = tempButtonText;
-
-						// const blb = new Blob([errors.data]);
-						// const reader = new FileReader();
-						//
-						// reader.addEventListener('loadend', (e) => {
-						// 	const text = e.srcElement.result;
-						// 	console.log(text);
-						// });
-						//
-						// reader.readAsText(blb);
+						this.isLoading = false;
+						this.persistButtonText = tempButtonText;
 					}
 				)
-
-				// this.form.patch('./profile')
-				// 	.then((data) => {
-				// 		this.isLoading = false;
-				// 		this.persistButtonText = tempButtonText;
-				//
-				// 		this.form.first_name = data.first_name;
-				// 		this.form.last_name = data.last_name;
-				// 		this.form.email = data.email;
-				// 		this.form.old_password = '';
-				// 		this.form.password = '';
-				// 		this.form.password_confirmation = '';
-				//
-				// 		lib.swalSuccess("Profile successfully updated");
-				// 	})
-				// 	.catch((error) => {
-				// 		this.isLoading = false;
-				// 		this.persistButtonText = tempButtonText;
-				// 	});
 			}
 		},
 

@@ -26,9 +26,9 @@ class Report
     }
 
     /**
-     * Create a simple xlsx document from a model.
+     * Create a simple xlsx document from a collection.
      *
-     * @param $model
+     * @param $collection
      * @param $fileName
      * @param $headers
      * @param $columns
