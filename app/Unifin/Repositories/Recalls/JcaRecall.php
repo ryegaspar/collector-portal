@@ -2,13 +2,15 @@
 
 namespace App\Unifin\Repositories\Recalls;
 
-use Illuminate\Support\Facades\DB;
-
-class JcaRecall
+class JcaRecall extends RecallFile
 {
-    protected $record;
-    protected $report;
+    protected $headerKeyIndex = 0;
 
+    /**
+     * Definitions of each record in the file.
+     *
+     * @var array
+     */
     protected $recordFormat = [
         'BFrameId'         => [0, 10],
         'RemoteId'         => [10, 4],
@@ -24,67 +26,84 @@ class JcaRecall
         'Reason'           => [111, 6]
     ];
 
-    public function generateReport($filePath)
+    /**
+     * JcaRecall constructor.
+     * @param $fileName
+     * @param $filePath
+     */
+    public function __construct($fileName, $filePath)
     {
-        $file = new \SplFileObject($filePath, "r");
+        $client = 'JCA';
+        $generic_type = 0;
+
+        parent::__construct($client, $fileName, $filePath, $generic_type);
+    }
+
+    /**
+     * Columns appended to the record.
+     *
+     * @return array
+     */
+    protected function columns()
+    {
+        return [
+            'DBR_STATUS' => 'DBR_STATUS',
+            'DBR_NO'     => 'DBR_NO',
+            'count_pdc'  => '(SELECT COUNT(*) FROM [CDSMSC].[CHK] WHERE [DBR].[DBR_NO] = [CHK].[CHK_DBR_NO]) as count_pdc',
+            'XCR_CODE'   => "DBR_NO+'01XCR' as XCR_CODE"
+        ];
+    }
+
+    /**
+     * Original column headers.
+     *
+     * @return array
+     */
+    protected function originalColumnHeaders()
+    {
+        return array_keys($this->recordFormat);
+    }
+
+    /**
+     * Parses the file given.
+     *
+     * @return $this|RecallFile
+     */
+    protected function parseFile()
+    {
+        $this->accounts = collect();
+
+        $file = new \SplFileObject($this->filePath, "r");
+
+        $index = 0;
 
         while (! $file->eof()) {
+
             $line = $file->fgets();
 
-            $this->getRecord($line);
-        }
-
-        $this->appendInfo();
-
-        $columns = collect($this->recordFormat)
-            ->keys()
-            ->concat(['DbrNo'])
-            ->concat(['DbrStatus'])
-            ->concat(['CountPdc'])
-            ->concat(['XcrCode']);
-
-        return [$this->record, $columns];
-    }
-
-    protected function getRecord($item)
-    {
-        foreach ($this->recordFormat as $recordKey => $recordItem) {
-            $account[$recordKey] = $this->formatToNumber(trim(substr($item, $recordItem[0], $recordItem[1])),
-                $recordItem);
-        }
-
-        $this->record[] = $account;
-    }
-
-    protected function appendInfo()
-    {
-        array_shift($this->record);
-
-        $this->record = collect($this->record)->map(function ($item) {
-            $account = DB::connection('sqlsrv2')
-                ->table('CDS.DBR')
-                ->select(DB::raw("DBR_NO, DBR_STATUS, (SELECT COUNT(*) FROM CDSMSC.CHK WHERE DBR.DBR_NO = CHK.CHK_DBR_NO) as count_pdc, DBR_NO+'01XCR' as XCR_CODE"))
-                ->whereRaw('DBR_CLIENT LIKE ?', ["%" . request()->client . "%"])
-                ->where('DBR_CLI_REF_NO', $item)
-                ->first();
-
-            if (! $account) {
-                $account = new \stdClass();
-                $account->DBR_NO = 'NOT FOUND';
-                $account->DBR_STATUS = 'NOT FOUND';
-                $account->count_pdc = 'NOT FOUND';
-                $account->XCR_CODE = 'NOT FOUND';
+            if ($index == 0) {
+                $index++;
+                continue;
             }
 
-            $item['DbrNo'] = $account->DBR_NO;
-            $item['DbrStatus'] = $account->DBR_STATUS;
-            $item['CountPdc'] = $account->count_pdc;
-            $item['XcrCode'] = $account->XCR_CODE;
+            foreach ($this->recordFormat as $recordKey => $recordItem) {
+                $account[$recordKey] = $this->formatToNumber(trim(substr($line, $recordItem[0], $recordItem[1])), $recordItem);
+            }
 
-            return $item;
-        });
+            $this->accounts[] = $account;
+            $index++;
+        }
+
+        return $this;
     }
 
+    /**
+     * Format to a number format, 2 decimal places.
+     *
+     * @param $value
+     * @param $record
+     * @return float
+     */
     private function formatToNumber($value, $record)
     {
         if (isset($record[2]) && $record[2] == 'number') {

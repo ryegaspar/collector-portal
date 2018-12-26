@@ -23,7 +23,7 @@ class UnifinServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        app()->bind("App\\Unifin\\Repositories\\Recalls\\RecallInterface",
+        app()->bind("App\\Unifin\\Repositories\\Recalls\\Contracts\\RecallInterface",
             "App\\Unifin\\Repositories\\Recalls\\Recall");
     }
 }
