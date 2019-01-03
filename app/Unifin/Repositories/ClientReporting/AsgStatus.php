@@ -40,6 +40,8 @@ class AsgStatus implements ReportInterface
             }
             $item->DBR_ASSIGN_DATE_O = Carbon::parse($item->DBR_ASSIGN_DATE_O)->format('m/d/Y');
             $item->DBR_CLOSE_DATE_O = $item->DBR_CLOSE_DATE_O ? Carbon::parse($item->DBR_CLOSE_DATE_O)->format('m/d/Y') : '';
+            
+
             $item->DBR_ASSIGN_AMT = [$item->DBR_ASSIGN_AMT, 'setFormatCode' => '#,##0.00'];
             $item->DBR_RECVD_TOT = [$item->DBR_RECVD_TOT, 'setFormatCode' => '#,##0.00'];
             return $item;
@@ -56,10 +58,10 @@ class AsgStatus implements ReportInterface
         
         $columns = collect(['DBR_NAME1', 'Orig_Acct_No', 'DBR_CLI_REF_NO', 'DBR_ASSIGN_DATE_O','DBR_CLOSE_DATE_O','DBR_ASSIGN_AMT', 'DBR_RECVD_TOT','DBR_STATUS', 'STS_DESC','UDW_FLD1']);
 
-        $fileName = 'Unifin-StatusReport '. Carbon::now()->format('m-d-Y') . '.xlsx';
+        $fileName = 'Unifin-ASG StatusReport '. Carbon::now()->format('m-d-Y') . '.xlsx';
         $filePath = public_path('storage\\reports\\'. $fileName);
 
-        (new ReportExcel)->makeSimpleXlsxFromCollection($data, $fileName, $headers, $columns, $filePath);
+        (new ReportExcel)->setFont('ARIAL', 10)->makeSimpleXlsxFromCollection($data, $fileName, $headers, $columns, $filePath);
 
     }
 }

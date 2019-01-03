@@ -25,6 +25,14 @@ class Report
         header('Cache-Control: max-age=0');
     }
 
+    public function setFont($fontName, $size)
+    {
+        $this->spreadsheet->getFont()->setname($fontName);
+        $this->spreadsheet->getFont()->setSize($size);
+
+        return $this;
+    }
+
     /**
      * Create a simple xlsx document from a model.
      *

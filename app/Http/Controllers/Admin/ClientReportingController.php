@@ -45,7 +45,15 @@ class ClientReportingController extends Controller
         ]);
 
         $reports = collect([
+            'orionRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\OrionRemit',
+            'musiRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\MusiRemit',
+            'eosRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\EosRemit',
+            'rmcRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\RmcRemit',
+            'rtcRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\RtcRemit',
+            'wcrRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\WcrRemit',
+            'jcapMaintenance' => 'App\\Unifin\\Repositories\\ClientReporting\\JcapMaintenance',
             'resurgentRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentRemit',
+            'resurgentSufWeekly' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentSufWeekly',
             'resurgentSufDaily' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentSufDaily',
             'resurgentSufMonthly' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentSufMonthly',
             'resurgentPdc' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentPdc',
