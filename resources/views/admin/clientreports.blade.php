@@ -19,7 +19,8 @@ td {
 th {
     font-family: "Lato", sans-serif;
     font-size: 15px;
-}+
+    cursor:pointer; 
+}
 
 #myInput {
   width: 80%;
@@ -40,8 +41,9 @@ th {
   border: 1px solid #ddd;
   padding: 8px;
   color:white;
-
 }
+
+
 
 #myTable td {
   text-align: left;
@@ -153,7 +155,7 @@ function makeVisible() {
 <div class="top">
 <h1>Unifin Reports</h1>
 </div>
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Report.." title="Type in a report">
+<input type="text" id="myInput" onkeyup="reportSearch()" placeholder="Search for Report.." title="Type in a report">
   
     </br>
     </br>
@@ -178,78 +180,19 @@ function makeVisible() {
 
 
   <tr class="header">
-  <th>Report Title</th>
-  <th>Description</th>
-  <th>Client</th>
-  <th>Last Ran Date</th>
+  <th onclick="sortTable(0)" >Report Title</th>
+  <th onclick="sortTable(1)">Description</th>
+  <th onclick="sortTable(2)">Cyle</th>
+  <th onclick="sortTable(3)">Client</th>
+  <th onclick="sortTable(4)">Last Ran Date</th>
   <th>Select</th>
   </tr>
 
 
-<tr>
-  <td>LTD Remit</td>
-  <td>Remittance</td>
-  <td>LTD Financial Services</td>
-  <td>Last Ran Date</td>
-  <td><input type="checkbox" name="ltdRemit" value="Yes" class=checkBox  /></td>
-  </tr>
-
-<tr>
-  <td>Capio Remit</td>
-  <td>Remittance</td>
-  <td>Capio Partners, LLC</td>
-  <td>Last Ran Date</td>
-  <td><input type="checkbox" name="capioRemit" value="Yes" class=checkBox  /></td>
-  </tr>
-
-<tr>
-  <td>Pendrick Invoice Main</td>
-  <td>Remittance</td>
-  <td>Pendrick Capital Partners</td>
-  <td>Last Ran Date</td>
-  <td><input type="checkbox" name="pendrickMainInvoice" value="Yes" class=checkBox  /></td>
-  </tr>
- 
- <tr>
-  <td>Pendrick Invoice PCP2</td>
-  <td>Remittance</td>
-  <td>Pendrick Capital Partners II</td>
-  <td>Last Ran Date</td>
-  <td><input type="checkbox" name="pendrickPcp2Invoice" value="Yes" class=checkBox  /></td>
-  </tr>
-
-
-  <tr>
-  <td>Pendrick Indirect Payments PCP2</td>
-  <td>Payment</td>
-  <td>Pendrick Capital Partners II</td>
-  <td>Last Ran Date</td>
-  <td><input type="checkbox" name="pendrickIndirectPaymentsPcp2" value="Yes" class=checkBox  /></td>
-  </tr>
- 
-
-  <tr>
-  <td>Pendrick Indirect Payments MAIN</td>
-  <td>Payment</td>
-  <td>Pendrick Capital Partners</td>
-  <td>Last Ran Date</td>
-  <td><input type="checkbox" name="pendrickIndirectPaymentsMain" value="Yes" class=checkBox /></td>
-  </tr>
-  
-
-  <tr>
-   <td>CLA Daily Payments</td>
-   <td>Payment File</td>
-   <td>Community Loans of America</td>
-   <td>Last Ran Date</td>
-   <td><input type="checkbox" name="claPayFile" value="Yes" class=checkBox  /></td>
-      
-  </tr>
-  
-
   <tr>
    <td>ASG Daily Payments</td>
    <td>Payment</td>
+   <td>Daily</td>
    <td>Acceptance Solutions Group</td>
    <td>Last Ran Date</td>
    <td><input type="checkbox" name="asgPayFile" value="Yes" class=checkBox  /></td>
@@ -258,22 +201,153 @@ function makeVisible() {
   <tr>
    <td>ASG Status</td>
    <td>Status</td>
+   <td>Weekly</td>
    <td>Acceptance Solutions Group</td>
    <td>Last Ran Date</td>
    <td><input type="checkbox" name="asgStatus" value="Yes" class=checkBox  /></td>
   </tr>
 
   <tr>
-   <td>JCAP RecUni</td>
-   <td>Remittance</td>
-   <td>Jefferson Capital Systems, LLC</td>
+  <td>Capio Remit</td>
+  <td>Remittance</td>
+  <td>Weekly</td>
+  <td>Capio Partners, LLC</td>
+  <td>Last Ran Date</td>
+  <td><input type="checkbox" name="capioRemit" value="Yes" class=checkBox  /></td>
+  </tr>
+
+  <tr>
+   <td>CLA Daily Payments</td>
+   <td>Payment File</td>
+   <td>Daily</td>
+   <td>Community Loans of America</td>
    <td>Last Ran Date</td>
-   <td><input type="checkbox" name="jcapRecUni" value="Yes" class=checkBox  /></td>
+   <td><input type="checkbox" name="claPayFile" value="Yes" class=checkBox  /></td>   
   </tr>
 
    <tr>
-   <td onclick="makeVisible()" class="showComponent">Resurgent SUF File <i class="down"></i></td>
+   <td>EOS Remit</td>
+   <td>Remittance</td>
+   <td>Bi Monthly</td>
+   <td>Rocky Mountain Capital</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="eosRemit" value="Yes" class=checkBox  /></td>
+  </tr>
+
+   <!-- <tr>
+   <td>JcapMaintenance</td>
+   <td>Maintenance</td>
+   <td>Weekly</td>
+   <td>Jefferson Capital Systems, LLC</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="jcapMaintenance" value="Yes" class=checkBox  /></td>
+  </tr>
+ -->
+
+  <!-- <tr>
+   <td>JCAP RecUni</td>
+   <td>Remittance</td>
+   <td>Weekly</td>
+   <td>Jefferson Capital Systems, LLC</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="jcapRecUni" value="Yes" class=checkBox  /></td>
+  </tr> -->
+
+<tr>
+  <td>LTD Remit</td>
+  <td>Remittance</td>
+  <td>Weekly</td>
+  <td>LTD Financial Services</td>
+  <td>Last Ran Date</td>
+  <td><input type="checkbox" name="ltdRemit" value="Yes" class=checkBox  /></td>
+  </tr>
+
+<tr>
+   <td>MUSI Remit</td>
+   <td>Remittance</td>
+   <td>Monthly</td>
+   <td>Musicians Institute</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="musiRemit" value="Yes" class=checkBox  /></td>
+  </tr>
+
+  <tr>
+   <td>Orion Remit</td>
+   <td>Remittance</td>
+   <td>Monthly</td>
+   <td>Orion</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="orionRemit" value="Yes" class=checkBox  /></td>
+  </tr>
+
+<tr>
+  <td>Pendrick Invoice Main</td>
+  <td>Remittance</td>
+  <td>Weekly</td>
+  <td>Pendrick Capital Partners</td>
+  <td>Last Ran Date</td>
+  <td><input type="checkbox" name="pendrickMainInvoice" value="Yes" class=checkBox  /></td>
+  </tr>
+ 
+ <tr>
+  <td>Pendrick Invoice PCP2</td>
+  <td>Remittance</td>
+  <td>Weekly</td>
+  <td>Pendrick Capital Partners II</td>
+  <td>Last Ran Date</td>
+  <td><input type="checkbox" name="pendrickPcp2Invoice" value="Yes" class=checkBox  /></td>
+  </tr>
+
+  <tr>
+  <td>Pendrick Indirect Payments PCP2</td>
+  <td>Payment</td>
+  <td>Daily</td>
+  <td>Pendrick Capital Partners II</td>
+  <td>Last Ran Date</td>
+  <td><input type="checkbox" name="pendrickIndirectPaymentsPcp2" value="Yes" class=checkBox  /></td>
+  </tr>
+
+  <tr>
+  <td>Pendrick Indirect Payments MAIN</td>
+  <td>Payment</td>
+  <td>Daily</td>
+  <td>Pendrick Capital Partners</td>
+  <td>Last Ran Date</td>
+  <td><input type="checkbox" name="pendrickIndirectPaymentsMain" value="Yes" class=checkBox /></td>
+  </tr>
+
+
+
+  <tr>
+  <td>Renaissance Remit</td>
+  <td>Remittance</td>
+  <td>Weekly</td>
+  <td>Renaissance Trade Capital</td>
+  <td>Last Ran Date</td>
+  <td><input type="checkbox" name="rtcRemit" value="Yes" class=checkBox  /></td>
+  </tr>
+
+  <tr>
+   <td>Resurgent Forcast</td>
+   <td>Forecast</td>
+   <td>Weekly</td>
+   <td>Resurgent</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="resurgentFct" value="Yes" class=checkBox  /></td>
+  </tr>
+
+  <tr>
+   <td>Resurgent Remit</td>
+   <td>Remittance</td>
+   <td>Weekly</td>
+   <td>Resurgent</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="resurgentRemit" value="Yes" class=checkBox  /></td>
+  </tr>
+   <tr>
+   <td onclick="makeVisible()" class="showComponent">Resurgent SUF File Monthly <i class="down"></i></td>
    <td>Monthly SUF</td>
+   <td>Monthly</td>
    <td>Resurgent</td>
    <td>Last Ran Date</td>
    <td><input type="checkbox" name="resurgentSufMonthly" value="Yes" class=checkBox  /></td>
@@ -289,6 +363,14 @@ function makeVisible() {
   </tr>
   
   <tr class="suf">
+   <td>Resurgent BKY</td>
+   <td>Bankrupcty</td>
+   <td>Resurgent</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="resurgentBky" value="Yes" class=checkBox  /></td>
+  </tr>
+
+  <tr class="suf">
    <td>Resurgent BWR</td>
    <td>Borrower</td>
    <td>Resurgent</td>
@@ -297,21 +379,12 @@ function makeVisible() {
   </tr>
   
   <tr class="suf">
-   <td>Resurgent WOR</td>
-   <td>Workflow</td>
-   <td>Resurgent</td>
-   <td>Last Ran Date</td>
-   <td><input type="checkbox" name="resurgentWor" value="Yes" class=checkBox  /></td>
-  </tr>
-
-  <tr class="suf">
    <td>Resurgent DEC</td>
    <td>Deceased Record</td>
    <td>Resurgent</td>
    <td>Last Ran Date</td>
    <td><input type="checkbox" name="resurgentDec" value="Yes" class=checkBox  /></td>
   </tr>
-
   
   <tr class="suf">
    <td>Resurgent KPI</td>
@@ -320,15 +393,7 @@ function makeVisible() {
    <td>Last Ran Date</td>
    <td><input type="checkbox" name="resurgentKpi" value="Yes" class=checkBox  /></td>
   </tr>
-
-  <tr class="suf">
-   <td>Resurgent BKY</td>
-   <td>KPI</td>
-   <td>Resurgent</td>
-   <td>Last Ran Date</td>
-   <td><input type="checkbox" name="resurgentBky" value="Yes" class=checkBox  /></td>
-  </tr>
-
+ 
   <tr class="suf">
    <td>Resurgent PDC</td>
    <td>Post Dated Checks</td>
@@ -336,22 +401,29 @@ function makeVisible() {
    <td>Last Ran Date</td>
    <td><input type="checkbox" name="resurgentPdc" value="Yes" class=checkBox  /></td>
   </tr>
-
-  
-  
-  <tr>
-   <td>Resurgent Remit</td>
-   <td>Remittance</td>
+ 
+  <tr class="suf">
+   <td>Resurgent WOR</td>
+   <td>Workflow</td>
    <td>Resurgent</td>
    <td>Last Ran Date</td>
-   <td><input type="checkbox" name="resurgentRemit" value="Yes" class=checkBox  /></td>
+   <td><input type="checkbox" name="resurgentWor" value="Yes" class=checkBox  /></td>
   </tr>
 
- 
 
+  <tr>
+   <td>Resurgent SUF File Weekly</td>
+   <td>Weekly SUF</td>
+   <td>Weekly</td>
+   <td>Resurgent</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="resurgentSufWeekly" value="Yes" class=checkBox  /></td>
+  </tr>
+  
   <tr>
    <td>Resurgent SUF File Daily</td>
    <td>Daily SUF</td>
+   <td>Daily</td>
    <td>Resurgent</td>
    <td>Last Ran Date</td>
    <td><input type="checkbox" name="resurgentSufDaily" value="Yes" class=checkBox  /></td>
@@ -359,13 +431,32 @@ function makeVisible() {
 
 
   <tr>
-   <td>Resurgent Forcast</td>
-   <td>Forecast</td>
-   <td>Resurgent</td>
+   <td>RMC Remit</td>
+   <td>Remittance</td>
+   <td>Bi Monthly</td>
+   <td>Rocky Mountain Capital</td>
    <td>Last Ran Date</td>
-   <td><input type="checkbox" name="resurgentFct" value="Yes" class=checkBox  /></td>
+   <td><input type="checkbox" name="rmcRemit" value="Yes" class=checkBox  /></td>
   </tr>
-  
+
+  <tr>
+   <td>RTC Remit</td>
+   <td>Remittance</td>
+   <td>Bi Monthly</td>
+   <td>Renaissance Trade Captial</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="rtcRemit" value="Yes" class=checkBox  /></td>
+  </tr>
+
+
+  <tr>
+   <td>WCR Remit</td>
+   <td>Remittance</td>
+   <td>Bi Monthly</td>
+   <td>World Credit Recovery</td>
+   <td>Last Ran Date</td>
+   <td><input type="checkbox" name="wcrRemit" value="Yes" class=checkBox  /></td>
+  </tr>
   
 
 </table>
@@ -405,7 +496,65 @@ function makeVisible() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 
 <script>
-function myFunction() {
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable");
+  switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc"; 
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;      
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+
+
+<script>
+function reportSearch() {
   var input, filter, table, tr, td, i;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();

@@ -80,7 +80,7 @@ class PendrickMainInvoice implements ReportInterface
 
         // dd($data);
 
-        (new ReportExcel)->makeSimpleXlsxFromCollection($data, $fileName, $headers, $columns, $filePath);
+        (new ReportExcel)->setFont('ARIAL', 10)->makeSimpleXlsxFromCollection($data, $fileName, $headers, $columns, $filePath);
 
     }
 }

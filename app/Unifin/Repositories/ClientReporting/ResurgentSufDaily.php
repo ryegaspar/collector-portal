@@ -51,8 +51,8 @@ class ResurgentSufDaily implements ReportInterface
         $report .= "\t".'008357';
         $report .= "\t".'000075';
         $report .= "\t".Carbon::now()->format('m/d/Y');
-        $report .= ' 16.23.00';
-        $report .= ' UNIFIN';
+        $report .= ' 10.23.00';
+        $report .= "\t".'UNIFINDAILY';
         $report .= "\n";
  //ABL Data Row Count
         $ablcount = count($abl);
@@ -206,7 +206,7 @@ class ResurgentSufDaily implements ReportInterface
 
 
 //File Creation and Naming
-        $filename = 'SUF_008357_01_'.Carbon::now()->format('Ymd').'_162300';
+        $filename = 'SUF_008357_01_'.Carbon::now()->format('Ymd').'_102300';
         $filePath = public_path('storage\\reports\\'. $filename .'.txt');
         $handle = fopen($filePath, 'w');
         fwrite($handle, $report);

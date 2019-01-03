@@ -5,7 +5,7 @@ namespace App\Unifin\Repositories\ClientReporting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class ResurgentSufMonthly implements ReportInterface
+class ResurgentSufWeekly implements ReportInterface
 {
 	public function generateReport($request) {
 
@@ -32,15 +32,6 @@ class ResurgentSufMonthly implements ReportInterface
                 ->select(DB::raw("*"))       
                 ->get();
 
-        $kpi = DB::connection('sqlsrv2')
-                ->table('RCS.KPI')
-                ->select(DB::raw("*"))      
-                ->get();
-
-        $pdc = DB::connection('sqlsrv2')
-                ->table('RCS.PDC')
-                ->select(DB::raw("*"))      
-                ->get();
         $wor = DB::connection('sqlsrv2')
                 ->table('RCS.WOR')
                 ->select(DB::raw("*"))
@@ -55,8 +46,8 @@ class ResurgentSufMonthly implements ReportInterface
         $report .= "\t".'008357';
         $report .= "\t".'000075';
         $report .= "\t".Carbon::now()->format('m/d/Y');
-        $report .= ' 10.24.00';
-        $report .= "\t".'UNIFINMONTHLY';
+        $report .= ' 10.25.00';
+        $report .= "\t".'UNIFINWEEKLY';
         $report .= "\n";
     //ABL Data Row Count
         $ablcount = count($abl);
@@ -158,53 +149,7 @@ class ResurgentSufMonthly implements ReportInterface
             $report .= "\t".$itemdec->DateofDeath;
             $report .= "\n";
         }
-    //KPI Data Row Count
-        $kpicount = count($kpi);
-    //KPI Header       
-        $report .= 'RHD';
-        $report .= "\t".'01';
-        $report .= "\t".'KPI';
-        $report .= "\t".'01';
-        $report .= "\t".$kpicount;
-        $report .= "\n";
-    //KPI File Data
-        foreach($kpi as $itemkpi) {
-            $report .= $itemkpi->RecType;
-            $report .= "\t".$itemkpi->AcctID;
-            $report .= "\t".$itemkpi->Acctnumber;
-            $report .= "\t".$itemkpi->RightPartyContact;
-            $report .= "\t".$itemkpi->CallAttempts;
-            $report .= "\t".$itemkpi->Connects;
-            $report .= "\t".$itemkpi->Letters;
-            $report .= "\t".number_format($itemkpi->LastSIFOffered,2,'.','');
-            $report .= "\t".$itemkpi->DateofLastSIFOffered;
-            $report .= "\n";
-        }
-    //PDC Data Row Count 
-        $pdccount = count($pdc);
-    //PDC Header    
-        $report .= 'RHD';
-        $report .= "\t".'01';
-        $report .= "\t".'PDC';
-        $report .= "\t".'01';
-        $report .= "\t".$pdccount;
-        $report .= "\n";
 
-    //PDC File Data
-        foreach($pdc as $itempdc) {
-            $report .= $itempdc->RecType;
-            $report .= "\t".$itempdc->AcctID;
-            $report .= "\t".$itempdc->AcctNumber;
-            $report .= "\t".$itempdc->PaymentType;
-            $report .= "\t".$itempdc->PaymentScheduledDate;
-            $report .= "\t".$itempdc->PaymentAmount;
-            $report .= "\t".$itempdc->StandardEntryClassCode;
-            $report .= "\t".$itempdc->ACHAcctType;
-            $report .= "\t".$itempdc->BankRoutingNumber;
-            $report .= "\t".$itempdc->BankAccountNumber;
-            $report .= "\t".$itempdc->CCAcctType;
-            $report .= "\n";
-        }
 //WOR Data Row Count
         $worcount = count($wor);
  //WOR Header
@@ -231,7 +176,7 @@ class ResurgentSufMonthly implements ReportInterface
         }
 
 
-        $filename = 'SUF_008357_01_'.Carbon::now()->format('Ymd').'_102400';
+        $filename = 'SUF_008357_01_'.Carbon::now()->format('Ymd').'_162300';
         $filePath = public_path('storage\\reports\\'. $filename .'.txt');
         $handle = fopen($filePath, 'w');
         fwrite($handle, $report);
