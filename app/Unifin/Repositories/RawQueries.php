@@ -101,6 +101,7 @@ class RawQueries
             ->Join('CDS.CLT', 'CDS.DBR.DBR_CLIENT', '=', 'CDS.CLT.CLT_NO')
             ->select(DB::raw("CHK_DBR_NO as DebtorNumber, DBR_CLIENT as ClientCode, CLT_NAME_1 as ClientName, CHK_CHECK_AMOUNT as CheckAmount, CHK_POST_DATE_O as PaymentDate, USR_NAME as UserName, UGP_DESC as CollectorGroup"))
             ->whereDate('CHK.EntryDate', '=', Carbon::now()->toDateString())
+            ->whereDate('CHK.CHK_POST_DATE_O', '<=', Carbon::now()->addDays(30)->toDateString())
             ->orderBy('DebtorNumber', 'desc')
             ->get();
 //            ->toSql();
