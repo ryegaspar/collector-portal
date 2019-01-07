@@ -69,6 +69,11 @@
                         text: 'Letter Requests',
                         icon: 'icon-envelope'
                     },
+                    deskTransfers: {
+						href: 'desk-transfer-requests',
+						text: 'Desk Transfers',
+						icon: 'fa fa-arrow-circle-o-right'
+					},
                     scripts: {
 						href: 'scripts',
                         text: 'Scripts',

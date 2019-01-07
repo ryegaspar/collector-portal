@@ -74,7 +74,24 @@
                                 permission: 'read letter-request-type'
                             }
                         }
-                    },
+					},
+					Desk_Transfers: {
+						href: '/admin/desk-transfer-requests',
+						text: 'Desk Transfers',
+						icon: 'fa fa-arrow-circle-o-right'
+					},
+					Client_Reports: {
+						href: '/admin/clientreports',
+						text: 'Client Reporting',
+						icon: 'fa fa-file-text-o',
+						permission: 'read calendar'
+					},
+					Remittance_Log: {
+						href: '/admin/remittance-log',
+						text: 'Remittance Log',
+						icon: 'fa fa fa-money',
+						permission: 'read calendar'
+					},
                     Scripts: {
 						href: '#',
                         text: 'Scripts',
