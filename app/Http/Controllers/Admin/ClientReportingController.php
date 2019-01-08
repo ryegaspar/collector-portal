@@ -37,43 +37,46 @@ class ClientReportingController extends Controller
 
 /*These are where the checkboxs from the view are connected to the Controller*/
     public function compute(Request $request)
-    {
-        
+    {   
         $request->validate([
             'date1' => 'required|date',
             'date2' => 'required|date',
         ]);
 
+     
+
+        $path = 'App\\Unifin\\Repositories\\ClientReporting\\';
+
         $reports = collect([
-            'orionRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\OrionRemit',
-            'musiRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\MusiRemit',
-            'eosRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\EosRemit',
-            'rmcRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\RmcRemit',
-            'rtcRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\RtcRemit',
-            'wcrRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\WcrRemit',
-            'jcapMaintenance' => 'App\\Unifin\\Repositories\\ClientReporting\\JcapMaintenance',
-            'resurgentRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentRemit',
-            'resurgentSufWeekly' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentSufWeekly',
-            'resurgentSufDaily' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentSufDaily',
-            'resurgentSufMonthly' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentSufMonthly',
-            'resurgentPdc' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentPdc',
-            'resurgentBky' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentBky',
-            'resurgentKpi' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentKpi',
-            'resurgentDec' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentDec',
-            'resurgentFct' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentFct',
-            'resurgentBwr' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentBwr',
-            'resurgentWor' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentWor',
-            'resurgentAbl' => 'App\\Unifin\\Repositories\\ClientReporting\\ResurgentAbl',
-            'jcapRecUni' => 'App\\Unifin\\Repositories\\ClientReporting\\JcapRecUni',
-            'asgStatus' => 'App\\Unifin\\Repositories\\ClientReporting\\AsgStatus',
-            'capioRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\CapioRemit',
-            'ltdRemit' => 'App\\Unifin\\Repositories\\ClientReporting\\LtdRemit',
-            'pendrickMainInvoice' => 'App\\Unifin\\Repositories\\ClientReporting\\PendrickMainInvoice',
-            'pendrickPcp2Invoice' => 'App\\Unifin\\Repositories\\ClientReporting\\PendrickPcp2Invoice',
-            'pendrickIndirectPaymentsMain' => 'App\\Unifin\\Repositories\\ClientReporting\\PendrickIndirectPaymentsMain',
-            'pendrickIndirectPaymentsPcp2' => 'App\\Unifin\\Repositories\\ClientReporting\\PendrickIndirectPaymentsPcp2',
-            'claPayFile' => 'App\\Unifin\\Repositories\\ClientReporting\\ClaPayFile',
-            'asgPayFile' => 'App\\Unifin\\Repositories\\ClientReporting\\AsgPayFile'
+            'orionRemit' => $path . 'OrionRemit',
+            'musiRemit' => $path . 'MusiRemit',
+            'eosRemit' => $path . 'EosRemit',
+            'rmcRemit' => $path . 'RmcRemit',
+            'rtcRemit' => $path . 'RtcRemit',
+            'wcrRemit' => $path . 'WcrRemit',
+            'jcapMaintenance' => $path . 'JcapMaintenance',
+            'resurgentRemit' => $path . 'ResurgentRemit',
+            'resurgentSufWeekly' => $path . 'ResurgentSufWeekly',
+            'resurgentSufDaily' => $path . 'ResurgentSufDaily',
+            'resurgentSufMonthly' => $path . 'ResurgentSufMonthly',
+            'resurgentPdc' => $path . 'ResurgentPdc',
+            'resurgentBky' => $path . 'ResurgentBky',
+            'resurgentKpi' => $path . 'ResurgentKpi',
+            'resurgentDec' => $path . 'ResurgentDec',
+            'resurgentFct' => $path . 'ResurgentFct',
+            'resurgentBwr' => $path . 'ResurgentBwr',
+            'resurgentWor' => $path . 'ResurgentWor',
+            'resurgentAbl' => $path . 'ResurgentAbl',
+            'jcapRecUni' => $path . 'JcapRecUni',
+            'asgStatus' => $path . 'AsgStatus',
+            'capioRemit' => $path . 'CapioRemit',
+            'ltdRemit' => $path . 'LtdRemit',
+            'pendrickMainInvoice' => $path . 'PendrickMainInvoice',
+            'pendrickPcp2Invoice' => $path . 'PendrickPcp2Invoice',
+            'pendrickIndirectPaymentsMain' => $path . 'PendrickIndirectPaymentsMain',
+            'pendrickIndirectPaymentsPcp2' => $path . 'PendrickIndirectPaymentsPcp2',
+            'claPayFile' => $path . 'ClaPayFile',
+            'asgPayFile' => $path . 'AsgPayFile'
         ]);
 
         $selectedReports = collect($request->all())->intersectByKeys($reports);
