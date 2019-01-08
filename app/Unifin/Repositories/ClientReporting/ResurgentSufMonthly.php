@@ -55,8 +55,8 @@ class ResurgentSufMonthly implements ReportInterface
         $report .= "\t".'008357';
         $report .= "\t".'000075';
         $report .= "\t".Carbon::now()->format('m/d/Y');
-        $report .= ' 16.23.00';
-        $report .= ' UNIFIN';
+        $report .= ' 10.24.00';
+        $report .= "\t".'UNIFINMONTHLY';
         $report .= "\n";
     //ABL Data Row Count
         $ablcount = count($abl);
@@ -231,7 +231,7 @@ class ResurgentSufMonthly implements ReportInterface
         }
 
 
-        $filename = 'SUF_008357_01_'.Carbon::now()->format('Ymd').'_162300Month';
+        $filename = 'SUF_008357_01_'.Carbon::now()->format('Ymd').'_102400';
         $filePath = public_path('storage\\reports\\'. $filename .'.txt');
         $handle = fopen($filePath, 'w');
         fwrite($handle, $report);

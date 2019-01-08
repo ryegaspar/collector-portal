@@ -43,10 +43,21 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
 
+        Route::patch('remittance-log/{remittance_log}/approvereport', 'RemittanceLogFulfillController@reportapprove')->name('remittance-logs-report.fulfill');
+        Route::patch('remittance-log/{remittance_log}/approveremittance', 'RemittanceLogFulfillController@remittanceapprove')->name('remittance-logs-remittance.fulfill');
+        Route::patch('remittance-log/{remittance_log}/approvecommission', 'RemittanceLogFulfillController@commissionapprove')->name('remittance-logs-commission.fulfill');
+        Route::patch('remittance-log/{remittance_log}/addnotes', 'RemittanceLogFulfillController@addnotes')->name('remittance-logs.deny');
+        Route::resource('remittance-log', 'RemittanceLogController')->except(['show', 'create', 'edit']);
+
+
         Route::get('active-letter-request-types', 'ActiveLetterRequestTypesController@index')->name('active-letter-request-types');
         Route::patch('letter-requests/{letter_request}/approve', 'LetterRequestFulfillController@approve')->name('letter-request.fulfill');
         Route::patch('letter-requests/{letter_request}/deny', 'LetterRequestFulfillController@deny')->name('letter-request.deny');
         Route::resource('letter-requests', 'LetterRequestController')->except(['show', 'create', 'edit']);
+
+        Route::patch('desk-transfer-requests/{desk_transfer_request}/approve', 'DeskTransferRequestFulfillController@approve')->name('desk-transfer-request.fulfill');
+        Route::patch('desk-transfer-requests/{desk_transfer_request}/deny', 'DeskTransferRequestFulfillController@deny')->name('desk-transfer-request.deny');
+        Route::resource('desk-transfer-requests', 'DeskTransferRequestController')->except(['show', 'create', 'edit']);
 
         Route::patch('letter-request-type/{letterRequestType}/toggle-active', 'LetterRequestTypeToggleActiveController@update')->name('letter-request-types');
         Route::resource('letter-request-type', 'LetterRequestTypeController')->only(['index', 'store', 'update']);
@@ -111,6 +122,8 @@ Route::name('collector.')->group(function () {
 
         Route::get('letter-request-types', 'LetterRequestTypesController@index');
         Route::resource('letter-requests', 'LetterRequestController')->except(['show', 'create', 'edit']);
+
+        Route::resource('desk-transfer-requests', 'DeskTransferRequestController')->except(['show', 'create', 'edit']);
 
         Route::get('scripts', 'ScriptsController@index')->name('scripts');
     });

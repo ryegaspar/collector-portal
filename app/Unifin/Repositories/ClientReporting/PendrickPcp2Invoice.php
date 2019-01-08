@@ -80,7 +80,7 @@ class PendrickPcp2Invoice implements ReportInterface
         $fileName = 'Unifin-Pendrick PCP2 Invoice '. Carbon::now()->format('m-d-Y') . '.xlsx';
         $filePath = public_path('storage\\reports\\'. $fileName);
 
-        (new ReportExcel)->makeSimpleXlsxFromCollection($data, $fileName, $headers, $columns, $filePath);
+        (new ReportExcel)->setFont('ARIAL', 10)->makeSimpleXlsxFromCollection($data, $fileName, $headers, $columns, $filePath);
 
     }
 }

@@ -20,7 +20,7 @@ class ResurgentRemit implements ReportInterface
                 ->join('CDS.TRS', 'DBR.DBR_NO', '=', 'TRS.TRS_DBR_NO')
                 ->join('CDS.CLT', 'DBR.DBR_CLIENT', '=', 'CLT.CLT_NO')
                
-                ->select(DB::raw("DBR.DBR_NO, DBR_CLI_REF_NO, TRS_TRX_DATE_O, TRS_TRUST_CODE, TRS_AMT, TRS_COMM_AMT, DBR_CL_MISC_2, TRS_SEQ_NO, Orig_Acct_No"))
+                ->select(DB::raw("DBR.DBR_NO, DBR_CLI_REF_NO, TRS_TRX_DATE_O, TRS_TRUST_CODE, TRS_AMT, TRS_COMM_AMT, DBR_CL_MISC_3, TRS_SEQ_NO, Orig_Acct_No"))
                 
                 
                 ->whereNotIn('TRS_TRUST_CODE', ['2', '3', '14', '33'])
@@ -58,11 +58,11 @@ class ResurgentRemit implements ReportInterface
 
         foreach($data as $item) {
             $report .= $item->Orig_Acct_No;
-            $report .= "\t".number_format($item->TRS_AMT,2);
+            $report .= "\t".abs(number_format($item->TRS_AMT,2));
             $report .= "\t".$item->TRS_TRUST_CODE;
             $report .= "\t".Carbon::parse($item->TRS_TRX_DATE_O)->format('m/d/Y');
-            $report .= "\t".number_format($item->TRS_COMM_AMT,2);
-            $report .= "\t".$item->DBR_CL_MISC_2;
+            $report .= "\t".abs(number_format($item->TRS_COMM_AMT,2));
+            $report .= "\t".$item->DBR_CL_MISC_3;
             $report .= "\t".$item->TRS_TRUST_CODE;
             $report .= "\t".$item->DBR_CLI_REF_NO;
             $report .= "\t".' ';

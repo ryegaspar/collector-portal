@@ -81,6 +81,16 @@ class Collector extends Authenticatable
     }
 
     /**
+     * A collector has many desk transfer requests.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function desk_transfer_requests()
+    {
+        return $this->morphMany(DeskTransferRequest::class, 'requestable');
+    }
+
+    /**
      * A collector belongs to a sub site.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

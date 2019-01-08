@@ -32,6 +32,7 @@ Vue.component('accounts', require('./components/Collector/Accounts'));
 Vue.component('transactions', require('./components/Collector/Transactions'));
 Vue.component('adjustments', require('./components/Collector/Adjustments'));
 Vue.component('letter-requests', require('./components/Collector/LetterRequests'));
+Vue.component('desk-transfer-requests', require('./components/Collector/DeskTransferRequests'));
 Vue.component('scripts', require('./components/Collector/Scripts'));
 
 const app = new Vue({
