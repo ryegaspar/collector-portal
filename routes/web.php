@@ -61,7 +61,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::patch('collectors/{collector}/reset-password', 'CollectorResetPasswordController@update')->name('collector.reset-password');
         Route::patch('collectors/{collector}/toggle-active', 'CollectorToggleActiveController@update')->name('collector.toggle-active');
-        Route::get('collectors/collector-options', 'CollectorOptionsController@index')->name('collector-option-lists');
+//        Route::get('collectors/collector-options', 'CollectorOptionsController@index')->name('collector-option-lists');
         Route::resource('collectors', 'CollectorsController')->only(['index', 'store', 'update']);
 
         Route::get('collector-batches/{id}/list', 'CollectorBatchListsController@index')->name('collector-batch-lists');
@@ -119,6 +119,8 @@ Route::name('collector.')->group(function () {
 Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
 
     Route::get('clients', 'ApiController@clients');
+    Route::get('subsite-options', 'ApiController@subsiteOptions');
+    Route::get('collector-options', 'ApiController@collectorOptions');
 
 });
 
@@ -126,26 +128,6 @@ Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-pl
 Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-plc.view');
 
 //TODO: remove this!
-Route::get('testing', function () {
-    $columns = [ //column => select query
-        'DBR_CLI_REF_NO'    => 'DBR_CLI_REF_NO',
-        'ADR_NAME'          => 'ADR_NAME',
-        'DBR_NO'            => 'DBR_NO',
-        'DBR_NAME1'         => 'DBR_NAME1',
-        'DBR_ASSIGN_DATE_O' => 'DBR_ASSIGN_DATE_O',
-        'DBR_CLOSE_DATE_O'  => 'DBR_CLOSE_DATE_O',
-        'DBR_ASSIGN_AMT'    => 'DBR_ASSIGN_AMT',
-        'DBR_RECVD_TOT'     => 'DBR_RECVD_TOT',
-        'STS_DESC'          => 'STS_DESC',
-        'DBR_COM_RATE'      => 'DBR_COM_RATE',
-        'DBR_CLIENT'        => 'DBR_CLIENT',
-        'DBR_LAST_WORKED_O' => 'DBR_LAST_WORKED_O',
-        'DBR_STATUS'        => 'DBR_STATUS',
-        'count_pdc'         => '(SELECT(*) FROM CDSMSC.CHK WHERE DBR.DBR_NO = CHK.CHK_DBR_NO) as count_pdc',
-        'XCR_CODE'          => "DBR_NO+'01XCR' as XCR_CODE"
-    ];
+Route::get('testing', function() {
 
-    $text = implode(",", array_values($columns));
-
-    dd($text);
 });

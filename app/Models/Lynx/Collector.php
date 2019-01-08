@@ -12,26 +12,11 @@ use Unifin\TableFilters\TableFilter;
 class Collector extends Authenticatable
 {
     /**
-     * The attributes that are mass assignable
+     * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'tiger_user_id',
-        'desk',
-        'username',
-        'last_name',
-        'first_name',
-        'sub_site_id',
-        'team_leader_id',
-        'commission_structure_id',
-        'status_id',
-        'start_date',
-        'start_full_month_date',
-
-        'change_pass_at',
-        'password'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.

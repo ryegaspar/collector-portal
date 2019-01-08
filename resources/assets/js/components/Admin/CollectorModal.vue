@@ -151,6 +151,7 @@
 		components: {
 			Datepicker
 		},
+
 		props: [
 			'isAdd',
 		],

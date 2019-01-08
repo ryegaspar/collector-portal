@@ -3,6 +3,7 @@
 namespace App\Unifin\Classes;
 
 use App\Models\Lynx\Collector;
+use App\Models\Lynx\Subsite;
 use Carbon\Carbon;
 
 class NewCollectorFromBatch
@@ -72,6 +73,8 @@ class NewCollectorFromBatch
         $fifteenth = Carbon::parse($this->batchData['start_date'])->day(15);
         $this->batchData['start_full_month_date'] = $startDate <= $fifteenth ? $tempDate : $tempDate->addMonth();
 
+        $group = Subsite::find($this->batchData['sub_site_id'])->default_collector_group;
+
         return new Collector([
             'desk'                    => $ids[0],
             'tiger_user_id'           => $ids[1],
@@ -79,6 +82,7 @@ class NewCollectorFromBatch
             'last_name'               => $lastName,
             'first_name'              => $firstName,
             'sub_site_id'             => $this->batchData['sub_site_id'],
+            'group'                   => $group,
             'team_leader_id'          => $this->batchData['team_leader_id'] ?? '',
             'commission_structure_id' => $this->batchData['commission_structure_id'],
             'start_date'              => $this->batchData['start_date'],
