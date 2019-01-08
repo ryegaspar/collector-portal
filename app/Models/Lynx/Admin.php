@@ -90,13 +90,33 @@ class Admin extends Authenticatable implements CanResetPasswordContract
     }
 
     /**
+     * An admin has many desk transfer requests.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function desk_transfer_requests()
+    {
+        return $this->morphMany(DeskTransferRequest::class, 'requestable');
+    }
+
+    /**
      * user has many scripts
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function scripts()
     {
-        return $this->hasMany('App\Script');
+        return $this->hasMany('App\Models\Lynx\Script');
+    }
+
+        /**
+     * user has many remittance logs
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function remittance_logs()
+    {
+        return $this->hasMany('App\Models\Lynx\RemittanceLog');
     }
 
     /**

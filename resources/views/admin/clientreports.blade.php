@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Unifin Reports </title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.admin')
+@section('title', ' - Dashboard')
+@section('topnavbar')
+	<topnavbar title="Dashboard"></topnavbar>
+@endsection
+@section('header')
 <style>
 * {
   box-sizing: border-box;
@@ -136,21 +137,11 @@ i {
   float:right;
 }
 </style>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script>
-$(document).ready(function() {
-  $('.suf').hide();
-});
-function makeVisible() {
-    $('.suf').toggle();
-}
-</script>
-
-</head>
-
-<body>
+@endsection
+@section('content')
+	<!-- Main content -->
+	<main class="main">
+		<div class="container-fluid">
 
 <div class="top">
 <h1>Unifin Reports</h1>
@@ -161,7 +152,7 @@ function makeVisible() {
     </br>
 
 <div class="date">
-    <th><form method="post" action="/admin/clientreports">
+    <th><form id="report_submit_form" method="post" action="/admin/clientreports">
     {{ csrf_field() }}
     
     Start Date:
@@ -173,11 +164,7 @@ function makeVisible() {
   </div>
 
 
-
-
 <table id ="myTable">
-  
-
 
   <tr class="header">
   <th onclick="sortTable(0)" >Report Title</th>
@@ -187,7 +174,6 @@ function makeVisible() {
   <th onclick="sortTable(4)">Last Ran Date</th>
   <th>Select</th>
   </tr>
-
 
   <tr>
    <td>ASG Daily Payments</td>
@@ -461,8 +447,6 @@ function makeVisible() {
 
 </table>
 
-
-
 </br>
 
 
@@ -472,7 +456,7 @@ function makeVisible() {
     <button type="button" class="presetButton" onClick="setDatesAutoDaily()">Daily Report</button>
   </br>
     </br>
-    <button type="submit" class="runButton">Run</button>
+    <button type="submit" class="runButton" onClick="formSubmit()">Run</button>
     
   </form>
 
@@ -492,6 +476,11 @@ function makeVisible() {
     </div>
   @endif
 
+
+</div>
+	</main>
+@endsection
+@section('footer')
 <!-- Allows for searching through report list -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 
@@ -617,6 +606,19 @@ function setDatesAutoDaily() {
 }
 
 </script>
+<script>
+$(document).ready(function() {
+  $('.suf').hide();
 
-</body>
-</html>
+  
+});
+function makeVisible() {
+    $('.suf').toggle();
+}
+
+function formSubmit() {
+    $("#report_submit_form").submit();
+  }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+@endsection

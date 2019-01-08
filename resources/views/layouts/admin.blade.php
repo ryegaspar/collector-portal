@@ -31,7 +31,7 @@
 		</div>
 
 		<footer class="app-footer">
-			<span>© 2018 ryeg_</span>
+			<span>© 2019 Unifin</span>
 		</footer>
 	</div>
 
