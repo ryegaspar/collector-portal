@@ -60,7 +60,6 @@
 	import Vtable from '../VTable';
 	import VtableSubHeaderCollectors from './VtableSubHeaderCollectors';
 	import CollectorModal from './CollectorModal';
-	import CollectorOptionStore from './CollectorOptionStore';
 	import Store from './Store';
 
 	export default {

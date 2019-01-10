@@ -116,8 +116,11 @@
 
 <script>
 	import Datepicker from 'vuejs-datepicker';
+	import Store from './Store';
 
 	export default {
+
+		store: Store,
 
 		components: {
 			Datepicker,
@@ -142,27 +145,27 @@
 					commission_structure_id: ''
 				}),
 
-				sub_sites: [],
-				commission_structures: {},
 				team_leaders_options: [],
-
-				team_leaders: [],
 			}
 		},
 
-		created() {
-			axios.get('/admin/collectors/collector-options')
-				.then(({data}) => {
-					_.assign(this.sub_sites, data.sub_sites);
-
-					_.assign(this.commission_structures, data.commission_structures);
-
-					_.assign(this.team_leaders, data.team_leaders);
-				})
-				.catch((error) => {
-					lib.swalError(error.message);
-				});
+		beforeCreate() {
+			this.$store.dispatch('loadCollectorOptions');
 		},
+
+		// created() {
+		// 	axios.get('/admin/collectors/collector-options')
+		// 		.then(({data}) => {
+		// 			_.assign(this.sub_sites, data.sub_sites);
+        //
+		// 			_.assign(this.commission_structures, data.commission_structures);
+        //
+		// 			_.assign(this.team_leaders, data.team_leaders);
+		// 		})
+		// 		.catch((error) => {
+		// 			lib.swalError(error.message);
+		// 		});
+		// },
 
 		methods: {
 			fileChanged(e) {
@@ -238,7 +241,19 @@
 					let obj = this.sub_sites.find(o => o.id === this.form.sub_site_id);
 					return +obj.has_team_leaders;
 				}
-			}
+			},
+
+			sub_sites() {
+				return this.$store.state.sub_sites;
+			},
+
+			commission_structures() {
+				return this.$store.state.commission_structures;
+			},
+
+			team_leaders() {
+				return this.$store.state.team_leaders;
+			},
 		},
 	}
 </script>

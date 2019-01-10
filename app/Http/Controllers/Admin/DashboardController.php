@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tiger\UFN_TodayTotals;
-use Carbon\Carbon;
 use Unifin\Repositories\RawQueries;
 
 class DashboardController extends Controller
@@ -27,11 +26,7 @@ class DashboardController extends Controller
         $postToday = UFN_TodayTotals::all();
         $hoursWorked = RawQueries::CollectorHoursWorked();
 
-
-   //     dd($hoursWorked);
-   //     dd($postToday);
-
-        return view('admin.dashboard', compact('postToday'), compact('hoursWorked'));
+        return view('admin.dashboard', compact('postToday', 'hoursWorked'));
     }
 
     /**

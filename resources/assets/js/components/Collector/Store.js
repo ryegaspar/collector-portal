@@ -16,7 +16,7 @@ export default new Vuex.Store({
 
 	actions: {
 		loadLetterRequestType({commit}) {
-			axios.get('/letter-request-types')
+			axios.get('/api/active-letter-request-types')
 				.then(({data}) => {
 					commit('updateLetterRequestType', data);
 				});

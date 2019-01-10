@@ -2,8 +2,6 @@
 
 namespace App\Models\Lynx;
 
-use App\Models\Tiger\DSK;
-use App\Models\Tiger\USR;
 use App\Unifin\Classes\NewCollector;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,21 +42,8 @@ class Collector extends Authenticatable
     protected $casts = [
         'start_date'          => 'datetime:m/d/Y',
         'start_full_month_at' => 'datetime:m/d/Y',
-        'active' => 'boolean'
+        'active'              => 'boolean'
     ];
-
-    /**
-     * Boot the model.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($collector) {
-            USR::makeCollectOneUser($collector);
-            DSK::makeCollectOneDesk($collector);
-        });
-    }
 
     /**
      * set username column
@@ -195,6 +180,7 @@ class Collector extends Authenticatable
         $validatedData['desk'] = $ids[0];
         $validatedData['tiger_user_id'] = $ids[1];
         $validatedData['username'] = $ids[2];
+        $validatedData['group'] = Subsite::find($validatedData['sub_site_id'])->default_collector_group;
 
         self::create($validatedData);
     }

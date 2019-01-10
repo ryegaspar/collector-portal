@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Lynx\Collector;
+use App\Observers\Lynx\CollectorObserver;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('hash', function ($attribute, $value, $parameters, $validator) {
             return Hash::check($value, auth()->user()->password);
         });
+
+        Collector::observe(CollectorObserver::class);
 
 //        DB::listen(function($query) {
 //            Log::info($query->sql, $query->bindings, $query->time);

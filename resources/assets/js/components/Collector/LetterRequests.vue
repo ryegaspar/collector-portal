@@ -67,11 +67,12 @@
 	import VtableSubHeaderLetterRequests from './VtableSubHeaderLetterRequests';
 	import LetterRequestModal from './LetterRequestModal';
 	import LetterRequestNotesModal from './LetterRequestNotesModal';
-	import CollectorOptionStore from './Store';
+	import Store from './Store';
+	// import CollectorOptionStore from './Store';
 
 	export default {
 
-		store: CollectorOptionStore,
+		store: Store,
 
 		components: {
 			Vtable,

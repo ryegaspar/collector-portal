@@ -17,7 +17,7 @@ export default new Vuex.Store({
 
 	mutations: {
 		updateLetterRequestType(state, data) {
-			state.letter_request_types = data.letter_request_types;
+			state.letter_request_types = data.letter_request_type;
 		},
 
 		updateClientLists(state, data) {
@@ -30,16 +30,17 @@ export default new Vuex.Store({
 		},
 
 		updateCollectorOptions(state, data) {
-			state.letter_request_types = data.letter_request_types;
+			state.sub_sites = data.sub_sites;
 			state.commission_structures = data.commission_structures;
 			state.team_leaders = data.team_leaders;
-			state.statuses = data.statuses();
+			state.statuses = data.statuses;
+			state.collector_groups = data.collector_groups;
 		}
 	},
 
 	actions: {
 		loadLetterRequestType({commit}) {
-			axios.get('/admin/active-letter-request-types')
+			axios.get('/api/active-letter-request-types')
 				.then(({data}) => {
 					commit('updateLetterRequestType', data);
 				});

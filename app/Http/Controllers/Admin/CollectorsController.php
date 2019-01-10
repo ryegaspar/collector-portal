@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Lynx\Collector;
 use App\Models\Lynx\Subsite;
-use App\Rules\CollectOneId;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Unifin\TableFilters\AdminCollectorFilter;
 use Unifin\Traits\Paginate;
@@ -96,7 +94,8 @@ class CollectorsController extends Controller
                 'last_name'               => ['required'],
                 'start_date'              => ['required'],
                 'commission_structure_id' => ['required'],
-                'status_id'               => ['required']
+                'status_id'               => ['required'],
+                'group'                   => ''
             ]
         );
 

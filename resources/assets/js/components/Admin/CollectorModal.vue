@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" id="collectorModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <form @submit.prevent="submit" @keydown="form.errors.clear()">
 
@@ -13,125 +13,149 @@
                     </div>
 
                     <div class="modal-body">
-                        <fieldset class="form-group">
-                            <label>Sub Site</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.sub_site_id"
-                                        @change="onSubSiteChange(form.sub_site_id)"
-                                        :disabled="!isAdd">
-                                    <option :value="sub_site.id"
-                                            v-for="sub_site in sub_sites">
-                                        {{ sub_site.name }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('sub_site_id')">
-                                    {{ form.errors.get('sub_site_id') }}
-                                </em>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label>Sub Site</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.sub_site_id"
+                                                @change="onSubSiteChange(form.sub_site_id)"
+                                                :disabled="!isAdd">
+                                            <option :value="sub_site.id"
+                                                    v-for="sub_site in sub_sites">
+                                                {{ sub_site.name }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('sub_site_id')">
+                                            {{ form.errors.get('sub_site_id') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group" v-if="!isAdd">
+                                    <label>Username</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control text-right"
+                                               v-model="form.username"
+                                               disabled>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>First Name</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               v-model="form.first_name">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('first_name')">
+                                            {{ form.errors.get('first_name') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Last Name</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               v-model="form.last_name">
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('last_name')">
+                                            {{ form.errors.get('last_name') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Hire Date</label>
+                                    <div class="input-group">
+                                        <datepicker style="flex: 1 1 auto;"
+                                                    input-class="form-control text-right"
+                                                    v-model="form.start_date">
+                                        </datepicker>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('start_date')">
+                                            {{ form.errors.get('start_date') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
                             </div>
-                        </fieldset>
-                        <fieldset class="form-group" v-if="!isAdd">
-                            <label>Username</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control text-right"
-                                       v-model="form.username"
-                                       disabled>
+                            <div class="col-md-6">
+                                <fieldset class="form-group" v-if="hasTeamLeader">
+                                    <label>Team Leader</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.team_leader_id"
+                                                @change="form.errors.clear()">
+                                            <option :value="team_leader.id"
+                                                    v-for="team_leader in team_leaders_options">
+                                                {{ team_leader.full_name }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('team_leader_id')">
+                                            {{ form.errors.get('team_leader_id') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset v-if="!isAdd">
+                                    <label>Group Designation</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.group"
+                                                @change="form.errors.clear()">
+                                            <option :value="group.UGP_CODE"
+                                                    v-for="group in collector_groups">
+                                                {{ group.UGP_DESC }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('group')">
+                                            {{ form.errors.get('group') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Commission Structure</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.commission_structure_id">
+                                            <option :value="index"
+                                                    v-for="(commission_structure, index) in commission_structures">
+                                                {{ commission_structure }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('commission_structure_id')">
+                                            {{ form.errors.get('commission_structure_id') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label>Collector Status</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.status_id">
+                                            <option :value="index"
+                                                    v-for="(status, index) in statuses">
+                                                {{ status }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('status_id')">
+                                            {{ form.errors.get('status_id') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
                             </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>First Name</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="form.first_name">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('first_name')">
-                                    {{ form.errors.get('first_name') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Last Name</label>
-                            <div class="input-group">
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="form.last_name">
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('last_name')">
-                                    {{ form.errors.get('last_name') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Hire Date</label>
-                            <div class="input-group">
-                                <datepicker style="flex: 1 1 auto;"
-                                            input-class="form-control text-right"
-                                            v-model="form.start_date">
-                                </datepicker>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('start_date')">
-                                    {{ form.errors.get('start_date') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group" v-if="hasTeamLeader">
-                            <label>Team Leader</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.team_leader_id"
-                                        @change="form.errors.clear()">
-                                    <option :value="team_leader.id"
-                                            v-for="team_leader in team_leaders_options">
-                                        {{ team_leader.full_name }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('team_leader_id')">
-                                    {{ form.errors.get('team_leader_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Commission Structure</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.commission_structure_id">
-                                    <option :value="index"
-                                            v-for="(commission_structure, index) in commission_structures">
-                                        {{ commission_structure }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('commission_structure_id')">
-                                    {{ form.errors.get('commission_structure_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label>Collector Status</label>
-                            <div class="input-group">
-                                <select class="form-control"
-                                        v-model="form.status_id">
-                                    <option :value="index"
-                                            v-for="(status, index) in statuses">
-                                        {{ status }}
-                                    </option>
-                                </select>
-                                <em class="error invalid-feedback"
-                                    v-if="form.errors.has('status_id')">
-                                    {{ form.errors.get('status_id') }}
-                                </em>
-                            </div>
-                        </fieldset>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
                         <button class="btn btn-secondary"
                                 type="button"
-                                data-dismiss="modal">Close</button>
+                                data-dismiss="modal">Close
+                        </button>
                         <button :class="this.isAdd ? 'btn btn-success' : 'btn btn-primary'"
                                 type="submit"
                                 :disabled="isLoading || form.errors.any()"
@@ -172,6 +196,7 @@
 					first_name: '',
 					start_date: '',
 					team_leader_id: '',
+                    group: '',
 					commission_structure_id: '',
 					status_id: ''
 				}),
@@ -252,15 +277,18 @@
 
 			statuses() {
 				return this.$store.state.statuses;
-			}
+			},
+
+            collector_groups() {
+				return this.$store.state.collector_groups;
+            }
 		},
 
 		watch: {
 			'isAdd': function (newVal, oldVal) {
 				if (newVal) {
 					this.persistButtonText = 'Add';
-				}
-				else {
+				} else {
 					this.persistButtonText = 'Update';
 				}
 			},
