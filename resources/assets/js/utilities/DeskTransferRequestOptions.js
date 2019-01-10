@@ -19,6 +19,10 @@ export const request_reasons = [
 	},
 	{
 		id: 4,
+		name: 'Good For Today Transfer'
+	},
+	{
+		id: 5,
 		name: 'Other'
 	}
 ];
