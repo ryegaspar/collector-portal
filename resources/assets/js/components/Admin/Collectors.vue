@@ -60,11 +60,11 @@
 	import Vtable from '../VTable';
 	import VtableSubHeaderCollectors from './VtableSubHeaderCollectors';
 	import CollectorModal from './CollectorModal';
-	import CollectorOptionStore from './CollectorOptionStore';
+	import Store from './Store';
 
 	export default {
 
-		store: CollectorOptionStore,
+		store: Store,
 
 		components: {
 			Vtable,
@@ -92,7 +92,7 @@
 		},
 
 		beforeCreate() {
-			this.$store.dispatch('loadData');
+			this.$store.dispatch('loadCollectorOptions');
 		},
 
 		methods: {

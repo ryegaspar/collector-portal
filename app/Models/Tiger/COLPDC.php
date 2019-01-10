@@ -27,6 +27,4 @@ class COLPDC extends Model
      * @var string
      */
     protected $primaryKey = 'Desk';
-
-    
 }

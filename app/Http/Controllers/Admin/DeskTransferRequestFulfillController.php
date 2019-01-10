@@ -24,7 +24,7 @@ class DeskTransferRequestFulfillController extends Controller
      */
     public function approve(DeskTransferRequest $deskTransferRequest)
     {
-       
+
         $deskTransferRequest->fulfilled_by = request()->user()->id;
         $deskTransferRequest->status = 1;
 
@@ -34,8 +34,7 @@ class DeskTransferRequestFulfillController extends Controller
         $userid = strtoupper(request()->user()->tiger_user_id);
         $transferto = $deskTransferRequest->desk;
 
-        DB::connection('sqlsrv2')->update("exec [UFN].[DeskTransferApprove] ?,?,?",[$acct_no, $userid, $transferto]);
-        
+        DB::connection('sqlsrv2')->update("exec [UFN].[DeskTransferApprove] ?,?,?", [$acct_no, $userid, $transferto]);
 
         return response([], 201);
     }
@@ -60,7 +59,7 @@ class DeskTransferRequestFulfillController extends Controller
         $userid = strtoupper(request()->user()->tiger_user_id);
         $transferto = $deskTransferRequest->desk;
 
-        DB::connection('sqlsrv2')->update("exec [UFN].[DeskTransferReject] ?,?,?",[$acct_no, $userid, $transferto]);
+        DB::connection('sqlsrv2')->update("exec [UFN].[DeskTransferReject] ?,?,?", [$acct_no, $userid, $transferto]);
 
         return response([], 201);
     }

@@ -43,8 +43,11 @@
 	import VtableSubHeaderSubSites from './VtableSubHeadersSubSites';
 	import SubSiteModal from './SubSiteModal';
 	import Vtable from '../VTable';
+	import Store from './Store';
 
 	export default {
+
+		store: Store,
 
 		components: {
 			VtableHeader,
@@ -69,6 +72,10 @@
 				isAdd: true,
 			}
 		},
+
+        beforeCreate() {
+			this.$store.dispatch('loadSubsiteOptions');
+        },
 
 		methods: {
 			addSubSite() {

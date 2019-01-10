@@ -110,7 +110,7 @@ class USR extends Authenticatable
             'USR_DIAL_SUFF'            => '',
             'USR_BUL_LDATE'            => "0",
             'USR_BUL_LTIME'            => "0",
-            'USR_GROUP'                => 'COL',
+            'USR_GROUP'                => $collector->group,
             'USR_NW_LOGIN'             => 'N',
             'USR_ALLOW_AD_DUN'         => 'Y',
             'USR_DEF_MOT_DESK'         => $collector->desk,
