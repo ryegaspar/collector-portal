@@ -2,8 +2,6 @@
 
 namespace App\Models\Lynx;
 
-use App\Models\Tiger\DSK;
-use App\Models\Tiger\USR;
 use App\Unifin\Classes\NewCollector;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,26 +10,11 @@ use Unifin\TableFilters\TableFilter;
 class Collector extends Authenticatable
 {
     /**
-     * The attributes that are mass assignable
+     * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'tiger_user_id',
-        'desk',
-        'username',
-        'last_name',
-        'first_name',
-        'sub_site_id',
-        'team_leader_id',
-        'commission_structure_id',
-        'status_id',
-        'start_date',
-        'start_full_month_date',
-
-        'change_pass_at',
-        'password'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -59,21 +42,8 @@ class Collector extends Authenticatable
     protected $casts = [
         'start_date'          => 'datetime:m/d/Y',
         'start_full_month_at' => 'datetime:m/d/Y',
-        'active' => 'boolean'
+        'active'              => 'boolean'
     ];
-
-    /**
-     * Boot the model.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($collector) {
-            USR::makeCollectOneUser($collector);
-            DSK::makeCollectOneDesk($collector);
-        });
-    }
 
     /**
      * set username column
@@ -210,6 +180,7 @@ class Collector extends Authenticatable
         $validatedData['desk'] = $ids[0];
         $validatedData['tiger_user_id'] = $ids[1];
         $validatedData['username'] = $ids[2];
+        $validatedData['group'] = Subsite::find($validatedData['sub_site_id'])->default_collector_group;
 
         self::create($validatedData);
     }

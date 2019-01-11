@@ -57,6 +57,7 @@ class SubSitesController extends Controller
             'site_id'                         => 'required|numeric',
             'has_team_leaders'                => 'boolean',
             'description'                     => '',
+            'default_collector_group'         => 'required',
             'min_desk_number'                 => 'required|numeric',
             'max_desk_number'                 => 'required|numeric',
             'collectone_id_assignment_method' => 'required|numeric',
@@ -83,6 +84,7 @@ class SubSitesController extends Controller
             'site_id'                         => 'required|numeric',
             'has_team_leaders'                => 'boolean',
             'description'                     => '',
+            'default_collector_group'         => 'required',
             'min_desk_number'                 => 'required|numeric',
             'max_desk_number'                 => 'required|numeric',
             'collectone_id_assignment_method' => 'required|numeric',
@@ -103,9 +105,11 @@ class SubSitesController extends Controller
     protected function getSubSites($adminSiteFilter)
     {
         $sites = Subsite::with('site')
-            ->withCount(['collectors' => function ($query) {
-                $query->whereNull('date_terminated');
-            }])
+            ->withCount([
+                'collectors' => function ($query) {
+                    $query->whereNull('date_terminated');
+                }
+            ])
             ->tableFilters($adminSiteFilter);
 
         $results = $this->paginate($sites);

@@ -65,6 +65,23 @@
                             </div>
                             <div class="col-md-6">
                                 <fieldset class="form-group">
+                                    <label>Default Collector Group</label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                v-model="form.default_collector_group"
+                                                @change="form.errors.clear()">
+                                            <option :value="collector_group.UGP_CODE"
+                                                    v-for="collector_group in collector_groups">
+                                                {{ collector_group.UGP_DESC }}
+                                            </option>
+                                        </select>
+                                        <em class="error invalid-feedback"
+                                            v-if="form.errors.has('default_collector_group')">
+                                            {{ form.errors.get('default_collector_group') }}
+                                        </em>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
                                     <label>Minimum Desk Number</label>
                                     <div class="input-group">
                                         <input type="text"
@@ -94,12 +111,12 @@
                                         <div class="form-check">
                                             <input type="radio" class="form-check-input" value="1"
                                                    v-model="form.collectone_id_assignment_method">
-                                            <label class="form-check-label">Use Initials + Number</label>
+                                            <label class="form-check-label">Use Initials + Number (e.g. cd1)</label>
                                         </div>
                                         <div class="form-check">
                                             <input type="radio" class="form-check-input" value="2"
                                                    v-model="form.collectone_id_assignment_method">
-                                            <label class="form-check-label">Use Fix Prefix + Number</label>
+                                            <label class="form-check-label">Use Fix Prefix + Number (e.g. p00)</label>
                                         </div>
                                         <em class="error invalid-feedback"
                                             v-if="form.errors.has('collectone_id_assignment_method')">
@@ -155,29 +172,28 @@
 					site_id: '',
 					has_team_leaders: false,
 					description: '',
+					default_collector_group: '',
 					min_desk_number: '',
 					max_desk_number: '',
 					collectone_id_assignment_method: '',
 					prefixes: [],
 				}),
 
-				sites: [],
-
 				updateID: '',
 			}
 		},
 
-		created() {
-			axios.get('/admin/sites?per_page=100')
-				.then(({data}) => {
-					data.data.forEach((element) => {
-						this.sites.push(element);
-					});
-				})
-				.catch((error) => {
-					lib.swalError(error.message);
-				});
-		},
+		// created() {
+		// 	axios.get('/admin/sites?per_page=100')
+		// 		.then(({data}) => {
+		// 			data.data.forEach((element) => {
+		// 				this.sites.push(element);
+		// 			});
+		// 		})
+		// 		.catch((error) => {
+		// 			lib.swalError(error.message);
+		// 		});
+		// },
 
 		methods: {
 			submit() {
@@ -222,6 +238,7 @@
 				this.form.name = data.name;
 				this.form.site_id = data.site_id;
 				this.form.description = data.description;
+				this.form.default_collector_group = data.default_collector_group;
 				this.form.has_team_leaders = !!+data.has_team_leaders;
 				this.form.min_desk_number = data.min_desk_number;
 				this.form.max_desk_number = data.max_desk_number;
@@ -237,15 +254,22 @@
 		computed: {
 			showPrefixes() {
 				return +this.form.collectone_id_assignment_method === 2;
-			}
+			},
+
+			collector_groups() {
+				return this.$store.state.collector_groups;
+			},
+
+            sites() {
+				return this.$store.state.sites;
+            }
 		},
 
 		watch: {
 			'isAdd': function (newVal, oldVal) {
 				if (newVal) {
 					this.persistButtonText = 'Add';
-				}
-				else {
+				} else {
 					this.persistButtonText = 'Update';
 				}
 			},

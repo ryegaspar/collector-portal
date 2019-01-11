@@ -8,20 +8,11 @@ use Unifin\TableFilters\TableFilter;
 class Subsite extends Model
 {
     /**
-     * The attributes that are mass assignable
+     * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'site_id',
-        'has_team_leaders',
-        'description',
-        'min_desk_number',
-        'max_desk_number',
-        'collectone_id_assignment_method',
-        'prefixes'
-    ];
+    protected $guarded = [];
 
     /**
      * A subsite belongs to a Site.

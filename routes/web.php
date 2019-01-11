@@ -55,7 +55,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('letter-requests/{letter_request}/deny', 'LetterRequestFulfillController@deny')->name('letter-request.deny');
         Route::resource('letter-requests', 'LetterRequestController')->except(['show', 'create', 'edit']);
 
-        Route::patch('desk-transfer-requests/{desk_transfer_request}/approve', 'DeskTransferRequestFulfillController@approve')->name('desk-transfer-request.fulfill');
+        Route::patch('desk-transfer-requests/{desk_transfer_request}/approve', 'DeskTransferRequestFulfillController@approve')->name('desk-transfer-request.approve');
         Route::patch('desk-transfer-requests/{desk_transfer_request}/deny', 'DeskTransferRequestFulfillController@deny')->name('desk-transfer-request.deny');
         Route::resource('desk-transfer-requests', 'DeskTransferRequestController')->except(['show', 'create', 'edit']);
 
@@ -72,7 +72,6 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
         Route::patch('collectors/{collector}/reset-password', 'CollectorResetPasswordController@update')->name('collector.reset-password');
         Route::patch('collectors/{collector}/toggle-active', 'CollectorToggleActiveController@update')->name('collector.toggle-active');
-        Route::get('collectors/collector-options', 'CollectorOptionsController@index')->name('collector-option-lists');
         Route::resource('collectors', 'CollectorsController')->only(['index', 'store', 'update']);
 
         Route::get('collector-batches/{id}/list', 'CollectorBatchListsController@index')->name('collector-batch-lists');
@@ -107,8 +106,7 @@ Route::name('collector.')->group(function () {
 
     Route::namespace('Collector')->middleware(['auth', 'activeCollector'])->group(function () {
         Route::get('reset-password', 'CollectorResetPasswordController@index')->name('collector-reset-password');
-        Route::post('reset-password',
-            'CollectorResetPasswordController@reset')->name('collector-reset-password.submit');
+        Route::post('reset-password', 'CollectorResetPasswordController@reset')->name('collector-reset-password.submit');
 
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         Route::get('dashboard/transactions', 'DashboardTransactionController@index')->name('dashboard.transactions');
@@ -120,7 +118,6 @@ Route::name('collector.')->group(function () {
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'store', 'destroy']);
 
-        Route::get('letter-request-types', 'LetterRequestTypesController@index');
         Route::resource('letter-requests', 'LetterRequestController')->except(['show', 'create', 'edit']);
 
         Route::resource('desk-transfer-requests', 'DeskTransferRequestController')->except(['show', 'create', 'edit']);
@@ -130,35 +127,16 @@ Route::name('collector.')->group(function () {
 });
 
 Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
-
     Route::get('clients', 'ApiController@clients');
-
+    Route::get('subsite-options', 'ApiController@subsiteOptions');
+    Route::get('collector-options', 'ApiController@collectorOptions');
+    Route::get('active-letter-request-types', 'ApiController@letterRequestTypeOptions');
 });
 
 Route::get('/placements/jcap', 'Placements\JcapController@index')->name('jcap-plc');
 Route::post('/placements/jcap', 'Placements\JcapController@show')->name('jcap-plc.view');
 
 //TODO: remove this!
-Route::get('testing', function () {
-    $columns = [ //column => select query
-        'DBR_CLI_REF_NO'    => 'DBR_CLI_REF_NO',
-        'ADR_NAME'          => 'ADR_NAME',
-        'DBR_NO'            => 'DBR_NO',
-        'DBR_NAME1'         => 'DBR_NAME1',
-        'DBR_ASSIGN_DATE_O' => 'DBR_ASSIGN_DATE_O',
-        'DBR_CLOSE_DATE_O'  => 'DBR_CLOSE_DATE_O',
-        'DBR_ASSIGN_AMT'    => 'DBR_ASSIGN_AMT',
-        'DBR_RECVD_TOT'     => 'DBR_RECVD_TOT',
-        'STS_DESC'          => 'STS_DESC',
-        'DBR_COM_RATE'      => 'DBR_COM_RATE',
-        'DBR_CLIENT'        => 'DBR_CLIENT',
-        'DBR_LAST_WORKED_O' => 'DBR_LAST_WORKED_O',
-        'DBR_STATUS'        => 'DBR_STATUS',
-        'count_pdc'         => '(SELECT(*) FROM CDSMSC.CHK WHERE DBR.DBR_NO = CHK.CHK_DBR_NO) as count_pdc',
-        'XCR_CODE'          => "DBR_NO+'01XCR' as XCR_CODE"
-    ];
+Route::get('testing', function() {
 
-    $text = implode(",", array_values($columns));
-
-    dd($text);
 });
