@@ -43,8 +43,6 @@ class ClientReportingController extends Controller
             'date2' => 'required|date',
         ]);
 
-     
-
         $path = 'App\\Unifin\\Repositories\\ClientReporting\\';
 
         $reports = collect([
@@ -78,6 +76,7 @@ class ClientReportingController extends Controller
             'claPayFile' => $path . 'ClaPayFile',
             'asgPayFile' => $path . 'AsgPayFile'
         ]);
+
 
         $selectedReports = collect($request->all())->intersectByKeys($reports);
 

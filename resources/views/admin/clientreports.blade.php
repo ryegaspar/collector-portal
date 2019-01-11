@@ -5,147 +5,79 @@
 @endsection
 @section('header')
 <style>
-* {
-  box-sizing: border-box;
-}
-
 .top-container {
-  width: 100%;
-  background-color:#ffffff;
-  text-align: center;
-  padding-top: 1%;
-  padding-bottom: 1%;
+
+
 }
 
-.header {
-  width: 100%;
-  background: #ffffff;
-  padding-top: 5%;
-  padding-bottom: 5%;
-}
-
-
-.content {
-  width: 100%;
-}
-
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-.sticky + .content {
-  padding-top: 5%;
-}
-
-.footer {
-  width: 100%;
-  padding-top: 5%;
-  padding-bottom: 5%;
-}
-
-
-
-
-#myInput {
-  width: 85%;
-  font-size: 100%;
-  padding: 1% 2% 1% 4%;
+div.tableContainer {
+  clear: both;
   border: 1px solid #ddd;
-  margin-bottom: 1%;
+  height: 516px;
+  overflow: auto;
+  width: 916px;
 }
 
-#myTable {
-  border-collapse: collapse;
-  width: 85%;
-  border: 1px solid #ddd;
-  font-size: 100%;
-  
-}
-#myTable th{ 
-  background-color: #88c4ce;
-  text-align: left;
-  border: 1px solid #ddd;
-  padding: 8px;
-  color:white;
-
+html>body div.tableContainer {
+  overflow: hidden;
+  width: 916px;
 }
 
-
-#myTable td {
-  text-align: left;
-  border: 1px solid #ddd;
-  padding: 8px;
+div.tableContainer table {
+  float: left;
+  /* width: 740px */
 }
 
-#myTable tr:hover {background-color: #15b8d3;
-}
-#myTable tr:active {background-color: #48ba91;
+html>body div.tableContainer table {
+  /* width: 756px */
 }
 
-#myTable tr {
-  border-bottom: 1px solid #ddd;
+thead.fixedHeader tr {
+  position: relative;
 }
 
 
-
-.runButton {
-  display: block;
-  width: 85%;
-  border: none;
-  background-color: #48aaba;
-    
-  padding: 2% 2%;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  color: white;
-
-}
-.runButton:hover {
-  background-color: #48ba91;
-  color: white;
-
-}
-.runButton:active {
-  background-color: #48ba91;
-}
-
-.presetButton {
-  background-color: #88c4ce;
-  border: none;
-  color: white;
-  padding: 2% 2%;
-  font-size: 100%;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  width:85%;
-}
-
-.presetButton:hover {
-background-color: #15b8d3;
-color: white;
-
-}
-
-
-
-.top{
+thead.fixedHeader th {
 background-color: #88c4ce;
-color:#15b8d3;
-}
-
-
-.date{
-width: 85%;
-background-color: #88c4ce;
-padding:1%;
+text-align: left;
+border: 1px solid #ddd;
+padding: 4px 3px;
 color:white;
+cursor:pointer;
 }
 
+html>body tbody.scrollContent {
+  display: block;
+  height: 516px;
+  overflow: auto;
+  width: 100%;
+}
+
+html>body thead.fixedHeader {
+  display: table;
+  overflow: auto;
+  width: 100%;
+}
+
+/* make TD elements pretty. Provide alternating classes for striping the table */
+/* http://www.alistapart.com/articles/zebratables/                             */
+tbody.scrollContent td, tbody.scrollContent tr.normalRow td {
+  background: #FFF;
+  border-bottom: none;
+  border-left: none;
+  border-right: 1px solid #CCC;
+  border-top: 1px solid #DDD;
+  padding: 2px 3px 3px 4px
+}
+
+tbody.scrollContent tr.alternateRow td {
+  background: #EEE;
+  border-bottom: none;
+  border-left: none;
+  border-right: 1px solid #CCC;
+  border-top: 1px solid #DDD;
+  padding: 2px 3px 3px 4px
+}
 
 .showComponent{
   cursor:pointer; 
@@ -162,80 +94,112 @@ color:white;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   border: solid black;
-  border-width: 0 3px 3px 0;
+  border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 3px;
   float:right;
 }
-.suf  {
-background-color: #dcedef;
+
+
+.presetButton {
+  background-color: #88c4ce;
+  border: none;
+  color: white;
+  padding: 2% 2%;
+  font-size: 100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  width:20%;
+}
+
+.presetButton:hover {
+background-color: #15b8d3;
+color: white;
+
+}
+
+.runButton {
+  display: block;
+  width: 85%;
+  border: none;
+  background-color: #48aaba;
+  padding: 2% 2%;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+
+}
+.runButton:hover {
+  background-color: #48ba91;
+  color: white;
+
+}
+.runButton:active {
+  background-color: #48ba91;
+}
+
+#myInput {
+  width: 85%;
+  font-size: 100%;
+  padding: 1% 2% 1% 4%;
+  border: 1px solid #ddd;
+  margin-bottom: 1%;
 }
 
 
-
 </style>
+
 @endsection
+
 @section('content')
   <!-- Main content -->
   <main class="main">
     <div class="container-fluid">
 
+<form id="report_submit_form" method="post" action="/admin/clientreports">
+
+
+
 <div class="top-container">
   
   <h1>Unifin Client Reporting</h1>
 
-</div>
+    <input type="text" id="myInput" onkeyup="reportSearch()" placeholder="Search for Report.." title="Type in a report" />
+    <br>
 
-
-
-
-<div class="header" id="myHeader">
-  
-
-    <input type="text" id="myInput" onkeyup="reportSearch()" placeholder="Search for Report.." title="Type in a report">
-  
-    <th><form id="report_submit_form" method="post" action="/admin/clientreports">
-    {{ csrf_field() }}
-    Start Date:
-    <input id="startDate" type='text' name='date1' value="{{ old('date1') }}" />
-    End Date:
-    <input id="endDate" type='text' name='date2' value="{{ old('date2') }}" />
+    <th>
+      {{ csrf_field() }} Start Date: <input id="startDate" type='text' name='date1' value="{{ old('date1') }}" /> End Date: <input id="endDate" type='text' name='date2' value="{{ old('date2') }}" />
     </th>
- </div> 
+   </div> 
 
 
 
 
-<div class="content">
-    <table id = "myTable">
-      <thead>
+
+  <div id="tableContainer" class="tableContainer">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="scrollTable" id="reportTable">
+      <thead class="fixedHeader">
       <tr>
-      <th onclick="sortTable(0)" >Report Title</th>
-      <th onclick="sortTable(1)">Description</th>
-      <th onclick="sortTable(2)">Cyle</th>
-      <th onclick="sortTable(3)">Client</th>
-      <th onclick="sortTable(4)">Last Ran Date</th>
-      <th>Select</th>
+        <th onclick="sortTable(0)"width="20%">Report Title</th>
+        <th onclick="sortTable(1)"width="20%">Description</th>
+        <th onclick="sortTable(2)"width="20%">Cyle</th>
+        <th onclick="sortTable(3)"width="20%">Client</th>
+        <th onclick="sortTable(4)"width="20%">Last Ran Date</th>
+        <th width="20%">Select</th>
       </tr>
     </thead>
 
-    <tbody>
-      <tr>
-       <td>ASG Daily Payments</td>
-       <td>Payment</td>
-       <td>Daily</td>
-       <td>Acceptance Solutions Group</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="asgPayFile" value="Yes" class=checkBox  /></td>
-      </tr>
-
-      <tr>
-       <td>ASG Status</td>
-       <td>Status</td>
-       <td>Weekly</td>
-       <td>Acceptance Solutions Group</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="asgStatus" value="Yes" class=checkBox  /></td>
+    <tbody class="scrollContent">
+       <tr>
+       <td width="20%">ASG Status</td>
+       <td width="20%">Status</td>
+       <td width="20%">Weekly</td>
+       <td width="20%">Acceptance Solutions Group</td>
+       <td width="20%">Last Ran Date</td>
+       <td width="19%"><input type="checkbox" name="asgStatus" value="Yes" class=checkBox  /></td>
       </tr>
 
       <tr>
@@ -373,6 +337,7 @@ background-color: #dcedef;
        <td>Last Ran Date</td>
        <td><input type="checkbox" name="resurgentRemit" value="Yes" class=checkBox  /></td>
       </tr>
+       
        <tr>
        <td onclick="makeVisible()" class="showComponent">Resurgent SUF File Monthly <i class="down"></i></td>
        <td>Monthly SUF</td>
@@ -486,50 +451,58 @@ background-color: #dcedef;
        <td>Last Ran Date</td>
        <td><input type="checkbox" name="wcrRemit" value="Yes" class=checkBox  /></td>
       </tr>
+
+
+      <tr>
+       <td>ASG Daily Payments</td>
+       <td>Payment</td>
+       <td>Daily</td>
+       <td>Acceptance Solutions Group</td>
+       <td>Last Ran Date</td>
+       <td><input type="checkbox" name="asgPayFile" value="Yes" class=checkBox  /></td>
+      </tr>
       
     </tbody>
     </table>
-</div>  <!-- End Content Div -->
+  </div>  <!-- End Content Div -->
 
+  
+  <div class="footer">
+      
+      </br>
+  
+      <button type="button" class="presetButton" onClick="setDatesLastOne()">Yesterday</button>
+      <button type="button" class="presetButton" onClick="setDatesLastThree()">Last Weekend</button>
+      <button type="button" class="presetButton" onClick="setDatesLastSeven()">Last 7</button>
+      <button type="button" class="presetButton" onClick="setDatesAutoDaily()">Daily Report</button>
 
-<div class="footer">
-    
-    </br>
-    <div class="presetButton">
-    <button type="button" class="presetButton" onClick="setDatesLastOne()">Yesterday</button>
-    <button type="button" class="presetButton" onClick="setDatesLastThree()">Last Weekend</button>
-    <button type="button" class="presetButton" onClick="setDatesLastSeven()">Last 7</button>
-    <button type="button" class="presetButton" onClick="setDatesAutoDaily()">Daily Report</button>
-    
-    </br>
-    </br>
-    
+      </br>
+      </br>
+      
 
-    <button type="submit" class="runButton" onClick="formSubmit()">Run</button>
- 
-</div> 
-
-
+      <button type="submit" class="runButton" onClick="formSubmit()">Run</button>
+   
+  </div> 
 
 
 
-  </form>
+</form>
 
-  @if ($errors->any())
-      <div class="alert alert-danger">
-          <ul>
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-              @endforeach
-          </ul>
-      </div>
-  @endif
-
-  @if (session('status'))
-      <div class="alert alert-success">
-          {{ session('status') }}
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
-  @endif
+@endif
+
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+  </div>
+@endif
 
 
 </div>
@@ -538,32 +511,56 @@ background-color: #dcedef;
 @section('footer')
 
 
-<script>
-window.onscroll = function() {myFunction()};
-
-var header = document.getElementById("myHeader");
-var sticky = header.offsetTop;
-
-function myFunction() {
-  if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-  } else {
-    header.classList.remove("sticky");
-  }
-}
-</script>
 
 <!-- Allows for searching through report list -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 
+<script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("reportTable");
+  switching = true;
+  dir = "asc"; 
 
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;      
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
 
 <script>
 function reportSearch() {
   var input, filter, table, tr, td, i;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
+  table = document.getElementById("reportTable");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[0];
@@ -632,7 +629,7 @@ function makeVisible() {
     $('.suf').toggle();
 }
 
-function formSubmit() {
+function formSubmit(e) {
     $("#report_submit_form").submit();
   }
 </script>

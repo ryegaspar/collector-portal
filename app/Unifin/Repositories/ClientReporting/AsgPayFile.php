@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class AsgPayFile implements ReportInterface
 {
 
-    public function generateReport($request) 
+    public function generateReport($request)
     {
         $fromDate = Carbon::parse($request->date1)->toDateString();
         $toDate = Carbon::parse($request->date2)->toDateString();
