@@ -55,6 +55,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('letter-requests/{letter_request}/deny', 'LetterRequestFulfillController@deny')->name('letter-request.deny');
         Route::resource('letter-requests', 'LetterRequestController')->except(['show', 'create', 'edit']);
 
+        Route::patch('desk-transfer-requests/{desk_transfer_request}/approve', 'DeskTransferRequestFulfillController@approve')->name('desk-transfer-request.approve');
         Route::patch('desk-transfer-requests/{desk_transfer_request}/deny', 'DeskTransferRequestFulfillController@deny')->name('desk-transfer-request.deny');
         Route::resource('desk-transfer-requests', 'DeskTransferRequestController')->except(['show', 'create', 'edit']);
 
