@@ -10,15 +10,18 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-
                     <div class="modal-body">
 						<fieldset class="form-group">
                             <label>Client Name</label>
                             <div class="input-group">
-                                <input type="text"
-                                       class="form-control text-right"
-                                       maxlength="50"
-                                       v-model="form.client_name">
+                                <select class="form-control"
+                                        v-model="form.client_name"
+                                        @change="form.errors.clear()">
+                                    <option :value="client_name.client_name1"
+                                            v-for="client_name in unifin_client_list">
+                                        {{ client_name.client_name1 }}
+                                    </option>
+                                </select>
                                 <em class="error invalid-feedback"
                                     v-if="form.errors.has('client_name')">
                                     {{ form.errors.get('client_name') }}
@@ -143,11 +146,14 @@
 
 <script>
 	import Datepicker from 'vuejs-datepicker';
-	import * as RemittanceLogOptions from '../../utilities/RemittanceLogOptions';
+    import * as RemittanceLogOptions from '../../utilities/RemittanceLogOptions';
+    import * as DeskTransferRequestOptions from '../../utilities/DeskTransferRequestOptions';
 
 	export default {
 		props: [
-			'isAdd'
+            'isAdd',
+            'unifinclients'
+
 		],
 
 		components: {
@@ -158,7 +164,7 @@
 			return {
 				persistButtonClass: 'btn btn-success',
 				persistButtonText: 'Add',
-				isLoading: false,
+                isLoading: false,
 
 				form: new Form({
                     client_name: '',
@@ -169,10 +175,13 @@
                     total_client_collections: '',
                     commission_amount: '',
                     remit_amount: '',
-					notes: '',
+                    notes: '',
+                    request_reason: '',
 				}),
 
-				updateID: '',
+                updateID: '',
+                
+                unifin_client_list: this.unifinclients, 
 
 			}
 		},

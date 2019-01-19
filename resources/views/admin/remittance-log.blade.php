@@ -7,7 +7,7 @@
 	<!-- Main content -->
 	<main class="main">
 		<div class="container-fluid">
-			<remittance-log></remittance-log>
+			<remittance-log :unifinclients="{{ $clientList }}" class="mt-md-4"></remittance-log>
 		</div>
 	</main>
 @endsection

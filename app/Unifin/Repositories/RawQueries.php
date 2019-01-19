@@ -109,5 +109,15 @@ class RawQueries
 
         return $todaystotals;
     }
+    public static function GetClientList()
+    {
+        $clientList = DB::connection('sqlsrv2')
+            ->table('CDS.CLT')
+            ->select(DB::raw("[CLT_NAME_1] as client_name1"))
+            ->groupBy('CDS.CLT.CLT_NAME_1')
+            ->get();
+
+        return $clientList;
+    }
 
 }

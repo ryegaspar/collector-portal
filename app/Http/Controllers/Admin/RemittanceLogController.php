@@ -10,6 +10,7 @@ use App\Rules\LetterRequestType;
 use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\RemittanceLogFilter;
 use App\Models\Tiger\TRS;
+use Unifin\Repositories\RawQueries;
 
 
 class RemittanceLogController extends Controller
@@ -40,7 +41,9 @@ class RemittanceLogController extends Controller
             return response()->json($response);
         }
 
-        return view($this->page);
+        $clientList = RawQueries::GetClientList();
+
+        return view($this->page, compact('clientList'));
     }
 
     /**

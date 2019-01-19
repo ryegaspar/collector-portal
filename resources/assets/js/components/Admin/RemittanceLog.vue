@@ -70,6 +70,7 @@
             </div>
         </div>
         <remittance-log-modal :isAdd="isAdd"
+							  :unifinclients="unifinclients"
                               @submitted="formSubmitted"
                               ref="remittanceLogModal">
         </remittance-log-modal>
@@ -89,6 +90,10 @@
 	import VtableSubHeaderRemittanceLog from './VtableSubHeaderRemittanceLog';
 
 	export default {
+		props: [
+            'unifinclients'
+		],
+
 
 		store: CollectorOptionStore,
 
