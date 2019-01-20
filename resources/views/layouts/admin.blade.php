@@ -31,7 +31,7 @@
 		</div>
 
 		<footer class="app-footer">
-			<span>© 2019 ryeg_</span>
+			<span>© 2019</span>
 		</footer>
 	</div>
 

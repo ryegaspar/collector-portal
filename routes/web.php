@@ -40,8 +40,16 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::post('clientreports', 'ClientReportingController@compute');
 
         Route::get('operationalreports', 'OperationalReportsController@index')->name('operationalreports');
+        Route::get('collector-pdc', 'OperationalReportsController@indexcollectorpdc')->name('collector-pdc');
+        Route::get('collector-average', 'OperationalReportsController@indexcollectoraverage')->name('collector-average');
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
+
+
+        Route::get('correspondence-log/{path_file}/{file}', 'CorrespondenceLogController@downloadfile')->name('correspondence-logs.downloadfile'); 
+        Route::patch('correspondence-log/{correspondence_log}/updatestatus', 'CorrespondenceLogController@updatestatus')->name('correspondence-logs.updatestatus');
+        Route::patch('correspondence-log/{correspondence_log}/addnotes', 'CorrespondenceLogController@addnotes')->name('correspondence-logs.addnotes');
+        Route::resource('correspondence-log', 'CorrespondenceLogController')->except(['show', 'create', 'edit']);
 
         Route::patch('remittance-log/{remittance_log}/approvereport', 'RemittanceLogFulfillController@reportapprove')->name('remittance-logs-report.fulfill');
         Route::patch('remittance-log/{remittance_log}/approveremittance', 'RemittanceLogFulfillController@remittanceapprove')->name('remittance-logs-remittance.fulfill');

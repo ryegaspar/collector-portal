@@ -51,12 +51,6 @@
 						text: 'Dashboard',
 						icon: 'fa fa-tachometer'
 					},
-					Adjustments: {
-						href: '/admin/adjustments',
-						text: 'Collector Adjustments',
-						icon: 'fa fa-line-chart',
-                        permission: 'read adjustment'
-					},
                     Letters: {
 						href:'#',
                         text: 'Letter Requests',
@@ -75,22 +69,52 @@
                             }
                         }
 					},
-					Desk_Transfers: {
-						href: '/admin/desk-transfer-requests',
-						text: 'Desk Transfers',
-						icon: 'fa fa-arrow-circle-o-right'
+					CollectionSupport: {
+						href:'#',
+                        text: 'Collection Support',
+                        icon: 'fa fa-arrow-circle-o-right',
+                        children: {
+							Adjustments: {
+								href: '/admin/adjustments',
+								text: 'Collector Adjustments',
+								icon: 'fa fa-line-chart',
+								permission: 'read adjustment'
+							},
+							Desk_Transfers: {
+								href: '/admin/desk-transfer-requests',
+								text: 'Desk Transfers',
+								icon: 'fa fa-arrow-circle-o-right'
+							},
+                        }
 					},
-					Client_Reports: {
-						href: '/admin/clientreports',
-						text: 'Client Reporting',
-						icon: 'fa fa-file-text-o',
-						permission: 'read calendar'
+					Correspondence_Log: {
+						href: '/admin/correspondence-log',
+						text: 'Correspondence Log',
+						icon: 'fa fa-comments'
 					},
 					Remittance_Log: {
 						href: '/admin/remittance-log',
 						text: 'Remittance Log',
 						icon: 'fa fa fa-money',
 						permission: 'read calendar'
+					},
+					Reports: {
+						href:'#',
+                        text: 'Reports',
+                        icon: 'fa fa-file-text-o',
+                        children: {
+							Client_Reports: {
+								href: '/admin/clientreports',
+								text: 'Client Reporting',
+								icon: 'fa fa-file-text-o',
+								permission: 'read calendar'
+							},
+							OperationalReports: {
+								href: '/admin/operationalreports',
+								text: 'Operational Reports',
+								icon: 'fa fa-apple'
+							},
+                        }
 					},
                     Scripts: {
 						href: '#',
@@ -161,11 +185,6 @@
 						text: 'Admins',
 						icon: 'fa fa-user-secret',
 						permission: 'read admin'
-					},
-					OperationalReports: {
-						href: '/admin/operationalreports',
-						text: 'Operational Reports',
-						icon: 'fa fa-apple'
 					},
 					Calendars: {
 						href: '/admin/calendars',

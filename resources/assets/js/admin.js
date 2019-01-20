@@ -33,6 +33,7 @@ Vue.component('dashboard', require('./components/Admin/Dashboard'));
 Vue.component('collector-hours', require('./components/Admin/CollectorHoursDetail'));
 Vue.component('todays-totals', require('./components/Admin/TodaysTotalsDetail'));
 Vue.component('remittance-log', require('./components/Admin/RemittanceLog'));
+Vue.component('correspondence-log', require('./components/Admin/CorrespondenceLog'));
 Vue.component('operationalreports', require('./components/Admin/OperationalReports'));
 Vue.component('adjustments', require('./components/Admin/Adjustments'));
 Vue.component('letter-requests', require('./components/Admin/LetterRequests'));

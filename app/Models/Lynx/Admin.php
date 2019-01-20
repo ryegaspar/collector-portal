@@ -119,6 +119,16 @@ class Admin extends Authenticatable implements CanResetPasswordContract
         return $this->hasMany('App\Models\Lynx\RemittanceLog');
     }
 
+        /**
+    * user has many remittance logs
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+   public function correspondence_logs()
+   {
+       return $this->hasMany('App\Models\Lynx\CorrespondenceLog');
+   }
+
     /**
      * fetch the created_at attribute as diffForHumans
      *

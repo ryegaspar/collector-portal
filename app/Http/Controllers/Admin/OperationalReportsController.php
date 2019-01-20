@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tiger\COLPDC;
 use App\Models\Lynx\Collector;
 use Carbon\Carbon;
-use Unifin\Repositories\RawQueries;
+use Unifin\Repositories\AdminReports\TigerQueries;
 
 class OperationalReportsController extends Controller
 {
@@ -25,9 +25,23 @@ class OperationalReportsController extends Controller
      */
     public function index()
     {
+
+        return view('admin.operationalreports');
+    }
+
+    public function indexcollectorpdc()
+    {
         $two = COLPDC::all();
        
-        return view('admin.operationalreports')->with('two', $two);
+        return view('admin.adminreports.collector-pdc')->with('two', $two);
     }
+
+    public function indexcollectoraverage()
+    {
+        $threemonthaverage = TigerQueries::CollectorThreeMonthAverage();
+       
+        return view('admin.adminreports.collector-average')->with('threemonthaverage', $threemonthaverage);
+    }
+
     
 }
