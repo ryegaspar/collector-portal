@@ -19,4 +19,16 @@ class TigerQueries
         return $threemonthaverage;
     }
 
+    public static function AccountsInNewStatus()
+    {
+        $accountsinnew = DB::connection('sqlsrv2')
+            ->table('UFN.AccountsInNewStatus')
+            ->select(DB::raw("ClientCode, Category, Count, AverageBalance"))
+            ->get();
+//            ->toSql();
+//        dd($accountsinnew);
+
+        return $accountsinnew;
+    }
+
 }

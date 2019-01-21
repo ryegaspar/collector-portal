@@ -43,5 +43,12 @@ class OperationalReportsController extends Controller
         return view('admin.adminreports.collector-average')->with('threemonthaverage', $threemonthaverage);
     }
 
+    public function indexaccountsinnewstatus()
+    {
+        $accountsinnew = TigerQueries::AccountsInNewStatus();
+       
+        return view('admin.adminreports.accounts-in-new-status')->with('accountsinnew', $accountsinnew);
+    }
+
     
 }

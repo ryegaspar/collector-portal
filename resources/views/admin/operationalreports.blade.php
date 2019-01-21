@@ -24,10 +24,31 @@
 								<tbody>
 									<tr>
 										<td><a href="/admin/collector-pdc" class="btn btn-dark" role="button">Collector PDC</a></td>
-										<td><p>TEvjshdjkafhsjkdhfkjsahfjkhsafhsjkdhfs</p></td>
+										<td><p></p></td>
 									</tr>
 									<tr>
 										<td><a href="/admin/collector-average" class="btn btn-dark" role="button">Collector Average</a></td>
+									</tr>
+								</tbody>
+							</table>
+						  </div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header" id="headingTwo">
+						<h5 class="mb-0">
+							<button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+							Account Management
+							</button>
+						</h5>
+					</div>
+					<div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+						<div class="card-body">
+							<table>
+								<tbody>
+									<tr>
+										<td><a href="/admin/accounts-in-new-status" class="btn btn-dark" role="button">New Status Account Summary</a></td>
+										<td><p></p></td>
 									</tr>
 								</tbody>
 							</table>

@@ -42,6 +42,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::get('operationalreports', 'OperationalReportsController@index')->name('operationalreports');
         Route::get('collector-pdc', 'OperationalReportsController@indexcollectorpdc')->name('collector-pdc');
         Route::get('collector-average', 'OperationalReportsController@indexcollectoraverage')->name('collector-average');
+        Route::get('accounts-in-new-status', 'OperationalReportsController@indexaccountsinnewstatus')->name('accounts-in-new');
 
         Route::resource('adjustments', 'AdjustmentsController')->only(['index', 'update']);
 
