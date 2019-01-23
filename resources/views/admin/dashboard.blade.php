@@ -7,7 +7,7 @@
 	<!-- Main content -->
 	<main class="main">
 		<div class="container-fluid">
-			<dashboard :summary="{{ $postToday }}":collectionhours="{{ $hoursWorked }}" class="mt-md-4"></dashboard>
+			<dashboard></dashboard>
 		</div>
 	</main>
 
