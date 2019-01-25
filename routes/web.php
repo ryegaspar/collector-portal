@@ -52,6 +52,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('correspondence-log/{correspondence_log}/addnotes', 'CorrespondenceLogController@addnotes')->name('correspondence-logs.addnotes');
         Route::resource('correspondence-log', 'CorrespondenceLogController')->except(['show', 'create', 'edit']);
 
+        Route::get('remittance-log/{client}/{startdate}/{enddate}', 'RemittanceLogController@indexstandardremit')->name('remittance-logs.indexstandardremit');
+        Route::get('remittance-log/{dataid}', 'RemittanceLogController@indexdetailview')->name('remittance-logs.indexdetailview');
         Route::patch('remittance-log/{remittance_log}/approvereport', 'RemittanceLogFulfillController@reportapprove')->name('remittance-logs-report.fulfill');
         Route::patch('remittance-log/{remittance_log}/approveremittance', 'RemittanceLogFulfillController@remittanceapprove')->name('remittance-logs-remittance.fulfill');
         Route::patch('remittance-log/{remittance_log}/approvecommission', 'RemittanceLogFulfillController@commissionapprove')->name('remittance-logs-commission.fulfill');

@@ -52,6 +52,12 @@
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
 									<button type="button"
+                                            class="btn btn-sm btn-primary"
+											title="Detailed View"
+                                            @click="itemAction('detail-view', props.rowData, props.rowIndex, $event)">
+                                        <i class="fa fa-info"></i>
+                                    </button>
+									<button type="button"
                                             class="btn btn-sm btn-info"
                                             data-toggle="tooltip"
                                             data-placement="top"
@@ -207,6 +213,13 @@
 
 					this.$refs.remittanceLogModal.populateData(data);
 					$("#remittanceLogModal").modal("show");
+
+					return;
+				}
+
+				if (action === 'detail-view') {
+
+					window.open(`/admin/remittance-log/${data.id}`);
 
 					return;
 				}

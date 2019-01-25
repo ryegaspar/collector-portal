@@ -33,7 +33,7 @@
 			<th data-field="client" data-sortable="true" data-filter-control="input">Client Code</th>
 			<th data-field="category" data-sortable="true" data-filter-control="select">Category</th>
 			<th data-field="countofstatus" data-sortable="true">Number in Status</th>
-			<th data-field="countofstatus" data-sortable="true">Average Balance</th>
+			<th data-field="averagebalance" data-sortable="true">Average Balance</th>
          </tr>
         </thead>
         <tbody>

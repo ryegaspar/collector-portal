@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\RemittanceLogFilter;
 use App\Models\Tiger\TRS;
 use Unifin\Repositories\RawQueries;
+use Illuminate\Support\Facades\DB;
 
 
 class RemittanceLogController extends Controller
@@ -44,6 +45,33 @@ class RemittanceLogController extends Controller
         $clientList = RawQueries::GetClientList();
 
         return view($this->page, compact('clientList'));
+    }
+
+    public function indexdetailview($dataid) {   
+
+        $remitdetail = RemittanceLog::where('id', $dataid)
+                    ->get();
+       
+        return view('admin.remittance-log-detail')->with('remitdetail', $remitdetail);
+    }
+
+    public function indexstandardremit($client, $startdate, $enddate) {   
+
+        $test = DB::connection('sqlsrv2')
+        ->table('CDS.TRS')
+        ->Join('CDS.CLT', 'CDS.TRS.TRS_AR_CLIENT', '=', 'CDS.CLT.CLT_NO')
+        ->Join('CDS.TRC', 'CDS.TRS.TRS_TRUST_CODE', '=', 'CDS.TRC.TRC_CODE')
+        ->select(DB::raw("CLT_NAME_1, TRS_DBR_NO, TRS_AMT, TRS_COMM_AMT, TRS_TRUST_CODE,TRC_DESC, TRS_TRX_DATE_O"))
+        ->whereDate('TRS_TRX_DATE_O', '>=', $startdate)
+        ->whereDate('TRS_TRX_DATE_O', '<=', $enddate)
+        ->where('CLT_NAME_1', $client)
+        ->where('TRS_TRUST_CODE', '<>', 0)
+        ->get();
+
+        dd($test);
+
+       
+        return view('admin.remittance-log-detail')->with('remitdetail', $remitdetail);
     }
 
     /**
