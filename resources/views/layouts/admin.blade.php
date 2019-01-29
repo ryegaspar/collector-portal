@@ -30,9 +30,7 @@
 			@yield('content')
 		</div>
 
-		<footer class="app-footer">
-			<span>© 2019</span>
-		</footer>
+		<footer class="app-footer">© 2019 ryeg_</footer>
 	</div>
 
 	<!-- Bootstrap and necessary plugins -->

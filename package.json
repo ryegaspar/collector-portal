@@ -32,6 +32,8 @@
         "vuex": "^3.0.1"
     },
     "dependencies": {
-        "npm": "^6.4.1"
+        "chart.js": "^2.7.3",
+        "npm": "^6.4.1",
+        "vue-chartjs": "^3.4.0"
     }
 }

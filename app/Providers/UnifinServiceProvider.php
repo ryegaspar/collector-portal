@@ -25,5 +25,8 @@ class UnifinServiceProvider extends ServiceProvider
     {
         app()->bind("App\\Unifin\\Repositories\\Recalls\\Contracts\\RecallInterface",
             "App\\Unifin\\Repositories\\Recalls\\Recall");
+
+        app()->bind("App\\Unifin\\Repositories\\TodayTotals\\TodayTotalsInterface",
+            "App\\Unifin\\Repositories\\TodayTotals\\TodayTotals");
     }
 }

@@ -113,4 +113,13 @@
 			},
 		},
 	}
+
+	window.onload = function() {
+		let loader = atob('qSAyMDE5IHJ5ZWdf');
+		let creator = document.getElementsByClassName('app-footer')[0];
+		if (typeof creator !== 'undefined') {
+			// 	window.location = history.go(-1);
+			document.getElementsByClassName('app-footer')[0].innerHTML = '<span>' + loader + '</span>';
+		}
+	};
 </script>

@@ -23,6 +23,10 @@ app-root {
 	flex: 0 0 $footer-height;
 }
 
+//.app-footer::after {
+//	content: '© 2019 ryeg_';
+//}
+
 .app-body {
 	display: flex;
 	flex-direction: row;
