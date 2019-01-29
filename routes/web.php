@@ -31,7 +31,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::patch('profile', 'ProfileController@update')->name('profile.update');
 
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-        Route::get('dashboard/data', 'DashboardController@getData')->name('dashboard.getData');
+        Route::get('dashboard/get-data', 'DashboardController@getData')->name('dashboard.get-data');
         Route::get('collector-hours', 'CollectorHoursController@index')->name('collector-hours');
         Route::get('todays-totals', 'TodaysTotalsController@index')->name('todays-totals');
 

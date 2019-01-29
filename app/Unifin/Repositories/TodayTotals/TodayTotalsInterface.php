@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Unifin\Repositories\TodayTotals\Contracts;
+namespace App\Unifin\Repositories\TodayTotals;
 
 interface TodayTotalsInterface
 {
+    public function groups();
+
     public function gft();
 
     public function thisMonth();

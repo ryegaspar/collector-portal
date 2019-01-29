@@ -3,7 +3,6 @@
 namespace App\Unifin\Repositories\TodayTotals;
 
 use App\Models\Tiger\UFN_TodayTotals2;
-use App\Unifin\Repositories\TodayTotals\Contracts\TodayTotalsInterface;
 use Carbon\Carbon;
 
 class TodayTotals implements TodayTotalsInterface
@@ -17,56 +16,56 @@ class TodayTotals implements TodayTotalsInterface
         $this->groups = $this->postsToday->pluck('group_name')->unique()->values();
     }
 
+    public function groups()
+    {
+        return $this->groups;
+    }
+
     public function gft()
     {
         return $this->groups->map(function ($item) {
-            $data = $this->postsToday->where('group_name', $item)
-                ->where('post_date', Carbon::now()->toDateString());
-            $total = $data->sum('check_amount');
-            $count = $data->count('check_amount');
-            $avg = $data->average('check_amount');
-
-            return compact('total', 'count', 'avg');
+            return $this->generateData($item, Carbon::now()->toDateString(), Carbon::now()->toDateString());
         });
     }
 
     public function thisMonth()
     {
         return $this->groups->map(function ($item) {
-            $data = $this->postsToday->where('group_name', $item)
-                ->where('post_date', '>=', Carbon::parse('first day of this month')->toDateString())
-                ->where('post_date', '<=', Carbon::parse('last day of this month')->toDateString());
-            $total = $data->sum('check_amount');
-            $count = $data->count('check_amount');
-            $avg = $data->average('check_amount');
-
-            return compact('total', 'count', 'avg');
+            return $this->generateData($item,
+                Carbon::parse('first day of this month')->toDateString(),
+                Carbon::parse('last day of this month')->toDateString());
         });
     }
 
     public function thirtyDays()
     {
         return $this->groups->map(function ($item) {
-            $data = $this->postsToday->where('group_name', $item)
-                ->where('post_date', '>=', Carbon::parse('today')->toDateString())
-                ->where('post_date', '<=', Carbon::parse('+30 days')->toDateString());
-            $total = $data->sum('check_amount');
-            $count = $data->count('check_amount');
-            $avg = $data->average('check_amount');
-
-            return compact('total', 'count', 'avg');
+            return $this->generateData($item,
+                Carbon::parse('today')->toDateString(),
+                Carbon::parse('+30 days')->toDateString());
         });
     }
 
     public function all()
     {
         return $this->groups->map(function ($item) {
-            $data = $this->postsToday->where('group_name', $item);
-            $total = $data->sum('check_amount');
-            $count = $data->count('check_amount');
-            $avg = $data->average('check_amount');
-
-            return compact('total', 'count', 'avg');
+            return $this->generateData($item);
         });
+    }
+
+    protected function generateData($item, $startDate = null, $endDate = null) {
+        $data = $this->postsToday->where('group_name', $item);
+
+        if ($startDate)
+            $data = $data->where('post_date', '>=', $startDate);
+
+        if ($endDate)
+            $data = $data->where('post_date', '<=', $endDate);
+
+        $total = number_format($data->sum('check_amount'), 2, '.', '');
+        $count = number_format($data->count('check_amount'), 0, '', '');
+        $avg = number_format($data->average('check_amount'), 2, '.', '');
+
+        return compact('total', 'count', 'avg');
     }
 }
