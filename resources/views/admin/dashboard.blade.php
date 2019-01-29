@@ -7,7 +7,7 @@
 	<!-- Main content -->
 	<main class="main">
 		<div class="container-fluid">
-			<dashboard></dashboard>
+			<dashboard :collectionhours="{{ $hoursWorked }}"></dashboard>
 		</div>
 	</main>
 
