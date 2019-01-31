@@ -2,9 +2,9 @@
 
 namespace App\Unifin\Repositories\Recalls;
 
-class JcaRecall extends RecallFile
+class RcsRecall extends RecallFile
 {
-    protected $headerKeyIndex = 0;
+    protected $headerKeyIndex = 1;
 
     /**
      * Definitions of each record in the file.
@@ -12,28 +12,25 @@ class JcaRecall extends RecallFile
      * @var array
      */
     protected $recordFormat = [
-        'BFrameId'         => [0, 10],
-        'RemoteId'         => [10, 4],
-        'PlacementDate'    => [14, 8],
-        'Portfolio'        => [22, 12],
-        'RecordType'       => [34, 2],
-        'CreditGrantorNum' => [36, 24],
-        'ServiceId'        => [60, 3],
-        'DateCreated'      => [63, 8],
-        'LastName'         => [71, 22],
-        'FirstName'        => [93, 7],
-        'AccountBalance'   => [100, 10, 'number'],
-        'Reason'           => [111, 6]
+        'FileType',
+        'AccountId',
+        'AccntNumber',
+        'DebtorNo',
+        'Fname',
+        'Lname',
+        'SSN',
+        'AccntStatusId'
     ];
 
     /**
-     * JcaRecall constructor.
+     * RcsRecall constructor.
+     *
      * @param $fileName
      * @param $filePath
      */
     public function __construct($fileName, $filePath)
     {
-        $client = 'JCA';
+        $client = 'RCS';
         $generic_type = 0;
 
         parent::__construct($client, $fileName, $filePath, $generic_type);
@@ -61,7 +58,7 @@ class JcaRecall extends RecallFile
      */
     protected function originalColumnHeaders()
     {
-        return array_keys($this->recordFormat);
+        return $this->recordFormat;
     }
 
     /**
@@ -73,26 +70,25 @@ class JcaRecall extends RecallFile
     {
         $this->accounts = collect();
 
-        $file = new \SplFileObject($this->filePath, "r");
+        $file = fopen($this->filePath, "r");
 
-        $index = 0;
+        while (!feof($file)) {
+            $line = fgets($file, 2048);
 
-        while (! $file->eof()) {
+            $data = str_getcsv($line, "\t");
 
-            $line = $file->fgets();
+            if (sizeof($data) <= 1) continue;
 
-            if ($index == 0) {
+            $index = 0;
+            foreach($this->recordFormat as $recordItem) {
+                $account[$recordItem] = $data[$index];
                 $index++;
-                continue;
-            }
-
-            foreach ($this->recordFormat as $recordKey => $recordItem) {
-                $account[$recordKey] = $this->formatToNumber(trim(substr($line, $recordItem[0], $recordItem[1])), $recordItem);
             }
 
             $this->accounts[] = $account;
-            $index++;
         }
+
+        fclose($file);
 
         return $this;
     }

@@ -63,6 +63,7 @@ return [
         'FAM' => 'First Financial Portfolio Services LLC',
         'GPR' => 'Georgia Prep Sports Academy Inc.',
         'GSD' => 'GS Holdings LLC',
+        'GXY' => 'Galaxy Capital Recoveries',
         'HCU' => 'Harvard University Employees Credit Union',
         'HSF' => 'HS Financial Group',
         'HVS' => 'Harvest Strategy Group, Inc.',
@@ -76,6 +77,8 @@ return [
         'ORI' => 'Orion Portfolios Services LLC',
         'PEN' => 'Pendrick Capital Partners',
         'PLS' => 'PLS Financial Services',
+        'PZA' => 'Plaza Services',
+        'RCS' => 'Resurgent Capital Services'
     ]
 
 ];

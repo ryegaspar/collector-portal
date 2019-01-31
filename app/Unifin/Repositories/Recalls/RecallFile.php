@@ -118,7 +118,6 @@ class RecallFile implements RecallActionInterface
         $accountInfo = collect();
 
         ($this->accounts)->each(function ($item) use ($columns, $client, $generic_type, $accountInfo) {
-
             $builder = DB::connection('sqlsrv2')
                 ->table('CDS.DBR')
                 ->select(DB::raw(implode(',', array_values($columns))))
@@ -131,27 +130,29 @@ class RecallFile implements RecallActionInterface
 
             if ($generic_type == 0) { // by client ref no
                 $account = $builder
-                    ->where('DBR_CLI_REF_NO', $item)
-                    ->first();
+                    ->where('DBR_CLI_REF_NO', $item[$this->originalColumnHeaders()[$this->headerKeyIndex]])
+                    ->get();
 
             } else { // by original accnt num
                 $account = $builder
-                    ->where('ADR_NAME', $item)
-                    ->first();
+                    ->where('ADR_NAME', $item[$this->originalColumnHeaders()[$this->headerKeyIndex]])
+                    ->get();
             }
 
-            if (! $account) {
-                $account = new \stdClass();
+            if ($account->isEmpty()) {
+                $noRecordAccount = new \stdClass();
                 foreach (array_keys($this->columns()) as $column) {
-                    $account->$column = 'NO RECORD';
+                    $noRecordAccount->$column = 'NO RECORD';
                 }
+                $account[] = $noRecordAccount;
             }
 
-            foreach($this->originalColumnHeaders() as $header) {
-                $account->$header = $item[$header];
-            }
-
-            $accountInfo->push($account);
+            collect($account)->each(function ($a) use ($item, $accountInfo) {
+                foreach($this->originalColumnHeaders() as $header) {
+                    $a->$header = $item[$header];
+                }
+                $accountInfo->push($a);
+            });
         });
 
         $this->accounts = collect(json_decode(json_encode($accountInfo),true));
