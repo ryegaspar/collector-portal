@@ -22,161 +22,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="filter-bar form-inline">
+                        <div class="filter-bar form-inline" v-for="permissionList in permissionLists">
                             <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-3"><strong>Adjustments</strong></label>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read adjustment']">
-                                    <label class="form-check-label">view</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-4">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['update adjustment']">
-                                    <label class="form-check-label">approve/deny</label>
+                                <label class="col-md-3"><strong>{{ permissionList.description }}</strong></label>
+                                <div class="btn-group input-group col-sm-2"
+                                     v-for="permissionObject in permissionList.perms">
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           v-model="permissions[permissionObject.permission_description]">
+                                    <label class="form-check-label">{{ permissionObject.name }}</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="filter-bar form-inline">
-                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-3"><strong>Letter Request Types</strong></label>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read letter-request-type']">
-                                    <label class="form-check-label">view</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['create letter-request-type']">
-                                    <label class="form-check-label">create</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['update letter-request-type']">
-                                    <label class="form-check-label">edit</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['disable letter-request-type']">
-                                    <label class="form-check-label">disable</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter-bar form-inline">
-                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-3"><strong>Scripts</strong></label>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read script']">
-                                    <label class="form-check-label">view</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['create script']">
-                                    <label class="form-check-label">create</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['update script']">
-                                    <label class="form-check-label">edit</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['delete script']">
-                                    <label class="form-check-label">delete</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter-bar form-inline">
-                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-3"><strong>Closure Reports</strong></label>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['view closure-report']">
-                                    <label class="form-check-label">view</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter-bar form-inline">
-                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-3"><strong>Calendars</strong></label>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read calendar']">
-                                    <label class="form-check-label">view</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter-bar form-inline">
-                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-3"><strong>Collector</strong></label>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read collector']">
-                                    <label class="form-check-label">view</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['create collector']">
-                                    <label class="form-check-label">create</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['update collector']">
-                                    <label class="form-check-label">edit</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['disable collector']">
-                                    <label class="form-check-label">disable</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter-bar form-inline">
-                            <div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">
-                                <label class="col-md-3"><strong>Collector Batches</strong></label>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['read collector-batch']">
-                                    <label class="form-check-label">view</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['create collector-batch']">
-                                    <label class="form-check-label">create</label>
-                                </div>
-                                <div class="btn-group input-group col-sm-2">
-                                    <input type="checkbox" class="form-check-input"
-                                           v-model="permissions['delete collector-batch']">
-                                    <label class="form-check-label">delete</label>
-                                </div>
-                            </div>
-                        </div>
-                        <!--<div class="filter-bar form-inline">-->
-                            <!--<div class="col-md-12 input-group" style="padding-left: 2px;padding-right: 2px">-->
-                                <!--<label class="col-md-2"><strong>Users</strong></label>-->
-                                <!--<div class="btn-group input-group col-sm-2">-->
-                                    <!--<input type="checkbox" class="form-check-input"-->
-                                           <!--v-model="permissions['read users']">-->
-                                    <!--<label class="form-check-label">view users</label>-->
-                                <!--</div>-->
-                                <!--<div class="btn-group input-group col-sm-2">-->
-                                    <!--<input type="checkbox" class="form-check-input"-->
-                                           <!--v-model="permissions['create users']">-->
-                                    <!--<label class="form-check-label">create users</label>-->
-                                <!--</div>-->
-                                <!--<div class="btn-group input-group col-sm-2">-->
-                                    <!--<input type="checkbox" class="form-check-input"-->
-                                           <!--v-model="permissions['update users']">-->
-                                    <!--<label class="form-check-label">edit users</label>-->
-                                <!--</div>-->
-                                <!--<div class="btn-group input-group col-sm-2">-->
-                                    <!--<input type="checkbox" class="form-check-input"-->
-                                           <!--v-model="permissions['disable users']">-->
-                                    <!--<label class="form-check-label">disable users</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -207,21 +64,11 @@
 
 				roleText: 'Role',
 				accessGroups: [],
-				permissions: {
-					// 'read users': false,
-					// 'create users': false,
-					// 'update users': false,
-					// 'disable users': false,
+				permissions: {},
 
-					'read adjustment': false,
-					'update adjustment': false,
-
-					'read script': false,
-					'create script': false,
-					'update script': false,
-					'delete script': false,
-				},
+				permissionLists: permissionsJson
 			}
+
 		},
 
 		methods: {
@@ -239,13 +86,15 @@
 					.catch((error) => {
 
 					});
-			},
+			}
+			,
 
 			resetPermissions() {
 				Object.keys(this.permissions).map((key) => {
 					this.permissions[key] = false;
 				});
-			},
+			}
+			,
 
 			updatePermissions() {
 				if (this.roleText === 'Role') {
@@ -270,7 +119,8 @@
 						this.updateText = tempButtonText;
 					});
 			}
-		},
+		}
+		,
 
 		created() {
 			axios.get('/admin/roles')
@@ -285,6 +135,129 @@
 				});
 		}
 	}
+
+	const permissionsJson = [
+		{
+			description: 'Adjustments',
+			perms: [
+				{
+					name: 'view',
+					permission_description: 'read adjustment',
+				},
+				{
+					name: 'approve/deny',
+					permission_description: 'update adjustment',
+				}
+			]
+		},
+		{
+			description: 'Calendars',
+			perms: [
+				{
+					name: 'view',
+					permission_description: 'read calendar',
+				}
+			]
+		},
+		{
+			description: 'Closure Reports',
+			perms: [
+				{
+					name: 'view',
+					permission_description: 'view closure-report'
+				}
+			]
+		},
+		{
+			description: 'Collector',
+			perms: [
+				{
+					name: 'view',
+					permission_description: 'read collector',
+				},
+				{
+					name: 'create',
+					permission_description: 'create collector',
+				},
+				{
+					name: 'edit',
+					permission_description: 'update collector',
+				},
+				{
+					name: 'disable',
+					permission_description: 'disable collector'
+				}
+			]
+		},
+		{
+			description: 'Collector Batches',
+			perms: [
+				{
+					name: 'view',
+					permission_description: 'read collector-batch',
+				},
+				{
+					name: 'create',
+					permission_description: 'create collector-batch',
+				},
+				{
+					name: 'delete',
+					permission_description: 'delete collector-batch'
+				}
+			]
+		},
+		{
+			description: 'Desk Transfer Requests',
+			perms: [
+				{
+					name: 'review',
+					permission_description: 'review desk-transfer-request',
+				}
+			]
+		},
+		{
+			description: 'Letter Request Types',
+			perms: [
+				{
+					name: 'view',
+					permission_description: 'read letter-request-type',
+				},
+				{
+					name: 'create',
+					permission_description: 'create letter-request-type',
+				},
+				{
+					name: 'edit',
+					permission_description: 'update letter-request-type',
+				},
+				{
+					name: 'disable',
+					permission_description: 'disable letter-request-type',
+				}
+			]
+		},
+		{
+			description: 'Scripts',
+			perms: [
+				{
+					name: 'view',
+					permission_description: 'read script',
+				},
+				{
+					name: 'create',
+					permission_description: 'create script',
+				},
+				{
+					name: 'edit',
+					permission_description: 'update script',
+				},
+				{
+					name: 'delete',
+					permission_description: 'delete script'
+				}
+			]
+		}
+	];
 </script>
 
 <style>

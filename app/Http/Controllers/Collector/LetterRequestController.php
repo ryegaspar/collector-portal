@@ -20,8 +20,4 @@ class LetterRequestController extends Controller
     {
         $this->middleware('collectorResetPassword');
     }
-
-
-
-
 }

@@ -15,11 +15,12 @@ window.moment = require('moment');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import Form from './utilities/Form';
+// import Form from 'vue-form-helper-preset-laravel';
 import SweetAlert from 'sweetalert';
 import * as lib from './utilities/Lib';
 
-window.Form = Form;
+window.Form = require('vue-form-helper-preset-laravel');
+Form.clear();
 window.swal = SweetAlert;
 window.lib = lib;
 
