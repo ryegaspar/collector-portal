@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lynx\Adjustment;
 use Unifin\TableFilters\AdminAdjustmentFilter;
 use Unifin\Traits\Paginate;
+use Illuminate\Support\Facades\DB;
 
 class AdjustmentsController extends Controller
 {
@@ -53,6 +54,18 @@ class AdjustmentsController extends Controller
         $data['reviewed_by'] = auth()->user()->id;
 
         $adjustment->update($data);
+
+        if ($adjustment->status == '1') {
+            $acct_no = $adjustment->dbr_no;
+            $userid = strtoupper(request()->user()->tiger_user_id);
+            $transferto = $adjustment->desk;
+            $paymentdate = $adjustment->date;
+            $paymentamount = $adjustment->amount;
+
+            DB::connection('sqlsrv2')->update("exec [UFN].[AdjustmentApprove] ?,?,?,?,?", [$acct_no, $userid, $transferto, $paymentdate, $paymentamount]);
+        
+            dd($adjustment->status);
+        }
 
         return response([], 201);
     }

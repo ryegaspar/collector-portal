@@ -74,7 +74,7 @@ class CorrespondenceLogController extends Controller
         if ($request->file('attachment') <> 0) {
     
             $data['attachment_path'] = hash( 'sha256', time());
-            $data['attachment_name'] = $request->file('attachment')->getClientOriginalName();
+            $data['attachment_name'] = $request->account_no.'-000001.'.$request->file('attachment')->getClientOriginalExtension();
             $data['attachment_mime'] = $request->file('attachment')->getClientMimeType();
             $data['attachment_size'] = $request->file('attachment')->getClientSize();
             $request->file('attachment')->storeAs('public\correspondence', $data['attachment_path'] . '\\' . $data['attachment_name']);
