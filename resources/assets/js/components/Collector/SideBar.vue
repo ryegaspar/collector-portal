@@ -78,7 +78,12 @@
 						href: 'scripts',
                         text: 'Scripts',
                         icon: 'fa fa-pencil-square-o'
-                    }
+                    },
+                    collectorIncentive: {
+						href: 'collectorIncentive',
+                        text: 'Incentives',
+                        icon: 'fa fa-money'
+                    },
                     // item2: {
 						// href: '#',
                     //     text: 'Item 2',
