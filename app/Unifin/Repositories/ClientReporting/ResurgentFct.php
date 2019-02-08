@@ -22,8 +22,21 @@ class ResurgentFct implements ReportInterface
 
         $report = '';
         $count = count($data);
+        
 
-      
+        $report .= 'FHD';
+        $report .= "\t".'01';
+        $report .= "\t".'02';
+        $report .= "\t".'FCT';
+        $report .= "\t".'008357';
+        $report .= "\t".'000075';
+        $report .= "\t".Carbon::now()->format('m/d/Y');
+        $report .= ' 10.30.00';
+        $report .= "\t".'UNIFIN';
+        $report .= "\n";
+
+    
+
         $report .= 'RHD';
         $report .= "\t".'01';
         $report .= "\t".'FCT';
@@ -53,7 +66,7 @@ class ResurgentFct implements ReportInterface
 
 
 
-        $filename = 'ResurgentFct'.Carbon::now()->format('Ymd');
+        $filename = 'FCT_008357_02_'.Carbon::now()->format('Ymd').'_103000';
         $filePath = public_path('storage\\reports\\'. $filename .'.txt');
         $handle = fopen($filePath, 'w');
         fwrite($handle, $report);

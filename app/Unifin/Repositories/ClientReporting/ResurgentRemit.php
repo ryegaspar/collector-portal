@@ -36,7 +36,7 @@ class ResurgentRemit implements ReportInterface
         
         $data = $data->map(function ($item) {
             $pmt = [1, 100, 101, 102, 103, 200, 201, 202, 203, 300, 301, 302, 303];
-            $rtn = [19, 120, 121, 122, 123, 220, 221, 222, 223, 320, 321, 322, 323];
+            $rtn = [19, 120, 121, 122, 123, 140,141,142,143, 220, 221, 222, 223, 320, 321, 322, 323];
             $nsf = [248];
 
             if (in_array($item->TRS_TRUST_CODE, $pmt)) {
@@ -49,6 +49,11 @@ class ResurgentRemit implements ReportInterface
                 $item->TRS_TRUST_CODE = 'NRV';
             }
 
+
+            $item->ABS_TRS_AMT = abs($item->TRS_AMT);
+            $item->ABS_TRS_COMM_AMT = abs($item->TRS_COMM_AMT);
+
+
             return $item;
         });
   
@@ -58,10 +63,10 @@ class ResurgentRemit implements ReportInterface
 
         foreach($data as $item) {
             $report .= $item->Orig_Acct_No;
-            $report .= "\t".abs(number_format($item->TRS_AMT,2));
+            $report .= "\t".number_format($item->ABS_TRS_AMT,2);
             $report .= "\t".$item->TRS_TRUST_CODE;
             $report .= "\t".Carbon::parse($item->TRS_TRX_DATE_O)->format('m/d/Y');
-            $report .= "\t".abs(number_format($item->TRS_COMM_AMT,2));
+            $report .= "\t".number_format($item->TRS_COMM_AMT,2);
             $report .= "\t".$item->DBR_CL_MISC_3;
             $report .= "\t".$item->TRS_TRUST_CODE;
             $report .= "\t".$item->DBR_CLI_REF_NO;
