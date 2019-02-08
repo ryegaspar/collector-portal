@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 @extends('layouts.admin')
 @section('title', ' - Client Reporting')
 @section('topnavbar')
@@ -6,148 +7,180 @@
 @section('header')
 <style>
 .top-container {
-
-
+color:#20A8D8;
+font-weight:900;
 }
 
-div.tableContainer {
-  clear: both;
-  border: 1px solid #ddd;
-  height: 516px;
-  overflow: auto;
-  width: 916px;
+.dateEntry{
+color:#20A8D8;
+font-weight:900;
 }
 
-html>body div.tableContainer {
-  overflow: hidden;
-  width: 916px;
+.table-container {
+height: 40em;
 }
 
-div.tableContainer table {
-  float: left;
-  /* width: 740px */
+table {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 
-html>body div.tableContainer table {
-  /* width: 756px */
+table thead {
+  /* head takes the height it requires, 
+  and it's not scaled when table is resized */
+flex:1 1 auto;
+width: 100%;
+display: table;
+table-layout:fixed;
 }
 
-thead.fixedHeader tr {
-  position: relative;
+table tbody {
+    /* body takes all the remaining available space */
+  flex: 0 1 auto;
+  display: block;
+  overflow-y: scroll;
+  width:100%;
 }
 
+table tbody tr {
+display: table;
+table-layout:fixed;
+width:100%;
+}
+/* decorations */
+.table-container {
+background-color:#FFFFFF; 
+}
 
-thead.fixedHeader th {
-background-color: #88c4ce;
-text-align: left;
-border: 1px solid #ddd;
-padding: 4px 3px;
-color:white;
+table th {
+padding:.8em;
+text-align:left;
+}
+
+table thead tr {
+color:#E1FFFF;
+background-color:#596473;
+}
+
+table th:hover {
+color:#20A8D8;
 cursor:pointer;
 }
 
-html>body tbody.scrollContent {
-  display: block;
-  height: 516px;
-  overflow: auto;
-  width: 100%;
+tbody tr:hover td {
+background-color:#444D58;
+color:#20A8D8;
+cursor:pointer;
 }
 
-html>body thead.fixedHeader {
-  display: table;
-  overflow: auto;
-  width: 100%;
+tbody td{
+padding: .2em 0em .4em 1em;
+vertical-align:middle;
+border-bottom: solid 1px rgba(255,255,255,0.1);
+font-weight:600;
 }
 
-/* make TD elements pretty. Provide alternating classes for striping the table */
-/* http://www.alistapart.com/articles/zebratables/                             */
-tbody.scrollContent td, tbody.scrollContent tr.normalRow td {
-  background: #FFF;
-  border-bottom: none;
-  border-left: none;
-  border-right: 1px solid #CCC;
-  border-top: 1px solid #DDD;
-  padding: 2px 3px 3px 4px
+table tr th:nth-child(6) {
+  width:7%;
 }
 
-tbody.scrollContent tr.alternateRow td {
-  background: #EEE;
-  border-bottom: none;
-  border-left: none;
-  border-right: 1px solid #CCC;
-  border-top: 1px solid #DDD;
-  padding: 2px 3px 3px 4px
+table tr td:nth-child(6) {
+  width:5%;
+}
+
+tr:nth-child(even) {
+background-color: #e9f7fc;
+}
+
+.highlight td {
+background: #20A8D8;
+color:white;
+}
+
+.checkBox  {
+vertical-align:middle;
 }
 
 .showComponent{
-  cursor:pointer; 
-}
-.showComponent:hover{
-  cursor:pointer;
-  background-color: #15b8d3;
-  color:white;
-} 
-.showComponent:active{
-  cursor:pointer; 
-}
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  border: solid black;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 3px;
-  float:right;
+cursor:pointer; 
 }
 
+.showComponent:hover{
+cursor:pointer;
+background-color: #15b8d3;
+color:white;
+} 
+
+.showComponent:active{
+cursor:pointer; 
+}
+
+.down {
+transform: rotate(45deg);
+-webkit-transform: rotate(45deg);
+border: solid black;
+border-width: 0 2px 2px 0;
+display: inline-block;
+padding: 3px;
+float:right;
+}
+
+.suf {
+ background-color: #bce6f5;
+}
 
 .presetButton {
-  background-color: #88c4ce;
-  border: none;
-  color: white;
-  padding: 2% 2%;
-  font-size: 100%;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  width:20%;
+background-color: #596473;
+border: none;
+color: white;
+padding: 2% 2%;
+font-size: 14px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+cursor: pointer;
+width:23%;
 }
 
 .presetButton:hover {
-background-color: #15b8d3;
+background-color: #20A8D8;
 color: white;
-
 }
 
 .runButton {
-  display: block;
-  width: 85%;
-  border: none;
-  background-color: #48aaba;
-  padding: 2% 2%;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  color: white;
-
+display: block;
+width: 90%;
+border: none;
+background-color: #20A8D8;
+padding: 2% 2%;
+font-size: 16px;
+cursor: pointer;
+text-align: center;
+color: white;
+margin-left:2%;
 }
+
 .runButton:hover {
-  background-color: #48ba91;
-  color: white;
+background-color: #48ba91;
+color: white;
 
 }
 .runButton:active {
-  background-color: #48ba91;
+background-color: #48ba91;
 }
 
-#myInput {
-  width: 85%;
-  font-size: 100%;
-  padding: 1% 2% 1% 4%;
-  border: 1px solid #ddd;
-  margin-bottom: 1%;
+#searchInput {
+width: 85%;
+font-size: 100%;
+padding: 1% 1% 1% 2%;
+border: 1px solid #ddd;
+margin-bottom: 1%;
 }
+
+
+
+
 
 
 </style>
@@ -156,319 +189,360 @@ color: white;
 
 @section('content')
   <!-- Main content -->
-  <main class="main">
-    <div class="container-fluid">
-
-<form id="report_submit_form" method="post" action="/admin/clientreports">
+<main class="main">
+  <div class="container-fluid">
+    <form id="report_submit_form" method="post" action="/admin/clientreports">
 
 
 
 <div class="top-container">
   
-  <h1>Unifin Client Reporting</h1>
+  <h1>Client Reporting</h1>
 
-    <input type="text" id="myInput" onkeyup="reportSearch()" placeholder="Search for Report.." title="Type in a report" />
+    <input type="text" id="searchInput" onkeyup="reportSearch()" placeholder="Search for Report.." title="Type in a report" />
     <br>
 
     <th>
-      {{ csrf_field() }} Start Date: <input id="startDate" type='text' name='date1' value="{{ old('date1') }}" /> End Date: <input id="endDate" type='text' name='date2' value="{{ old('date2') }}" />
+      {{ csrf_field() }} Start Date: <input id="startDate"  type='text' name='date1' value="{{ old('date1') }}" /> End Date: <input id="endDate"  type='text' name='date2' value="{{ old('date2') }}" />
     </th>
-   </div> 
+</div> 
 
 
 
 
 
-  <div id="tableContainer" class="tableContainer">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="scrollTable" id="reportTable">
-      <thead class="fixedHeader">
-      <tr>
-        <th onclick="sortTable(0)"width="20%">Report Title</th>
-        <th onclick="sortTable(1)"width="20%">Description</th>
-        <th onclick="sortTable(2)"width="20%">Cyle</th>
-        <th onclick="sortTable(3)"width="20%">Client</th>
-        <th onclick="sortTable(4)"width="20%">Last Ran Date</th>
-        <th width="20%">Select</th>
-      </tr>
-    </thead>
 
-    <tbody class="scrollContent">
-       <tr>
-       <td width="20%">ASG Status</td>
-       <td width="20%">Status</td>
-       <td width="20%">Weekly</td>
-       <td width="20%">Acceptance Solutions Group</td>
-       <td width="20%">Last Ran Date</td>
-       <td width="19%"><input type="checkbox" name="asgStatus" value="Yes" class=checkBox  /></td>
-      </tr>
+  <div class="table-container">
+    <table id="reportTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Report Title</th>
+          <th onclick="sortTable(1)">Description</th>
+          <th onclick="sortTable(2)">Cycle</th>
+          <th onclick="sortTable(3)">Client</th>
+          <th onclick="sortTable(4)">Last Ran Date</th>
+          <th>Select</th>
+        </tr>
+      </thead>
 
-      <tr>
-      <td>Capio Remit</td>
-      <td>Remittance</td>
-      <td>Weekly</td>
-      <td>Capio Partners, LLC</td>
-      <td>Last Ran Date</td>
-      <td><input type="checkbox" name="capioRemit" value="Yes" class=checkBox  /></td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>ASG Status</td>
+          <td>Status</td>
+          <td>Weekly</td>
+          <td>Acceptance Solutions Group</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="asgStatus" class=checkBox /></td>
+        </tr>
 
-      <tr>
-       <td>CLA Daily Payments</td>
-       <td>Payment File</td>
-       <td>Daily</td>
-       <td>Community Loans of America</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="claPayFile" value="Yes" class=checkBox  /></td>   
-      </tr>
+        <tr>
+           <td>ASG Daily Payments</td>
+           <td>Payment</td>
+           <td>Daily</td>
+           <td>Acceptance Solutions Group</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="asgPayFile" value="Yes" class=checkBox  /></td>
+        </tr>
 
-       <tr>
-       <td>EOS Remit</td>
-       <td>Remittance</td>
-       <td>Bi Monthly</td>
-       <td>Rocky Mountain Capital</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="eosRemit" value="Yes" class=checkBox  /></td>
-      </tr>
+        <tr>
+           <td>ASG Remit</td>
+           <td>Remittance</td>
+           <td>Bi Monthly</td>
+           <td>Acceptance Solutions Group</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="asgRemit" value="Yes" class=checkBox  /></td>
+        </tr>
 
-       <!-- <tr>
-       <td>JcapMaintenance</td>
-       <td>Maintenance</td>
-       <td>Weekly</td>
-       <td>Jefferson Capital Systems, LLC</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="jcapMaintenance" value="Yes" class=checkBox  /></td>
-      </tr>
-     -->
+        <tr>
+          <td>Capio Remit</td>
+          <td>Remittance</td>
+          <td>Weekly</td>
+          <td>Capio Partners, LLC</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="capioRemit" value="Yes" class=checkBox  /></td>
+        </tr>
 
-      <!-- <tr>
-       <td>JCAP RecUni</td>
-       <td>Remittance</td>
-       <td>Weekly</td>
-       <td>Jefferson Capital Systems, LLC</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="jcapRecUni" value="Yes" class=checkBox  /></td>
-      </tr> -->
+         <tr>
+          <td>Cascade Remit</td>
+          <td>Remittance</td>
+          <td>Weekly</td>
+          <td>Cascade</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="cascadeRemit" value="Yes" class=checkBox  /></td>
+        </tr>
 
-    <tr>
-      <td>LTD Remit</td>
-      <td>Remittance</td>
-      <td>Weekly</td>
-      <td>LTD Financial Services</td>
-      <td>Last Ran Date</td>
-      <td><input type="checkbox" name="ltdRemit" value="Yes" class=checkBox  /></td>
-      </tr>
+        <tr>
+           <td>CLA Daily Payments</td>
+           <td>Payment File</td>
+           <td>Daily</td>
+           <td>Community Loans of America</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="claPayFile" value="Yes" class=checkBox  /></td>   
+        </tr>
 
-    <tr>
-       <td>MUSI Remit</td>
-       <td>Remittance</td>
-       <td>Monthly</td>
-       <td>Musicians Institute</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="musiRemit" value="Yes" class=checkBox  /></td>
-      </tr>
+        <tr>
+           <td>EOS Remit</td>
+           <td>Remittance</td>
+           <td>Bi Monthly</td>
+           <td>Rocky Mountain Capital</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="eosRemit" value="Yes" class=checkBox  /></td>
+        </tr>
+        <tr>
+           <td>Galaxy APAY</td>
+           <td>Remittance</td>
+           <td>Weekly</td>
+           <td>Galaxy</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="galaxyAPAY" value="Yes" class=checkBox  /></td>
+        </tr>
 
-      <tr>
-       <td>Orion Remit</td>
-       <td>Remittance</td>
-       <td>Monthly</td>
-       <td>Orion</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="orionRemit" value="Yes" class=checkBox  /></td>
-      </tr>
+           <!-- <tr>
+           <td>JcapMaintenance</td>
+           <td>Maintenance</td>
+           <td>Weekly</td>
+           <td>Jefferson Capital Systems, LLC</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="jcapMaintenance" value="Yes" class=checkBox  /></td>
+          </tr>
+         -->
 
-    <tr>
-      <td>Pendrick Invoice Main</td>
-      <td>Remittance</td>
-      <td>Weekly</td>
-      <td>Pendrick Capital Partners</td>
-      <td>Last Ran Date</td>
-      <td><input type="checkbox" name="pendrickMainInvoice" value="Yes" class=checkBox  /></td>
-      </tr>
-     
-     <tr>
-      <td>Pendrick Invoice PCP2</td>
-      <td>Remittance</td>
-      <td>Weekly</td>
-      <td>Pendrick Capital Partners II</td>
-      <td>Last Ran Date</td>
-      <td><input type="checkbox" name="pendrickPcp2Invoice" value="Yes" class=checkBox  /></td>
-      </tr>
+          <!-- <tr>
+           <td>JCAP RecUni</td>
+           <td>Remittance</td>
+           <td>Weekly</td>
+           <td>Jefferson Capital Systems, LLC</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="jcapRecUni" value="Yes" class=checkBox  /></td>
+          </tr> -->
 
-      <tr>
-      <td>Pendrick Indirect Payments PCP2</td>
-      <td>Payment</td>
-      <td>Daily</td>
-      <td>Pendrick Capital Partners II</td>
-      <td>Last Ran Date</td>
-      <td><input type="checkbox" name="pendrickIndirectPaymentsPcp2" value="Yes" class=checkBox  /></td>
-      </tr>
+        <tr>
+          <td>LTD Remit</td>
+          <td>Remittance</td>
+          <td>Weekly</td>
+          <td>LTD Financial Services</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="ltdRemit" value="Yes" class=checkBox  /></td>
+          </tr>
 
-      <tr>
-      <td>Pendrick Indirect Payments MAIN</td>
-      <td>Payment</td>
-      <td>Daily</td>
-      <td>Pendrick Capital Partners</td>
-      <td>Last Ran Date</td>
-      <td><input type="checkbox" name="pendrickIndirectPaymentsMain" value="Yes" class=checkBox /></td>
-      </tr>
+        <tr>
+           <td>MUSI Remit</td>
+           <td>Remittance</td>
+           <td>Monthly</td>
+           <td>Musicians Institute</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="musiRemit" value="Yes" class=checkBox  /></td>
+        </tr>
 
-      <tr>
-      <td>Renaissance Remit</td>
-      <td>Remittance</td>
-      <td>Weekly</td>
-      <td>Renaissance Trade Capital</td>
-      <td>Last Ran Date</td>
-      <td><input type="checkbox" name="rtcRemit" value="Yes" class=checkBox  /></td>
-      </tr>
+        <tr>
+           <td>Orion Remit</td>
+           <td>Remittance</td>
+           <td>Monthly</td>
+           <td>Orion</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="orionRemit" value="Yes" class=checkBox  /></td>
+        </tr>
 
-      <tr>
-       <td>Resurgent Forcast</td>
-       <td>Forecast</td>
-       <td>Weekly</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentFct" value="Yes" class=checkBox  /></td>
-      </tr>
+        <tr>
+          <td>Pendrick Invoice Main</td>
+          <td>Remittance</td>
+          <td>Weekly</td>
+          <td>Pendrick Capital Partners</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="pendrickMainInvoice" value="Yes" class=checkBox  /></td>
+        </tr>
+         
+        <tr>
+          <td>Pendrick Invoice PCP2</td>
+          <td>Remittance</td>
+          <td>Weekly</td>
+          <td>Pendrick Capital Partners II</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="pendrickPcp2Invoice" value="Yes" class=checkBox  /></td>
+        </tr>
 
-      <tr>
-       <td>Resurgent Remit</td>
-       <td>Remittance</td>
-       <td>Weekly</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentRemit" value="Yes" class=checkBox  /></td>
-      </tr>
-       
-       <tr>
-       <td onclick="makeVisible()" class="showComponent">Resurgent SUF File Monthly <i class="down"></i></td>
-       <td>Monthly SUF</td>
-       <td>Monthly</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentSufMonthly" value="Yes" class=checkBox  /></td>
-      </tr>
+        <tr>
+          <td>Pendrick Indirect Payments PCP2</td>
+          <td>Payment</td>
+          <td>Daily</td>
+          <td>Pendrick Capital Partners II</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="pendrickIndirectPaymentsPcp2" value="Yes" class=checkBox  /></td>
+        </tr>
+
+        <tr>
+          <td>Pendrick Indirect Payments MAIN</td>
+          <td>Payment</td>
+          <td>Daily</td>
+          <td>Pendrick Capital Partners</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="pendrickIndirectPaymentsMain" value="Yes" class=checkBox /></td>
+        </tr>
+
+          <tr>
+           <td>Plaza Remit</td>
+           <td>Remittance</td>
+           <td>Bi Monthly</td>
+           <td>Plaza Services, LLC </td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="pzaRemit" value="Yes" class=checkBox  /></td>
+        </tr>
+
+         <tr>
+           <td>PLS Remit</td>
+           <td>Remittance</td>
+           <td>Bi Monthly</td>
+           <td>PLS </td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="plsRemit" value="Yes" class=checkBox  /></td>
+        </tr>
+          
+        <tr>
+           <td>Resurgent Forcast</td>
+           <td>Forecast</td>
+           <td>Weekly</td>
+           <td>Resurgent</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="resurgentFct" value="Yes" class=checkBox  /></td>
+        </tr>
+
+        <tr>
+           <td>Resurgent Remit</td>
+           <td>Remittance</td>
+           <td>Weekly</td>
+           <td>Resurgent</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="resurgentRemit" value="Yes" class=checkBox  /></td>
+        </tr>
+
+         <tr>
+           <td>Resurgent Recap</td>
+           <td>Remittance</td>
+           <td>Weekly</td>
+           <td>Resurgent</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="resurgentSummaryRemit" value="Yes" class=checkBox  /></td>
+        </tr>
+           
+        <tr>
+           <td>Resurgent SUF File Monthly</td>
+           <td onclick="makeVisible()" class="showComponent">Monthly SUF<i class="down"></i></td>
+           <td>Monthly</td>
+           <td>Resurgent</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="resurgentSufMonthly" value="Yes" class=checkBox  /></td>
+        </tr>
+
+                <tr class = "suf">
+                   <td>Resurgent ABL</td>
+                   <td>Balance</td>
+                   <td>Resurgent</td>
+                   <td>Last Ran Date</td>
+                   <td><input type="checkbox" name="resurgentAbl" value="Yes" class=checkBox  /></td>
+                  </tr>
+                  
+                <tr class="suf">
+                   <td>Resurgent BKY</td>
+                   <td>Bankrupcty</td>
+                   <td>Resurgent</td>
+                   <td>Last Ran Date</td>
+                   <td><input type="checkbox" name="resurgentBky" value="Yes" class=checkBox  /></td>
+                </tr>
+
+                <tr class="suf">
+                   <td>Resurgent BWR</td>
+                   <td>Borrower</td>
+                   <td>Resurgent</td>
+                   <td>Last Ran Date</td>
+                   <td><input type="checkbox" name="resurgentBwr" value="Yes" class=checkBox  /></td>
+                </tr>
+                  
+                <tr class="suf">
+                   <td>Resurgent DEC</td>
+                   <td>Deceased Record</td>
+                   <td>Resurgent</td>
+                   <td>Last Ran Date</td>
+                   <td><input type="checkbox" name="resurgentDec" value="Yes" class=checkBox  /></td>
+                </tr>
+                  
+                <tr class="suf">
+                   <td>Resurgent KPI</td>
+                   <td>KPI</td>
+                   <td>Resurgent</td>
+                   <td>Last Ran Date</td>
+                   <td><input type="checkbox" name="resurgentKpi" value="Yes" class=checkBox  /></td>
+                </tr>
+                 
+                <tr class="suf">
+                   <td>Resurgent PDC</td>
+                   <td>Post Dated Checks</td>
+                   <td>Resurgent</td>
+                   <td>Last Ran Date</td>
+                   <td><input type="checkbox" name="resurgentPdc" value="Yes" class=checkBox  /></td>
+                </tr>
+                 
+                <tr class="suf">
+                   <td>Resurgent WOR</td>
+                   <td>Workflow</td>
+                   <td>Resurgent</td>
+                   <td>Last Ran Date</td>
+                   <td><input type="checkbox" name="resurgentWor" value="Yes" class=checkBox  /></td>
+                </tr>
 
 
-      <tr class = "suf">
-       <td>Resurgent ABL</td>
-       <td>Balance</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentAbl" value="Yes" class=checkBox  /></td>
-      </tr>
-      
-      <tr class="suf">
-       <td>Resurgent BKY</td>
-       <td>Bankrupcty</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentBky" value="Yes" class=checkBox  /></td>
-      </tr>
+        <tr>
+           <td>Resurgent SUF File Weekly</td>
+           <td>Weekly SUF</td>
+           <td>Weekly</td>
+           <td>Resurgent</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="resurgentSufWeekly" value="Yes" class=checkBox  /></td>
+        </tr>
+          
+        <tr>
+           <td>Resurgent SUF File Daily</td>
+           <td>Daily SUF</td>
+           <td>Daily</td>
+           <td>Resurgent</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="resurgentSufDaily" value="Yes" class=checkBox  /></td>
+        </tr>
 
-      <tr class="suf">
-       <td>Resurgent BWR</td>
-       <td>Borrower</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentBwr" value="Yes" class=checkBox  /></td>
-      </tr>
-      
-      <tr class="suf">
-       <td>Resurgent DEC</td>
-       <td>Deceased Record</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentDec" value="Yes" class=checkBox  /></td>
-      </tr>
-      
-      <tr class="suf">
-       <td>Resurgent KPI</td>
-       <td>KPI</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentKpi" value="Yes" class=checkBox  /></td>
-      </tr>
-     
-      <tr class="suf">
-       <td>Resurgent PDC</td>
-       <td>Post Dated Checks</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentPdc" value="Yes" class=checkBox  /></td>
-      </tr>
-     
-      <tr class="suf">
-       <td>Resurgent WOR</td>
-       <td>Workflow</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentWor" value="Yes" class=checkBox  /></td>
-      </tr>
+          <!-- <tr>
+           <td>RMC Remit</td>
+           <td>Remittance</td>
+           <td>Bi Monthly</td>
+           <td>Rocky Mountain Capital</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="rmcRemit" value="Yes" class=checkBox  /></td>
+          </tr> -->
 
+        <tr>
+           <td>RTC Remit</td>
+           <td>Remittance</td>
+           <td>Bi Monthly</td>
+           <td>Renaissance Trade Captial</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="rtcRemit" value="Yes" class=checkBox  /></td>
+        </tr>
 
-      <tr>
-       <td>Resurgent SUF File Weekly</td>
-       <td>Weekly SUF</td>
-       <td>Weekly</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentSufWeekly" value="Yes" class=checkBox  /></td>
-      </tr>
-      
-      <tr>
-       <td>Resurgent SUF File Daily</td>
-       <td>Daily SUF</td>
-       <td>Daily</td>
-       <td>Resurgent</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="resurgentSufDaily" value="Yes" class=checkBox  /></td>
-      </tr>
-
-
-      <tr>
-       <td>RMC Remit</td>
-       <td>Remittance</td>
-       <td>Bi Monthly</td>
-       <td>Rocky Mountain Capital</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="rmcRemit" value="Yes" class=checkBox  /></td>
-      </tr>
-
-      <tr>
-       <td>RTC Remit</td>
-       <td>Remittance</td>
-       <td>Bi Monthly</td>
-       <td>Renaissance Trade Captial</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="rtcRemit" value="Yes" class=checkBox  /></td>
-      </tr>
-
-
-      <tr>
-       <td>WCR Remit</td>
-       <td>Remittance</td>
-       <td>Bi Monthly</td>
-       <td>World Credit Recovery</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="wcrRemit" value="Yes" class=checkBox  /></td>
-      </tr>
-
-
-      <tr>
-       <td>ASG Daily Payments</td>
-       <td>Payment</td>
-       <td>Daily</td>
-       <td>Acceptance Solutions Group</td>
-       <td>Last Ran Date</td>
-       <td><input type="checkbox" name="asgPayFile" value="Yes" class=checkBox  /></td>
-      </tr>
-      
-    </tbody>
+        <tr>
+           <td>WCR Remit</td>
+           <td>Remittance</td>
+           <td>Bi Monthly</td>
+           <td>World Credit Recovery</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="wcrRemit" value="Yes" class=checkBox  /></td>
+        </tr>
+          
+      </tbody>
     </table>
   </div>  <!-- End Content Div -->
 
+   </br>
   
   <div class="footer">
-      
+      <div class=presetContainer>
       </br>
   
       <button type="button" class="presetButton" onClick="setDatesLastOne()">Yesterday</button>
@@ -476,9 +550,9 @@ color: white;
       <button type="button" class="presetButton" onClick="setDatesLastSeven()">Last 7</button>
       <button type="button" class="presetButton" onClick="setDatesAutoDaily()">Daily Report</button>
 
-      </br>
-      </br>
-      
+    
+      </div>   
+        </br>
 
       <button type="submit" class="runButton" onClick="formSubmit()">Run</button>
    
@@ -556,9 +630,28 @@ function sortTable(n) {
 </script>
 
 <script>
+$(document).ready(function () {
+    $('tbody tr').click(function (event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    });
+
+    $("input[type='checkbox']").change(function (e) {
+        if ($(this).is(":checked")) {
+            $(this).closest('tr').addClass("highlight");
+        } else {
+            $(this).closest('tr').removeClass("highlight");
+        }
+    });
+});
+
+</script>
+
+<script>
 function reportSearch() {
   var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput");
+  input = document.getElementById("searchInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("reportTable");
   tr = table.getElementsByTagName("tr");

@@ -4,7 +4,8 @@ namespace App\Unifin\Repositories\ClientReporting;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Unifin\Repositories\ClientReporting\ReportExcel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class AsgRemit implements ReportInterface
 {
@@ -40,11 +41,6 @@ class AsgRemit implements ReportInterface
                 $item->TransactionType = 'Agency Refund';
                 }
 
-
-
-
-
-
             $sts = ['SIF','PIF'];
             if (in_array($item->DBR_STATUS,$sts)) {
                 $item->DBR_STATUS = $item->DBR_STATUS;
@@ -56,16 +52,16 @@ class AsgRemit implements ReportInterface
                 $item->Remitted = '-'.$item->TRS_COMM_AMT;
             }else $item->Remitted = ($item->TRS_AMT-$item->TRS_COMM_AMT);
             
+
             $item->AccountID = $item->DBR_CLI_REF_NO;
-            $item->BorrowerName = $item->Orig_Acct_No;
-            $item->DebtorPayment = [$item->TRS_AMT, 'setFormatCode' => '#,##0.00'];
-            $item->ContingencyFee =[$item->TRS_COMM_AMT,'setFormatCode' => '#,##0.00'];
-
-            $item->RemittoClient = [($item->Remitted), 'setFormatCode' => '#,##0.00'];
-            
-
+            $item->ClientAccountID = $item->Orig_Acct_No;
+            $item->IssuerAccountNumber = '';
+            $item->CheckNumber = '';
+            $item->DebtorPayment = $item->TRS_AMT;
+            $item->ContingencyFee =$item->TRS_COMM_AMT;
+            $item->Remitted = $item->Remitted;
             $item->Date = Carbon::parse($item->TRS_TRX_DATE_O)->format('m/d/Y');
-            $item->TransactionType = $item->TransactionType;
+            $item->PaymentType = $item->TransactionType;
             $item->Closure =$item->DBR_STATUS;
 
             return $item;
@@ -73,17 +69,99 @@ class AsgRemit implements ReportInterface
 
         $data = collect(json_decode(json_encode($data), true));
 
-        $headers = collect(['Account ID', ' ClientAccountID', 'IssuerAccountNumber', 'Check Number', 'Date', 'DebtorPayment', 'ContingencyFee', 'Remitted', 'Notes','PaymentType','Closure']);
+        $headers = collect([
+        'Account ID',
+         'ClientAccountID', 
+         'IssuerAccountNumber', 
+         'Check Number', 
+         'Date', 
+         'DebtorPayment', 
+         'ContingencyFee', 
+         'Remitted', 
+         'Notes',
+         'PaymentType',
+         'Closure']);
         
 
-        $columns = collect(['Account ID', ' ClientAccountID', ' ', ' ', 'Date', 'DebtorPayment', 'ContingencyFee', 'Remitted', 'Notes','PaymentType','Closure']);
+        $columns = collect([
+        'AccountID', 
+        'ClientAccountID',
+        'IssuerAccountNumber', 
+        'IssuerAccountNumber', 
+        'Date', 
+        'DebtorPayment',
+        'ContingencyFee', 
+        'Remitted', 
+        'IssuerAccountNumber',
+        'PaymentType',
+        'Closure']);
 
-        $fileName = 'Unifin-Musicians Institute Remit '. Carbon::now()->format('m-d-Y') . '.xlsx';
+        $fileName = 'Unifin-ASG Remittance Report '. Carbon::now()->format('m-d-Y') . '.xlsx';
         $filePath = public_path('storage\\reports\\'. $fileName);
 
         // dd($data, $fileName, $headers, $columns, $filePath);
 
-        (new ReportExcel)->setFont('Arial', 10)->makeSimpleXlsxFromCollection($data, $fileName, $headers, $columns, $filePath);
+        $this->createExcel($data, $fileName, $headers, $columns, $filePath);
 
     }
+
+    public function createExcel($data, $fileName, $headers, $columns, $filePath)
+    {
+        $spreadsheet = new Spreadsheet;
+
+        $spreadsheet->getProperties()->setCreator('Claire')
+            ->setLastModifiedBy('Claire');
+
+        $headers->each(function ($item, $index) use ($spreadsheet) {
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValueByColumnAndRow($index + 1, 1, $item);
+        });
+
+        $row = 2;
+
+        $data->each(function ($item) use ($spreadsheet, &$row, $columns) {
+            $columns->each(function ($columnName, $index) use ($item, $spreadsheet, $row) {
+                $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow($index + 1, $row, $item[$columnName]);
+            });
+
+            $row++;
+        });
+
+      
+
+        $recordCount = $data->count() + 1;
+
+        $sumDebtorPayment = $data->pluck('DebtorPayment')->sum();
+        $sumPayment = $data->pluck('ContingencyFee')->sum();
+        $sumRemitted = $data->pluck('Remitted')->sum();
+
+        $style = [
+            'font' => [
+                'bold' => true
+            ]
+        ];
+
+
+        $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(5, $row + 1, 'Totals:');
+        $spreadsheet->getActiveSheet()->getStyleByColumnAndRow(5, $row + 1)->applyFromArray($style);
+
+        $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(6, $row + 1, $sumDebtorPayment);
+        $spreadsheet->getActiveSheet()->getStyleByColumnAndRow(6, $row + 1)->applyFromArray($style);
+
+        $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(7, $row + 1 ,$sumPayment);
+        $spreadsheet->getActiveSheet()->getStyleByColumnAndRow(7, $row + 1)->applyFromArray($style);
+
+        $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(8, $row + 1 ,$sumRemitted);
+        $spreadsheet->getActiveSheet()->getStyleByColumnAndRow(8, $row + 1)->applyFromArray($style);
+
+        //$spreadsheet->setActiveSheetIndexByName('Remit')->getStyle('F2:I'. $recordCount)->getNumberFormat()->setFormatCode('#,##0.00');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$fileName.'.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save($filePath);
+    }
+
 }

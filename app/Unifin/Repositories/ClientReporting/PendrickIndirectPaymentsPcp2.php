@@ -36,7 +36,10 @@ class PendrickIndirectPaymentsPcp2 implements ReportInterface
             $report .= Carbon::parse($item->TRS_TRX_DATE_O)->format('mdY');
             $report .= 'UN1';
   
-            $report .= sprintf("%010d", $item->TRS_AMT * 100);
+            if ($item->TRS_AMT < 0) 
+                $report .= "-".sprintf("%09s", abs($item->TRS_AMT * 100));
+            else
+                $report .= sprintf("%010s", $item->TRS_AMT * 100);
            
 
             if ($item->DBR_STATUS == 'SIF') 

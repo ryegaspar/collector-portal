@@ -23,21 +23,21 @@ class PendrickWorkflowMain implements ReportInterface
                 ->join('CDS.01_ADR', 'DBR.DBR_NO', '=', '01_ADR.DBR_NO')
                 
                 ->select(DB::raw("DAT.DAT_TRX_DATE_O, 
-                                DAT.DAT_ACTION_CODE, 
+                                $item->DAT_ACTION_CODE, 
                                 DBR.DBR_NAME1, 
                                 DBR.DBR_CLI_REF_NO, 
                                 DBR.DBR_CLIENT, 
-                                020_UDW.UDW_FLD1, 
+                                $item->020_UDW.UDW_FLD21, 
                                 020_UDW.UDW_FLD21, 
                                 020_UDW.UDW_FLD2, 
                                 020_UDW.UDW_FLD23, 
                                 DBR.DBR_ASSIGN_DATE_O,
                                 020_UDW.UDW_FLD25, 
                                 020_UDW.UDW_FLD27, 
-                                020_UDW.UDW_FLD17, 
-                                020_UDW.UDW_FLD18, 
+                                $item->020_UDW.UDW_FLD217, 
+                                $item->020_UDW.UDW_FLD218, 
                                 020_UDW.UDW_FLD20, 
-                                020_UDW.UDW_FLD14, 
+                                $item->020_UDW.UDW_FLD214, 
                                 01_ADR.ADR_ADDR1, 
                                 01_ADR.ADR_STATE, 
                                 01_ADR.ADR_ZIP_CODE, 
@@ -92,140 +92,132 @@ class PendrickWorkflowMain implements ReportInterface
             
 
 
-   IF ({DAT.DAT_ACTION_CODE} = 'DNC'
-        and {020_UDW.UDW_FLD1} = 'Validation Request'
-        and {020_UDW.UDW_FLD21} = 'General Valid. Request') 
-    THEN '1000'
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC'
-        and {020_UDW.UDW_FLD1} = 'Validation Request'
-        and {020_UDW.UDW_FLD21} = 'Itemized Bill Request')
-    THEN '1000'
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC'
-        and {020_UDW.UDW_FLD1} = 'Validation Request'
-        and {020_UDW.UDW_FLD21} = 'Non-Itemized Bill Request')
-    THEN '1001'
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC'
-        and {020_UDW.UDW_FLD1} = 'Validation Request')
-    THEN '1000'
-    ELSE
+   if ($item->DAT_ACTION_CODE = 'DNC' and $item->020_UDW.UDW_FLD21 = 'Validation Request' and $item->020_UDW.UDW_FLD21 = 'General Valid. Request')
+   {$item->WorkflowCodeII = '1000';}
+    else if 
+     ($item->DAT_ACTION_CODE = 'DNC'and $item->$item->020_UDW.UDW_FLD21 = 'Validation Request'and $item->020_UDW.UDW_FLD21 = 'temized Bill Request')
+    {$item->WorkflowCodeII = '1000';}
+    else if
+    ($item->DAT_ACTION_CODE = 'DNC' and $item->020_UDW.UDW_FLD21 = 'Validation Request' and $item->020_UDW.UDW_FLD21 = 'Non-Itemized Bill Request')
+    {$item->WorkflowCodeII = '1001';}
+    else if
+    ($item->DAT_ACTION_CODE = 'DNC' and $item->020_UDW.UDW_FLD21 = 'Validation Request')
+    {$item->WorkflowCodeII = '1001';}
+
 //
 //Credit Bureau Reporting (CBR) Section
 //
 //
 //Dispute Section - Account Balance Incorrect
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD2} = 'Written' 
-        and {020_UDW.UDW_FLD23} = 'Account Balance Incorrect'
-        and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
-    THEN '3023' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD2} = 'Written' 
-        and {020_UDW.UDW_FLD23} = 'Account Balance Incorrect'
-        and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
-    THEN '3024' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD23} = 'Account Balance Incorrect'
-        and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
-    THEN '3021' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD23} = 'Account Balance Incorrect'
-        and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
-    THEN '3022' 
-    ELSE
+if ($item->DAT_ACTION_CODE = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and 020_UDW.UDW_FLD2 = 'Written' 
+        and 020_UDW.UDW_FLD23 = 'Account Balance Incorrect'
+        and currentdate<=($item->DBR_ASSIGN_DATE_O+30)) 
+    {$item->WorkflowCodeII = '3023'} 
+    else if
+ ($item->DAT_ACTION_CODE = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and 020_UDW.UDW_FLD2 = 'Written' 
+        and 020_UDW.UDW_FLD23 = 'Account Balance Incorrect'
+        and currentdate>($item->DBR_ASSIGN_DATE_O+30)) 
+    {$item->WorkflowCodeII = '3024';}
+    else if
+ ($item->DAT_ACTION_CODE = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and $item->020_UDW.UDW_FLD23 = 'Account Balance Incorrect'
+        and currentdate<=($item->DBR_ASSIGN_DATE_O+30)) 
+    {$item->WorkflowCodeII = '3021'} 
+    else if
+ ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and $item->020_UDW.UDW_FLD23 = 'Account Balance Incorrect'
+        and currentdate>($item->DBR_ASSIGN_DATE_O+30)) 
+    {$item->WorkflowCodeII ='3022'} 
+
 //
 //Dispute Section - Bad Service Provided
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD2} = 'Written' 
-        and {020_UDW.UDW_FLD23} = 'Bad Service Provided'
-        and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
-    THEN '3015' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD2} = 'Written' 
-        and {020_UDW.UDW_FLD23} = 'Bad Service Provided'
-        and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
-    THEN '3016' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD23} = 'Bad Service Provided'
-        and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
-    THEN '3013' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD23} = 'Bad Service Provided'
-        and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
-    THEN '3014' 
-    ELSE
-//
+if ($item->DAT_ACTION_CODE = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and $item->020_UDW.UDW_FLD2 = 'Written' 
+        and $item->020_UDW.UDW_FLD23 = 'Bad Service Provided'
+        and currentdate<=($item->DBR_ASSIGN_DATE_O+30)) 
+    {$item->WorkflowCodeII ='3015'}
+else if
+     ($item->DAT_ACTION_CODE = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and $item->020_UDW.UDW_FLD2 = 'Written' 
+        and $item->020_UDW.UDW_FLD23 = 'Bad Service Provided'
+        and currentdate>($item->DBR_ASSIGN_DATE_O+30))
+        {$item->WorkflowCodeII ='3016'} 
+else if
+     ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and $item->020_UDW.UDW_FLD23 = 'Bad Service Provided'
+        and currentdate<=($item->DBR_ASSIGN_DATE_O+30)) 
+    {$item->WorkflowCodeII ='3013'}
+else if
+    ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and $item->020_UDW.UDW_FLD23 = 'Bad Service Provided'
+        and currentdate>($item->DBR_ASSIGN_DATE_O+30)) 
+    {$item->WorkflowCodeII ='3014'}
+
 //Dispute Section - Charity Care
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD2} = 'Written' 
-        and {020_UDW.UDW_FLD23} = 'Charity Care'
-        and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
+if ($item->DAT_ACTION_CODE = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
+        and {$item->020_UDW.UDW_FLD2} = 'Written' 
+        and {$item->020_UDW.UDW_FLD23} = 'Charity Care'
+        and currentdate<=({$item->DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3031' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD2} = 'Written' 
-        and {020_UDW.UDW_FLD23} = 'Charity Care'
-        and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
+else if
+IF ($item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
+        and {$item->020_UDW.UDW_FLD2} = 'Written' 
+        and {$item->020_UDW.UDW_FLD23} = 'Charity Care'
+        and currentdate>({$item->DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3032' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD23} = 'Charity Care'
-        and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
+else if
+IF ($item->DAT_ACTION_CODE = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
+        and {$item->020_UDW.UDW_FLD23} = 'Charity Care'
+        and currentdate<=({$item->DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3029' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD23} = 'Charity Care'
-        and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
+else if
+IF ($item->DAT_ACTION_CODE = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
+        and {$item->020_UDW.UDW_FLD23} = 'Charity Care'
+        and currentdate>({$item->DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3030' 
     ELSE
 //
 //Dispute Section - General
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD2} = 'Written' 
-        and {020_UDW.UDW_FLD23} = 'General'
-        and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and $item->020_UDW.UDW_FLD21 = 'Disputing Debt' 
+        and $item->020_UDW.UDW_FLD2 = 'Written' 
+        and $item->020_UDW.UDW_FLD23 = 'General'
+        and currentdate<=({$item->DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3003' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
-        and {020_UDW.UDW_FLD2} = 'Written' 
-        and {020_UDW.UDW_FLD23} = 'General'
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
+        and {$item->020_UDW.UDW_FLD2} = 'Written' 
+        and {$item->020_UDW.UDW_FLD23} = 'General'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3004' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'General'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3001' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'General'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3002' 
@@ -233,28 +225,28 @@ IF ({DAT.DAT_ACTION_CODE} = 'DNC'
 //
 //Dispute Section - Insurance Claim Error
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Insurance Claim Error'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3027' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Insurance Claim Error'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3028' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Insurance Claim Error'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3025' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Insurance Claim Error'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3026' 
@@ -262,28 +254,28 @@ IF ({DAT.DAT_ACTION_CODE} = 'DNC'
 //
 //Dispute Section - Multiple Reasons
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Multiple Reasons'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3051' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Multiple Reasons'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3052' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Multiple Reasons'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3049' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Multiple Reasons'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3050' 
@@ -291,28 +283,28 @@ IF ({DAT.DAT_ACTION_CODE} = 'DNC'
 //
 //Dispute Section - Never Recieved Service
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Never Recieved Service'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3011' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Never Recieved Service'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3012' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Never Recieved Service'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3009' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Never Recieved Service'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3010' 
@@ -320,28 +312,28 @@ IF ({DAT.DAT_ACTION_CODE} = 'DNC'
 //
 //Dispute Section - Date of Service Wrong
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Date of Service Wrong'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3007' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Date of Service Wrong'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3008' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Date of Service Wrong'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3005' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Date of Service Wrong'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3006' 
@@ -349,28 +341,28 @@ IF ({DAT.DAT_ACTION_CODE} = 'DNC'
 //
 //Dispute Section - Not Responsible for Bill
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Not Responsible for Bill'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3039' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Not Responsible for Bill'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3040' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Not Responsible for Bill'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3037' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Not Responsible for Bill'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3038' 
@@ -378,28 +370,28 @@ IF ({DAT.DAT_ACTION_CODE} = 'DNC'
 //
 //Dispute Section - Paid Prior
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Paid Prior'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3035' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and {020_UDW.UDW_FLD23} = 'Paid Prior'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3036' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Paid Prior'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3033' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} = 'Paid Prior'
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3034' 
@@ -407,152 +399,152 @@ IF ({DAT.DAT_ACTION_CODE} = 'DNC'
 //
 //Dispute Section - Other
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written'
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3055' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD2} = 'Written' 
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3056' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and currentdate<=({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3053' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and currentdate>({DBR.DBR_ASSIGN_DATE_O}+30)) 
     THEN '3054' 
     ELSE
 //
 //Cease & Desist Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Cease & Desist' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Cease & Desist' 
         and {020_UDW.UDW_FLD2} = 'Written') 
     THEN '4002' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Cease & Desist') 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Cease & Desist') 
     THEN '4001' 
     ELSE
 //
 //Fraud Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Fraud Claim' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Fraud Claim' 
         and {020_UDW.UDW_FLD2} = 'Written') 
     THEN '4051' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Fraud Claim') 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Fraud Claim') 
     THEN '4050' 
     ELSE
 //
 //Complaint Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Complaint' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Complaint' 
         and {020_UDW.UDW_FLD25} = 'Agency Complaint') 
     THEN '5001' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Complaint' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Complaint' 
         and {020_UDW.UDW_FLD25} = 'Collector Complaint') 
     THEN '5001' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Complaint' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Complaint' 
         and {020_UDW.UDW_FLD25} = 'Orig. Creditor Complaint') 
     THEN '5002' 
-    ELSE
+else if
 //
 //Regulatory Complaint Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Complaint' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Complaint' 
         and {020_UDW.UDW_FLD25} = 'Regulatory (Admin Only)') 
     THEN '5103' 
-    ELSE
+ else if
 //
 //Attorney and Lawsuit Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Attorney Handles' 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Attorney Handles' 
         and {020_UDW.UDW_FLD27} = 'Single Plaintiff Letter') 
     THEN '5201' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Attorney Handles' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Attorney Handles' 
         and {020_UDW.UDW_FLD27} = 'Class Action Letter') 
     THEN '5202' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Attorney Handles' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Attorney Handles' 
         and {020_UDW.UDW_FLD27} = 'Single Plaintiff Lawsuit') 
     THEN '5301' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Attorney Handles' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Attorney Handles' 
         and {020_UDW.UDW_FLD27} = 'Class Action Lawsuit') 
     THEN '5302' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Attorney Handles') 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Attorney Handles') 
     THEN '6001' 
-    ELSE
+else if
 //
 //Account Closed Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'XCR' 
-        and {020_UDW.UDW_FLD1} = 'Disputing Debt' 
+IF ({$item->DAT_ACTION_CODE} = 'XCR' 
+        and {$item->020_UDW.UDW_FLD21} = 'Disputing Debt' 
         and {020_UDW.UDW_FLD23} <> '') 
     THEN '5501' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'XCR' 
-        and {020_UDW.UDW_FLD1} = 'Complaint' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'XCR' 
+        and {$item->020_UDW.UDW_FLD21} = 'Complaint' 
         and {020_UDW.UDW_FLD25} <> '') 
     THEN '5502' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'XCR' 
-        and {020_UDW.UDW_FLD1} = 'Attorney Handles' 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'XCR' 
+        and {$item->020_UDW.UDW_FLD21} = 'Attorney Handles' 
         and {020_UDW.UDW_FLD27} <> '') 
     THEN '5503' 
-    ELSE
+else if
 //
 //Bankruptcy and Deceased Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Bankruptcy' 
-        and {020_UDW.UDW_FLD17} <> ''
-        and {020_UDW.UDW_FLD18} <> '') 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Bankruptcy' 
+        and {$item->020_UDW.UDW_FLD217} <> ''
+        and {$item->020_UDW.UDW_FLD218} <> '') 
     THEN '5901' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Deceased' 
-        and {020_UDW.UDW_FLD14} <> ''
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Deceased' 
+        and {$item->020_UDW.UDW_FLD214} <> ''
         and {01_ADR.ADR_STATE} <> '') 
     THEN '5902' 
-    ELSE
+else if
 //
 //Military Deployment Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'DNC' 
-        and {020_UDW.UDW_FLD1} = 'Active Military') 
+IF ({$item->DAT_ACTION_CODE} = 'DNC' 
+        and {$item->020_UDW.UDW_FLD21} = 'Active Military') 
     THEN '4150' 
-    ELSE
+else if
 //
 //Default Values Section
 //
-IF ({DAT.DAT_ACTION_CODE} = 'XCR') 
+IF ({$item->DAT_ACTION_CODE} = 'XCR') 
     THEN '5510' 
-    ELSE
-IF ({DAT.DAT_ACTION_CODE} = 'DNC') 
+else if
+IF ({$item->DAT_ACTION_CODE} = 'DNC') 
     THEN '4001' 
     ELSE ''
 
