@@ -20,8 +20,4 @@ class DeskTransferRequestController extends Controller
     {
         $this->middleware('collectorResetPassword');
     }
-
-
-
-
 }

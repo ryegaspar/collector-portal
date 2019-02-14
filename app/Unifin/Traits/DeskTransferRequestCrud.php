@@ -2,15 +2,19 @@
 
 namespace Unifin\Traits;
 
+use App\Http\Requests\DeskTransferRequestRequest;
 use App\Models\Lynx\DeskTransferRequest;
-use Illuminate\Http\Request;
-use App\Rules\LetterRequestType;
 use Illuminate\Support\Facades\Auth;
 use Unifin\TableFilters\CollectorDeskTransferRequestFilter;
-use App\Models\Tiger\DBR;
 
 trait DeskTransferRequestCrud
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:modify, App\Models\Lynx\DeskTransferRequest')->only('update');
+    }
+
     /**
      * Display listing of the resource.
      *
@@ -31,61 +35,49 @@ trait DeskTransferRequestCrud
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param DeskTransferRequestRequest $deskTransferRequestRequest
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DeskTransferRequestRequest $deskTransferRequestRequest)
     {
-        $data = $this->validateData();
+        $deskTransferRequest = new DeskTransferRequest($deskTransferRequestRequest->validated());
 
-        $user = $request->user();
-
-        //temporary fix, filter eager loaded in polymorphic relations not working in sqlsrv
-        //TODO: remove if updated or fixed.
-        $data['creator_name'] = $user->first_name . ' ' . $user->last_name;
-
-        $debterRecord = DBR::findOrFail($data['dbr_no']);
-        $data['desk_from'] = $debterRecord->DBR_DESK;
-        $data['desk'] = Auth::user()->desk ? Auth::user()->desk : $data['desk'];
-
-        $deskTransferRequest = new DeskTransferRequest($data);
-
-        $response = $request->user()->desk_transfer_requests()->save($deskTransferRequest);
+        $response = auth()->user()->desk_transfer_requests()->save($deskTransferRequest);
 
         return response($response, 200);
     }
 
-//    /**
-//     * Show the form for editing the specified resource.
-//     *
-//     * @param $id
-//     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-//     */
-//    public function edit($id)
-//    {
-//        if (request()->wantsJson()) {
-//            return response(DeskTransferRequest::find($id), 200);
-//        }
-//    }
-
     /**
      * Update the specified resource in storage.
      *
-     * @param DeskTransfer $deskTransferRequest
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param DeskTransferRequestRequest $deskTransferRequestRequest
+     * @param DeskTransferRequest $deskTransferRequest
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(DeskTransferRequest $deskTransferRequest)
+    public function update(DeskTransferRequestRequest $deskTransferRequestRequest, DeskTransferRequest $deskTransferRequest)
+    {
+        $deskTransferRequest->update($deskTransferRequestRequest->validated());
+
+        return response([], 201);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param DeskTransferRequest $deskTransferRequest
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function destroy(DeskTransferRequest $deskTransferRequest)
     {
         if (! Auth::user()->can('modify', $deskTransferRequest)) {
 
             return response(['message' => 'Not Allowed'], 403);
         }
 
-        $validatedData = $this->validateData();
+        $deskTransferRequest->delete();
 
-        $deskTransferRequest->update($validatedData);
-
-        return response([], 201);
+        return response([], 204);
     }
 
     /**
@@ -98,28 +90,10 @@ trait DeskTransferRequestCrud
     {
         $deskTransferRequests = DeskTransferRequest::tableFilters($collectorDeskTransferRequestFilter)
             ->with('requestable:id,tiger_user_id,last_name,first_name')
-             ->with('checked_by:id,last_name,first_name');
+            ->with('checked_by:id,last_name,first_name');
 
         $results = $this->paginate($deskTransferRequests);
 
         return $results;
-    }
-
-    /**
-     * Validate desk transfer request.
-     *
-     * @return mixed
-     */
-    private function validateData()
-    {
-        request()->merge(['dbr_no' => sprintf('%010d', request()->dbr_no)]);
-        request()->merge(['desk' => sprintf('%03d', request()->desk)]);
-
-        return request()->validate([
-            'dbr_no'         => 'required|exists:sqlsrv2.CDS.DBR,DBR_NO',
-            'request_reason' => ['required', 'numeric'],
-            'notes'          => '',
-            'desk'           => ''
-        ]);
     }
 }

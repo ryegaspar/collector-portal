@@ -26,6 +26,20 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
+                            <label>Transfer to Desk:</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       class="form-control text-right"
+                                       maxlength="3"
+                                       :value="desk"
+                                       disabled>
+                                <em class="error invalid-feedback"
+                                    v-if="form.errors.has('desk')">
+                                    {{ form.errors.get('desk') }}
+                                </em>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
                             <label>Request Reason</label>
                             <div class="input-group">
                                 <select class="form-control"
@@ -87,6 +101,7 @@
 					dbr_no: '',
 					request_reason: '',
 					notes: '',
+                    desk: this.desk,
 				}),
 
 				updateID: '',
@@ -145,6 +160,9 @@
 		},
 
 		computed: {
+			desk() {
+				return window.App.desk;
+            }
 		},
 
 		watch: {

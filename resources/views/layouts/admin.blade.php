@@ -24,7 +24,6 @@
 <body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 	<div id="app" class="app">
 		@yield('topnavbar')
-
 		<div class="app-body">
 			<sidebar perms="{{ $permissions }}"></sidebar>
 			@yield('content')

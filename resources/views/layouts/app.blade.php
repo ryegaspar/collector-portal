@@ -16,7 +16,8 @@
 	<script>
 		window.App = {!! json_encode([
 			'name' => Auth::user()->full_name,
-			'userId' => Auth::user()->id
+			'userId' => Auth::user()->id,
+			'desk' => Auth::user()->desk,
 		]) !!}
 	</script>
 </head>
@@ -30,9 +31,7 @@
 			@yield('content')
 		</div>
 
-		<footer class="app-footer">
-			<span>© 2019</span>
-		</footer>
+		<footer class="app-footer"><span>© 2019 ryeg_</span></footer>
 	</div>
 
 	<!-- Bootstrap and necessary plugins -->

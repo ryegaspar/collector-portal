@@ -14,6 +14,7 @@ class DeskTransferRequestFulfillController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:admin', 'activeUser']);
+        $this->middleware('permission:review desk-transfer-request');
     }
 
     /**
@@ -30,11 +31,11 @@ class DeskTransferRequestFulfillController extends Controller
 
         $deskTransferRequest->save();
 
-        $acct_no = $deskTransferRequest->dbr_no;
-        $userid = strtoupper(request()->user()->tiger_user_id);
-        $transferto = $deskTransferRequest->desk;
+        $acctId = $deskTransferRequest->dbr_no;
+        $userId = strtoupper(request()->user()->tiger_user_id);
+        $transferTo = $deskTransferRequest->desk;
 
-        DB::connection('sqlsrv2')->update("exec [UFN].[DeskTransferApprove] ?,?,?", [$acct_no, $userid, $transferto]);
+        DB::connection('sqlsrv2')->update("exec [UFN].[DeskTransferApprove] ?,?,?", [$acctId, $userId, $transferTo]);
 
         return response([], 201);
     }

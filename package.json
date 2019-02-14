@@ -14,7 +14,6 @@
         "babel-preset-stage-2": "^6.24.1",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
-        "vuejs-datepicker": "^1.5.2",
         "flag-icon-css": "2.9.0",
         "font-awesome": "^4.7.0",
         "jquery": "^3.2",
@@ -26,9 +25,11 @@
         "sweetalert": "^2.1.0",
         "tinymce": "^4.8.1",
         "vue": "^2.5.7",
-        "vuetable-2": "^1.7.5",
         "vue-clickaway": "^2.2.2",
         "vue-events": "^3.1.0",
+        "vue-form-helper-preset-laravel": "^1.0.3",
+        "vuejs-datepicker": "^1.5.2",
+        "vuetable-2": "^1.7.5",
         "vuex": "^3.0.1"
     },
     "dependencies": {

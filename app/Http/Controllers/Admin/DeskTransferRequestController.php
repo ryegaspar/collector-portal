@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Unifin\Traits\DeskTransferRequestCrud;
 use Unifin\Traits\Paginate;
-use App\Models\Lynx\DeskTransferRequest;
 
 class DeskTransferRequestController extends Controller
 {
@@ -22,17 +21,17 @@ class DeskTransferRequestController extends Controller
         $this->middleware(['auth:admin', 'activeUser']);
     }
 
-        /**
-     * Remove the specified resource from storage.
-     *
-     * @param DeskTransferRequest $deskTransferRequest
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
-     */
-    public function destroy(DeskTransferRequest $deskTransferRequest)
-    {
-        $deskTransferRequest->delete();
-
-        return response([], 204);
-    }
+//    /**
+//     * Remove the specified resource from storage.
+//     *
+//     * @param DeskTransferRequest $deskTransferRequest
+//     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+//     * @throws \Exception
+//     */
+//    public function destroy(DeskTransferRequest $deskTransferRequest)
+//    {
+//        $deskTransferRequest->delete();
+//
+//        return response([], 204);
+//    }
 }
