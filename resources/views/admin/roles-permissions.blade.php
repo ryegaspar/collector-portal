@@ -7,7 +7,7 @@
 	<!-- Main content -->
 	<main class="main">
 		<div class="container-fluid">
-			<roles-permissions></roles-permissions>
+			<roles-permissions :permission-descriptions="{{ $permissions }}" :permission-lists="{{ $lists }}"></roles-permissions>
 		</div>
 	</main>
 @endsection

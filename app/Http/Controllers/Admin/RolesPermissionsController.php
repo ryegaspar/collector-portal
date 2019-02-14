@@ -28,7 +28,51 @@ class RolesPermissionsController extends Controller
      */
     public function index()
     {
-        return view('admin.roles-permissions');
+        $permissions = collect([
+            'Adjustments'            => [
+                'view' => 'read adjustment'
+            ],
+            'Calendars'              => [
+                'view' => 'read calendar',
+            ],
+            'Closure Reports'        => [
+                'view' => 'view closure-report',
+            ],
+            'Collector'              => [
+                'view'    => 'read collector',
+                'create'  => 'create collector',
+                'edit'    => 'update collector',
+                'disable' => 'disable collector',
+            ],
+            'Collector Batches'      => [
+                'view'   => 'read collector-batch',
+                'create' => 'create collector-batch',
+                'delete' => 'delete collector-batch',
+            ],
+            'Desk Transfer Requests' => [
+                'review' => 'review desk-transfer-request',
+            ],
+            'Letter Request Types'   => [
+                'view'    => 'read letter-request-type',
+                'create'  => 'create letter-request-type',
+                'edit'    => 'update letter-request-type',
+                'disable' => 'disable letter-request-type',
+            ],
+            'Scripts'                => [
+                'view'   => 'read script',
+                'create' => 'create script',
+                'edit'   => 'update script',
+                'delete' => 'delete script'
+            ]
+        ]);
+
+        $lists = collect();
+
+        $permissions->flatten(1)->each(function ($item) use ($lists) {
+            $lists[$item] = false;
+        });
+
+        return view('admin.roles-permissions', compact('permissions', 'lists'));
     }
 
     /**
@@ -59,7 +103,7 @@ class RolesPermissionsController extends Controller
             return response([], 403);
         }
 
-        array_filter($request->permissions, function($key, $value) use (&$newPermissions) {
+        array_filter($request->permissions, function ($key, $value) use (&$newPermissions) {
             if ($key) {
                 $newPermissions[] = $value;
             }
