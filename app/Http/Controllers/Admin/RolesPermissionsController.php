@@ -30,7 +30,8 @@ class RolesPermissionsController extends Controller
     {
         $permissions = collect([
             'Adjustments'            => [
-                'view' => 'read adjustment'
+                'view'         => 'read adjustment',
+                'approve/deny' => 'update adjustment'
             ],
             'Calendars'              => [
                 'view' => 'read calendar',
