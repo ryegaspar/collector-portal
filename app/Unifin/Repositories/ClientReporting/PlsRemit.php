@@ -109,7 +109,7 @@ class PlsRemit implements ReportInterface
         $row = 2;
         $dps->each(function ($item) use ($spreadsheet, &$row, $columns) {
             $columns->each(function ($columnName, $index) use ($item, $spreadsheet, $row) {
-                $this->claire($spreadsheet, $item, $columnName, $index, 'DPs', $row);
+                $this->xlsxAddSheet($spreadsheet, $item, $columnName, $index, 'DPs', $row);
             });
             $row++;
         });
@@ -117,7 +117,7 @@ class PlsRemit implements ReportInterface
         $row = 2;
         $ups->each(function ($item) use ($spreadsheet, &$row, $columns) {
             $columns->each(function ($columnName, $index) use ($item, $spreadsheet, $row) {
-                $this->claire($spreadsheet, $item, $columnName, $index, 'Remit', $row);
+                $this->xlsxAddSheet($spreadsheet, $item, $columnName, $index, 'Remit', $row);
             });
             $row++;
         });
