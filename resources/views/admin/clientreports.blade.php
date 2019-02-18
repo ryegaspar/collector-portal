@@ -315,6 +315,15 @@ margin-bottom: 1%;
            <td><input type="checkbox" name="galaxyRemit" value="Yes" class=checkBox  /></td>
         </tr>
 
+         <tr>
+           <td>HCU Remit</td>
+           <td>Remittance</td>
+           <td>Bi Monthly</td>
+           <td>HCU</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="hcuRemit" value="Yes" class=checkBox  /></td>
+        </tr>
+
            <!-- <tr>
            <td>JcapMaintenance</td>
            <td>Maintenance</td>
