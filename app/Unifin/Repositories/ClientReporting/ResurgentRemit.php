@@ -23,7 +23,7 @@ class ResurgentRemit implements ReportInterface
                 ->select(DB::raw("DBR.DBR_NO, DBR_CLI_REF_NO, TRS_TRX_DATE_O, TRS_TRUST_CODE, TRS_AMT, TRS_COMM_AMT, DBR_CL_MISC_3, TRS_SEQ_NO, Orig_Acct_No"))
                 
                 
-                ->whereNotIn('TRS_TRUST_CODE', ['2', '3', '14', '33'])
+                ->whereNotIn('TRS_TRUST_CODE', ['2', '14', '30', '31', '32', '33', '34', '35' ])
                 
                 ->whereRaw('CLT_NAME_1 LIKE ?', ['Resurgent Capital Systems'])
                
@@ -34,10 +34,10 @@ class ResurgentRemit implements ReportInterface
                 ->get();
 
         
-        $data = $data->map(function ($item) {
-            $pmt = [1, 100, 101, 102, 103, 200, 201, 202, 203, 300, 301, 302, 303];
-            $rtn = [19, 120, 121, 122, 123, 140,141,142,143, 220, 221, 222, 223, 320, 321, 322, 323];
-            $nsf = [248];
+       $data = $data->map(function ($item) {
+            $pmt = [1, 100, 101, 102, 103, 200, 201, 202, 203, 300, 301, 302, 303, 400, 401, 402, 403, 500, 501, 502, 503];
+            $rtn = [4, 120, 121, 122, 123, 140,141,142,143, 220, 221, 222, 223];
+            $nsf = [241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 320, 321, 322, 323];
 
             if (in_array($item->TRS_TRUST_CODE, $pmt)) {
                 $item->TRS_TRUST_CODE = 'PMT';

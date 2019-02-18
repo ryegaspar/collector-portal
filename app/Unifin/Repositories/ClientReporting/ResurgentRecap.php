@@ -34,6 +34,8 @@ class ResurgentRecap implements ReportInterface
                 ->whereBetween('TRS_TRX_DATE_O', [$fromDate, $toDate])
                 ->get();
 
+
+
             $data = $data->map(function ($item) {
             $pmt = [1, 100, 101, 102, 103, 200, 201, 202, 203, 300, 301, 302, 303];
             $rtn = [19, 120, 121, 122, 123, 140,141,142,143, 220, 221, 222, 223, 320, 321, 322, 323];
@@ -50,10 +52,8 @@ class ResurgentRecap implements ReportInterface
                 $item->TRS_TRUST_CODE = 'NRV';
             }
 
-               
-
-
-
+            
+        
             $item->ABS_TRS_AMT = abs($item->TRS_AMT);
             $item->ABS_TRS_COMM_AMT = abs($item->TRS_COMM_AMT);
             $item->Remitted = ($item->TRS_AMT-$item->TRS_COMM_AMT);
@@ -81,7 +81,6 @@ class ResurgentRecap implements ReportInterface
     }
 
 
-
  public function resurgentRemitXlsx($data, $fileName, $filePath)
     {
         $spreadsheet = new spreadsheet;
@@ -100,13 +99,24 @@ class ResurgentRecap implements ReportInterface
         $sumDebtorPayment = $data->pluck('DebtorPayment')->sum();
         $sumComPayment = $data->pluck('ContingencyFee')->sum();
         $sumRemitted = $data->pluck('Remitted')->sum();
-        $countPMT = $data->pluck('countPMT');
-        $countPRV = $data->pluck('countPRV');
-         
-    
-   
 
+        $countPMT = $data->filter(function ($value, $key) {
+            return $value->TRS_TRUST_CODE == 'PMT';
+        })->count();
+        
+        $countPRV = $data->filter(function ($value, $key) {
+            return $value->TRS_TRUST_CODE == 'PRV';
+        })->count();
+        
+        $countNSF = $data->filter(function ($value, $key) {
+            return $value->TRS_TRUST_CODE == 'NSF';
+        })->count();
+        
+        $countNRV = $data->filter(function ($value, $key) {
+            return $value->TRS_TRUST_CODE == 'NRV';
+        })->count();
 
+        
 
 
         $styleBold = [
@@ -211,19 +221,19 @@ class ResurgentRecap implements ReportInterface
         $spreadsheet->getActiveSheet()->setCellValue('B22', $countPMT);
         $spreadsheet->getActiveSheet()->getStyle('B22')->getFont()->setSize(10)->setName("Arial");
         
-        $spreadsheet->getActiveSheet()->setCellValue('B23', '');
+        $spreadsheet->getActiveSheet()->setCellValue('B23', $countPRV);
         $spreadsheet->getActiveSheet()->getStyle('B23')->getFont()->setSize(10)->setName("Arial");
         
         $spreadsheet->getActiveSheet()->setCellValue('B24', '=B22+B23');
         $spreadsheet->getActiveSheet()->getStyle('B24')->applyFromArray($styleBold)->getFont()->setSize(11)->setName("Arial");
         
-        $spreadsheet->getActiveSheet()->setCellValue('B27', $countnotpmt);
+        $spreadsheet->getActiveSheet()->setCellValue('B27', $countNSF);
         $spreadsheet->getActiveSheet()->getStyle('B27')->getFont()->setSize(10)->setName("Arial");
         
-        $spreadsheet->getActiveSheet()->setCellValue('B28', '');
+        $spreadsheet->getActiveSheet()->setCellValue('B28', $countNRV);
         $spreadsheet->getActiveSheet()->getStyle('B28')->getFont()->setSize(10)->setName("Arial");
         
-        $spreadsheet->getActiveSheet()->setCellValue('B29', '=B27-B28');
+        $spreadsheet->getActiveSheet()->setCellValue('B29', '=B27+B28');
         $spreadsheet->getActiveSheet()->getStyle('B29')->applyFromArray($styleBold)->getFont()->setSize(11)->setName("Arial");
         
         $spreadsheet->getActiveSheet()->setCellValue('B31', '=B22+B23+B27+B28');
@@ -238,6 +248,7 @@ class ResurgentRecap implements ReportInterface
 
         $spreadsheet->getActiveSheet()->setCellValue('C23', '');
         $spreadsheet->getActiveSheet()->getStyle('C23')->getFont()->setSize(10)->setName("Arial");
+        $spreadsheet->getActiveSheet()->getStyle('C23')->getNumberFormat()->setFormatCode("#,##0.00_);[Red](#,##0.00)");
 
         $spreadsheet->getActiveSheet()->setCellValue('C24', '=C22+C23');
         $spreadsheet->getActiveSheet()->getStyle('C24')->applyFromArray($styleBold)->getFont()->setSize(11)->setName("Arial");

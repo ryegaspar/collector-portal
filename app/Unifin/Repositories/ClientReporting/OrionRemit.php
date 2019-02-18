@@ -53,7 +53,7 @@ class OrionRemit implements ReportInterface
             $report .= "\t".Carbon::parse($item->DBR_ASSIGN_DATE_O)->format('m/d/Y');
             $report .= "\t". $item->Orig_Acct_No;
             $report .= "\t".$item->PaymentType;
-            $report .= "\t".Carbon::parse($item->TRS_TRX_DATE_O)->format('md/Y');
+            $report .= "\t".Carbon::parse($item->TRS_TRX_DATE_O)->format('m/d/Y');
             $report .= "\t".number_format($item->TRS_AMT,2);
             $report .= "\tUNIF";
             $report .= "\t3";
@@ -63,19 +63,15 @@ class OrionRemit implements ReportInterface
         }
 
 
-        $headers = ['UNIF', 'DBR_CL_MISC_3' , 'DBR_ASSIGN_DATE_O' ,  'Client Reference Number', 'Original Account Number', 'Transaction Type'  ,  'Transaction Date' ,   'Transaction Amount' , 'UNIF'  ,  '3'  , '2'  , 'DBR_COM_RATE'];
-
-
-        $columns = collect(['','DBR_CL_MISC_3','DBR_ASSIGN_DATE_O','Orig_Acct_No','Payment','TRS_TRX_DATE_O','TRS_AMT','','','','DBR_COM_RATE']);
+      
 
         $filename = 'PAY-UNIF_'.Carbon::now()->format('Ymd');
         $filePath = public_path('storage\\reports\\'. $filename .'.txt');
         $handle = fopen($filePath, 'w');
         fwrite($handle, $report);
-
-        $reportContents = file_get_contents($filePath);
-/*Adds headers to */
-        file_put_contents($filePath, implode("\t", $headers). "\n" . $reportContents);
+        
 	}
 }
+
+
 

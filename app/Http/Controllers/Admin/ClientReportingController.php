@@ -46,9 +46,9 @@ class ClientReportingController extends Controller
         $path = 'App\\Unifin\\Repositories\\ClientReporting\\';
 
         $reports = collect([
+            'galaxyRemit' => $path . 'GalaxyRemit',
             'galaxyAPAY' => $path . 'GalaxyAPAY',
             'cascadeRemit' => $path . 'CascadeRemit',
-            'resurgentSummaryRemit' => $path . 'ResurgentSummaryRemit',
             'asgRemit' => $path . 'AsgRemit',
             'plsRemit' => $path . 'PlsRemit',
             'pzaRemit' => $path . 'PzaRemit',
@@ -59,6 +59,7 @@ class ClientReportingController extends Controller
             'rtcRemit' => $path . 'RtcRemit',
             'wcrRemit' => $path . 'WcrRemit',
             'jcapMaintenance' => $path . 'JcapMaintenance',
+            'resurgentRecap' => $path . 'ResurgentRecap',
             'resurgentRemit' => $path . 'ResurgentRemit',
             'resurgentSufWeekly' => $path . 'ResurgentSufWeekly',
             'resurgentSufDaily' => $path . 'ResurgentSufDaily',
@@ -80,6 +81,7 @@ class ClientReportingController extends Controller
             'pendrickIndirectPaymentsMain' => $path . 'PendrickIndirectPaymentsMain',
             'pendrickIndirectPaymentsPcp2' => $path . 'PendrickIndirectPaymentsPcp2',
             'claPayFile' => $path . 'ClaPayFile',
+            'claStatus' => $path . 'ClaStatus',
             'asgPayFile' => $path . 'AsgPayFile'
         ]);
 

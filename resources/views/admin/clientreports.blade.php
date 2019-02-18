@@ -281,6 +281,15 @@ margin-bottom: 1%;
         </tr>
 
         <tr>
+           <td>CLA Status</td>
+           <td>Status</td>
+           <td>Monthly</td>
+           <td>Community Loans of America</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="claStatus" value="Yes" class=checkBox  /></td>   
+        </tr>
+
+        <tr>
            <td>EOS Remit</td>
            <td>Remittance</td>
            <td>Bi Monthly</td>
@@ -295,6 +304,15 @@ margin-bottom: 1%;
            <td>Galaxy</td>
            <td>Last Ran Date</td>
            <td><input type="checkbox" name="galaxyAPAY" value="Yes" class=checkBox  /></td>
+        </tr>
+
+        <tr>
+           <td>Galaxy Remit</td>
+           <td>Remittance</td>
+           <td>Weekly</td>
+           <td>Galaxy</td>
+           <td>Last Ran Date</td>
+           <td><input type="checkbox" name="galaxyRemit" value="Yes" class=checkBox  /></td>
         </tr>
 
            <!-- <tr>
@@ -421,7 +439,7 @@ margin-bottom: 1%;
            <td>Weekly</td>
            <td>Resurgent</td>
            <td>Last Ran Date</td>
-           <td><input type="checkbox" name="resurgentSummaryRemit" value="Yes" class=checkBox  /></td>
+           <td><input type="checkbox" name="resurgentRecap" value="Yes" class=checkBox  /></td>
         </tr>
            
         <tr>
@@ -508,14 +526,14 @@ margin-bottom: 1%;
            <td><input type="checkbox" name="resurgentSufDaily" value="Yes" class=checkBox  /></td>
         </tr>
 
-          <!-- <tr>
+          <tr>
            <td>RMC Remit</td>
            <td>Remittance</td>
            <td>Bi Monthly</td>
            <td>Rocky Mountain Capital</td>
            <td>Last Ran Date</td>
            <td><input type="checkbox" name="rmcRemit" value="Yes" class=checkBox  /></td>
-          </tr> -->
+          </tr> 
 
         <tr>
            <td>RTC Remit</td>
