@@ -154,6 +154,10 @@ class AsgRemit implements ReportInterface
         $spreadsheet->setActiveSheetIndex(0)->setCellValueByColumnAndRow(8, $row + 1 ,$sumRemitted);
         $spreadsheet->getActiveSheet()->getStyleByColumnAndRow(8, $row + 1)->applyFromArray($style);
 
+
+
+        $spreadsheet->getActiveSheet()->getStyle('F2:H'.$recordCount)->getNumberFormat()->setFormatCode('#,##0.00');
+
         //$spreadsheet->setActiveSheetIndexByName('Remit')->getStyle('F2:I'. $recordCount)->getNumberFormat()->setFormatCode('#,##0.00');
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

@@ -51,7 +51,7 @@ class GalaxyAPAY implements ReportInterface
                 $report .= '|'.'PA';
             $report .= '|'.$item->DBR_NO.'-'.$item->TRS_SEQ_NO.'-'.$item->TRS_SEQ_SUB;
             $report .= '|'.'';
-            $report .='\n';
+            $report .="\n";
         }
         $report .='TRL';
         $report .='|UNIFIN';
