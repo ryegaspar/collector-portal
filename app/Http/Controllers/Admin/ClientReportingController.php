@@ -46,6 +46,7 @@ class ClientReportingController extends Controller
         $path = 'App\\Unifin\\Repositories\\ClientReporting\\';
 
         $reports = collect([
+            'ffamPlacementAcknowledgement' => $path . 'FfamPlacementAcknowledgement',
             'hcuRemit' => $path . 'HcuRemit',
             'galaxyRemit' => $path . 'GalaxyRemit',
             'galaxyAPAY' => $path . 'GalaxyAPAY',

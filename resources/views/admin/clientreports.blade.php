@@ -227,6 +227,15 @@ margin-bottom: 1%;
 
       <tbody>
         <tr>
+          <td>ffamPlacementAcknowledgement</td>
+          <td>PlacementAcknowledgement</td>
+          <td>NA</td>
+          <td>FFAM</td>
+          <td>Last Ran Date</td>
+          <td><input type="checkbox" name="ffamPlacementAcknowledgement" class=checkBox /></td>
+        </tr>
+        
+        <tr>
           <td>ASG Status</td>
           <td>Status</td>
           <td>Weekly</td>
