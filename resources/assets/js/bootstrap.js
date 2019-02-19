@@ -44,29 +44,6 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-window.onload = () => {
-	let elements = [
-		atob('Zm9vdGVy'),
-		atob('YXBw'),
-		atob('YXBwLWZvb3Rlcg=='),
-		atob('qSAyMDE5IHJ5ZWdf'),
-		atob('c3R5bGU='),
-		atob('ZGlzcGxheTogZmxleCAhaW1wb3J0YW50O2ZsZXg6IDAgMCA1MHB4'),
-	];
-	let axios = document.getElementsByTagName(elements[0]);
-	while (axios[0]) axios[0].parentNode.removeChild(axios[0]);
-
-	let popover = document.getElementById(elements[1]);
-	let sidebar = document.createElement(elements[0]);
-	sidebar.className = elements[2];
-	sidebar.innerHTML = elements[3];
-	sidebar.setAttribute(elements[4], elements[5]);
-	setTimeout(() => {
-		if (+window.location.href.indexOf("login") === -1)
-			popover.appendChild(sidebar);
-	}, 150);
-};
-
 // import Echo from 'laravel-echo'
 
 // window.Pusher = require('pusher-js');

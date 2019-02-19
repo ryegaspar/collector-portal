@@ -31,7 +31,7 @@
 			@yield('content')
 		</div>
 
-		<footer class="app-footer"><span>© 2019 ryeg_</span></footer>
+		<footer class="app-footer"><span></span></footer>
 	</div>
 
 	<!-- Bootstrap and necessary plugins -->
