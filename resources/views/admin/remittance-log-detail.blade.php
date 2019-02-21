@@ -9,6 +9,7 @@
 		<div class="container-fluid">
 			<div class="card-body">
 			@foreach($remitdetail as $remitdetail)
+			@foreach($test as $test)
 				<div class="row">
 					<div class="col-sm btn btn-primary disabled">Client Name</div>
 					<div class="col-sm"></div>
@@ -17,11 +18,11 @@
 					<div class="col-sm"><a href="{{ url('/admin/remittance-log/'.$remitdetail->client_name.'/'.$remitdetail->period_start_date.'/'.$remitdetail->period_end_date.'/') }}" class="btn btn-dark" role="button">Download Remit</a></div>
 				</div>
 				<div class="row">
-					<div class="col-sm">{{$remitdetail->client_name}}</div>
-					<div class="col-sm"></div>
-					<div class="col-sm">{{$remitdetail->remit_date}}</div>
-					<div class="col-sm"></div>
-					<div class="col-sm"></div>
+					<div class="col-sm btn disabled">{{$remitdetail->client_name}}</div>
+					<div class="col-sm btn disabled"></div>
+					<div class="col-sm btn disabled">{{$remitdetail->remit_date}}</div>
+					<div class="col-sm btn disabled"></div>
+					<div class="col-sm btn disabled"></div>
 				</div>
 					<br>
 					<br>
@@ -32,36 +33,61 @@
 					<div class="col-sm-7"></div>
 				</div>
 				<div class="row">
-					<div class="col-sm-2 btn">{{$remitdetail->period_start_date}}</div>
-					<div class="col-sm-1"></div>
-					<div class="col-sm-2 btn">{{$remitdetail->period_end_date}}</div>
-					<div class="col-sm-7"></div>
+					<div class="col-sm-2 btn disabled">{{$remitdetail->period_start_date}}</div>
+					<div class="col-sm-1 btn disabled">to</div>
+					<div class="col-sm-2 btn disabled">{{$remitdetail->period_end_date}}</div>
+					<div class="col-sm-7 btn disabled"></div>
 				</div>
 					<br>
 					<br>
 					<br>
 				<table class="table table-bordered table-info" style="width:75%">
+					<tbody>
+						<tr>
+							<th></th>
+							<th>Report</th>
+							<th>Database</th>
+							<th></th>
+							<th>Difference</th>
+						</tr>
+						<tr>
+							<th>Remittance Amount</th>
+							<td>{{$remitdetail->remit_amount}}</td>
+							<td>{{$test->TRS_REMIT_AMT}}</td>
+							<td></td>
+							<td>{{$remitdetail->remit_amount - $test->TRS_REMIT_AMT}}</td>
+						</tr>
+						<tr>
+							<th>Commission Amount</th>
+							<td>{{$remitdetail->commission_amount}}</td>
+							<td>{{$test->TRS_COMM_AMT}}</td>
+							<td></td>
+							<td>{{$remitdetail->commission_amount - $test->TRS_COMM_AMT}}</td>
+						</tr>
+						<tr>
+							<th>Total Collections</th>
+							<td>{{$remitdetail->total_collections}}</td>
+							<td>{{$test->TRS_AMT}}</td>
+							<td></td>
+							<td>{{$remitdetail->total_collections - $test->TRS_AMT}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-bordered table-info" style="width:75%">
 					<tbody>	
 						<tr>
-							<td>Remittance Amount</td>
-							<td>{{$remitdetail->remit_amount}}</td>
-							<td></td>
 							<td>Sent Date</td>
-							<td>{{$remitdetail->remitance_sent_date}}</td>
+							<td>{{$remitdetail->remittance_sent_date}}</td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 						<tr>
-							<td>Commission Amount</td>
-							<td>{{$remitdetail->commission_amount}}</td>
-							<td></td>
 							<td>Recieved Date</td>
 							<td>{{$remitdetail->commission_recieved_date}}</td>
-						</tr>
-						<tr>
-							<th class="table-dark">Total Collections</th>
-							<th class="table-dark">{{$remitdetail->total_collections}}</th>
-							<th class="table-dark"></th>
-							<th class="table-dark"></th>
-							<th class="table-dark"></th>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 					</tbody>
 				</table>
@@ -78,6 +104,7 @@
 						</div>
 					</div>
 				</div>
+			@endforeach
 			@endforeach
 			</div>
 		</div>

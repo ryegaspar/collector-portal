@@ -51,8 +51,24 @@ class RemittanceLogController extends Controller
 
         $remitdetail = RemittanceLog::where('id', $dataid)
                     ->get();
+
+        $startdate = $remitdetail[0]['period_start_date'];
+        $enddate = $remitdetail[0]['period_end_date'];
+        $client = $remitdetail[0]['client_name'];
+
+        $test = DB::connection('sqlsrv2')
+                ->table('CDS.TRS')
+                ->Join('CDS.CLT', 'CDS.TRS.TRS_AR_CLIENT', '=', 'CDS.CLT.CLT_NO')
+                ->Join('CDS.TRC', 'CDS.TRS.TRS_TRUST_CODE', '=', 'CDS.TRC.TRC_CODE')
+                ->select(DB::raw("CLT_NAME_1, SUM(TRS_AMT) as TRS_AMT, SUM(TRS_COMM_AMT) as TRS_COMM_AMT, SUM(IIF(TRS_TRUST_CODE=2,-TRS_COMM_AMT,TRS_AMT-TRS_COMM_AMT)) as TRS_REMIT_AMT"))
+                ->whereDate('TRS_TRX_DATE_O', '>=', $startdate)
+                ->whereDate('TRS_TRX_DATE_O', '<=', $enddate)
+                ->where('CLT_NAME_1', $client)
+                ->where('TRS_TRUST_CODE', '<>', 0)
+                ->groupby('CLT_NAME_1')
+                ->get();
        
-        return view('admin.remittance-log-detail')->with('remitdetail', $remitdetail);
+        return view('admin.remittance-log-detail', compact('remitdetail', '1','2','3','test'));
     }
 
     public function indexstandardremit($client, $startdate, $enddate) {   
@@ -89,6 +105,31 @@ class RemittanceLogController extends Controller
         //temporary fix, filter eager loaded in polymorphic relations not working in sqlsrv
         //TODO: remove if updated or fixed.
         $data['creator_name'] = $user->first_name . ' ' . $user->last_name;
+
+        $startdate = $data['period_start_date'];
+        $enddate = $data['period_end_date'];
+        $client = $data['client_name'];
+
+        $databasevalidation = DB::connection('sqlsrv2')
+                ->table('CDS.TRS')
+                ->Join('CDS.CLT', 'CDS.TRS.TRS_AR_CLIENT', '=', 'CDS.CLT.CLT_NO')
+                ->Join('CDS.TRC', 'CDS.TRS.TRS_TRUST_CODE', '=', 'CDS.TRC.TRC_CODE')
+                ->select(DB::raw("CLT_NAME_1, SUM(TRS_AMT) as TRS_AMT, SUM(TRS_COMM_AMT) as TRS_COMM_AMT, SUM(IIF(TRS_TRUST_CODE=2,-TRS_COMM_AMT,TRS_AMT-TRS_COMM_AMT)) as TRS_REMIT_AMT"))
+                ->whereDate('TRS_TRX_DATE_O', '>=', $startdate)
+                ->whereDate('TRS_TRX_DATE_O', '<=', $enddate)
+                ->where('CLT_NAME_1', $client)
+                ->where('TRS_TRUST_CODE', '<>', 0)
+                ->groupby('CLT_NAME_1')
+                ->get();
+
+        if ($databasevalidation['TRS_AMT'] == $data['total_collections']) {
+
+            $data['notes'] = $data['notes'] . 'Amount Validated';
+
+        } else{
+
+            $data['notes'] = $data['notes'] . 'Amount Not Validated';
+        };
 
         $remittanceLog = new RemittanceLog($data);
 

@@ -29,7 +29,7 @@
 			@yield('content')
 		</div>
 
-		<footer class="app-footer"></footer>
+		<footer class="app-footer">©Unifin Inc 2019</footer>
 	</div>
 
 	<!-- Bootstrap and necessary plugins -->
