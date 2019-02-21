@@ -110,11 +110,11 @@ class RemittanceLogController extends Controller
         $enddate = $data['period_end_date'];
         $client = $data['client_name'];
 
-        $databasevalidation = DB::connection('sqlsrv2')
+        (array)$databasevalidation = DB::connection('sqlsrv2')
                 ->table('CDS.TRS')
                 ->Join('CDS.CLT', 'CDS.TRS.TRS_AR_CLIENT', '=', 'CDS.CLT.CLT_NO')
                 ->Join('CDS.TRC', 'CDS.TRS.TRS_TRUST_CODE', '=', 'CDS.TRC.TRC_CODE')
-                ->select(DB::raw("CLT_NAME_1, SUM(TRS_AMT) as TRS_AMT, SUM(TRS_COMM_AMT) as TRS_COMM_AMT, SUM(IIF(TRS_TRUST_CODE=2,-TRS_COMM_AMT,TRS_AMT-TRS_COMM_AMT)) as TRS_REMIT_AMT"))
+                ->select(DB::raw("CLT_NAME_1, SUM(TRS_AMT) as sumtrs, SUM(TRS_COMM_AMT) as TRS_COMM_AMT, SUM(IIF(TRS_TRUST_CODE=2,-TRS_COMM_AMT,TRS_AMT-TRS_COMM_AMT)) as TRS_REMIT_AMT"))
                 ->whereDate('TRS_TRX_DATE_O', '>=', $startdate)
                 ->whereDate('TRS_TRX_DATE_O', '<=', $enddate)
                 ->where('CLT_NAME_1', $client)
@@ -122,14 +122,16 @@ class RemittanceLogController extends Controller
                 ->groupby('CLT_NAME_1')
                 ->get();
 
-        if ($databasevalidation['TRS_AMT'] == $data['total_collections']) {
+        $array = json_decode(json_encode($databasevalidation), True);      
+
+        if ($array[0]['sumtrs'] == $data['total_collections']) {
 
             $data['notes'] = $data['notes'] . 'Amount Validated';
 
-        } else{
+        } else {
 
             $data['notes'] = $data['notes'] . 'Amount Not Validated';
-        };
+        }
 
         $remittanceLog = new RemittanceLog($data);
 
@@ -218,7 +220,7 @@ class RemittanceLogController extends Controller
 
         return request()->validate([
             'client_name'       => ['required'],
-            'sub_client_name'   => '',
+            'sub_client_name'   => [''],
             'remit_date'        => ['required'],
             'period_start_date' => ['required'],
             'period_end_date'   => ['required'],
@@ -226,7 +228,7 @@ class RemittanceLogController extends Controller
             'total_client_collections'  => ['required', 'numeric'],
             'commission_amount' => ['required', 'numeric'],
             'remit_amount'  => ['required', 'numeric'],
-            'notes'          => '',
+            'notes'          => [''],
         ]);
     }
 }
